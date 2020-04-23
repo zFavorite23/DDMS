@@ -1,0 +1,177 @@
+{
+  "id": "1716806",
+  "name": "DDMS",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9668380",
+      "name": "weixin",
+      "font_class": "weixin",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "410559",
+      "name": "审批",
+      "font_class": "shenpi",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "456960",
+      "name": "主页",
+      "font_class": "zhuye",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "569100",
+      "name": "用户",
+      "font_class": "yonhu",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "657538",
+      "name": "分期－通用",
+      "font_class": "tongyong",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "1601920",
+      "name": "员工",
+      "font_class": "yuangong",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "2039579",
+      "name": "部门",
+      "font_class": "bumen",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "2170872",
+      "name": "项目",
+      "font_class": "xiangmu",
+      "unicode": "e707",
+      "unicode_decimal": 59143
+    },
+    {
+      "icon_id": "3077332",
+      "name": "打卡补签",
+      "font_class": "buqian",
+      "unicode": "e75d",
+      "unicode_decimal": 59229
+    },
+    {
+      "icon_id": "4185074",
+      "name": "鸡腿",
+      "font_class": "jitui",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
+      "icon_id": "5344985",
+      "name": "支出",
+      "font_class": "zhichu",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "9132008",
+      "name": "文档",
+      "font_class": "wendang",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "9344221",
+      "name": "AI工时填报流程",
+      "font_class": "AIgongshitianbaoliucheng",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "9344282",
+      "name": "出差申请审批流程",
+      "font_class": "chuchashenqingshenpiliucheng",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "10149461",
+      "name": "考勤",
+      "font_class": "kaoqin",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "10340469",
+      "name": "出差申请",
+      "font_class": "chuchashenqing",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "10340472",
+      "name": "公司",
+      "font_class": "gongsi",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "10742440",
+      "name": "外出申请",
+      "font_class": "waichushenqing",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
+      "icon_id": "11741700",
+      "name": "个人费用报销",
+      "font_class": "tubiaozhizuomoban",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "11742120",
+      "name": "请假",
+      "font_class": "tubiaozhizuomoban1",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "11866509",
+      "name": "设备维修工时",
+      "font_class": "shebeiweixiugongshi",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "12498372",
+      "name": "34开票",
+      "font_class": "kaipiao",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "12592395",
+      "name": "财务",
+      "font_class": "caiwu",
+      "unicode": "e74a",
+      "unicode_decimal": 59210
+    },
+    {
+      "icon_id": "13401002",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    }
+  ]
+}

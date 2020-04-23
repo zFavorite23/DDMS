@@ -1,0 +1,51 @@
+.titBox{
+    height: 40px;
+    width: 100%;
+    margin-bottom: 12px;
+}
+.right{
+    float: right;
+}
+.left{
+    float: left;
+}
+.tit{
+    font-weight: bold;
+    color: #000000;
+    line-height: 40px;
+    display: block;
+}
+.apply-user-list{
+    display: inline-grid;
+    text-align: center;
+    padding-right: 15px;
+}
+.username{
+    color: #000;
+}
+.el-form{
+    display: inline-block;
+}
+
+@media screen and (max-width: 320px) {
+    .el-textarea{
+        width: 95% !important;
+    }
+    .el-date-editor.el-input{
+        width: 150px !important;
+    }
+    .el-input{
+        width: 85% !important;
+    }
+    .el-select{
+        width: 100% !important;
+    }
+}
+.invoiceRules{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.form{
+    padding: 20px 10px 10px;
+}
