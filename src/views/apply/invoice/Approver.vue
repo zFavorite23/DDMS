@@ -14,6 +14,7 @@
                     <el-select
                         clearable
                         v-model="query.applyUserId"
+                        filterable
                         placeholder="请选择"
                     >
                         <el-option

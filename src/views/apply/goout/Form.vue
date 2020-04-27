@@ -13,6 +13,7 @@
                 <el-select
                     v-model="formData.itemId"
                     clearable
+                    filterable
                     placeholder="请选择"
                     @change="selectItem"
                 >

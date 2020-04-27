@@ -42,6 +42,7 @@
                 <el-select
                     v-model="formData.itemId"
                     placeholder="请选择"
+                    filterable
                     @change="selectItem"
                 >
                     <el-option
@@ -62,6 +63,7 @@
                 <el-select
                     v-model="formData.itemId"
                     placeholder="请选择"
+                    filterable
                     @change="selectItem"
                 >
                     <el-option
@@ -195,6 +197,7 @@
                             type="text"
                             placeholder="请输入支付金额"
                             v-model="formData.payPriceYuan"
+                            @blur="getApplyUser"
                             show-word-limit
                         ></el-input>
                     </el-form-item>
@@ -271,6 +274,7 @@
                         type="text"
                         placeholder="请输入发票金额"
                         v-model="formData.invoicePriceYuan"
+                        @blur="getApplyUser"
                         show-word-limit
                     ></el-input>
                 </el-form-item>
@@ -340,7 +344,8 @@ export default {
                 companyId: null,
                 userId: null,
                 deptId: null,
-                type: 6
+                type: 6,
+                priceYuan: 0
             },
             labelPosition: "right",
             fileList1: [],
@@ -550,17 +555,17 @@ export default {
                 this.isDisabled = false;
             }
 
-            this.getApplyUser();
+            //this.getApplyUser();
         },
         selectItem(val) {
             if (val == null || val == "") {
                 this.query.itemId = null;
                 this.formData.itemId = null;
-                this.getApplyUser();
+                //this.getApplyUser();
             } else {
                 this.query.itemId = val;
                 this.formData.itemId = val;
-                this.getApplyUser();
+                //this.getApplyUser();
             }
         },
         getItemVosWithUserId(userId) {
@@ -582,7 +587,13 @@ export default {
             });
         },
         getApplyUser() {
-            if (this.formData.classify != 10) {
+            if (this.formData.classify != 10 || this.formData.classify != 11) {
+                if (this.formData.isFull == '1') {
+                    this.query.priceYuan = this.formData.payPriceYuan;
+                } else {
+                    this.query.priceYuan = this.formData.invoicePriceYuan;
+                }
+
                 getApplyUserInfo(this.query).then(response => {
                     this.applyUserList = [];
                     this.formData.approverids = null;

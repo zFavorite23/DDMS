@@ -39,6 +39,7 @@
                     <el-form-item :label="userName" prop="userId">
                         <el-select
                             v-model="formData.userId"
+                            filterable
                             placeholder="请选择"
                         >
                             <el-option

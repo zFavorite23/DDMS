@@ -12,7 +12,8 @@
             <el-form-item label="项目：">
                 <el-select
                     v-model="formData.itemId"
-                    placeholder="请选择未打卡日期"
+                    filterable
+                    placeholder="请选择"
                 >
                     <el-option
                         v-for="(item, index) in itemOptions"

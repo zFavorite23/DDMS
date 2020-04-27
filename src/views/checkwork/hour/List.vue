@@ -3,7 +3,7 @@
         <div>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select v-model="query.userId" placeholder="请选择">
+                    <el-select v-model="query.userId" filterable placeholder="请选择">
                         <el-option
                             v-for="item in userOptions"
                             :key="item.value"

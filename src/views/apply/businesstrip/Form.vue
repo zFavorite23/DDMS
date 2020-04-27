@@ -13,6 +13,7 @@
                 <el-select
                     v-model="formData.itemId"
                     placeholder="请选择"
+                    filterable
                     style="width: 230px;"
                 >
                     <el-option

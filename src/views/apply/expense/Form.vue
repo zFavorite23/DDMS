@@ -63,6 +63,7 @@
                 <el-select
                     v-model="formData.itemId"
                     placeholder="请选择"
+                    filterable
                     @change="selectItem"
                 >
                     <el-option
@@ -82,6 +83,7 @@
                 <el-select
                     v-model="formData.itemId"
                     placeholder="请选择"
+                    filterable
                     @change="selectItem"
                 >
                     <el-option
@@ -219,6 +221,7 @@
                     type="number"
                     placeholder="请填写金额"
                     v-model="formData.priceYuan"
+                    @blur="getApplyUser"
                     show-word-limit
                 ></el-input>
             </el-form-item>
@@ -335,7 +338,8 @@ export default {
                 userId: null,
                 deptId: null,
                 isPublic: "1",
-                type: 7
+                type: 7,
+                priceYuan: 0
             },
             fileList1: [],
             fileList2: [],
@@ -466,6 +470,7 @@ export default {
             this.formData.bankAccount = editExpenseInfo.bankAccount;
             this.formData.isLarge = editExpenseInfo.isLarge;
             this.formData.priceYuan = editExpenseInfo.priceYuan;
+            this.query.priceYuan = editExpenseInfo.priceYuan;
             this.formData.remark = editExpenseInfo.remark;
             this.formData.invoiceNum = editExpenseInfo.invoiceNum;
             this.formData.detailed = editExpenseInfo.detailed;
@@ -534,6 +539,7 @@ export default {
             }
         },
         getApplyUser() {
+            this.query.priceYuan = this.formData.priceYuan;
             getApplyUserInfo(this.query).then(response => {
                 this.applyUserList = [];
                 this.formData.approverids = null;
