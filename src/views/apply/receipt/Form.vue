@@ -153,6 +153,7 @@
                         value="22"
                     ></el-option>
                     <el-option label="*硬件*" value="23"></el-option>
+                    <el-option label="*现代服务*服务费" value="24"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="开票备注" prop="remark">
