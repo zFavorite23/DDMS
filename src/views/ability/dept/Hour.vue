@@ -197,6 +197,10 @@
                             data: [],
                             axisTick: {
                                 alignWithLabel: true
+                            },
+                            axisLabel: {    //底部文字倾斜
+                                interval: 0,
+                                rotate:25
                             }
                         }
                     ],
