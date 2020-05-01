@@ -28,13 +28,13 @@
                         >搜索</el-button
                     >
                 </el-form-item>
-                <el-form-item>
-                    <router-link to="/apply/businesstrip/form">
-                        <el-button type="primary" size="medium"
-                            >添加申请</el-button
-                        >
-                    </router-link>
-                </el-form-item>
+<!--                <el-form-item>-->
+<!--                    <router-link to="/apply/businesstrip/form">-->
+<!--                        <el-button type="primary" size="medium"-->
+<!--                            >添加申请</el-button-->
+<!--                        >-->
+<!--                    </router-link>-->
+<!--                </el-form-item>-->
             </el-form>
             <el-radio-group
                 v-model="listType"
