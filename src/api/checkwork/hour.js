@@ -62,6 +62,13 @@ export function getHourRadixUserBySum(query) {
     });
 }
 
+export function getHourRadixUserYesterday(){
+    return axios({
+        url:'checkwork/clockHour/user/yesterday',
+        method:'get'
+    })
+}
+
 /**
  * 部门系数
  * @param query
