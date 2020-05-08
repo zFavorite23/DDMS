@@ -44,7 +44,6 @@ import clockApprover from "../views/apply/clock/Approver.vue";
 import ClockInfo from "../views/apply/clock/Info.vue";
 
 import BusinesstripList from "../views/apply/businesstrip/List.vue";
-import BusinesstripForm from "../views/apply/businesstrip/Form.vue";
 import BusinesstripApprover from "../views/apply/businesstrip/Approver.vue";
 import BusinesstripInfo from "../views/apply/businesstrip/Info.vue";
 
@@ -315,12 +314,12 @@ export const asyncRouterMap = [
                 name: "出差列表",
                 hidden: true
             },
-            {
-                path: "businesstrip/form",
-                component: BusinesstripForm,
-                name: "出差申请",
-                hidden: true
-            },
+            // {
+            //     path: "businesstrip/form",
+            //     component: BusinesstripForm,
+            //     name: "出差申请",
+            //     hidden: true
+            // },
             {
                 path: "businesstrip/approver",
                 component: BusinesstripApprover,

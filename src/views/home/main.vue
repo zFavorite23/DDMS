@@ -122,9 +122,9 @@
                                     <span v-else-if="scope.row.msgType == '2'"
                                         >外出</span
                                     >
-                                    <span v-else-if="scope.row.msgType == '3'"
-                                        >出差</span
-                                    >
+<!--                                    <span v-else-if="scope.row.msgType == '3'"-->
+<!--                                        >出差</span-->
+<!--                                    >-->
                                     <span v-else-if="scope.row.msgType == '4'"
                                         >请假</span
                                     >
@@ -188,9 +188,9 @@
                                     <span v-else-if="scope.row.msgType == '2'"
                                         >外出</span
                                     >
-                                    <span v-else-if="scope.row.msgType == '3'"
-                                        >出差</span
-                                    >
+<!--                                    <span v-else-if="scope.row.msgType == '3'"-->
+<!--                                        >出差</span-->
+<!--                                    >-->
                                     <span v-else-if="scope.row.msgType == '4'"
                                         >请假</span
                                     >
@@ -282,13 +282,13 @@ export default {
                     disagree: "0",
                     id: 3
                 },
-                {
-                    title: "出差申请",
-                    check: "0",
-                    agree: "0",
-                    disagree: "0",
-                    id: 4
-                },
+                // {
+                //     title: "出差申请",
+                //     check: "0",
+                //     agree: "0",
+                //     disagree: "0",
+                //     id: 4
+                // },
                 {
                     title: "请假申请",
                     check: "0",
@@ -350,13 +350,13 @@ export default {
                     disagree: "0",
                     id: 3
                 },
-                {
-                    title: "出差审批",
-                    check: "0",
-                    agree: "0",
-                    disagree: "0",
-                    id: 4
-                },
+                // {
+                //     title: "出差审批",
+                //     check: "0",
+                //     agree: "0",
+                //     disagree: "0",
+                //     id: 4
+                // },
                 {
                     title: "请假审批",
                     check: "0",
@@ -401,7 +401,7 @@ export default {
     created() {
         window.localStorage.removeItem("editManhourInfo");
         window.localStorage.removeItem("editGooutInfo");
-        window.localStorage.removeItem("editBusinesstripInfo");
+        //window.localStorage.removeItem("editBusinesstripInfo");
         window.localStorage.removeItem("editLeaveInfo");
         window.localStorage.removeItem("editClockInfo");
         window.localStorage.removeItem("editInvoiceInfo");
@@ -484,11 +484,11 @@ export default {
                     path: "/apply/goout/info/" + row.toId
                 });
             }
-            if (row.msgType == "3") {
-                this.$router.push({
-                    path: "/apply/businesstrip/info/" + row.toId
-                });
-            }
+            // if (row.msgType == "3") {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip/info/" + row.toId
+            //     });
+            // }
             if (row.msgType == "4") {
                 this.$router.push({
                     path: "/apply/leave/info/" + row.toId
@@ -529,10 +529,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/form"
                 });
-            } else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout/form"
-                });
+            // } else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout/form"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip/form"
@@ -570,10 +570,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour?status=0"
                 });
-            } else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout?status=0"
-                });
+            // } else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout?status=0"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip?status=0"
@@ -610,10 +610,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour?status=1"
                 });
-            } else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout?status=1"
-                });
+            // } else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout?status=1"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip?status=1"
@@ -651,10 +651,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour?status=2"
                 });
-            }  else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout?status=2"
-                });
+            // }  else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout?status=2"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip?status=2"
@@ -692,10 +692,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver"
                 });
-            } else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout/approver"
-                });
+            // } else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout/approver"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip/approver"
@@ -733,10 +733,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver?status=0"
                 });
-            }else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout/approver?status=0"
-                });
+            // }else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout/approver?status=0"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip/approver?status=0"
@@ -773,10 +773,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver?status=1"
                 });
-            } else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout/approver?status=1"
-                });
+            // } else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout/approver?status=1"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip/approver?status=1"
@@ -814,10 +814,10 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver?status=2"
                 });
-            } else if (id == 3) {
-                this.$router.push({
-                    path: "/apply/goout/approver?status=2"
-                });
+            // } else if (id == 3) {
+            //     this.$router.push({
+            //         path: "/apply/goout/approver?status=2"
+            //     });
             } else if (id == 4) {
                 this.$router.push({
                     path: "/apply/businesstrip/approver?status=2"
