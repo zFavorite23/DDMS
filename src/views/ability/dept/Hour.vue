@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { getHourRadixUserBySum,getHourRadixUserYesterday } from '../../../api/checkwork/hour.js';
+import { getHourRadixUserBySum, getHourRadixUserYesterday } from '../../../api/checkwork/hour.js';
 import { getHourRadixDept } from '../../../api/checkwork/hour.js';
 import { dateFormat } from '../../../utils/date.js';
 import { mapGetters } from 'vuex';
@@ -100,12 +100,13 @@ export default {
                         data: [],
                         axisTick: {
                             alignWithLabel: true
-                        }
+                        },
                     }
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        splitLine: { show: false }
                     }
                 ],
                 series: [
@@ -116,15 +117,14 @@ export default {
                         data: [],
                         markLine: {
                             data: [
-                               {
-                                   type: 'average',
-                                   name: '平均值',
-                                   itemStyle: { normal: { color: 'green' } },
-                                   label: {
-                                       formatter: "平均线"
-                               
-                                   }
-                               }
+                                {
+                                    type: 'average',
+                                    name: '平均值',
+                                    itemStyle: { normal: { color: 'green' } },
+                                    label: {
+                                        formatter: '平均线'
+                                    }
+                                }
                             ]
                         },
                         label: {
@@ -180,7 +180,8 @@ export default {
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        splitLine: { show: false }
                     }
                 ],
                 series: [
@@ -191,34 +192,30 @@ export default {
                         data: [],
                         markLine: {
                             data: [
-                                 {
+                                {
                                     type: 'average',
                                     name: '平均值',
                                     itemStyle: { normal: { color: 'green' } },
                                     label: {
-                                        formatter: "平均线"
-
-                                    },
+                                        formatter: '平均线'
+                                    }
                                 },
                                 {
                                     name: '达标线',
                                     itemStyle: { normal: { color: 'red' } },
                                     label: {
-                                        formatter: "达标线"
-
+                                        formatter: '达标线'
                                     },
-                                    yAxis: '',
-
+                                    yAxis: ''
                                 },
                                 {
                                     name: '劳模线',
                                     itemStyle: { normal: { color: 'blue' } },
                                     label: {
-                                        formatter: "劳模线"
-
+                                        formatter: '劳模线'
                                     },
-                                    yAxis: '',
-                                },
+                                    yAxis: ''
+                                }
                             ]
                         },
                         label: {
@@ -274,7 +271,8 @@ export default {
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        splitLine: { show: false }
                     }
                 ],
                 series: [
@@ -290,8 +288,7 @@ export default {
                                     name: '平均值',
                                     itemStyle: { normal: { color: 'green' } },
                                     label: {
-                                        formatter: "平均线"
-
+                                        formatter: '平均线'
                                     }
                                 }
                             ]
@@ -307,7 +304,6 @@ export default {
                     }
                 ]
             },
-
             optionBar4: {
                 title: {
                     text: '昨日个人工时排行'
@@ -350,7 +346,8 @@ export default {
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        splitLine: { show: false }
                     }
                 ],
                 series: [
@@ -361,34 +358,30 @@ export default {
                         data: [],
                         markLine: {
                             data: [
-                                 {
+                                {
                                     type: 'average',
                                     name: '平均值',
                                     itemStyle: { normal: { color: 'green' } },
                                     label: {
-                                        formatter: "平均线"
-
-                                    },
+                                        formatter: '平均线'
+                                    }
                                 },
                                 {
                                     name: '达标线',
                                     itemStyle: { normal: { color: 'red' } },
                                     label: {
-                                        formatter: "达标线"
-
+                                        formatter: '达标线'
                                     },
-                                    yAxis: 9,
-
+                                    yAxis: 9
                                 },
                                 {
                                     name: '劳模线',
                                     itemStyle: { normal: { color: 'blue' } },
                                     label: {
-                                        formatter: "劳模线"
-
+                                        formatter: '劳模线'
                                     },
-                                    yAxis: 11,
-                                },
+                                    yAxis: 11
+                                }
                             ]
                         },
                         label: {
@@ -401,7 +394,7 @@ export default {
                         }
                     }
                 ]
-            },
+            }
         };
     },
     computed: {
@@ -433,9 +426,9 @@ export default {
             this.isShow3 = false;
             this.isShow4 = false;
             getHourRadixUserBySum(this.query2).then(response => {
-                var workTotalNum = response.data.data[1].workTotalNum - 1
-                this.optionBar2.series[0].markLine.data[1].yAxis = workTotalNum * 9
-                this.optionBar2.series[0].markLine.data[2].yAxis = workTotalNum * 11
+                var workTotalNum = response.data.data[1].workTotalNum - 1;
+                this.optionBar2.series[0].markLine.data[1].yAxis = workTotalNum * 9;
+                this.optionBar2.series[0].markLine.data[2].yAxis = workTotalNum * 11;
                 response.data.data.forEach((item, index) => {
                     //console.log(item);
                     this.optionBar2.xAxis[0].data[index] = item.userName;
@@ -458,19 +451,19 @@ export default {
                 this.drawBar3();
             });
         },
-        getHourRadix4(){
+        getHourRadix4() {
             this.isShow = false;
             this.isShow2 = false;
             this.isShow3 = false;
             this.isShow4 = true;
-            getHourRadixUserYesterday().then(res=>{
+            getHourRadixUserYesterday().then(res => {
                 res.data.data.forEach((item, index) => {
                     // console.log(item);
                     this.optionBar4.xAxis[0].data[index] = item.userName;
                     this.optionBar4.series[0].data[index] = item.sumNum;
                 });
                 this.drawBar4();
-            })
+            });
         },
 
         drawBar1() {
@@ -508,7 +501,7 @@ export default {
             window.addEventListener('resize', function() {
                 bar4.resize();
             });
-        },
+        }
     }
 };
 </script>
