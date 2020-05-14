@@ -174,6 +174,17 @@ export default {
             this.formData.day = editGooutInfo.day;
             this.formData.isCross = editGooutInfo.isCross;
             this.formData.start = editGooutInfo.start;
+            if (this.formData.isCross == 1) {
+                this.formData.end = '';
+                this.endOptions.start = '00:00';
+                this.endOptions.end = '05:30';
+                this.endOptions.minTime = '';
+            } else {
+                this.formData.end = '';
+                this.endOptions.start = '07:00';
+                this.endOptions.end = '23:30';
+                this.endOptions.minTime = this.formData.start;
+            }
             this.formData.end = editGooutInfo.end;
             this.formData.time = editGooutInfo.time
             this.timeValue = editGooutInfo.time;
