@@ -175,9 +175,11 @@ export default {
             this.formData.isCross = editGooutInfo.isCross;
             this.formData.start = editGooutInfo.start;
             this.formData.end = editGooutInfo.end;
+            this.formData.time = editGooutInfo.time
             this.timeValue = editGooutInfo.time;
             this.timeValue=`${this.timeValue}小时`
             this.formData.reason = editGooutInfo.reason;
+
         } else {
             this.applyClockInfo = JSON.parse(window.localStorage.getItem('applyClockInfo'));
             if (this.applyClockInfo) {
