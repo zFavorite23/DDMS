@@ -1,29 +1,9 @@
 <template>
     <div>
-        <el-form
-            label-position="right"
-            ref="formData"
-            :rules="rules"
-            :model="formData"
-            class="form"
-            :label-position="labelPosition"
-            label-width="100px"
-        >
+        <el-form label-position="right" ref="formData" :rules="rules" :model="formData" class="form" :label-position="labelPosition" label-width="100px">
             <el-form-item label="项目：">
-                <el-select
-                    v-model="formData.itemId"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    @change="selectItem"
-                >
-                    <el-option
-                        v-for="(item, index) in itemOptions"
-                        :value="item.value"
-                        :key="index"
-                        :label="item.label"
-                    >
-                    </el-option>
+                <el-select v-model="formData.itemId" clearable filterable placeholder="请选择" @change="selectItem">
+                    <el-option v-for="(item, index) in itemOptions" :value="item.value" :key="index" :label="item.label"></el-option>
                 </el-select>
             </el-form-item>
 
@@ -37,16 +17,12 @@
                             placeholder="选择日期"
                             format="yyyy 年 MM 月 dd 日"
                             value-format="yyyy-MM-dd"
-                        >
-                        </el-date-picker>
+                        ></el-date-picker>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-form-item label="是否跨天：" prop="isCross">
-                <el-radio-group
-                    v-model="formData.isCross"
-                    @change="selectIsCross"
-                >
+                <el-radio-group v-model="formData.isCross" @change="selectIsCross">
                     <el-radio label="1">是</el-radio>
                     <el-radio label="0">否</el-radio>
                 </el-radio-group>
@@ -64,41 +40,23 @@
                                     step: '00:30',
                                     end: '23:30'
                                 }"
-                            >
-                            </el-time-select>
+                            ></el-time-select>
                         </el-form-item>
                     </el-col>
                     <el-col class="line" :span="2">-</el-col>
                     <el-col :span="11">
                         <el-form-item prop="end">
-                            <el-time-select
-                                v-model="formData.end"
-                                @change="selectEndTime"
-                                placeholder="选择结束时间"
-                                :picker-options="endOptions"
-                            >
-                            </el-time-select>
+                            <el-time-select v-model="formData.end" @change="selectEndTime" placeholder="选择结束时间" :picker-options="endOptions"></el-time-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-form-item>
 
             <el-form-item label="外出时长：" prop="time">
-                <el-input
-                    v-model="timeValue"
-                    placeholder="请选择日期"
-                    :disabled="true"
-                ></el-input>
+                <el-input v-model="timeValue" placeholder="请选择日期" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="外出事由：" prop="reason">
-                <el-input
-                    type="textarea"
-                    v-model="formData.reason"
-                    maxlength="30"
-                    show-word-limit
-                ></el-input>
-            </el-form-item>
+            <el-form-item label="外出事由：" prop="reason"><el-input type="textarea" v-model="formData.reason" maxlength="30" show-word-limit></el-input></el-form-item>
             <el-form-item label="审批人：">
                 <div class="apply-user-list" v-for="user in applyUserList">
                     <el-avatar :size="60" :src="user.avatar"></el-avatar>
@@ -106,23 +64,19 @@
                 </div>
             </el-form-item>
             <el-form-item style="text-align: center" class="save">
-                <el-button type="primary" @click="onSubmit" :loading="saving"
-                    >保存</el-button
-                >
+                <el-button type="primary" @click="onSubmit" :loading="saving">保存</el-button>
                 <el-button @click="backHistory">取消</el-button>
             </el-form-item>
         </el-form>
-        <el-button type="primary" class="invoiceRules" @click="open"
-            >外出规范</el-button
-        >
+        <el-button type="primary" class="invoiceRules" @click="open">外出规范</el-button>
     </div>
 </template>
 <script>
-import { addObj, editObj } from "../../../api/apply/goout.js";
-import { getApplyUserInfo } from "../../../api/admin/user.js";
-import { getItemVosWithUserId } from "../../../api/project/team.js";
-import { getStandardApplyInfoById } from "../../../api/standard/apply.js";
-import { mapGetters } from "vuex";
+import { addObj, editObj } from '../../../api/apply/goout.js';
+import { getApplyUserInfo } from '../../../api/admin/user.js';
+import { getItemVosWithUserId } from '../../../api/project/team.js';
+import { getStandardApplyInfoById } from '../../../api/standard/apply.js';
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -132,72 +86,66 @@ export default {
                 deptId: null,
                 type: 2
             },
-            labelPosition: "right",
-            startTime: "",
-            endTime: "",
+            labelPosition: 'right',
+            startTime: '',
+            endTime: '',
             formData: {
                 newData: true,
                 gooutId: null,
                 itemId: null,
-                userId: "",
-                day: "",
-                isCross: "0",
-                start: "",
-                end: "",
+                userId: '',
+                day: '',
+                isCross: '0',
+                start: '',
+                end: '',
                 time: null,
-                reason: "",
-                clockList: "",
-                approverids: ""
+                reason: '',
+                clockList: '',
+                approverids: ''
             },
-            timeValue: "",
+            timeValue: '',
             itemOptions: [
                 {
                     value: null,
-                    label: "与项目无关"
+                    label: '与项目无关'
                 }
             ],
             endOptions: {
-                start: "07:00",
-                step: "00:30",
-                end: "23:30",
-                minTime: ""
+                start: '07:00',
+                step: '00:30',
+                end: '23:30',
+                minTime: ''
             },
             rules: {
                 destinations: [
                     {
                         required: true,
-                        message: "请填写出差目的地",
-                        trigger: "blur"
+                        message: '请填写出差目的地',
+                        trigger: 'blur'
                     }
                 ],
-                day: [
-                    { required: true, message: "请选择日期", trigger: "blur" }
-                ],
-                isCross: [
-                    { required: true, message: "请选择", trigger: "blur" }
-                ],
+                day: [{ required: true, message: '请选择日期', trigger: 'blur' }],
+                isCross: [{ required: true, message: '请选择', trigger: 'blur' }],
                 start: [
                     {
                         required: true,
-                        message: "请填写开始时间",
-                        trigger: "blur"
+                        message: '请填写开始时间',
+                        trigger: 'blur'
                     }
                 ],
                 end: [
                     {
                         required: true,
-                        message: "请填写回来时间",
-                        trigger: "blur"
+                        message: '请填写回来时间',
+                        trigger: 'blur'
                     }
                 ],
-                time: [
-                    { required: true, message: "请填写时长", trigger: "blur" }
-                ],
+                time: [{ required: true, message: '请填写时长', trigger: 'blur' }],
                 reason: [
                     {
                         required: true,
-                        message: "请填写外出事由",
-                        trigger: "blur"
+                        message: '请填写外出事由',
+                        trigger: 'blur'
                     }
                 ]
             },
@@ -205,12 +153,7 @@ export default {
             applyUserList: [],
             pickerOptions1: {
                 disabledDate(time) {
-                    return (
-                        time.getTime() <
-                            new Date().getTime() - 3600 * 1000 * 24 * 8 ||
-                        time.getTime() >
-                            new Date().getTime() + 3600 * 1000 * 24 * 7
-                    );
+                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 8 || time.getTime() > new Date().getTime() + 3600 * 1000 * 24 * 0;
                 }
             }
         };
@@ -222,18 +165,11 @@ export default {
         this.formData.userId = this.userId;
         this.query.userId = this.userId;
 
-        const editGooutInfo = JSON.parse(
-            window.localStorage.getItem("editGooutInfo")
-        );
+        const editGooutInfo = JSON.parse(window.localStorage.getItem('editGooutInfo'));
         if (editGooutInfo) {
             this.formData.newData = false;
             this.formData.gooutId = editGooutInfo.gooutId;
-            this.formData.itemId =
-                editGooutInfo.itemId == "" ||
-                editGooutInfo.itemId == null ||
-                editGooutInfo.itemId == undefined
-                    ? null
-                    : editGooutInfo.itemId;
+            this.formData.itemId = editGooutInfo.itemId == '' || editGooutInfo.itemId == null || editGooutInfo.itemId == undefined ? null : editGooutInfo.itemId;
             this.formData.day = editGooutInfo.day;
             this.formData.isCross = editGooutInfo.isCross;
             this.formData.start = editGooutInfo.start;
@@ -241,22 +177,20 @@ export default {
             this.formData.time = editGooutInfo.time;
             this.formData.reason = editGooutInfo.reason;
         } else {
-            this.applyClockInfo = JSON.parse(
-                window.localStorage.getItem("applyClockInfo")
-            );
+            this.applyClockInfo = JSON.parse(window.localStorage.getItem('applyClockInfo'));
             if (this.applyClockInfo) {
                 this.formData.day = this.applyClockInfo.day;
                 if (this.applyClockInfo.type == 1) {
-                    this.formData.start = "09:30";
-                    this.formData.end = "12:00";
+                    this.formData.start = '09:30';
+                    this.formData.end = '12:00';
                     this.formData.time = 2.5;
-                    this.timeValue = "2.5 小时";
+                    this.timeValue = '2.5 小时';
                 }
                 if (this.applyClockInfo.type == 2) {
-                    this.formData.start = "14:00";
-                    this.formData.end = "18:30";
+                    this.formData.start = '14:00';
+                    this.formData.end = '18:30';
                     this.formData.time = 4.5;
-                    this.timeValue = "4.5 小时";
+                    this.timeValue = '4.5 小时';
                 }
 
                 this.formData.clockList = JSON.stringify(this.applyClockInfo);
@@ -264,11 +198,11 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["permissions", "userId"])
+        ...mapGetters(['permissions', 'userId'])
     },
     methods: {
         selectItem(val) {
-            if (val == null || val == "") {
+            if (val == null || val == '') {
                 this.query.itemId = null;
                 this.formData.itemId = null;
                 this.getApplyUser();
@@ -301,20 +235,22 @@ export default {
             });
         },
         backHistory() {
-            window.localStorage.removeItem("editGooutInfo");
-            window.localStorage.removeItem("applyClockInfo");
+            window.localStorage.removeItem('editGooutInfo');
+            window.localStorage.removeItem('applyClockInfo');
             this.formData.newData = true;
             this.formData.gooutId = null;
             this.formData.itemId = null;
-            this.formData.start = "";
-            this.formData.end = "";
-            this.formData.time = "";
-            this.timeValue = "";
-            this.formData.reason = "";
+            this.formData.start = '';
+            this.formData.end = '';
+            this.formData.time = '';
+            this.timeValue = '';
+            this.formData.reason = '';
             this.$router.go(-1);
         },
         onSubmit() {
-            this.$refs["formData"].validate(valid => {
+              console.log(this.formData)
+              console.log(this.timeValue)
+            this.$refs['formData'].validate(valid => {
                 if (valid) {
                     this.saving = true;
                     if (!this.formData.newData) {
@@ -343,66 +279,61 @@ export default {
         },
         selectIsCross(val) {
             if (this.formData.isCross == 1) {
-                this.formData.end = "";
-                this.endOptions.start = "00:00";
-                this.endOptions.end = "05:30";
-                this.endOptions.minTime = "";
+                this.formData.end = '';
+                this.endOptions.start = '00:00';
+                this.endOptions.end = '05:30';
+                this.endOptions.minTime = '';
             } else {
-                this.formData.end = "";
-                this.endOptions.start = "07:00";
-                this.endOptions.end = "23:30";
+                this.formData.end = '';
+                this.endOptions.start = '07:00';
+                this.endOptions.end = '23:30';
                 this.endOptions.minTime = this.formData.start;
             }
         },
         selectStartTime(val) {
-            this.formData.end = "";
+            this.formData.end = '';
             this.formData.time = null;
-            this.timeValue = "";
+            this.timeValue = '';
             if (this.formData.isCross == 0) {
                 this.endOptions.minTime = val;
             }
         },
         selectEndTime(val) {
-            const startHour = this.formData.start.split(":");
-            const endHour = this.formData.end.split(":");
-            const end = "24:00".split(":");
-            const end1 = "00:00".split(":");
+            const startHour = this.formData.start.split(':');
+            const endHour = this.formData.end.split(':');
+            const end = '24:00'.split(':');
+            const end1 = '00:00'.split(':');
 
             if (this.formData.isCross == 0) {
-                const startMin =
-                    (24 - parseInt(startHour[0])) * 60 + parseInt(startHour[1]);
-                const endMin =
-                    (24 - parseInt(endHour[0])) * 60 - parseInt(endHour[1]);
+                const startMin = (24 - parseInt(startHour[0])) * 60 + parseInt(startHour[1]);
+                const endMin = (24 - parseInt(endHour[0])) * 60 - parseInt(endHour[1]);
                 //console.log(endMin)
                 const mins = startMin - endMin;
                 // console.log(mins/60)
                 // console.log(mins)
                 if (startHour[1] == 30) {
                     this.formData.time = mins / 60 - 1;
-                    this.timeValue = mins / 60 - 1 + " 小时";
+                    this.timeValue = mins / 60 - 1 + ' 小时';
                 } else {
                     this.formData.time = mins / 60;
-                    this.timeValue = mins / 60 + " 小时";
+                    this.timeValue = mins / 60 + ' 小时';
                 }
             } else if (this.formData.isCross == 1) {
-                const hoursTime1 =
-                    (24 - parseInt(startHour[0])) * 60 + parseInt(startHour[1]);
-                const hoursTime11 =
-                    (24 - parseInt(end[0])) * 60 - parseInt(end[1]);
+                const hoursTime1 = (24 - parseInt(startHour[0])) * 60 + parseInt(startHour[1]);
+                const hoursTime11 = (24 - parseInt(end[0])) * 60 - parseInt(end[1]);
                 const hoursTime111 = (hoursTime1 - hoursTime11) / 60;
 
-                const hoursTime2 =
-                    (24 - parseInt(end1[0])) * 60 + parseInt(end1[1]);
-                const hoursTime22 =
-                    (24 - parseInt(endHour[0])) * 60 - parseInt(endHour[1]);
+                const hoursTime2 = (24 - parseInt(end1[0])) * 60 + parseInt(end1[1]);
+                const hoursTime22 = (24 - parseInt(endHour[0])) * 60 - parseInt(endHour[1]);
                 const hoursTime222 = (hoursTime2 - hoursTime22) / 60;
 
                 if (startHour[1] == 30) {
-                    this.timeValue = hoursTime111 - 1 + hoursTime222 + "小时";
+                    this.timeValue = hoursTime111 - 1 + hoursTime222 + '小时';
                 } else {
-                    this.timeValue = hoursTime111 + hoursTime222 + "小时";
+                    this.timeValue = hoursTime111 + hoursTime222 + '小时';
                 }
             }
+            this.formData.time=this.timeValue
         },
         getStandardApplyInfo() {
             getStandardApplyInfoById(2).then(response => {
@@ -410,9 +341,7 @@ export default {
                     console.log(response);
                     const data = response.data.data;
                     this.content = data.content;
-                    const gootStandardApply = JSON.parse(
-                        window.localStorage.getItem("gooutStandardApply")
-                    );
+                    const gootStandardApply = JSON.parse(window.localStorage.getItem('gooutStandardApply'));
                     // console.log(gootStandardApply);
                     if (gootStandardApply) {
                         if (gootStandardApply.version < data.version) {
@@ -421,22 +350,19 @@ export default {
                     } else {
                         this.open();
                     }
-                    window.localStorage.setItem(
-                        "gooutStandardApply",
-                        JSON.stringify(data)
-                    );
+                    window.localStorage.setItem('gooutStandardApply', JSON.stringify(data));
                 }
             });
         },
         open() {
             console.log(this.content);
-            let content = this.content.split("\n\n");
+            let content = this.content.split('\n\n');
             let newDatas = [];
             const h = this.$createElement;
             for (let i in content) {
-                newDatas.push(h("p", null, content[i]));
+                newDatas.push(h('p', null, content[i]));
             }
-            this.$alert(h("div", null, newDatas), "外出规范");
+            this.$alert(h('div', null, newDatas), '外出规范');
         }
     },
     mounted() {}
