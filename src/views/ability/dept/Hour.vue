@@ -124,7 +124,15 @@ export default {
                                     label: {
                                         formatter: '平均线'
                                     }
-                                }
+                                },
+                                {
+                                    name: '达标线',
+                                    itemStyle: { normal: { color: 'red' } },
+                                    label: {
+                                        formatter: '达标线'
+                                    },
+                                    yAxis: ''
+                                },
                             ]
                         },
                         label: {
@@ -306,7 +314,7 @@ export default {
             },
             optionBar4: {
                 title: {
-                    text: '昨日个人工时排行'
+                    text: ''
                     //subtext: '纯属虚构'
                 },
                 toolbox: {
@@ -412,10 +420,11 @@ export default {
             this.isShow3 = false;
             this.isShow4 = false;
             getHourRadixUserBySum(this.query1).then(response => {
+                var workTotalNum = response.data.data[0].workTotalNum - 1
+                this.optionBar.series[0].markLine.data[1].yAxis = workTotalNum * 9
                 response.data.data.forEach((item, index) => {
-                    //console.log(item);
                     this.optionBar.xAxis[0].data[index] = item.userName;
-                    this.optionBar.series[0].data[index] = item.sumNum;
+                    this.optionBar.series[0].data[index] = item.sumNum.toFixed(2);
                 });
                 this.drawBar1();
             });
@@ -432,7 +441,7 @@ export default {
                 response.data.data.forEach((item, index) => {
                     //console.log(item);
                     this.optionBar2.xAxis[0].data[index] = item.userName;
-                    this.optionBar2.series[0].data[index] = item.sumNum;
+                    this.optionBar2.series[0].data[index] = item.sumNum.toFixed(2);
                 });
                 this.drawBar2();
             });
@@ -446,7 +455,7 @@ export default {
                 response.data.data.forEach((item, index) => {
                     // console.log(item);
                     this.optionBar3.xAxis[0].data[index] = item.deptName;
-                    this.optionBar3.series[0].data[index] = item.avgNum;
+                    this.optionBar3.series[0].data[index] = item.avgNum.toFixed(2);
                 });
                 this.drawBar3();
             });
@@ -457,10 +466,14 @@ export default {
             this.isShow3 = false;
             this.isShow4 = true;
             getHourRadixUserYesterday().then(res => {
+                var time = res.data.data[0].time
+                var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+                var date = time.replace(reg, "$1年$2月$3日");
+                this.optionBar4.title.text = `${date}个人工时排行`
                 res.data.data.forEach((item, index) => {
                     // console.log(item);
                     this.optionBar4.xAxis[0].data[index] = item.userName;
-                    this.optionBar4.series[0].data[index] = item.sumNum;
+                    this.optionBar4.series[0].data[index] = item.sumNum.toFixed(2);
                 });
                 this.drawBar4();
             });
