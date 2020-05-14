@@ -166,6 +166,7 @@ export default {
         this.query.userId = this.userId;
 
         const editGooutInfo = JSON.parse(window.localStorage.getItem('editGooutInfo'));
+        console.log(editGooutInfo)
         if (editGooutInfo) {
             this.formData.newData = false;
             this.formData.gooutId = editGooutInfo.gooutId;
@@ -174,7 +175,8 @@ export default {
             this.formData.isCross = editGooutInfo.isCross;
             this.formData.start = editGooutInfo.start;
             this.formData.end = editGooutInfo.end;
-            this.formData.time = editGooutInfo.time;
+            this.timeValue = editGooutInfo.time;
+            this.timeValue=`${this.timeValue}小时`
             this.formData.reason = editGooutInfo.reason;
         } else {
             this.applyClockInfo = JSON.parse(window.localStorage.getItem('applyClockInfo'));
@@ -338,8 +340,8 @@ export default {
         },
         getStandardApplyInfo() {
             getStandardApplyInfoById(2).then(response => {
+                console.log(response);
                 if (response.data.data) {
-                    console.log(response);
                     const data = response.data.data;
                     this.content = data.content;
                     const gootStandardApply = JSON.parse(window.localStorage.getItem('gooutStandardApply'));
