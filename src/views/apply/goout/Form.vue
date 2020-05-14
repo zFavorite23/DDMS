@@ -328,12 +328,13 @@ export default {
                 const hoursTime222 = (hoursTime2 - hoursTime22) / 60;
 
                 if (startHour[1] == 30) {
+                    this.formData.time = hoursTime111 - 1 + hoursTime222 ;
                     this.timeValue = hoursTime111 - 1 + hoursTime222 + '小时';
                 } else {
+                    this.formData.time = hoursTime111 + hoursTime222;
                     this.timeValue = hoursTime111 + hoursTime222 + '小时';
                 }
             }
-            this.formData.time=this.timeValue
         },
         getStandardApplyInfo() {
             getStandardApplyInfoById(2).then(response => {
