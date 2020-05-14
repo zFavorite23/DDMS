@@ -157,7 +157,8 @@
                 </div>
             </el-form-item>
             <el-form-item v-if="isSave" style="text-align: center" class="save">
-                <el-button type="primary" @click="onSubmit" :loading="saving">保存</el-button>
+                <el-button v-if='query.companyId==1' type="primary" disabled>保存</el-button>
+                <el-button v-else type="primary" @click="onSubmit" :loading="saving">保存</el-button>
                 <el-button @click="backHistory">取消</el-button>
             </el-form-item>
         </el-form>
@@ -304,6 +305,7 @@ export default {
             this.formData.newData = false;
             this.formData.invoiceId = editInvoiceInfo.invoiceId;
             this.formData.companyId = editInvoiceInfo.companyId;
+            this.query.companyId=editInvoiceInfo.companyId
             this.formData.itemId = editInvoiceInfo.itemId;
             this.formData.classify = editInvoiceInfo.classify;
             this.formData.type = editInvoiceInfo.type;
