@@ -484,11 +484,11 @@ export default {
                     path: "/apply/goout/info/" + row.toId
                 });
             }
-            // if (row.msgType == "3") {
-            //     this.$router.push({
-            //         path: "/apply/businesstrip/info/" + row.toId
-            //     });
-            // }
+            if (row.msgType == "3") {
+                this.$router.push({
+                    path: "/apply/businesstrip/info/" + row.toId
+                });
+            }
             if (row.msgType == "4") {
                 this.$router.push({
                     path: "/apply/leave/info/" + row.toId
@@ -529,14 +529,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/form"
                 });
-            // } else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout/form"
-            //     });
-            } else if (id == 4) {
+            } else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip/form"
+                    path: "/apply/goout/form"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip/form"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave/form"
@@ -570,14 +570,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour?status=0"
                 });
-            // } else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout?status=0"
-            //     });
-            } else if (id == 4) {
+            } else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip?status=0"
+                    path: "/apply/goout?status=0"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip?status=0"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave?status=0"
@@ -610,14 +610,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour?status=1"
                 });
-            // } else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout?status=1"
-            //     });
-            } else if (id == 4) {
+            } else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip?status=1"
+                    path: "/apply/goout?status=1"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip?status=1"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave?status=1"
@@ -651,14 +651,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour?status=2"
                 });
-            // }  else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout?status=2"
-            //     });
-            } else if (id == 4) {
+            }  else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip?status=2"
+                    path: "/apply/goout?status=2"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip?status=2"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave?status=2"
@@ -692,14 +692,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver"
                 });
-            // } else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout/approver"
-            //     });
-            } else if (id == 4) {
+            } else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip/approver"
+                    path: "/apply/goout/approver"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip/approver"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave/approver"
@@ -733,14 +733,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver?status=0"
                 });
-            // }else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout/approver?status=0"
-            //     });
-            } else if (id == 4) {
+            }else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip/approver?status=0"
+                    path: "/apply/goout/approver?status=0"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip/approver?status=0"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave/approver?status=0"
@@ -773,14 +773,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver?status=1"
                 });
-            // } else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout/approver?status=1"
-            //     });
-            } else if (id == 4) {
+            } else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip/approver?status=1"
+                    path: "/apply/goout/approver?status=1"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip/approver?status=1"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave/approver?status=1"
@@ -814,14 +814,14 @@ export default {
                 this.$router.push({
                     path: "/apply/manhour/approver?status=2"
                 });
-            // } else if (id == 3) {
-            //     this.$router.push({
-            //         path: "/apply/goout/approver?status=2"
-            //     });
-            } else if (id == 4) {
+            } else if (id == 3) {
                 this.$router.push({
-                    path: "/apply/businesstrip/approver?status=2"
+                    path: "/apply/goout/approver?status=2"
                 });
+            // } else if (id == 4) {
+            //     this.$router.push({
+            //         path: "/apply/businesstrip/approver?status=2"
+            //     });
             } else if (id == 5) {
                 this.$router.push({
                     path: "/apply/leave/approver?status=2"
