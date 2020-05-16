@@ -905,7 +905,7 @@ export default {
             //console.log(val)
             this.formData.restList = "";
             val.forEach(element => {
-                this.formData.restList = element + ",";
+                this.formData.restList += element + ",";
             });
             this.formData.time = val.length;
             this.timeValue = val.length + " 天";
