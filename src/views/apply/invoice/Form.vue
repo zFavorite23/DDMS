@@ -178,6 +178,7 @@ export default {
                 companyId: null,
                 userId: null,
                 deptId: null,
+                itemId: null,
                 type: 6,
                 priceYuan: 0
             },
@@ -307,6 +308,7 @@ export default {
             this.formData.companyId = editInvoiceInfo.companyId;
             this.query.companyId=editInvoiceInfo.companyId
             this.formData.itemId = editInvoiceInfo.itemId;
+            this.query.itemId = editInvoiceInfo.itemId;
             this.formData.classify = editInvoiceInfo.classify;
             this.formData.type = editInvoiceInfo.type;
             this.formData.isFull = editInvoiceInfo.isFull;
@@ -377,17 +379,17 @@ export default {
                 this.isDisabled = false;
             }
 
-            //this.getApplyUser();
+            this.getApplyUser();
         },
         selectItem(val) {
             if (val == null || val == '') {
                 this.query.itemId = null;
                 this.formData.itemId = null;
-                //this.getApplyUser();
+                this.getApplyUser();
             } else {
                 this.query.itemId = val;
                 this.formData.itemId = val;
-                //this.getApplyUser();
+                this.getApplyUser();
             }
         },
         getItemVosWithUserId(userId) {
@@ -409,7 +411,8 @@ export default {
             });
         },
         getApplyUser() {
-            if (this.formData.classify != 10 || this.formData.classify != 11) {
+            console.log("2222")
+            if (this.formData.classify != 10) {
                 if (this.formData.isFull == '1') {
                     this.query.priceYuan = this.formData.payPriceYuan;
                 } else {
