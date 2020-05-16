@@ -243,6 +243,16 @@
                 </el-select>
             </el-form-item>
 
+            <el-row v-if="formData.type == '1'">
+                <el-col :md="{ span: 8 }">
+                    <el-form-item label="合同金额：" prop="contractAmountYuan">
+                        <el-input type="text" placeholder="请输入合同金额" v-model="formData.contractAmountYuan"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+
+
+
             <el-form-item label="完工日期：" prop="endDate">
                 <el-date-picker
                     v-model="formData.endDate"
@@ -290,6 +300,7 @@ export default {
                 teamList: [],
                 status: "0",
                 endDate: "",
+                contractAmountYuan: 0,
                 approverids: "10"
             },
             statusOptions: [
@@ -352,6 +363,9 @@ export default {
                 ],
                 status: [
                     { required: true, message: "请选择", trigger: "change" }
+                ],
+                contractAmountYuan: [
+                    { required: true, message: "请填【与"}
                 ]
                 // endDate: [
                 //     { required: true, message: '请选择', trigger: 'change' },
@@ -387,6 +401,7 @@ export default {
 
             this.formData.status = editProjectInfo.status;
             this.formData.endDate = editProjectInfo.endDate;
+            this.formData.contractAmountYuan = editProjectInfo.contractAmountYuan;
         }
     },
     computed: {
@@ -427,6 +442,7 @@ export default {
             this.formData.alias = "";
             this.formData.status = "";
             this.formData.endDate = "";
+            this.formData.contractAmountYuan = 0;
             this.$router.go(-1);
         },
         onSubmit() {
