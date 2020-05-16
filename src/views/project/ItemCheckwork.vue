@@ -65,13 +65,13 @@ export default {
             let line = this.$echarts.init(document.getElementById('line'));
             let optionLine = {
                 title: {
-                    text: '支出分类趋势'
+                    text: '工时趋势'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['设备', '售前', '交付', '管理', '外协']
+                    data: ['员工一', '员工二', '员工三', '员工四', '员工五', '员工六', '员工七']
                 },
                 grid: {
                     left: '3%',
@@ -87,41 +87,53 @@ export default {
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
+                    data: ['5月1日', '5月2日', '5月3日', '5月4日', '5月5日', '5月6日', '5月7日']
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [
                     {
-                        name: '设备',
+                        name: '员工一',
                         type: 'line',
                         stack: '总量',
                         data: [120, 132, 101, 134, 90, 230, 210]
                     },
                     {
-                        name: '售前',
+                        name: '员工二',
                         type: 'line',
                         stack: '总量',
                         data: [220, 182, 191, 234, 290, 330, 310]
                     },
                     {
-                        name: '交付',
+                        name: '员工三',
                         type: 'line',
                         stack: '总量',
                         data: [150, 232, 201, 154, 190, 330, 410]
                     },
                     {
-                        name: '管理',
+                        name: '员工四',
                         type: 'line',
                         stack: '总量',
                         data: [320, 332, 301, 334, 390, 330, 320]
                     },
                     {
-                        name: '外协',
+                        name: '员工五',
                         type: 'line',
                         stack: '总量',
-                        data: [220, 232, 201, 234, 290, 230, 220]
+                        data: [820, 932, 901, 934, 1290, 1330, 1320]
+                    },
+                    {
+                        name: '员工六',
+                        type: 'line',
+                        stack: '总量',
+                        data: [520, 432, 701, 734, 1090, 1130, 1120]
+                    },
+                    {
+                        name: '员工七',
+                        type: 'line',
+                        stack: '总量',
+                        data: [620, 632, 501, 534, 990, 1030, 1020]
                     }
                 ]
             };
@@ -132,6 +144,9 @@ export default {
         drawBar() {
             let bar = this.$echarts.init(document.getElementById('bar'));
             let optionBar = {
+                title: {
+                    text: '参与工时'
+                },
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -140,7 +155,7 @@ export default {
                     }
                 },
                 legend: {
-                    data: ['设备', '售前', '交付', '管理', '外协']
+                    data: ['管理', '产品', '交付', '售前', '销售']
                 },
                 grid: {
                     left: '3%',
@@ -153,21 +168,21 @@ export default {
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
+                    data: ['员工一', '员工二', '员工三', '员工四', '员工五', '员工六', '员工七']
                 },
                 series: [
                     {
-                        name: '设备',
+                        name: '管理',
                         type: 'bar',
                         stack: '总量',
                         label: {
                             show: true,
                             position: 'inside'
                         },
-                        data: [320, 302, 301, 334, 390, 330, 320]
+                        data: [120, 102, 101, 104, 190, 130, 120]
                     },
                     {
-                        name: '售前',
+                        name: '产品',
                         type: 'bar',
                         stack: '总量',
                         label: {
@@ -187,25 +202,24 @@ export default {
                         data: [220, 182, 191, 234, 290, 330, 310]
                     },
                     {
-                        name: '管理',
+                        name: '售前',
                         type: 'bar',
                         stack: '总量',
                         label: {
                             show: true,
                             position: 'inside'
                         },
-                        data: [150, 212, 201, 154, 190, 330, 410]
+                        data: [150, 212, 201, 154, 190, 130, 110]
                     },
-                    ,
                     {
-                        name: '外协',
+                        name: '销售',
                         type: 'bar',
                         stack: '总量',
                         label: {
                             show: true,
                             position: 'inside'
                         },
-                        data: [250, 312, 301, 254, 290, 230, 310]
+                        data: [82, 32, 91, 93, 190, 130, 320]
                     }
                 ]
             };
@@ -217,7 +231,7 @@ export default {
             let pie = this.$echarts.init(document.getElementById('pie'));
             let optionPie = {
                 title: {
-                    text: '支出占比',
+                    text: '考勤占比',
                     // subtext: '纯属虚构',
                     x: 'center'
                 },
@@ -228,7 +242,7 @@ export default {
                 legend: {
                     orient: 'vertical',
                     left: 'left',
-                    data: ['设备', '售前', '交付', '管理', '外协']
+                    data: ['员工一', '员工二', '员工三', '员工四', '员工五']
                 },
                 series: [
                     {
@@ -237,11 +251,11 @@ export default {
                         radius: '55%',
                         center: ['50%', '60%'],
                         data: [
-                            { value: 335, name: '设备' },
-                            { value: 310, name: '售前' },
-                            { value: 234, name: '交付' },
-                            { value: 135, name: '管理' },
-                            { value: 335, name: '外协' }
+                            { value: 335, name: '员工一' },
+                            { value: 310, name: '员工二' },
+                            { value: 234, name: '员工三' },
+                            { value: 135, name: '员工四' },
+                            { value: 335, name: '员工五' }
                         ],
                         itemStyle: {
                             emphasis: {
