@@ -525,7 +525,7 @@ export default {
     methods: {
         getApplyUser() {
             getApplyUserInfo(this.query).then(response => {
-                console.log(response)
+                
                 const applyUser = response.data.data;
                 this.applyUserList.push({
                     userId: applyUser.userId,
