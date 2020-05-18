@@ -720,6 +720,9 @@ export default {
             this.$router.go(-1);
         },
         onSubmit() {
+            if (this.formData.type == '9' || this.formData.type == '10') {
+                this.formData.end = this.formData.start;
+            }
             this.$refs['formData'].validate(valid => {
                 if (valid) {
                     this.saving = true;
