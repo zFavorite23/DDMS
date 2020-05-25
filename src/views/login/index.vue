@@ -61,14 +61,12 @@
                             <span
                                 v-if="code.type == 'text'"
                                 class="login-code-img"
-                                @click="refreshCode"
                                 >{{ code.value }}</span
                             >
                             <img
                                 v-else
                                 :src="code.src"
                                 class="login-code-img"
-                                @click="refreshCode"
                             />
                         </div>
                     </el-col>
