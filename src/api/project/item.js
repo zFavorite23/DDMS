@@ -42,6 +42,32 @@ export function deleteItem(itemId) {
     });
 }
 
+// 项目开票信息
+export function getReceipt(itemId) {
+    return axios({
+        url: `/project/item/receipt/${itemId}`,
+        method: 'get',
+    })
+}
+
+// 项目报销
+export function getItemPay(query){
+	return axios({
+		url:'/project/item/payBack',
+        method:'get',
+        params:query
+	})
+}
+
+// 支出管理
+export function getExpend(query){
+    return axios({
+        url:'/project/item/expend',
+        method:'get',
+        params:query
+    })
+}
+
 /**
  * 项目数据迁移
  * @returns {*}
