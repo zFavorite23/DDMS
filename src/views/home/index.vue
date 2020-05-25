@@ -86,25 +86,7 @@
                 <div class="header-right">
                     <el-popover placement="bottom" width="350" trigger="hover">
                         <!--                        <avue-crud :data="data" :option="option"></avue-crud>-->
-                        <el-table :data="tableData" border style="width: 100%">
-                            <el-table-column
-                                prop="date"
-                                label="日期"
-                                width="100"
-                            >
-                            </el-table-column>
-                            <el-table-column
-                                prop="name"
-                                label="姓名"
-                                width="100"
-                            >
-                            </el-table-column>
-                            <el-table-column prop="address" label="地址">
-                            </el-table-column>
-                        </el-table>
-
-                        <el-button type="text" size="mini">查看全部</el-button>
-
+                        <div style="margin-left: 45%;">暂无数据</div>
                         <div
                             slot="reference"
                             class="top-bar__item top-bar__item--show"
@@ -301,18 +283,6 @@ export default {
                     { validator: validatePass2, trigger: "blur" }
                 ]
             },
-            tableData: [
-                {
-                    date: "2016-05-02",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1518 弄"
-                },
-                {
-                    date: "2016-05-04",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1517 弄"
-                }
-            ]
         };
     },
     components: {
