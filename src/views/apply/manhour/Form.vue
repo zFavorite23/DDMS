@@ -1,743 +1,2162 @@
 <template>
     <div>
-        <el-form
-            label-position="right"
-            :model="formData"
-            :rules="rules"
-            ref="formData"
-            class="form"
-            label-width="135px"
-        >
-            <el-form-item label="填报日期：" prop="hourId">
-                <el-select
-                    v-model="formData.hourId"
-                    placeholder="请选择填报日期"
-                    @change="selectWorkDay"
-                >
-                    <el-option
-                        v-for="(item, index) in dayOptions"
-                        :value="item.value"
-                        :key="index"
-                        :label="item.label"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
-
-            <el-form-item label="鸡腿数量：" v-if="dayHourInt > 0">
-                <p>
+        <el-row :gutter="24">
+            <el-col :span="24">
+                <fieldset>
+                    <legend>未填报日期</legend>
+                    <el-row :gutter="24">
+                        <el-col :span="3" v-for="(item, index) in dayOptions" :key="index">
+                            <el-link type="danger" style="font-size: 1rem;">{{ item.day }}</el-link>
+                        </el-col>
+                    </el-row>
+                </fieldset>
+            </el-col>
+        </el-row>
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_1 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_1.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_1 > 0">
                     <el-rate
                         disabled
                         show-score
                         text-color="#ff9900"
-                        v-model="dayHourFloat"
-                        :max="dayHourInt"
-                        :icon-classes="[
-                            'icon iconfont iconjitui',
-                            'icon iconfont iconjitui',
-                            'icon iconfont iconjitui'
-                        ]"
+                        v-model="dayHourFloat_1"
+                        :max="dayHourInt_1"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
-                    >
-                    </el-rate>
-                </p>
-            </el-form-item>
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_1[0].integral" :placeholder="String(tableData_1[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_1" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == '1'" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '2'" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '3'" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '4'" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '4'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '5'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '2'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '3'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '4'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour_1"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_1(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_1()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_1()">提交</el-button>
+        </el-row>
 
-            <el-form-item label="自评积分：" prop="integral">
-                <el-select v-model="formData.integral" placeholder="请选择">
-                    <el-option
-                        v-for="(item, index) in integralOptions"
-                        :key="index"
-                        :label="item.label"
-                        :value="item.value"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_2 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_2.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_2 > 0">
+                    <el-rate
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        v-model="dayHourFloat_2"
+                        :max="dayHourInt_2"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
+                        disabled-void-icon-class="icon iconfont iconjitui"
+                        :colors="['#FF9900', '#FF9900', '#FF9900']"
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_2[0].integral" :placeholder="String(tableData_2[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_2" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 1"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 2"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 3"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 4"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 5"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour_2"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_2(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_2()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_2()">提交</el-button>
+        </el-row>
 
-            <el-form-item label="工作类别：" prop="category">
-                <el-radio-group
-                    v-model="formData.category"
-                    @change="selectcCategory"
-                >
-                    <el-radio label="1">管理</el-radio>
-                    <el-radio label="2">项目</el-radio>
-                    <el-radio label="3">产品</el-radio>
-                    <el-radio label="4">长身体</el-radio>
-                </el-radio-group>
-            </el-form-item>
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_3 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_3.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_3 > 0">
+                    <el-rate
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        v-model="dayHourFloat_3"
+                        :max="dayHourInt_3"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
+                        disabled-void-icon-class="icon iconfont iconjitui"
+                        :colors="['#FF9900', '#FF9900', '#FF9900']"
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_3[0].integral" :placeholder="String(tableData_3[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_3" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 1"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 2"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 3"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 4"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 5"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour_3"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_3(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_3()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_3()">提交</el-button>
+        </el-row>
 
-            <el-form-item
-                label="主分类："
-                prop="mainClassify"
-                v-if="formData.category == '1'"
-            >
-                <el-radio-group v-model="formData.mainClassify">
-                    <el-radio label="1">公司管理</el-radio>
-                    <el-radio label="2">财务管理</el-radio>
-                    <el-radio label="3">人事管理</el-radio>
-                    <el-radio label="4">部门管理</el-radio>
-                    <el-radio label="5">工厂管理</el-radio>
-                </el-radio-group>
-            </el-form-item>
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_4 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_4.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_4 > 0">
+                    <el-rate
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        v-model="dayHourFloat_4"
+                        :max="dayHourInt_4"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
+                        disabled-void-icon-class="icon iconfont iconjitui"
+                        :colors="['#FF9900', '#FF9900', '#FF9900']"
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_4[0].integral" :placeholder="String(tableData_4[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_4" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 1"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 2"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 3"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 4"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 5"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour_4"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_4(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_4()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_4()">提交</el-button>
+        </el-row>
 
-            <el-form-item
-                label="项目："
-                prop="itemId"
-                v-if="formData.category == '2'"
-            >
-                <el-select
-                    v-model="formData.itemId"
-                    placeholder="请选择"
-                    style="width: 230px;"
-                    @change="selectcItem"
-                >
-                    <el-option
-                        v-for="(item, index) in itemOptions"
-                        :value="item.value"
-                        :key="index"
-                        :label="item.label"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_5 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_5.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_5 > 0">
+                    <el-rate
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        v-model="dayHourFloat_5"
+                        :max="dayHourInt_5"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
+                        disabled-void-icon-class="icon iconfont iconjitui"
+                        :colors="['#FF9900', '#FF9900', '#FF9900']"
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_5[0].integral" :placeholder="String(tableData_5[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_5" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 1"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 2"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 3"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 4"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 5"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour_5"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_5(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_5()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_5()">提交</el-button>
+        </el-row>
 
-            <el-form-item
-                label="产品："
-                prop="itemId"
-                v-if="formData.category == '3'"
-            >
-                <el-select
-                    v-model="formData.itemId"
-                    placeholder="请选择"
-                    style="width: 230px;"
-                    @change="selectcItem"
-                >
-                    <el-option
-                        v-for="(item, index) in productOptions"
-                        :value="item.value"
-                        :key="index"
-                        :label="item.label"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_6 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_6.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_6 > 0">
+                    <el-rate
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        v-model="dayHourFloat_6"
+                        :max="dayHourInt_6"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
+                        disabled-void-icon-class="icon iconfont iconjitui"
+                        :colors="['#FF9900', '#FF9900', '#FF9900']"
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_6[0].integral" :placeholder="String(tableData_6[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_6" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 1"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 2"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 3"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 4"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 5"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour_6"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_6(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_6()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_6()">提交</el-button>
+        </el-row>
 
-            <el-form-item
-                label="子分类："
-                prop="subClassify"
-                v-if="
-                    (formData.category == '1' && formData.mainClassify != '') ||
-                        formData.category == '2' ||
-                        formData.category == '3' ||
-                        formData.category == '4'
-                "
-            >
-                <el-radio-group v-model="formData.subClassify">
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '1'
-                        "
-                        label="1"
-                        >公司战略规划</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '1'
-                        "
-                        label="2"
-                        >客户对接</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '1'
-                        "
-                        label="3"
-                        >项目对接</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '1'
-                        "
-                        label="4"
-                        >人员管理及招聘</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '1'
-                        "
-                        label="5"
-                        >其他事务</el-radio
-                    >
+        <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_7 != ''">
+            <div class="top">
+                <span>未填报日期 : {{ day_7.day }}</span>
+                <span class="HourFloat" v-if="dayHourInt_7 > 0">
+                    <el-rate
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        v-model="dayHourFloat_7"
+                        :max="dayHourInt_7"
+                        :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
+                        disabled-void-icon-class="icon iconfont iconjitui"
+                        :colors="['#FF9900', '#FF9900', '#FF9900']"
+                    ></el-rate>
+                </span>
+                <span>
+                    <el-select v-model="tableData_7[0].integral" :placeholder="String(tableData_7[0].integral)" size="mini" style="width: 80px;">
+                        <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </span>
+            </div>
+            <el-table :data="tableData_7" style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 1"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 2"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 3"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 4"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == 1 && scope.row.mainClassify == 5"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 2" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 3" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker
+                            v-if="scope.row.complete != 100"
+                            style="width: 180px;"
+                            size="mini"
+                            v-model="scope.row.completeTime"
+                            :picker-options="pickerOptions"
+                            type="date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期"
+                        ></el-date-picker>
+                        <el-date-picker v-else disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            v-model="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                            :precision="1"
+                            :step="0.5"
+                            :min="0.0"
+                            :max="maxUseHour7"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="address" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_7(scope.$index)"></el-button>
+                        <el-button type="primary" icon="el-icon-document-copy" circle @click="addRow_7()"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_7()">提交</el-button>
+        </el-row>
 
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="1"
-                        >开票</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="2"
-                        >支付</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="3"
-                        >税筹</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="4"
-                        >账务处理</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="5"
-                        >预算</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="6"
-                        >补贴申报</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '2'
-                        "
-                        label="7"
-                        >其他事务</el-radio
-                    >
-
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="1"
-                        >薪酬福利管理</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="2"
-                        >考勤管理</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="3"
-                        >员工入职手续办理</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="4"
-                        >招聘</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="5"
-                        >培训</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="6"
-                        >员工关系管理</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '3'
-                        "
-                        label="7"
-                        >其他事务</el-radio
-                    >
-
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '4'
-                        "
-                        label="1"
-                        >人员招聘</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '4'
-                        "
-                        label="2"
-                        >人员管理及培训</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '4'
-                        "
-                        label="3"
-                        >部门发展计划</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '4'
-                        "
-                        label="4"
-                        >工作流程</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '4'
-                        "
-                        label="5"
-                        >其他日常事务</el-radio
-                    >
-
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '5'
-                        "
-                        label="1"
-                        >工厂备料</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '5'
-                        "
-                        label="2"
-                        >环境卫生</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '5'
-                        "
-                        label="3"
-                        >房租水电</el-radio
-                    >
-                    <el-radio
-                        v-if="
-                            formData.category == '1' &&
-                                formData.mainClassify == '5'
-                        "
-                        label="4"
-                        >其他事务</el-radio
-                    >
-
-                    <el-radio v-if="formData.category == '2'" label="1"
-                        >管理</el-radio
-                    >
-                    <el-radio v-if="formData.category == '2'" label="2"
-                        >销售</el-radio
-                    >
-                    <el-radio v-if="formData.category == '2'" label="3"
-                        >售前</el-radio
-                    >
-                    <el-radio v-if="formData.category == '2'" label="4"
-                        >交付</el-radio
-                    >
-                    <el-radio v-if="formData.category == '2'" label="5"
-                        >产品</el-radio
-                    >
-
-                    <el-radio v-if="formData.category == '3'" label="1"
-                        >管理</el-radio
-                    >
-                    <el-radio v-if="formData.category == '3'" label="2"
-                        >交付</el-radio
-                    >
-
-                    <el-radio v-if="formData.category == '4'" label="1"
-                        >学习</el-radio
-                    >
-                    <el-radio v-if="formData.category == '4'" label="2"
-                        >吃饭</el-radio
-                    >
-                    <el-radio v-if="formData.category == '4'" label="3"
-                        >睡觉</el-radio
-                    >
-                </el-radio-group>
-            </el-form-item>
-
-            <el-form-item label="工作内容：" prop="reason">
-                <el-input
-                    type="textarea"
-                    v-model="formData.reason"
-                    placeholder="请填写工作内容"
-                    maxlength="100"
-                    show-word-limit
-                ></el-input>
-            </el-form-item>
-
-            <el-form-item label="验收人：" prop="approverids">
-                <el-select v-model="formData.approverids" placeholder="请选择">
-                    <el-option
-                        v-for="(item, index) in applyUserList"
-                        :label="item.label"
-                        :key="index"
-                        :value="item.value"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
-
-            <el-form-item label="工时(小时)：" prop="useHour">
-                <el-input-number
-                    v-model="useHour"
-                    size="small"
-                    controls-position="right"
-                    :precision="1"
-                    :step="0.5"
-                    :min="0.0"
-                    :max="maxUseHour"
-                >
-                </el-input-number>
-            </el-form-item>
-
-            <el-form-item label="完成情况：" prop="complete">
-                <el-select v-model="formData.complete" placeholder="请选择">
-                    <el-option
-                        v-for="(item, index) in completeOptions"
-                        :key="index"
-                        :label="item.label"
-                        :value="item.value"
-                    >
-                    </el-option>
-                </el-select>
-            </el-form-item>
-
-            <el-form-item
-                label="预计完成时间："
-                prop="completeTime"
-                v-if="formData.complete != 100"
-            >
-                <el-date-picker
-                    v-model="formData.completeTime"
-                    :picker-options="pickerOptions"
-                    type="date"
-                    format="yyyy 年 MM 月 dd 日"
-                    value-format="yyyy-MM-dd"
-                    placeholder="选择日期"
-                >
-                </el-date-picker>
-            </el-form-item>
-
-            <el-form-item
-                label="保存为草稿："
-            >
-                <el-radio v-model="formData.isDraft" label="0">否</el-radio>
-                <el-radio v-model="formData.isDraft" label="1">是</el-radio>
-            </el-form-item>
-
-            <el-form-item style="text-align: left" class="save">
-                <el-button type="primary" @click="onSubmit" :loading="saving">保存</el-button>
-                <el-button @click="backHistory">取消</el-button>
-            </el-form-item>
-        </el-form>
-        <el-button type="primary" class="invoiceRules" @click="open"
-            >工时规范</el-button
-        >
+        <el-button type="primary" class="invoiceRules" @click="open">工时规范</el-button>
     </div>
 </template>
 <script>
-import { addObj, editObj } from "../../../api/apply/manhour.js";
-import { getApplyUserInfo } from "../../../api/admin/user.js";
-import {
-    getAbnormalSeven,
-    getClockHourInfo
-} from "../../../api/checkwork/hour.js";
-import { getItemVosWithUserId } from "../../../api/project/team.js";
-import { getStandardApplyInfoById } from "../../../api/standard/apply.js";
-import { mapGetters } from "vuex";
+import { addObj, editObj } from '../../../api/apply/manhour.js';
+import { getApplyUserInfo } from '../../../api/admin/user.js';
+import { getAbnormalSeven, getClockHourInfo } from '../../../api/checkwork/hour.js';
+import { getItemVosWithUserId } from '../../../api/project/team.js';
+import { getStandardApplyInfoById } from '../../../api/standard/apply.js';
+import { mapGetters } from 'vuex';
 export default {
     data() {
-        var validateUseHour = (rule, value, callback) => {
-            // if (!reg.test(value)) {
-            //     callback(new Error('密码应是6-12位数字、字母或字符！'))
-            // } else if (this.form.oldPasswd === value) {
-            //     callback(new Error('新密码与旧密码不可一致！'))
-            // } else {
-            //     callback()
-            // }
-            if (parseFloat(value) <= 0){
-                callback(new Error('请选择对应工时！'))
-            } else {
-                callback()
-            }
-        };
         return {
+            value: '',
+            day_1: '',
+            day_2: '',
+            day_3: '',
+            day_4: '',
+            day_5: '',
+            day_6: '',
+            day_7: '',
+            tableData_1: [
+                {
+                    hourId: '',
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 日期
+                    day: '',
+                    useHour: '',
+                    useMin: 0
+                }
+            ],
+            tableData_2: [
+                {
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 工时
+                    useHour: '',
+                    // 日期
+                    day: '',
+                    useMin: 0
+                }
+            ],
+            tableData_3: [
+                {
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 工时
+                    useHour: '',
+                    // 日期
+                    day: '',
+                    useMin: 0
+                }
+            ],
+            tableData_4: [
+                {
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 工时
+                    useHour: '',
+                    // 日期
+                    day: '',
+                    useMin: 0
+                }
+            ],
+            tableData_5: [
+                {
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 工时
+                    useHour: '',
+                    // 日期
+                    day: '',
+                    useMin: 0
+                }
+            ],
+            tableData_6: [
+                {
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 工时
+                    useHour: '',
+                    // 日期
+                    day: '',
+                    useMin: 0
+                }
+            ],
+            tableData_7: [
+                {
+                    userId: null,
+                    // 自评分
+                    integral: '',
+                    // 类别
+                    category: '1',
+                    // 主分类
+                    mainClassify: '',
+                    // 子分类
+                    subClassify: '',
+                    // 项目产品
+                    itemId: null,
+                    // 完成情况
+                    complete: '100',
+                    // 预计完成时间
+                    completeTime: '',
+                    // 验收人
+                    approverids: 0,
+                    // 工作内容
+                    reason: '',
+                    // 工时
+                    useHour: '',
+                    // 日期
+                    day: '',
+                    useMin: 0
+                }
+            ],
             query: {
                 itemId: null,
                 userId: null,
                 deptId: null,
                 type: 1
             },
-            dayHourInt: 0.0,
-            useHour: 0.0,
-            maxUseHour: 0.0,
-
-            formData: {
-                newData: true,
-                manhourId: null,
-                userId: null,
-                itemId: null,
-                hourId: "",
-                day: "",
-                integral: 0,
-                category: "",
-                mainClassify: "",
-                subClassify: "",
-                reason: "",
-                approverids: 0,
-                useMin: 0,
-                complete: "100",
-                completeTime: "",
-                isDraft: '0'
-            },
-            dayOptions: [
-                // {
-                //     label:"2020-01-08",
-                //     value:"2020-01-08"
-                // }
-            ],
+            dayHourInt_1: 0.0,
+            dayHourInt_2: 0.0,
+            dayHourInt_3: 0.0,
+            dayHourInt_4: 0.0,
+            dayHourInt_5: 0.0,
+            dayHourInt_6: 0.0,
+            dayHourInt_7: 0.0,
+            maxUseHour_1: 0.0,
+            maxUseHour_2: 0.0,
+            maxUseHour_3: 0.0,
+            maxUseHour_4: 0.0,
+            maxUseHour_5: 0.0,
+            maxUseHour_6: 0.0,
+            maxUseHour_7: 0.0,
+            dayOptions: [],
             integralOptions: [
-                { value: 0, label: "0分" },
-                { value: 1, label: "1分" },
-                { value: 2, label: "2分" },
-                { value: 3, label: "3分" },
-                { value: 4, label: "4分" },
-                { value: 5, label: "5分" }
+                { value: 0, label: '0分' },
+                { value: 1, label: '1分' },
+                { value: 2, label: '2分' },
+                { value: 3, label: '3分' },
+                { value: 4, label: '4分' },
+                { value: 5, label: '5分' }
             ],
+            categoryOptions: [{ value: '1', label: '管理' }, { value: '2', label: '项目' }, { value: '3', label: '产品' }, { value: '4', label: '长身体' }],
+            mainClassifyOptions: [
+                { value: '1', label: '公司管理' },
+                { value: '2', label: '财务管理' },
+                { value: '3', label: '人事管理' },
+                { value: '4', label: '部门管理' },
+                { value: '5', label: '工厂管理' }
+            ],
+            subClassifyOptions_1: [
+                { value: '1', label: '公司战略规划' },
+                { value: '2', label: '客户对接' },
+                { value: '3', label: '项目对接' },
+                { value: '4', label: '人员管理及招聘' },
+                { value: '5', label: '其他事务' }
+            ],
+            subClassifyOptions_2: [
+                { value: '1', label: '开票' },
+                { value: '2', label: '支付' },
+                { value: '3', label: '税筹' },
+                { value: '4', label: '账务处理' },
+                { value: '5', label: '预算' },
+                { value: '6', label: '补贴申报' },
+                { value: '7', label: '其他事务' }
+            ],
+            subClassifyOptions_3: [
+                { value: '1', label: '薪酬福利管理' },
+                { value: '2', label: '考勤管理' },
+                { value: '3', label: '员工入职手续办理' },
+                { value: '4', label: '招聘' },
+                { value: '5', label: '培训' },
+                { value: '6', label: '员工关系管理' },
+                { value: '7', label: '其他事务' }
+            ],
+            subClassifyOptions_4: [
+                { value: '1', label: '人员招聘' },
+                { value: '2', label: '人员管理及培训' },
+                { value: '3', label: '部门发展计划' },
+                { value: '4', label: '工作流程' },
+                { value: '5', label: '其他日常事务' }
+            ],
+            subClassifyOptions_5: [{ value: '1', label: '工厂备料' }, { value: '2', label: '环境卫生' }, { value: '3', label: '房租水电' }, { value: '4', label: '其他事务' }],
+            subClassifyOptions_6: [
+                { value: '1', label: '管理' },
+                { value: '2', label: '销售' },
+                { value: '3', label: '售前' },
+                { value: '4', label: '交付' },
+                { value: '5', label: '产品' }
+            ],
+            subClassifyOptions_7: [{ value: '1', label: '管理' }, { value: '2', label: '交付' }],
+            subClassifyOptions_8: [{ value: '1', label: '学习' }, { value: '2', label: '吃饭' }, { value: '3', label: '长身体' }],
             itemOptions: [],
             productOptions: [],
             completeOptions: [
-                { value: "0", label: "未完成" },
-                { value: "100", label: "已完成" },
-                { value: "10", label: "完成10%" },
-                { value: "20", label: "完成20%" },
-                { value: "30", label: "完成30%" },
-                { value: "40", label: "完成40%" },
-                { value: "50", label: "完成50%" },
-                { value: "60", label: "完成60%" },
-                { value: "70", label: "完成70%" },
-                { value: "80", label: "完成80%" },
-                { value: "90", label: "完成90%" }
+                { value: '0', label: '未完成' },
+                { value: '100', label: '已完成' },
+                { value: '10', label: '完成10%' },
+                { value: '20', label: '完成20%' },
+                { value: '30', label: '完成30%' },
+                { value: '40', label: '完成40%' },
+                { value: '50', label: '完成50%' },
+                { value: '60', label: '完成60%' },
+                { value: '70', label: '完成70%' },
+                { value: '80', label: '完成80%' },
+                { value: '90', label: '完成90%' }
             ],
-            saving: false,
-            rules: {
-                hourId: [
-                    {
-                        required: true,
-                        message: "请选择填报日期",
-                        trigger: "change"
-                    }
-                ],
-                integral: [
-                    {
-                        required: true,
-                        message: "请选择自评积分",
-                        trigger: "change"
-                    }
-                ],
-                category: [
-                    {
-                        required: true,
-                        message: "请选择工作类别",
-                        trigger: "change"
-                    }
-                ],
-                mainClassify: [
-                    {
-                        required: true,
-                        message: "请选择主分类",
-                        trigger: "change"
-                    }
-                ],
-                itemId: [
-                    { required: true, message: "请选择", trigger: "change" }
-                ],
-                subClassify: [
-                    {
-                        required: true,
-                        message: "请选择子分类",
-                        trigger: "change"
-                    }
-                ],
-                reason: [{ required: true, message: "请填写工作内容" }],
-                approverids: [
-                    {
-                        required: true,
-                        message: "请选择验收人",
-                        trigger: "change"
-                    }
-                ],
-                useHour: [{ validator: validateUseHour, trigger: 'blur' }],
-                complete: [
-                    {
-                        required: true,
-                        message: "请选择完成情况",
-                        trigger: "change"
-                    }
-                ],
-                completeTime: [
-                    {
-                        required: true,
-                        message: "请选择预计完成时间",
-                        trigger: "change"
-                    }
-                ]
-            },
-            applyUserList: [{ value: 0, label: "无人验收" }],
-            applyClockInfo: "",
+
+            applyUserList: [{ value: 0, label: '无人验收' }],
+            applyClockInfo: '',
             pickerOptions: {
                 disabledDate(time) {
-                    return (
-                        time.getTime() <
-                        new Date().getTime() - 3600 * 1000 * 24 * 10 ||
-                        time.getTime() >
-                        new Date().getTime() + 3600 * 1000 * 24 * 20
-                    );
+                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 1 || time.getTime() > new Date().getTime() + 3600 * 1000 * 24 * 20;
                 }
             }
         };
     },
     created() {
         this.getStandardApplyInfo();
-        this.formData.userId = this.userId;
+        this.tableData_1[0].userId = this.userId;
+        this.tableData_2[0].userId = this.userId;
+        this.tableData_3[0].userId = this.userId;
+        this.tableData_4[0].userId = this.userId;
+        this.tableData_5[0].userId = this.userId;
+        this.tableData_6[0].userId = this.userId;
+        this.tableData_7[0].userId = this.userId;
         this.query.userId = this.userId;
         this.getAbnormalSeven();
         this.getItemVosWithUserId();
-        const editManhourInfo = JSON.parse(
-            window.localStorage.getItem("editManhourInfo")
-        );
-        if (editManhourInfo) {
-            this.formData.newData = false;
-            this.formData.manhourId = editManhourInfo.manhourId;
-            this.formData.userId = editManhourInfo.userId;
-            this.formData.hourId = editManhourInfo.hourId;
-            this.formData.day = editManhourInfo.day;
-            this.formData.integral = editManhourInfo.integral;
-            this.formData.category = editManhourInfo.category;
-            this.formData.mainClassify = editManhourInfo.mainClassify;
-            this.formData.subClassify = editManhourInfo.subClassify;
-            this.formData.reason = editManhourInfo.reason;
-            this.formData.approverids = editManhourInfo.approverids;
-            this.formData.isDraft = editManhourInfo.isDraft;
-            this.useHour = parseFloat(editManhourInfo.useHour);
-            this.formData.complete = editManhourInfo.complete;
-            this.formData.completeTime = editManhourInfo.completeTime;
-            this.selectWorkDayByEdit(editManhourInfo);
-        }
     },
     computed: {
-        ...mapGetters(["permissions", "userId"])
+        ...mapGetters(['permissions', 'userId'])
     },
     methods: {
+        // 删除行
+        deleteRow_1(index) {
+            this.tableData_1.splice(index, 1);
+        },
+        deleteRow_2(index) {
+            this.tableData_2.splice(index, 1);
+        },
+        deleteRow_3(index) {
+            this.tableData_3.splice(index, 1);
+        },
+        deleteRow_4(index) {
+            this.tableData_4.splice(index, 1);
+        },
+        deleteRow_5(index) {
+            this.tableData_5.splice(index, 1);
+        },
+        deleteRow_6(index) {
+            this.tableData_6.splice(index, 1);
+        },
+        deleteRow_7(index) {
+            this.tableData_7.splice(index, 1);
+        },
 
-        selectWorkDayByEdit(data){
-            getClockHourInfo(data.hourId).then(response => {
-                const clockHourInfo = response.data.data;
-                this.formData.day = clockHourInfo.day;
-                this.dayHourInt = Math.ceil(clockHourInfo.hour);
-                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
-                this.dayHourFloat = parseFloat(hour) + data.useMin / 60;
-                this.maxUseHour = parseFloat(this.dayHourFloat);
-                this.useHour = data.useHour;
-            });
+        // 增加行
+        addRow_1() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_1[0].integral,
+                // 个人id
+                userId: this.tableData_1[0].userId,
+                // 工时id
+                hourId: this.tableData_1[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                // 工时
+                useMin: '',
+                useHour: '',
+                // 填报日期
+                day: this.tableData_1[0].day
+            };
+            this.tableData_1.push(list);
+            if (this.tableData_1.length > 5) {
+                this.tableData_1.length = 5;
+            }
         },
-        selectWorkDay(val) {
-            getClockHourInfo(val).then(response => {
-                const clockHourInfo = response.data.data;
-                this.formData.day = clockHourInfo.day;
-                this.formData.integral = clockHourInfo.integral;
-                this.dayHourInt = Math.ceil(clockHourInfo.hour);
-                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
-                this.dayHourFloat = parseFloat(hour);
-                this.maxUseHour = parseFloat(hour)
-            });
+        addRow_2() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_2[0].integral,
+                // 个人id
+                userId: this.tableData_2[0].userId,
+                // 工时id
+                hourId: this.tableData_2[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                useHour: '',
+                useMin: '',
+                // 填报日期
+                day: this.tableData_2[0].day
+            };
+            this.tableData_2.push(list);
+            if (this.tableData_2.length > 5) {
+                this.tableData_2.length = 5;
+            }
         },
-        selectcCategory(val) {
-            if (val == 2 || val == 3) {
-                this.formData.itemId = null;
-            }else {
-                this.getApplyUser();
-                // this.applyUserList = [{ value: 0, label: "无人验收" }];
-                // this.formData.approverids = 0;
+        addRow_3() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_3[0].integral,
+                // 个人id
+                userId: this.tableData_3[0].userId,
+                // 工时id
+                hourId: this.tableData_3[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                useHour: '',
+                useMin: '',
+                // 填报日期
+                day: this.tableData_3[0].day
+            };
+            this.tableData_3.push(list);
+            if (this.tableData_3.length > 5) {
+                this.tableData_3.length = 5;
+            }
+        },
+        addRow_4() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_4[0].integral,
+                // 个人id
+                userId: this.tableData_4[0].userId,
+                // 工时id
+                hourId: this.tableData_4[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                useHour: '',
+                useMin: '',
+                // 填报日期
+                day: this.tableData_4[0].day
+            };
+            this.tableData_4.push(list);
+            if (this.tableData_4.length > 5) {
+                this.tableData_4.length = 5;
+            }
+        },
+        addRow_5() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_5[0].integral,
+                // 个人id
+                userId: this.tableData_5[0].userId,
+                // 工时id
+                hourId: this.tableData_5[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                useHour: '',
+                useMin: '',
+                // 填报日期
+                day: this.tableData_5[0].day
+            };
+            this.tableData_5.push(list);
+            if (this.tableData_5.length > 5) {
+                this.tableData_5.length = 5;
+            }
+        },
+        addRow_6() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_6[0].integral,
+                // 个人id
+                userId: this.tableData_6[0].userId,
+                // 工时id
+                hourId: this.tableData_6[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                useHour: '',
+                useMin: '',
+                // 填报日期
+                day: this.tableData_6[0].day
+            };
+            this.tableData_6.push(list);
+            if (this.tableData_6.length > 5) {
+                this.tableData_6.length = 5;
+            }
+        },
+        addRow_7() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            var list = {
+                // 自评分
+                integral: this.tableData_7[0].integral,
+                // 个人id
+                userId: this.tableData_7[0].userId,
+                // 工时id
+                hourId: this.tableData_7[0].hourId,
+                // 类别
+                category: '1',
+                // 主分类
+                mainClassify: '',
+                // 子分类
+                subClassify: '',
+                // 项目产品
+                itemId: null,
+                // 完成情况
+                complete: '100',
+                // 预计完成时间
+                completeTime: '',
+                // 验收人
+                approverids: 0,
+                // 工作内容
+                reason: '',
+                useHour: '',
+                useMin: '',
+                // 填报日期
+                day: this.tableData_7[0].day
+            };
+            this.tableData_7.push(list);
+            if (this.tableData_7.length > 5) {
+                this.tableData_7.length = 5;
             }
         },
 
+        // 提交
+        submit_1() {
+            console.log(this.tableData_1);
+            var num = 0;
+            for (var i = 0; i < this.tableData_1.length; i++) {
+                if (this.tableData_1[i].useHour > 0) {
+                    this.tableData_1[i].useMin = this.tableData_1[i].useHour * 60;
+                }
+                num += this.tableData_1[i].useHour;
+            }
+            if (num > this.dayHourFloat_1) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_1)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_1(this.day_1.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+        submit_2() {
+            console.log(this.tableData_2);
+            var num = 0;
+            for (var i = 0; i < this.tableData_2.length; i++) {
+                if (this.tableData_2[i].useHour > 0) {
+                    this.tableData_2[i].useMin = this.tableData_2[i].useHour * 60;
+                }
+                num += this.tableData_2[i].useHour;
+            }
+            if (num > this.dayHourFloat_2) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_2)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_2(this.day_2.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+        submit_3() {
+            console.log(this.tableData_3);
+            var num = 0;
+            for (var i = 0; i < this.tableData_3.length; i++) {
+                if (this.tableData_3[i].useHour > 0) {
+                    this.tableData_3[i].useMin = this.tableData_3[i].useHour * 60;
+                }
+                num += this.tableData_3[i].useHour;
+            }
+            if (num > this.dayHourFloat_3) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_3)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_3(this.day_3.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+        submit_4() {
+            console.log(this.tableData_4);
+            var num = 0;
+            for (var i = 0; i < this.tableData_4.length; i++) {
+                if (this.tableData_4[i].useHour > 0) {
+                    this.tableData_4[i].useMin = this.tableData_4[i].useHour * 60;
+                }
+                num += this.tableData_4[i].useHour;
+            }
+            if (num > this.dayHourFloat_4) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_4)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_4(this.day_4.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+        submit_5() {
+            console.log(this.tableData_5);
+            var num = 0;
+            for (var i = 0; i < this.tableData_5.length; i++) {
+                if (this.tableData_5[i].useHour > 0) {
+                    this.tableData_5[i].useMin = this.tableData_5[i].useHour * 60;
+                }
+                num += this.tableData_5[i].useHour;
+            }
+            if (num > this.dayHourFloat_5) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_5)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_5(this.day_5.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+        submit_6() {
+            console.log(this.tableData_6);
+            var num = 0;
+            for (var i = 0; i < this.tableData_6.length; i++) {
+                if (this.tableData_6[i].useHour > 0) {
+                    this.tableData_6[i].useMin = this.tableData_6[i].useHour * 60;
+                }
+                num += this.tableData_6[i].useHour;
+            }
+            if (num > this.dayHourFloat_6) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_6)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_6(this.day_6.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+        submit_7() {
+            console.log(this.tableData_7);
+            var num = 0;
+            for (var i = 0; i < this.tableData_7.length; i++) {
+                if (this.tableData_7[i].useHour > 0) {
+                    this.tableData_7[i].useMin = this.tableData_7[i].useHour * 60;
+                }
+                num += this.tableData_7[i].useHour;
+            }
+            if (num > this.dayHourFloat_7) {
+                this.$message({
+                    message: '填报工时超过未填报工时数，请重新选择！',
+                    type: 'warning'
+                });
+            } else {
+                addObj(this.tableData_7)
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.getAbnormalSeven();
+                            this.selectWorkDay_7(this.day_7.hourId);
+                        });
+                        this.$message({
+                            message: '工时填报成！',
+                            type: 'success'
+                        });
+                    })
+                    .catch(() => {
+                        this.$message({
+                            message: '工时填报失败！请查看是否有未填项！',
+                            type: 'warning'
+                        });
+                    });
+            }
+        },
+
+        // 获取鸡腿数量 最大工时
+        selectWorkDay_1(val) {
+            getClockHourInfo(val).then(response => {
+                // console.log(response);
+                const clockHourInfo = response.data.data;
+                this.tableData_1[0].day = clockHourInfo.day;
+                this.tableData_1[0].hourId = clockHourInfo.hourId;
+                this.tableData_1[0].integral = clockHourInfo.integral;
+                this.dayHourInt_1 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_1 = parseFloat(hour);
+                this.maxUseHour_1 = parseFloat(hour);
+            });
+        },
+        selectWorkDay_2(val) {
+            getClockHourInfo(val).then(response => {
+                const clockHourInfo = response.data.data;
+                this.tableData_2[0].day = clockHourInfo.day;
+                this.tableData_2[0].integral = clockHourInfo.integral;
+                this.tableData_2[0].hourId = clockHourInfo.hourId;
+                this.dayHourInt_2 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_2 = parseFloat(hour);
+                this.maxUseHour_2 = parseFloat(hour);
+            });
+        },
+        selectWorkDay_3(val) {
+            getClockHourInfo(val).then(response => {
+                const clockHourInfo = response.data.data;
+                this.tableData_3[0].day = clockHourInfo.day;
+                this.tableData_3[0].integral = clockHourInfo.integral;
+                this.tableData_3[0].hourId = clockHourInfo.hourId;
+                this.dayHourInt_3 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_3 = parseFloat(hour);
+                this.maxUseHour_3 = parseFloat(hour);
+            });
+        },
+        selectWorkDay_4(val) {
+            getClockHourInfo(val).then(response => {
+                const clockHourInfo = response.data.data;
+                this.tableData_4[0].day = clockHourInfo.day;
+                this.tableData_4[0].integral = clockHourInfo.integral;
+                this.tableData_4[0].hourId = clockHourInfo.hourId;
+                this.dayHourInt_4 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_4 = parseFloat(hour);
+                this.maxUseHour_4 = parseFloat(hour);
+            });
+        },
+        selectWorkDay_5(val) {
+            getClockHourInfo(val).then(response => {
+                const clockHourInfo = response.data.data;
+                this.tableData_5[0].day = clockHourInfo.day;
+                this.tableData_5[0].integral = clockHourInfo.integral;
+                this.tableData_5[0].hourId = clockHourInfo.hourId;
+                this.dayHourInt_5 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_5 = parseFloat(hour);
+                this.maxUseHour_5 = parseFloat(hour);
+            });
+        },
+        selectWorkDay_6(val) {
+            getClockHourInfo(val).then(response => {
+                const clockHourInfo = response.data.data;
+                this.tableData_6[0].day = clockHourInfo.day;
+                this.tableData_6[0].integral = clockHourInfo.integral;
+                this.tableData_6[0].hourId = clockHourInfo.hourId;
+                this.dayHourInt_6 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_6 = parseFloat(hour);
+                this.maxUseHour_6 = parseFloat(hour);
+            });
+        },
+        selectWorkDay_7(val) {
+            getClockHourInfo(val).then(response => {
+                const clockHourInfo = response.data.data;
+                this.tableData_7[0].day = clockHourInfo.day;
+                this.tableData_7[0].integral = clockHourInfo.integral;
+                this.tableData_7[0].hourId = clockHourInfo.hourId;
+                this.dayHourInt_7 = Math.ceil(clockHourInfo.hour);
+                var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                this.dayHourFloat_7 = parseFloat(hour);
+                this.maxUseHour_7 = parseFloat(hour);
+            });
+        },
+
+        //  非项目产品时 验收人清空
+        selectcCategory(val) {
+            console.log(val);
+            if (val == 2 || val == 3) {
+                this.tableData_1[0].itemId = null;
+                this.tableData_2[0].itemId = null;
+                this.tableData_3[0].itemId = null;
+                this.tableData_4[0].itemId = null;
+                this.tableData_5[0].itemId = null;
+                this.tableData_6[0].itemId = null;
+                this.tableData_7[0].itemId = null;
+            } else {
+                this.getApplyUser();
+                this.applyUserList = [{ value: 0, label: '无人验收' }];
+            }
+        },
+
+        // 获取项目产品验收人
         selectcItem(val) {
             this.query.itemId = val;
             this.getApplyUser();
         },
+
+        // 验收人
         getApplyUser() {
             getApplyUserInfo(this.query).then(response => {
-                this.applyUserList = [{ value: 0, label: "无人验收" }];
-                this.formData.approverids = 0;
+                console.log(response);
+                this.applyUserList = [{ value: 0, label: '无人验收' }];
+                this.tableData_1[0].approverids = 0;
+                this.tableData_2[0].approverids = 0;
+                this.tableData_3[0].approverids = 0;
+                this.tableData_4[0].approverids = 0;
+                this.tableData_5[0].approverids = 0;
+                this.tableData_6[0].approverids = 0;
+                this.tableData_7[0].approverids = 0;
+                // console.log(response);
                 response.data.data.forEach(element => {
                     this.applyUserList.push({
                         value: element.userId,
                         label: element.username
                     });
                 });
-            })
-        },
-        getAbnormalSeven() {
-            getAbnormalSeven(this.query.userId).then(response => {
-                response.data.data.forEach(element => {
-                    if (element.min > 0) {
-                        this.dayOptions.push({
-                            value: element.hourId,
-                            label:
-                                element.day +
-                                " " +
-                                (element.min / 60).toFixed(1) +
-                                "h"
-                        });
-                    }
-                });
             });
         },
+
+        // 未填报日期
+        getAbnormalSeven() {
+            getAbnormalSeven(this.query.userId).then(response => {
+                this.dayOptions = response.data.data;
+                this.dayOptions = this.dayOptions.filter(item => item.min > 0 && Number(item.hour) > Number(item.useHour));
+                if (this.dayOptions[0] == undefined) {
+                    this.day_1 = '';
+                } else {
+                    this.day_1 = this.dayOptions[0];
+                    this.selectWorkDay_1(this.day_1.hourId);
+                }
+                if (this.dayOptions[1] == undefined) {
+                    this.day_2 = '';
+                } else {
+                    this.day_2 = this.dayOptions[1];
+                    this.selectWorkDay_2(this.day_2.hourId);
+                }
+                if (this.dayOptions[2] == undefined) {
+                    this.day_3 = '';
+                } else {
+                    this.day_3 = this.dayOptions[2];
+                    this.selectWorkDay_3(this.day_3.hourId);
+                }
+                if (this.dayOptions[3] == undefined) {
+                    this.day_4 = '';
+                } else {
+                    this.day_4 = this.dayOptions[3];
+                    this.selectWorkDay_4(this.day_4.hourId);
+                }
+                if (this.dayOptions[4] == undefined) {
+                    this.day_5 = '';
+                } else {
+                    this.day_5 = this.dayOptions[4];
+                    this.selectWorkDay_5(this.day_5.hourId);
+                }
+                if (this.dayOptions[5] == undefined) {
+                    this.day_6 = '';
+                } else {
+                    this.day_6 = this.dayOptions[5];
+                    this.selectWorkDay_6(this.day_6.hourId);
+                }
+                if (this.dayOptions[6] == undefined) {
+                    this.day_7 = '';
+                } else {
+                    this.day_7 = this.dayOptions[6];
+                    this.selectWorkDay_7(this.day_7.hourId);
+                }
+            });
+        },
+
+        // 项目产品列表
         getItemVosWithUserId() {
             getItemVosWithUserId(this.query.userId).then(response => {
                 response.data.data.forEach(element => {
@@ -756,71 +2175,13 @@ export default {
                 });
             });
         },
-        backHistory() {
-            window.localStorage.removeItem("editManhourInfo");
-            this.formData.newData = true;
-            this.formData.manhourId = null;
-            this.formData.userId = null;
-            this.formData.hourId = "";
-            this.formData.day = "";
-            this.formData.integral = 3;
-            this.formData.category = "";
-            this.formData.mainClassify = "";
-            this.formData.subClassify = "";
-            this.formData.reason = "";
-            this.formData.approverids = 0;
-            this.formData.useMin = 0;
-            this.formData.complete = "100";
-            this.formData.completeTime = "";
 
-            this.$router.go(-1);
-        },
-        onSubmit() {
-            this.$refs["formData"].validate(valid => {
-                if (valid) {
-                    this.saving = true;
-                    if (this.useHour > 0) {
-                        this.formData.useMin = this.useHour * 60;
-                    }
-
-                    if (this.formData.useMin <= 0){
-                        this.$message.error("请选择对应工时");
-                        this.saving = false;
-                        return;
-                    }
-
-                    if (!this.formData.newData) {
-                        editObj(this.formData)
-                            .then(res => {
-                                if (res.data.data) {
-                                    this.backHistory();
-                                }
-                            })
-                            .finally(() => {
-                                this.saving = false;
-                            });
-                    } else {
-                        addObj(this.formData)
-                            .then(res => {
-                                if (res.data.data) {
-                                    this.backHistory();
-                                }
-                            })
-                            .finally(() => {
-                                this.saving = false;
-                            });
-                    }
-                }
-            });
-        },
         getStandardApplyInfo() {
             getStandardApplyInfoById(1).then(response => {
                 if (response.data.data) {
                     const data = response.data.data;
                     this.content = data.content;
-                    const workStandardApply = JSON.parse(
-                        window.localStorage.getItem("workStandardApply")
-                    );
+                    const workStandardApply = JSON.parse(window.localStorage.getItem('workStandardApply'));
                     if (workStandardApply) {
                         if (workStandardApply.version < data.version) {
                             this.open();
@@ -828,24 +2189,27 @@ export default {
                     } else {
                         this.open();
                     }
-                    window.localStorage.setItem(
-                        "workStandardApply",
-                        JSON.stringify(data)
-                    );
+                    window.localStorage.setItem('workStandardApply', JSON.stringify(data));
                 }
             });
         },
+        // 工时规范
         open() {
-            let content = this.content.split("\n\n");
+            let content = this.content.split('\n\n');
             let newDatas = [];
             const h = this.$createElement;
             for (let i in content) {
-                newDatas.push(h("p", null, content[i]));
+                newDatas.push(h('p', null, content[i]));
             }
-            this.$alert(h("div", null, newDatas), "工时规范");
+            this.$alert(h('div', null, newDatas), '工时规范');
         }
     },
-    mounted() {}
+    watch: {
+        dayHourInt_1() {
+            // console.log(13132132)
+            this.selectWorkDay_1(this.day_1.hourId);
+        }
+    }
 };
 </script>
 <style type="text/scss" scoped lang="scss">
@@ -857,5 +2221,32 @@ export default {
 }
 .el-rate__icon {
     font-size: 2rem !important;
+}
+.top {
+    display: flex;
+    margin-top: 20px;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    border-bottom: 5px solid #969696;
+    color: #199ed8;
+    font-size: 20px;
+    font-weight: 700;
+}
+.HourFloat {
+    margin: 0 30px;
+    margin-top: -5px;
+}
+
+fieldset {
+    padding: 20px;
+    margin-top: 30px;
+    font-size: 1rem;
+    color: #2d8cf0;
+    /* border:#06c dashed 1px; */
+}
+legend {
+    width: 6rem;
+    margin-left: 10px;
+    padding-left: 7px;
 }
 </style>

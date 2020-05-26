@@ -36,7 +36,7 @@ export function getManhourInfo(manhourId) {
  */
 export function addObj(data) {
     return axios({
-        url: "/apply/manhour",
+        url: "/apply/manhour/saveBatchManhour",
         method: "post",
         data: data
     });
@@ -171,11 +171,20 @@ export function getManhourApproverList(manhourId) {
  * @param data
  * @returns {*}
  */
-export function updateManhourApprover(data) {
+export function updateManhourApproverAll(data) {
     return axios({
-        url: "/apply/manhour/approver",
+        url: "/apply/manhour/approver/checkAllItem",
         method: "put",
         data: data
     });
 }
+
+export function updateManhourApprover(data) {
+    return axios({
+        url: "/apply/manhour/approver/checkItem",
+        method: "put",
+        data: data
+    });
+}
+
 

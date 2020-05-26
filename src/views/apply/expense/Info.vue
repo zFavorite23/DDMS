@@ -3,12 +3,7 @@
         <el-button @click="backHistory" class="back">返回</el-button>
         <div class="title" style="margin-top: -40px;margin-bottom:20px;">
             <p class="name">支出申请单</p>
-            <table
-                border="0"
-                cellspacing="0"
-                cellpadding="0"
-                v-if="expenseInfo"
-            >
+            <table border="0" cellspacing="0" cellpadding="0" v-if="expenseInfo">
                 <tr v-if="expenseInfo.isPublic == 1">
                     <td>支出名称</td>
                     <td>{{ expenseInfo.name }}</td>
@@ -28,16 +23,12 @@
 
                 <tr v-if="expenseInfo.classify == 1">
                     <td style="width: 35%;">项目</td>
-                    <td v-if="expenseInfo.alias != null">
-                        {{ expenseInfo.alias }}
-                    </td>
+                    <td v-if="expenseInfo.alias != null">{{ expenseInfo.alias }}</td>
                     <td v-else>与项目无关</td>
                 </tr>
                 <tr v-if="expenseInfo.classify == 2">
                     <td style="width: 35%;">产品</td>
-                    <td v-if="expenseInfo.alias != null">
-                        {{ expenseInfo.alias }}
-                    </td>
+                    <td v-if="expenseInfo.alias != null">{{ expenseInfo.alias }}</td>
                     <td v-else>与项目无关</td>
                 </tr>
                 <tr v-if="expenseInfo.classify == 3">
@@ -52,6 +43,7 @@
                     <td v-else-if="expenseInfo.type == 2">办公用品</td>
                     <td v-else-if="expenseInfo.type == 3">办公家具</td>
                     <td v-else-if="expenseInfo.type == 4">税款</td>
+                    <td v-else-if="expenseInfo.type == 5">会议服务费</td>
                     <td v-else></td>
                 </tr>
                 <tr>
@@ -60,12 +52,8 @@
                 </tr>
                 <tr>
                     <td>是否对外</td>
-                    <td v-if="expenseInfo.isPublic == 0">
-                        <el-tag type="danger">否</el-tag>
-                    </td>
-                    <td v-if="expenseInfo.isPublic == 1">
-                        <el-tag type="success">是</el-tag>
-                    </td>
+                    <td v-if="expenseInfo.isPublic == 0"><el-tag type="danger">否</el-tag></td>
+                    <td v-if="expenseInfo.isPublic == 1"><el-tag type="success">是</el-tag></td>
                 </tr>
 
                 <tr v-if="expenseInfo.isPublic == 1">
@@ -121,150 +109,68 @@
                 <tr>
                     <td>合同及附件图片</td>
                     <td v-if="expenseInfo.contract">
-                        <el-image
-                            v-for="(url, index) in urls2"
-                            :key="url"
-                            :src="url"
-                            lazy
-                            @click="onPreview2(index)"
-                        ></el-image>
-                        <el-image-viewer
-                            v-if="showViewer"
-                            :on-close="closeViewer"
-                            :url-list="[url]"
-                        >
-                        </el-image-viewer>
+                        <el-image v-for="(url, index) in urls2" :key="url" :src="url" lazy @click="onPreview2(index)"></el-image>
+                        <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
                     </td>
                     <td v-else>无</td>
                 </tr>
                 <tr>
                     <td>审批状态</td>
                     <td>
-                        <span v-if="expenseInfo.status == '0'"
-                            ><el-tag type="warning">审批中</el-tag></span
-                        >
-                        <span v-else-if="expenseInfo.status == '1'"
-                            ><el-tag type="success">已同意</el-tag></span
-                        >
-                        <span v-else-if="expenseInfo.status == '2'"
-                            ><el-tag type="danger">已拒绝</el-tag></span
-                        >
-                        <span v-else> </span>
+                        <span v-if="expenseInfo.status == '0'"><el-tag type="warning">审批中</el-tag></span>
+                        <span v-else-if="expenseInfo.status == '1'"><el-tag type="success">已同意</el-tag></span>
+                        <span v-else-if="expenseInfo.status == '2'"><el-tag type="danger">已拒绝</el-tag></span>
+                        <span v-else></span>
                     </td>
                 </tr>
                 <tr v-if="(formData.isPublic = '1')">
                     <td>确认状态</td>
                     <td>
-                        <span v-if="expenseInfo.isAffirm == '1'"
-                            ><el-tag type="success">已确认</el-tag></span
-                        >
-                        <span v-else-if="expenseInfo.isAffirm == '0'"
-                            ><el-tag type="danger">未确认</el-tag></span
-                        >
+                        <span v-if="expenseInfo.isAffirm == '1'"><el-tag type="success">已确认</el-tag></span>
+                        <span v-else-if="expenseInfo.isAffirm == '0'"><el-tag type="danger">未确认</el-tag></span>
                         <span v-else></span>
-                        &nbsp;&nbsp;<el-button
+                        &nbsp;&nbsp;
+                        <el-button
                             size="mini"
                             type="danger"
                             @click.native="handleModalAffirm(expenseInfo)"
-                            v-if="
-                                expenseInfo.status == 1 &&
-                                    expenseInfo.isAffirm == 0 &&
-                                    deptId == '7100'
-                            "
-                            >确认</el-button
+                            v-if="expenseInfo.status == 1 && expenseInfo.isAffirm == 0 && deptId == '7100'"
                         >
+                            确认
+                        </el-button>
                     </td>
                 </tr>
                 <tr v-if="expenseInfo.isPublic == 0">
                     <td>采购状态</td>
                     <td>
-                        <el-tag
-                            v-if="expenseInfo.purchaseStatus == 0"
-                            type="warning"
-                            >未支付</el-tag
-                        >
-                        <el-tag
-                            v-else-if="expenseInfo.purchaseStatus == 1"
-                            type="warning"
-                            >已支付未发货</el-tag
-                        >
-                        <el-tag
-                            v-else-if="expenseInfo.purchaseStatus == 2"
-                            type="success"
-                            >已发货</el-tag
-                        >
-                        <el-tag
-                            v-else-if="expenseInfo.purchaseStatus == 3"
-                            type="success"
-                            >已签收</el-tag
-                        >
-                        <el-tag
-                            v-else-if="expenseInfo.purchaseStatus == 4"
-                            type="success"
-                            >已支付无需发货</el-tag
-                        >
+                        <el-tag v-if="expenseInfo.purchaseStatus == 0" type="warning">未支付</el-tag>
+                        <el-tag v-else-if="expenseInfo.purchaseStatus == 1" type="warning">已支付未发货</el-tag>
+                        <el-tag v-else-if="expenseInfo.purchaseStatus == 2" type="success">已发货</el-tag>
+                        <el-tag v-else-if="expenseInfo.purchaseStatus == 3" type="success">已签收</el-tag>
+                        <el-tag v-else-if="expenseInfo.purchaseStatus == 4" type="success">已支付无需发货</el-tag>
                         <el-tag v-else></el-tag>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click.native="handleModal(expenseInfo)"
-                            v-if="deptId == '3000' || deptId == '3200'"
-                            >编辑</el-button
-                        >
+                        <el-button size="mini" type="danger" @click.native="handleModal(expenseInfo)" v-if="deptId == '3000' || deptId == '3200'">编辑</el-button>
                     </td>
                 </tr>
-                <tr
-                    v-if="
-                        expenseInfo.isPublic == 0 &&
-                            (expenseInfo.purchaseStatus == 2 ||
-                                expenseInfo.purchaseStatus == 3)
-                    "
-                >
+                <tr v-if="expenseInfo.isPublic == 0 && (expenseInfo.purchaseStatus == 2 || expenseInfo.purchaseStatus == 3)">
                     <td>物流信息</td>
-                    <td>
-                        {{ expenseInfo.expressName }}：{{
-                            expenseInfo.expressNum
-                        }}
-                    </td>
+                    <td>{{ expenseInfo.expressName }}：{{ expenseInfo.expressNum }}</td>
                 </tr>
                 <tr>
                     <td>发票信息</td>
                     <td>
                         <span v-if="expenseInfo.invoiceType == 0">无发票</span>
-                        <span v-else-if="expenseInfo.invoiceType == 1"
-                            >专票</span
-                        >
-                        <span v-else-if="expenseInfo.invoiceType == 2"
-                            >普票</span
-                        >
-                        <span v-if="expenseInfo.invoiceType > 0">
-                            ：{{ expenseInfo.taxRate }} %
-                        </span>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click.native="handleModalInvoice(expenseInfo)"
-                            v-if="deptId == '3000' || deptId == '3200'"
-                            >编辑</el-button
-                        >
+                        <span v-else-if="expenseInfo.invoiceType == 1">专票</span>
+                        <span v-else-if="expenseInfo.invoiceType == 2">普票</span>
+                        <span v-if="expenseInfo.invoiceType > 0">：{{ expenseInfo.taxRate }} %</span>
+                        <el-button size="mini" type="danger" @click.native="handleModalInvoice(expenseInfo)" v-if="deptId == '3000' || deptId == '3200'">编辑</el-button>
                     </td>
                 </tr>
                 <tr v-if="expenseInfo.invoiceType > 0">
                     <td>发票图片</td>
                     <td v-if="expenseInfo.invoiceImg">
-                        <el-image
-                            v-for="(url, index) in urls1"
-                            :key="url"
-                            :src="url"
-                            lazy
-                            @click="onPreview1(index)"
-                        ></el-image>
-                        <el-image-viewer
-                            v-if="showViewer"
-                            :on-close="closeViewer"
-                            :url-list="[url]"
-                        >
-                        </el-image-viewer>
+                        <el-image v-for="(url, index) in urls1" :key="url" :src="url" lazy @click="onPreview1(index)"></el-image>
+                        <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
                     </td>
                     <td v-else>无</td>
                 </tr>
@@ -274,207 +180,88 @@
                 </tr>
             </table>
         </div>
-        <div>
-            <p class="name">审批结果</p>
-        </div>
+        <div><p class="name">审批结果</p></div>
         <div class="result" v-for="approver in approverList">
-            <el-avatar
-                size="medium"
-                :src="approver.checkUserAvatar"
-                class="avatar"
-            ></el-avatar>
+            <el-avatar size="medium" :src="approver.checkUserAvatar" class="avatar"></el-avatar>
             <span class="username" style="color: #65CEA7;">
                 {{ approver.checkUserName }}
-                <i
-                    class="el-icon-time"
-                    style="color: #000;margin-left: 10px;margin-right: 5px"
-                    v-if="approver.check > 0"
-                ></i>
-                <span style="color: #000" v-if="approver.check > 0">{{
-                    approver.updateTime
-                }}</span>
+                <i class="el-icon-time" style="color: #000;margin-left: 10px;margin-right: 5px" v-if="approver.check > 0"></i>
+                <span style="color: #000" v-if="approver.check > 0">{{ approver.updateTime }}</span>
             </span>
-            <span
-                style="color: #000000;margin-top: 45px;position: absolute;font-size: 12px"
-                >审批意见：{{ approver.summary }}</span
-            >
+            <span style="color: #000000;margin-top: 45px;position: absolute;font-size: 12px">审批意见：{{ approver.summary }}</span>
             <div>
                 <span v-if="approver.check == 0 && approver.isBeing == 1">
-                    <el-tag class="checkSty" type="warning"
-                        ><i class="el-icon-loading" style="margin-right:5px"></i
-                        >审批中</el-tag
-                    >
+                    <el-tag class="checkSty" type="warning">
+                        <i class="el-icon-loading" style="margin-right:5px"></i>
+                        审批中
+                    </el-tag>
                 </span>
                 <span v-if="approver.check == 0 && approver.isBeing == 0">
-                    <el-tag class="checkSty" type=""
-                        ><i class="el-icon-loading" style="margin-right:5px"></i
-                        >待审批</el-tag
-                    >
+                    <el-tag class="checkSty" type="">
+                        <i class="el-icon-loading" style="margin-right:5px"></i>
+                        待审批
+                    </el-tag>
                 </span>
                 <span v-if="approver.check == 1">
-                    <el-tag class="checkSty" type="success"
-                        ><i class="el-icon-success" style="margin-right:5px"></i
-                        >已同意</el-tag
-                    >
+                    <el-tag class="checkSty" type="success">
+                        <i class="el-icon-success" style="margin-right:5px"></i>
+                        已同意
+                    </el-tag>
                 </span>
                 <span v-if="approver.check == 2">
-                    <el-tag class="checkSty" type="danger"
-                        ><i class="el-icon-error" style="margin-right:5px"></i
-                        >已拒绝</el-tag
-                    >
+                    <el-tag class="checkSty" type="danger">
+                        <i class="el-icon-error" style="margin-right:5px"></i>
+                        已拒绝
+                    </el-tag>
                 </span>
             </div>
         </div>
 
         <div v-if="showCheck">
-            <div class="title left">
-                <p class="name">审批</p>
-            </div>
-            <el-alert title="审批流程不可逆转" type="warning"> </el-alert>
-            <el-form
-                :model="formData"
-                :rules="rules"
-                ref="formData"
-                label-width="100px"
-                class="demo-ruleForm res"
-                style="width: 100%"
-            >
-                <el-radio-group
-                    v-model="formData.check"
-                    @change="selectChcek"
-                    style="margin-top: 10px;margin-left: 20px"
-                >
+            <div class="title left"><p class="name">审批</p></div>
+            <el-alert title="审批流程不可逆转" type="warning"></el-alert>
+            <el-form :model="formData" :rules="rules" ref="formData" label-width="100px" class="demo-ruleForm res" style="width: 100%">
+                <el-radio-group v-model="formData.check" @change="selectChcek" style="margin-top: 10px;margin-left: 20px">
                     <el-radio label="1">同意</el-radio>
                     <el-radio label="2">拒绝</el-radio>
                 </el-radio-group>
-                <el-form-item
-                    prop="summary"
-                    style="margin-left: -100px;margin-top: 10px"
-                >
-                    <el-input
-                        type="textarea"
-                        v-model="formData.summary"
-                        placeholder="请填写原因"
-                        maxlength="30"
-                        show-word-limit
-                    ></el-input>
+                <el-form-item prop="summary" style="margin-left: -100px;margin-top: 10px">
+                    <el-input type="textarea" v-model="formData.summary" placeholder="请填写原因" maxlength="30" show-word-limit></el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-button
-                        type="success"
-                        class="submit"
-                        @click="onSubmit"
-                        :loading="saving"
-                        >提交</el-button
-                    >
-                </el-form-item>
+                <el-form-item><el-button type="success" class="submit" @click="onSubmit" :loading="saving">提交</el-button></el-form-item>
             </el-form>
         </div>
 
-        <el-dialog
-            title="修改采购状态"
-            :visible.sync="dialogVisibleExpress"
-            :width="'80%'"
-        >
-            <el-form
-                :model="editExpressData"
-                :rules="rules"
-                ref="editExpressData"
-                label-width="80px"
-            >
+        <el-dialog title="修改采购状态" :visible.sync="dialogVisibleExpress" :width="'80%'">
+            <el-form :model="editExpressData" :rules="rules" ref="editExpressData" label-width="80px">
                 <el-form-item label="状态" prop="purchaseStatus">
-                    <el-select
-                        v-model="editExpressData.purchaseStatus"
-                        placeholder="请选择"
-                        @change="selectPurchaseStatus"
-                    >
-                        <el-option
-                            v-for="(item, index) in purchaseStatusOptions"
-                            :value="item.value"
-                            :key="index"
-                            :label="item.label"
-                        >
-                        </el-option>
+                    <el-select v-model="editExpressData.purchaseStatus" placeholder="请选择" @change="selectPurchaseStatus">
+                        <el-option v-for="(item, index) in purchaseStatusOptions" :value="item.value" :key="index" :label="item.label"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item
-                    label="快递公司"
-                    prop="expressName"
-                    v-if="
-                        editExpressData.purchaseStatus == 2 ||
-                            editExpressData.purchaseStatus == 3
-                    "
-                >
-                    <el-input
-                        v-model="editExpressData.expressName"
-                        placeholder="请填写快递公司"
-                    ></el-input>
+                <el-form-item label="快递公司" prop="expressName" v-if="editExpressData.purchaseStatus == 2 || editExpressData.purchaseStatus == 3">
+                    <el-input v-model="editExpressData.expressName" placeholder="请填写快递公司"></el-input>
                 </el-form-item>
-                <el-form-item
-                    label="快递单号"
-                    prop="expressNum"
-                    v-if="
-                        editExpressData.purchaseStatus == 2 ||
-                            editExpressData.purchaseStatus == 3
-                    "
-                >
-                    <el-input
-                        v-model="editExpressData.expressNum"
-                        placeholder="请填写快递单号"
-                    ></el-input>
+                <el-form-item label="快递单号" prop="expressNum" v-if="editExpressData.purchaseStatus == 2 || editExpressData.purchaseStatus == 3">
+                    <el-input v-model="editExpressData.expressNum" placeholder="请填写快递单号"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="handleSubmit"
-                    >提 交</el-button
-                >
-                <el-button @click="dialogVisibleExpress = false"
-                    >取 消</el-button
-                >
+                <el-button type="primary" @click="handleSubmit">提 交</el-button>
+                <el-button @click="dialogVisibleExpress = false">取 消</el-button>
             </div>
         </el-dialog>
-        <el-dialog
-            title="修改审批状态"
-            :visible.sync="dialogVisibleInvoice"
-            :width="'80%'"
-        >
-            <el-form
-                :model="editInvoiceData"
-                :rules="rules"
-                ref="editInvoiceData"
-                label-width="135px"
-            >
+        <el-dialog title="修改审批状态" :visible.sync="dialogVisibleInvoice" :width="'80%'">
+            <el-form :model="editInvoiceData" :rules="rules" ref="editInvoiceData" label-width="135px">
                 <el-form-item label="状态" prop="invoiceType">
-                    <el-select
-                        v-model="editInvoiceData.invoiceType"
-                        placeholder="请选择"
-                        @change="selectInvoiceType"
-                    >
-                        <el-option
-                            v-for="(item, index) in invoiceTypeOptions"
-                            :value="item.value"
-                            :key="index"
-                            :label="item.label"
-                        >
-                        </el-option>
+                    <el-select v-model="editInvoiceData.invoiceType" placeholder="请选择" @change="selectInvoiceType">
+                        <el-option v-for="(item, index) in invoiceTypeOptions" :value="item.value" :key="index" :label="item.label"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item
-                    label="税率"
-                    prop="taxRate"
-                    v-if="editInvoiceData.invoiceType > 0"
-                >
-                    <el-input
-                        type="number"
-                        v-model="editInvoiceData.taxRate"
-                        placeholder="请填写税率"
-                    ></el-input>
+                <el-form-item label="税率" prop="taxRate" v-if="editInvoiceData.invoiceType > 0">
+                    <el-input type="number" v-model="editInvoiceData.taxRate" placeholder="请填写税率"></el-input>
                 </el-form-item>
-                <el-form-item
-                    label="发票图片："
-                    v-if="editInvoiceData.invoiceType > 0"
-                    prop="invoiceImg"
-                >
+                <el-form-item label="发票图片：" v-if="editInvoiceData.invoiceType > 0" prop="invoiceImg">
                     <el-upload
                         class="upload-demo box"
                         :action="uploadUrl"
@@ -488,36 +275,22 @@
                         :before-upload="beforeAvatarUpload"
                         list-type="picture"
                     >
-                        <el-button size="small" type="primary"
-                            >点击上传</el-button
-                        >
-                        <div slot="tip" class="el-upload__tip">
-                            只能上传jpg/png文件，且不超过500kb
-                        </div>
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                     </el-upload>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="handleSubmitInvoice"
-                    >提 交</el-button
-                >
-                <el-button @click="dialogVisibleInvoice = false"
-                    >取 消</el-button
-                >
+                <el-button type="primary" @click="handleSubmitInvoice">提 交</el-button>
+                <el-button @click="dialogVisibleInvoice = false">取 消</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
-import {
-    getExpenseInfo,
-    updateExpress,
-    affirmExpense,
-    getExpenseApproverList,
-    updateExpenseApprover
-} from "../../../api/apply/expense.js";
-import { mapGetters } from "vuex";
-import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+import { getExpenseInfo, updateExpress, affirmExpense, getExpenseApproverList, updateExpenseApprover } from '../../../api/apply/expense.js';
+import { mapGetters } from 'vuex';
+import ElImageViewer from 'element-ui/packages/image/src/image-viewer';
 export default {
     components: { ElImageViewer },
     data() {
@@ -527,56 +300,56 @@ export default {
             editExpressData: {
                 expenseId: null,
                 purchaseStatus: null,
-                expressName: "",
-                expressNum: ""
+                expressName: '',
+                expressNum: ''
             },
             editInvoiceData: {
                 expenseId: null,
-                invoiceType: "",
-                taxRate: "",
-                invoiceImg: ""
+                invoiceType: '',
+                taxRate: '',
+                invoiceImg: ''
             },
             purchaseStatusOptions: [
                 {
-                    value: "0",
-                    label: "未支付"
+                    value: '0',
+                    label: '未支付'
                 },
                 {
-                    value: "1",
-                    label: "已支付未发货"
+                    value: '1',
+                    label: '已支付未发货'
                 },
                 {
-                    value: "2",
-                    label: "已发货"
+                    value: '2',
+                    label: '已发货'
                 },
                 {
-                    value: "3",
-                    label: "已签收"
+                    value: '3',
+                    label: '已签收'
                 },
                 {
-                    value: "4",
-                    label: "已支付无需发货"
+                    value: '4',
+                    label: '已支付无需发货'
                 }
             ],
             invoiceTypeOptions: [
                 {
-                    value: "0",
-                    label: "无发票"
+                    value: '0',
+                    label: '无发票'
                 },
                 {
-                    value: "1",
-                    label: "专票"
+                    value: '1',
+                    label: '专票'
                 },
                 {
-                    value: "2",
-                    label: "普票"
+                    value: '2',
+                    label: '普票'
                 }
             ],
             formData: {
                 approverId: null,
                 checkUserId: null,
-                check: "1",
-                summary: "同意"
+                check: '1',
+                summary: '同意'
             },
             expenseId: null,
             expenseInfo: null,
@@ -584,43 +357,41 @@ export default {
             list: [],
             approverList: [],
             ruleForm: {
-                check: "1",
-                desc: "同意"
+                check: '1',
+                desc: '同意'
             },
             rules: {
-                desc: [
-                    { required: true, message: "请填写批注", trigger: "blur" }
-                ],
+                desc: [{ required: true, message: '请填写批注', trigger: 'blur' }],
                 purchaseStatus: [
                     {
                         required: true,
-                        message: "请选择采购状态",
-                        trigger: "change"
+                        message: '请选择采购状态',
+                        trigger: 'change'
                     }
                 ],
-                expressName: [{ required: true, message: "请填写快递公司" }],
-                expressNum: [{ required: true, message: "请填写快递单号" }],
+                expressName: [{ required: true, message: '请填写快递公司' }],
+                expressNum: [{ required: true, message: '请填写快递单号' }],
                 invoiceType: [
                     {
                         required: true,
-                        message: "请选择发票状态",
-                        trigger: "change"
+                        message: '请选择发票状态',
+                        trigger: 'change'
                     }
                 ],
-                taxRate: [{ required: true, message: "请填写税率" }]
+                taxRate: [{ required: true, message: '请填写税率' }]
             },
             showViewer: false, // 显示查看器
-            url: "",
+            url: '',
             urls1: [],
             urls2: [],
             showCheck: false,
             saving: false,
-            uploadUrl: "",
+            uploadUrl: '',
             fileList1: []
         };
     },
     computed: {
-        ...mapGetters(["permissions", "userId", "deptId"])
+        ...mapGetters(['permissions', 'userId', 'deptId'])
     },
     created() {
         this.expenseId = this.$route.params.expenseId;
@@ -634,28 +405,18 @@ export default {
             getExpenseInfo(this.expenseId).then(response => {
                 this.expenseInfo = response.data.data;
                 if (this.expenseInfo.invoiceImg) {
-                    this.expenseInfo.invoiceImg
-                        .split(",")
-                        .forEach((item, index) => {
-                            if (item) {
-                                this.urls1.push(
-                                    `${window.location.origin}/apply/expense/` +
-                                        item
-                                );
-                            }
-                        });
+                    this.expenseInfo.invoiceImg.split(',').forEach((item, index) => {
+                        if (item) {
+                            this.urls1.push(`${window.location.origin}/apply/expense/` + item);
+                        }
+                    });
                 }
                 if (this.expenseInfo.contract) {
-                    this.expenseInfo.contract
-                        .split(",")
-                        .forEach((item, index) => {
-                            if (item) {
-                                this.urls2.push(
-                                    `${window.location.origin}/apply/expense/` +
-                                        item
-                                );
-                            }
-                        });
+                    this.expenseInfo.contract.split(',').forEach((item, index) => {
+                        if (item) {
+                            this.urls2.push(`${window.location.origin}/apply/expense/` + item);
+                        }
+                    });
                 }
             });
         },
@@ -663,11 +424,7 @@ export default {
             getExpenseApproverList(this.expenseId).then(response => {
                 this.approverList = response.data.data;
                 this.approverList.forEach((item, index) => {
-                    if (
-                        item.check == "0" &&
-                        item.isBeing == "1" &&
-                        item.userId == this.formData.checkUserId
-                    ) {
+                    if (item.check == '0' && item.isBeing == '1' && item.userId == this.formData.checkUserId) {
                         this.formData.approverId = item.approverId;
                         this.showCheck = true;
                     }
@@ -687,13 +444,13 @@ export default {
         },
         closeViewer() {
             this.showViewer = false;
-            this.url = "";
+            this.url = '';
         },
         selectChcek() {
             if (this.formData.check == 1) {
-                this.formData.summary = "同意";
+                this.formData.summary = '同意';
             } else {
-                this.formData.summary = "";
+                this.formData.summary = '';
             }
         },
         onSubmit() {
@@ -726,12 +483,10 @@ export default {
             this.editInvoiceData.taxRate = data.taxRate;
             this.editInvoiceData.invoiceImg = data.invoiceImg;
             if (data.invoiceImg) {
-                data.invoiceImg.split(",").forEach((item, index) => {
+                data.invoiceImg.split(',').forEach((item, index) => {
                     if (item) {
                         this.fileList1.push({
-                            url:
-                                `${window.location.origin}/apply/expense/` +
-                                item
+                            url: `${window.location.origin}/apply/expense/` + item
                         });
                     }
                 });
@@ -739,7 +494,7 @@ export default {
             this.dialogVisibleInvoice = true;
         },
         handleSubmit() {
-            this.$refs["editExpressData"].validate(valid => {
+            this.$refs['editExpressData'].validate(valid => {
                 if (valid) {
                     updateExpress(this.editExpressData)
                         .then(res => {
@@ -753,7 +508,7 @@ export default {
             });
         },
         handleSubmitInvoice() {
-            this.$refs["editInvoiceData"].validate(valid => {
+            this.$refs['editInvoiceData'].validate(valid => {
                 if (valid) {
                     updateExpress(this.editInvoiceData)
                         .then(res => {
@@ -767,25 +522,22 @@ export default {
             });
         },
         beforeAvatarUpload: function(file) {
-            const isJPG = file.type === "image/jpeg";
-            const isPNG = file.type === "image/png";
+            const isJPG = file.type === 'image/jpeg';
+            const isPNG = file.type === 'image/png';
             const isPG = isJPG || isPNG; //限制图片格式为jpg / png
             const isLt5M = file.size / 1024 / 1024 < 5; //限制图片大小
             if (!isPG) {
-                this.$message.error("图片只能是 JPG 或 PNG 格式!");
+                this.$message.error('图片只能是 JPG 或 PNG 格式!');
             }
             if (!isLt5M) {
-                this.$message.error("图片大小不能超过 5MB!");
+                this.$message.error('图片大小不能超过 5MB!');
             }
             return isPG && isLt5M;
         },
         handleRemove1(data) {
             const imgInfo = data.response.data;
-            const imgUrl = imgInfo.bucketName + "-" + imgInfo.fileName;
-            this.editInvoiceData.invoiceImg = this.editInvoiceData.invoiceImg.replace(
-                imgUrl + ",",
-                ""
-            );
+            const imgUrl = imgInfo.bucketName + '-' + imgInfo.fileName;
+            this.editInvoiceData.invoiceImg = this.editInvoiceData.invoiceImg.replace(imgUrl + ',', '');
             //console.log(this.editInvoiceData.invoiceImg)
         },
         handlePreview1(file) {
@@ -793,19 +545,19 @@ export default {
         },
         handSuccess1(data) {
             const imgInfo = data.data;
-            const imgUrl = imgInfo.bucketName + "-" + imgInfo.fileName;
-            this.editInvoiceData.invoiceImg += imgUrl + ",";
+            const imgUrl = imgInfo.bucketName + '-' + imgInfo.fileName;
+            this.editInvoiceData.invoiceImg += imgUrl + ',';
             //console.log(this.editInvoiceData.invoiceImg)
         },
         handleModalAffirm(data) {
             //console.log(data)
             if (data.expenseId) {
-                this.$confirm("确认收到发票了吗?", "提示", {
-                    type: "warning"
+                this.$confirm('确认收到发票了吗?', '提示', {
+                    type: 'warning'
                 }).then(() => {
                     const editData = {
                         expenseId: data.expenseId,
-                        isAffirm: "1"
+                        isAffirm: '1'
                     };
                     affirmExpense(editData).then(res => {
                         if (res.data.data) {

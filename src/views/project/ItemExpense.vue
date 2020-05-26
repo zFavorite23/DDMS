@@ -3,10 +3,10 @@
         <div class="top">
             <el-form :inline="true" :model="query1">
                 <el-form-item label="开始日期：">
-                    <el-date-picker v-model="query1.startDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query1.startTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="结束日期：">
-                    <el-date-picker v-model="query1.endDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query1.endTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix()" icon="el-icon-search">搜索</el-button></el-form-item>
             </el-form>
@@ -18,12 +18,12 @@
         <div class="bot">
             <el-form :inline="true" :model="query2">
                 <el-form-item label="开始日期：">
-                    <el-date-picker v-model="query2.startDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query2.startTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="结束日期：">
-                    <el-date-picker v-model="query2.endDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query2.endTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
-                <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix()" icon="el-icon-search">搜索</el-button></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix2()" icon="el-icon-search">搜索</el-button></el-form-item>
             </el-form>
             <div id="line" class="line"></div>
         </div>
@@ -32,38 +32,58 @@
 
 <script>
 import { dateFormat } from '../../utils/date.js';
+import { getExpend } from '../../api/project/item.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
             query1: {
-                startDay: dateFormat(new Date()).substr(0, 7) + '-01',
-                endDay: dateFormat(new Date()),
-                deptId: null
+                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                endTime: dateFormat(new Date()),
+                itemId: null
             },
             query2: {
-                startDay: dateFormat(new Date()).substr(0, 7) + '-01',
-                endDay: dateFormat(new Date()),
-                deptId: null
-            }
-        };
-    },
-    computed: {
-        ...mapGetters(['permissions'])
-    },
-    created() {
-        this.$nextTick(function() {
-            this.drawLine();
-            this.drawBar();
-            this.drawPie();
-        });
-    },
-    mounted() {},
-    methods: {
-        // 折线
-        drawLine() {
-            let line = this.$echarts.init(document.getElementById('line'));
-            let optionLine = {
+                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                endTime: dateFormat(new Date()),
+                itemId: null
+            },
+            //  柱状图
+            optionBar: {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data: []
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: [{ type: 'category', data: [] }],
+                series: [
+                    {
+                        name: '',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            show: true,
+                            position: 'inside'
+                        },
+                        data: []
+                    }
+                ]
+            },
+            // 折线图
+            optionLin: {
                 title: {
                     text: '支出分类趋势'
                 },
@@ -71,7 +91,7 @@ export default {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['设备', '售前', '交付', '管理', '外协']
+                    data: []
                 },
                 grid: {
                     left: '3%',
@@ -84,134 +104,39 @@ export default {
                         saveAsImage: {}
                     }
                 },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
-                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: []
+                    }
+                ],
                 yAxis: {
                     type: 'value'
                 },
                 series: [
                     {
-                        name: '设备',
+                        name: '',
                         type: 'line',
                         stack: '总量',
-                        data: [120, 132, 101, 134, 90, 230, 210]
-                    },
-                    {
-                        name: '售前',
-                        type: 'line',
-                        stack: '总量',
-                        data: [220, 182, 191, 234, 290, 330, 310]
-                    },
-                    {
-                        name: '交付',
-                        type: 'line',
-                        stack: '总量',
-                        data: [150, 232, 201, 154, 190, 330, 410]
-                    },
-                    {
-                        name: '管理',
-                        type: 'line',
-                        stack: '总量',
-                        data: [320, 332, 301, 334, 390, 330, 320]
-                    },
-                    {
-                        name: '外协',
-                        type: 'line',
-                        stack: '总量',
-                        data: [220, 232, 201, 234, 290, 230, 220]
+                        data: []
                     }
                 ]
-            };
-            line.setOption(optionLine, (window.onresize = line.resize));
-        },
+            }
+        };
+    },
+    computed: {
+        ...mapGetters(['permissions'])
+    },
+    created() {
+        this.query1.itemId = this.$route.params.itemId;
+        this.query2.itemId = this.$route.params.itemId;
 
-        // 柱状
-        drawBar() {
-            let bar = this.$echarts.init(document.getElementById('bar'));
-            let optionBar = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
-                legend: {
-                    data: ['设备', '售前', '交付', '管理', '外协']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value'
-                },
-                yAxis: {
-                    type: 'category',
-                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
-                },
-                series: [
-                    {
-                        name: '设备',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [320, 302, 301, 334, 390, 330, 320]
-                    },
-                    {
-                        name: '售前',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [120, 132, 101, 134, 190, 230, 210]
-                    },
-                    {
-                        name: '交付',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [220, 182, 191, 234, 290, 330, 310]
-                    },
-                    {
-                        name: '管理',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [150, 212, 201, 154, 190, 330, 410]
-                    },
-                    ,
-                    {
-                        name: '外协',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [250, 312, 301, 254, 290, 230, 310]
-                    }
-                ]
-            };
-            bar.setOption(optionBar, (window.onresize = bar.resize));
-        },
-
+        this.getItemExpend(this.query1);
+        this.getItemExpend2(this.query2);
+    },
+    mounted() {},
+    methods: {
         // 饼状
         drawPie() {
             let pie = this.$echarts.init(document.getElementById('pie'));
@@ -256,10 +181,69 @@ export default {
             pie.setOption(optionPie, (window.onresize = pie.resize));
             // pie.setOption(optionPie)
         },
-
         getHourRadix() {
-            console.log(this.query1);
-            console.log(this.query2);
+            this.optionBar.yAxis[0].data = [];
+            this.optionBar.series[0].data = [];
+            this.getItemExpend(this.query1);
+        },
+        getHourRadix2() {
+            this.optionLin.xAxis[0].data = [];
+            this.optionLin.series[0].data = [];
+            this.getItemExpend2(this.query2);
+        },
+
+        // 柱状图
+        getItemExpend(query) {
+            getExpend(query).then(res => {
+                // console.log(res);
+                res.data.data.forEach((item, index) => {
+                    this.optionBar.yAxis[0].data[index] = item.createTime;
+                    this.optionBar.series[0].data[index] = item.invoicePriceYuan;
+                    if (item.type == null) {
+                        this.optionBar.legend.data[index] = '其它';
+                        this.optionBar.series[0].name = '其它';
+                    }
+                });
+                this.drawBar();
+            });
+
+            this.$nextTick(function() {
+                this.drawPie();
+            });
+        },
+        // 柱状
+        drawBar() {
+            let bar = this.$echarts.init(document.getElementById('bar'));
+            bar.setOption(this.optionBar, (window.onresize = bar.resize));
+            bar.resize();
+            window.addEventListener('resize', function() {
+                bar.resize();
+            });
+        },
+
+        // 折线图
+        getItemExpend2(query) {
+            getExpend(query).then(res => {
+                // console.log(res);
+                res.data.data.forEach((item, index) => {
+                    this.optionLin.xAxis[0].data[index] = item.createTime;
+                    this.optionLin.series[0].data[index] = item.invoicePriceYuan;
+                    if (item.type == null) {
+                        this.optionLin.legend.data[index] = '其它';
+                        this.optionLin.series[0].name = '其它';
+                    }
+                });
+                this.drawLine();
+            });
+        },
+        // 折线
+        drawLine() {
+            let line = this.$echarts.init(document.getElementById('line'));
+            line.setOption(this.optionLin, (window.onresize = line.resize));
+            line.resize();
+            window.addEventListener('resize', function() {
+                line.resize();
+            });
         }
     }
 };

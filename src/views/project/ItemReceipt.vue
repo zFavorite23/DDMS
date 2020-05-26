@@ -14,14 +14,17 @@
                 </el-table-column>
                 <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.alias == null || scope.row.alias == ''">与项目无关</span>
-                        <span v-else>{{ scope.row.alias }}</span>
+                        <span>{{ scope.row.itemName }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="proportion" min-width="80" label="开票比例"></el-table-column>
+                <el-table-column prop="proportion" min-width="80" label="开票比例">
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.proportion }}%</span>
+                    </template>
+                </el-table-column>
                 <el-table-column min-width="80" label="开票金额">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.priceYuan }} 元</span>
+                        <span>{{ scope.row.price }} 元</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="type" min-width="80" label="开票类型">
@@ -68,11 +71,13 @@
 </template>
 
 <script>
+import { getReceipt } from '../../api/project/item.js';
 import { getSupplierPage, addObj, editObj, deleteObj } from '../../api/customer/supplier.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            itemId: '',
             query: {
                 userId: null,
                 status: '',
@@ -80,69 +85,22 @@ export default {
                 size: 10
             },
             pages: 0,
-            total: 6,
+            total: 0,
             listLoading: false,
-            list: [
-                {
-                    proportion: '10%',
-                    type: 2,
-                    priceYuan: 999,
-                    name: '测试',
-                    content: '测试',
-                    status: 1
-                },
-                {
-                    proportion: '53%',
-                    type: 2,
-                    priceYuan: 1111,
-                    name: '测试2',
-                    content: '测试2',
-                    status: 1
-                },
-                {
-                    proportion: '19%',
-                    type: 2,
-                    priceYuan: 99,
-                    name: '测试3',
-                    content: '测试3',
-                    status: 1
-                },
-                {
-                    proportion: '19%',
-                    type: 2,
-                    priceYuan: 99,
-                    name: '测试3',
-                    content: '测试3',
-                    status: 1
-                },
-                {
-                    proportion: '19%',
-                    type: 2,
-                    priceYuan: 99,
-                    name: '测试3',
-                    content: '测试3',
-                    status: 1
-                },
-                {
-                    proportion: '19%',
-                    type: 2,
-                    priceYuan: 99,
-                    name: '测试3',
-                    content: '测试3',
-                    status: 1
-                }
-            ],
+            list: [],
             number: '',
-            listType: '1'
+            listType: '1',
+            proportion: ''
         };
     },
     computed: {
         ...mapGetters(['permissions'])
     },
     created() {
-        this.$nextTick(function() {
-            this.drawPie();
-        });
+        this.itemId = this.$route.params.itemId;
+        // console.log(this.itemId);
+        // 获取开票信息列表
+        this.getReceiptList();
     },
     mounted() {},
     methods: {
@@ -153,6 +111,22 @@ export default {
         handleCurrentChange(val) {
             this.query.current = val;
             this.getReceiptPage();
+        },
+
+        // 获取开票信息列表
+        getReceiptList() {
+            getReceipt(this.itemId).then(res => {
+                // console.log(res);
+                this.list = res.data.data;
+                this.total = res.data.data.length;
+                for (var i = 0; i < this.list.length; i++) {
+                    this.proportion += this.list[i].proportion;
+                }
+                // console.log(this.proportion);
+                this.$nextTick(function() {
+                    this.drawPie();
+                });
+            });
         },
         drawPie() {
             let pie = this.$echarts.init(document.getElementById('pie'));
@@ -195,12 +169,12 @@ export default {
                         },
                         data: [
                             {
-                                value: 80,
-                                name: '已开票 80%'
+                                value: this.proportion,
+                                name: `已开票 ${this.proportion}%`
                             },
                             {
                                 name: ' ',
-                                value: 20,
+                                value: 100 - this.proportion,
                                 itemStyle: {
                                     normal: {
                                         label: {
@@ -259,12 +233,12 @@ export default {
                         },
                         data: [
                             {
-                                value: 20,
-                                name: '未开票 20%'
+                                value: 100 - this.proportion,
+                                name: `未开票 ${100 - this.proportion}%`
                             },
                             {
                                 name: ' ',
-                                value: 80,
+                                value: this.proportion,
                                 itemStyle: {
                                     normal: {
                                         label: {

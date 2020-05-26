@@ -3,10 +3,10 @@
         <div class="top">
             <el-form :inline="true" :model="query1">
                 <el-form-item label="开始日期：">
-                    <el-date-picker v-model="query1.startDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query1.startTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="结束日期：">
-                    <el-date-picker v-model="query1.endDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query1.endTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix()" icon="el-icon-search">搜索</el-button></el-form-item>
             </el-form>
@@ -18,12 +18,12 @@
         <div class="bot">
             <el-form :inline="true" :model="query2">
                 <el-form-item label="开始日期：">
-                    <el-date-picker v-model="query2.startDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query2.startTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="结束日期：">
-                    <el-date-picker v-model="query2.endDay" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="query2.endTime" type="month" placeholder="选择日期" format="yyyy 年 MM 月" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
-                <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix()" icon="el-icon-search">搜索</el-button></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix2()" icon="el-icon-search">搜索</el-button></el-form-item>
             </el-form>
             <div id="line" class="line"></div>
         </div>
@@ -32,19 +32,79 @@
 
 <script>
 import { dateFormat } from '../../utils/date.js';
+import { getItemPay } from '../../api/project/item.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
             query1: {
-                startDay: dateFormat(new Date()).substr(0, 7) + '-01',
-                endDay: dateFormat(new Date()),
-                deptId: null
+                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                endTime: dateFormat(new Date()),
+                itemId: ''
             },
             query2: {
-                startDay: dateFormat(new Date()).substr(0, 7) + '-01',
-                endDay: dateFormat(new Date()),
-                deptId: null
+                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                endTime: dateFormat(new Date()),
+                itemId: ''
+            },
+            optionBar: {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['差旅费', '业务招待费', '外协', '设备采购', '办公费', '市内交通', '会议费']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: [
+                    {
+                        type: 'category',
+                        data: []
+                    }
+                ],
+                series: [
+                    {
+                        name: '差旅费',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            show: true,
+                            position: 'inside'
+                        },
+                        data: []
+                    },
+                    {
+                        name: '业务招待费',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            show: true,
+                            position: 'inside'
+                        },
+                        data: []
+                    },
+                    {
+                        name: '外协',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            show: true,
+                            position: 'inside'
+                        },
+                        data: []
+                    }
+                ]
             }
         };
     },
@@ -52,11 +112,10 @@ export default {
         ...mapGetters(['permissions'])
     },
     created() {
-        this.$nextTick(function() {
-            this.drawLine();
-            this.drawBar();
-            this.drawPie();
-        });
+        this.query1.itemId = this.$route.params.itemId;
+        this.query2.itemId = this.$route.params.itemId;
+
+        this.getItemPayBack(this.query1);
     },
     mounted() {},
     methods: {
@@ -140,109 +199,6 @@ export default {
             line.setOption(optionLine, (window.onresize = line.resize));
         },
 
-        // 柱状
-        drawBar() {
-            let bar = this.$echarts.init(document.getElementById('bar'));
-            let optionBar = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
-                legend: {
-                   data: ['差旅费', '业务招待费', '外协', '设备采购', '办公费', '市内交通', '会议费']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value'
-                },
-                yAxis: {
-                    type: 'category',
-                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
-                },
-                series: [
-                    {
-                        name: '差旅费',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [120, 102, 101, 104, 190, 130, 120]
-                    },
-                    {
-                        name: '业务招待费',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [120, 132, 101, 134, 190, 230, 210]
-                    },
-                    {
-                        name: '外协',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [220, 182, 191, 234, 290, 330, 310]
-                    },
-                    {
-                        name: '设备采购',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [150, 212, 201, 154, 190, 130, 110]
-                    },
-                    {
-                        name: '办公费',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [82, 32, 91, 93, 190, 130, 320]
-                    },
-                    {
-                        name: '市内交通',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [62, 63, 71, 73, 190, 113, 120]
-                    },
-                    {
-                        name: '会议费',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        data: [110, 132, 101, 134, 190, 103, 120]
-                    }
-                ]
-            };
-            bar.setOption(optionBar, (window.onresize = bar.resize));
-        },
-
         // 饼状
         drawPie() {
             let pie = this.$echarts.init(document.getElementById('pie'));
@@ -291,7 +247,42 @@ export default {
         },
 
         getHourRadix() {
-            console.log(this.query2);
+            this.optionBar.yAxis[0].data = [];
+            this.optionBar.series[0].data = [];
+            this.optionBar.series[1].data = [];
+            this.getItemPayBack(this.query1);
+        },
+        getHourRadix2() {
+            this.getItemPayBack(this.query2);
+        },
+
+        getItemPayBack(query) {
+            getItemPay(query).then(res => {
+                console.log(res);
+                res.data.data.forEach((item, index) => {
+                    this.optionBar.yAxis[0].data[index] = item.createTime;
+                    if (item.type === "1") {
+                        this.optionBar.series[0].data.push(item.invoicePriceYuan);
+                    } else if (item.type === "4") {
+                        this.optionBar.series[1].data.push(item.invoicePriceYuan);
+                    } else if (item.type === "6") {
+                        this.optionBar.series[2].data.push(item.invoicePriceYuan);
+                    }
+                });
+                this.drawBar();
+            });
+            this.$nextTick(function() {
+                this.drawPie();
+            });
+        },
+        // 柱状
+        drawBar() {
+            let bar = this.$echarts.init(document.getElementById('bar'));
+            bar.setOption(this.optionBar, (window.onresize = bar.resize));
+            bar.resize();
+            window.addEventListener('resize', function() {
+                bar.resize();
+            });
         }
     }
 };
