@@ -3,100 +3,37 @@
         <div class="">
             <span class="tit">我审批的支出申请 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
+                <el-form-item><el-input v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
                 <el-form-item>
-                    <el-input
-                        v-model="query.likeKeyWords"
-                        placeholder="关键字"
-                        clearable
-                    ></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-select
-                        clearable
-                        v-model="query.status"
-                        placeholder="请选择"
-                    >
-                        <el-option
-                            v-for="item in statusOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled"
-                        >
-                        </el-option>
+                    <el-select clearable v-model="query.status" placeholder="请选择">
+                        <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item><el-button type="primary" size="medium" v-on:click="getExpenseApproverPage()" icon="el-icon-search">搜索</el-button></el-form-item>
                 <el-form-item>
-                    <el-button
-                        type="primary"
-                        size="medium"
-                        v-on:click="getExpenseApproverPage()"
-                        icon="el-icon-search"
-                        >搜索</el-button
-                    >
-                </el-form-item>
-                <el-form-item>
-                    <router-link to="/apply/expense/form">
-                        <el-button type="primary" size="medium"
-                            >添加申请</el-button
-                        >
-                    </router-link>
+                    <router-link to="/apply/expense/form"><el-button type="primary" size="medium">添加申请</el-button></router-link>
                 </el-form-item>
             </el-form>
-            <el-radio-group
-                v-model="listType"
-                style="float: right;"
-                @change="openList"
-            >
+            <el-radio-group v-model="listType" style="float: right;" @change="openList">
                 <el-radio-button label="1">我申请的</el-radio-button>
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table
-            :data="list"
-            stripe
-            border
-            v-loading="listLoading"
-            style="width: 100%;"
-        >
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="50" label="序号">
-                <template scope="scope"
-                    ><span
-                        >{{
-                            scope.$index + (query.current - 1) * query.size + 1
-                        }}
-                    </span></template
-                >
+                <template scope="scope">
+                    <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
+                </template>
             </el-table-column>
-            <el-table-column
-                prop="name"
-                min-width="120"
-                label="名称"
-                :show-overflow-tooltip="true"
-            ></el-table-column>
-            <el-table-column
-                min-width="120"
-                label="项目"
-                :show-overflow-tooltip="true"
-            >
+            <el-table-column prop="name" min-width="120" label="名称" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
-                    <span
-                        v-if="scope.row.alias == null || scope.row.alias == ''"
-                        >与项目无关</span
-                    >
+                    <span v-if="scope.row.alias == null || scope.row.alias == ''">与项目无关</span>
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column
-                prop="applyUserName"
-                min-width="120"
-                label="申请人"
-            ></el-table-column>
-            <el-table-column
-                min-width="140"
-                label="支出信息"
-                :show-overflow-tooltip="true"
-            >
+            <el-table-column prop="applyUserName" min-width="120" label="申请人"></el-table-column>
+            <el-table-column min-width="140" label="支出信息" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <p>公司名称：{{ scope.row.companyName }}</p>
                     <p>银行：{{ scope.row.bankName }}</p>
@@ -119,88 +56,22 @@
             <!--                    <span>{{scope.row.invoiceNum}} 张</span>-->
             <!--                </template>-->
             <!--            </el-table-column>-->
-            <el-table-column
-                prop="detailed"
-                min-width="80"
-                label="用途明细"
-                :show-overflow-tooltip="true"
-            ></el-table-column>
+            <el-table-column prop="detailed" min-width="80" label="用途明细" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="status" min-width="100" label="状态">
                 <template slot-scope="scope">
-                    <p>
-                        <el-tag
-                            v-if="scope.row.status == 0"
-                            type="warning"
-                            size="small"
-                            >审批中</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.status == 1"
-                            type="success"
-                            size="small"
-                            >同意</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.status == 2"
-                            type="danger"
-                            size="small"
-                            >拒绝</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.purchaseStatus == 0"
-                            type="warning"
-                            size="small"
-                            >未支付</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.purchaseStatus == 1"
-                            type="warning"
-                            size="small"
-                            >已支付未发货</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.purchaseStatus == 2"
-                            type="warning"
-                            size="small"
-                            >已发货</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.purchaseStatus == 3"
-                            type="success"
-                            size="small"
-                            >已签收</el-tag
-                        >
-                    </p>
-                    <p>
-                        <el-tag
-                            v-if="scope.row.purchaseStatus == 4"
-                            type="success"
-                            size="small"
-                            >已支付无需发货</el-tag
-                        >
-                    </p>
+                    <p><el-tag v-if="scope.row.status == 0" type="warning" size="small">审批中</el-tag></p>
+                    <p><el-tag v-if="scope.row.status == 1" type="success" size="small">同意</el-tag></p>
+                    <p><el-tag v-if="scope.row.status == 2" type="danger" size="small">拒绝</el-tag></p>
+                    <p><el-tag v-if="scope.row.purchaseStatus == 0" type="warning" size="small">未支付</el-tag></p>
+                    <p><el-tag v-if="scope.row.purchaseStatus == 1" type="warning" size="small">已支付未发货</el-tag></p>
+                    <p><el-tag v-if="scope.row.purchaseStatus == 2" type="warning" size="small">已发货</el-tag></p>
+                    <p><el-tag v-if="scope.row.purchaseStatus == 3" type="success" size="small">已签收</el-tag></p>
+                    <p><el-tag v-if="scope.row.purchaseStatus == 4" type="success" size="small">已支付无需发货</el-tag></p>
                 </template>
             </el-table-column>
             <el-table-column label="操作" min-width="110" fixed="right">
                 <template slot-scope="scope">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        @click.native="handInfo(scope.row)"
-                        >查看&审批</el-button
-                    >
+                    <el-button size="mini" type="primary" @click.native="handInfo(scope.row)">查看&审批</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -213,61 +84,60 @@
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
             :total="total"
-        >
-        </el-pagination>
+        ></el-pagination>
     </div>
 </template>
 <script>
-import { getExpenseApproverPage } from "../../../api/apply/expense.js";
+import { getExpenseApproverPage } from '../../../api/apply/expense.js';
 // import {getUserInfo} from "../../../api/admin/user.js";
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
             query: {
                 userId: null,
-                likeKeyWords: "",
-                status: "",
+                likeKeyWords: '',
+                status: '',
                 current: 1,
                 size: 10
             },
             statusOptions: [
                 {
-                    value: "",
-                    label: "全部"
+                    value: '',
+                    label: '全部'
                 },
                 {
-                    value: "0",
-                    label: "审批中"
+                    value: '0',
+                    label: '审批中'
                 },
                 {
-                    value: "1",
-                    label: "同意"
+                    value: '1',
+                    label: '同意'
                 },
                 {
-                    value: "2",
-                    label: "拒绝"
+                    value: '2',
+                    label: '拒绝'
                 }
             ],
             pages: 0,
             total: 0,
             listLoading: false,
             list: [],
-            number: "",
-            listType: "2"
+            number: '',
+            listType: '2'
         };
     },
     created() {
-        window.localStorage.removeItem("editExpenseInfo");
+        window.localStorage.removeItem('editExpenseInfo');
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
-            this.query.status = "";
+            this.query.status = '';
         }
         this.query.userId = this.userId;
         this.getExpenseApproverPage();
     },
     computed: {
-        ...mapGetters(["permissions", "userId"])
+        ...mapGetters(['permissions', 'userId'])
     },
     methods: {
         getExpenseApproverPage() {
@@ -295,13 +165,13 @@ export default {
         handInfo(data) {
             console.log(data);
             this.$router.push({
-                path: "/apply/expense/info/" + data.expenseId
+                path: '/apply/expense/info/' + data.expenseId
             });
         },
         openList(val) {
             if (val == 1) {
                 this.$router.push({
-                    path: "/apply/expense"
+                    path: '/apply/expense'
                 });
             }
         }
