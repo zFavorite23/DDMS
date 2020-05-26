@@ -958,6 +958,7 @@ export default {
                                 if (res.data.data) {
                                     this.backHistory();
                                 }
+                                this.$router.push('/apply/leave');
                             })
                             .finally(() => {
                                 this.saving = false;
