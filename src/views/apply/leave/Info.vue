@@ -206,6 +206,7 @@ export default {
     created() {
         this.leaveId = this.$route.params.leaveId;
         this.formData.checkUserId = this.userId;
+        console.log(this.userId)
         this.getLeaveInfo();
         this.getLeaveApproverList();
     },
@@ -258,6 +259,7 @@ export default {
             }
         },
         onSubmit() {
+            console.log(this.formData)
             updateLeaveApprover(this.formData)
                 .then(res => {
                     if (res.data.data) {
