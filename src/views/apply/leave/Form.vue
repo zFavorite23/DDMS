@@ -86,7 +86,7 @@
                 </el-col>
             </el-form-item>
 
-            <el-form-item v-if="formData.type == '2'" label="请假时间：" required>
+            <el-form-item v-if="formData.type == '2'" label="请假时间：" >
                 <el-col :span="10">
                     <el-form-item prop="start">
                         <el-date-picker
@@ -742,6 +742,7 @@ export default {
                                 if (res.data.data) {
                                     this.backHistory();
                                 }
+                                this.$router.push('/apply/leave')
                             })
                             .finally(() => {
                                 this.saving = false;
