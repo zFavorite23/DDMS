@@ -1,4 +1,4 @@
-const url = 'http://192.168.1.119:9999';
+const url = 'http://dd-gateway:9999';
 module.exports = {
     baseUrl: process.env.NODE_ENV === "production" ? "./" : "/",
     outputDir: process.env.outputDir,

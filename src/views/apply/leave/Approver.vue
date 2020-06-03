@@ -230,11 +230,11 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getLeaveList();
+            this.getLeaveApproverPage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            this.getLeaveList();
+            this.getLeaveApproverPage();
         },
         openList(val) {
             if (val == 1) {

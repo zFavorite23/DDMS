@@ -14,7 +14,7 @@
             </el-form-item>
 
             <el-form-item label="调休日期：" v-if="formData.type == '4'">
-                <el-select v-model="formData.rest" multiple placeholder="请选择" @change="selectRest">
+                <el-select v-model="formData.restIdList" multiple placeholder="请选择" @change="selectRest">
                     <el-option v-for="(item, index) in restOptions" :value="item.value" :key="index" :label="item.label"></el-option>
                 </el-select>
             </el-form-item>
@@ -247,6 +247,7 @@ export default {
                 time: '',
                 reason: '',
                 proveImg: '',
+                restIdList: '',
                 restList: '',
                 clockList: '',
                 approverids: ''
@@ -481,7 +482,7 @@ export default {
                 this.restInfo = response.data.data;
                 this.restInfo.forEach(element => {
                     this.restOptions.push({
-                        value: element.day,
+                        value: element.restId,
                         label: element.day
                     });
                 });
@@ -696,7 +697,8 @@ export default {
         },
 
         selectRest(val) {
-            //console.log(val)
+            // console.log(val)
+            // console.log(this.formData.restIdList)
             this.formData.restList = '';
             val.forEach(element => {
                 this.formData.restList += element + ',';
