@@ -37,7 +37,7 @@
             <el-table :data="tableData_1" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory()">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -2093,17 +2093,9 @@ export default {
 
         //  非项目产品时 验收人清空
         selectcCategory(val) {
-            console.log(val);
             if (val == 2 || val == 3) {
-                this.tableData_1[0].itemId = null;
-                this.tableData_2[0].itemId = null;
-                this.tableData_3[0].itemId = null;
-                this.tableData_4[0].itemId = null;
-                this.tableData_5[0].itemId = null;
-                this.tableData_6[0].itemId = null;
-                this.tableData_7[0].itemId = null;
-            } else {
                 this.getApplyUser();
+            } else {
                 this.applyUserList = [{ value: 0, label: '无人验收' }];
             }
         },
@@ -2117,15 +2109,7 @@ export default {
         // 验收人
         getApplyUser() {
             getApplyUserInfo(this.query).then(response => {
-                // console.log(response);
-                this.applyUserList = [{ value: 0, label: '无人验收' }];
-                this.tableData_1[0].approverids = 0;
-                this.tableData_2[0].approverids = 0;
-                this.tableData_3[0].approverids = 0;
-                this.tableData_4[0].approverids = 0;
-                this.tableData_5[0].approverids = 0;
-                this.tableData_6[0].approverids = 0;
-                this.tableData_7[0].approverids = 0;
+                console.log(response);
                 // console.log(response);
                 response.data.data.forEach(element => {
                     this.applyUserList.push({
