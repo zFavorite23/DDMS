@@ -34,6 +34,127 @@
                 </span>
                 <el-button type="info" style="margin-left: 3%" icon="el-icon-document-copy" circle @click="copyCode_1()"></el-button>
             </div>
+            <el-table :data="oldList" v-if='oldList.length!=0' style="width: 100%">
+                <el-table-column align="center" prop="category" label="工作类别" width="140">
+                    <template slot-scope="scope">
+                        <el-select disabled :value="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory()">
+                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select  disabled v-if="scope.row.category == '1'" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select disabled  v-if="scope.row.category == '2'" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select disabled  v-if="scope.row.category == '3'" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select  disabled v-if="scope.row.category == '4'" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
+                    <template slot-scope="scope">
+                        <el-select
+                            disabled
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                        disabled
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            disabled
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            disabled
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '4'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            disabled
+                            v-if="scope.row.category == '1' && scope.row.mainClassify == '5'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select disabled v-if="scope.row.category == '2'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select disabled v-if="scope.row.category == '3'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select disabled v-if="scope.row.category == '4'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="reason" label="工作内容" width="320">
+                    <template slot-scope="scope">
+                        <el-input type="textarea" size="mini" disabled :value="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="approverids" label="验收人" width="140">
+                    <template slot-scope="scope">
+                        <el-select :value="scope.row.approverids" disabled placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="complete" label="完成情况" width="140">
+                    <template slot-scope="scope">
+                        <el-select :value="scope.row.complete" disabled placeholder="请选择" size="mini" style="width: 120px;">
+                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
+                    <template slot-scope="scope">
+                        <el-date-picker :value="scope.row.completeTime" disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="useHour" label="工时" width="140">
+                    <template slot-scope="scope">
+                        <el-input-number
+                            disabled
+                            :value="scope.row.useHour"
+                            size="small"
+                            controls-position="right"
+                        ></el-input-number>
+                    </template>
+                </el-table-column>
+
+            </el-table>
             <el-table :data="tableData_1" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
@@ -1144,6 +1265,7 @@ import { getItemVosWithUserId } from '../../../api/project/team.js';
 import { getStandardApplyInfoById } from '../../../api/standard/apply.js';
 import { mapGetters } from 'vuex';
 export default {
+    inject:['reload'],
     data() {
         return {
             value: '',
@@ -1370,6 +1492,7 @@ export default {
             maxUseHour_5: 0.0,
             maxUseHour_6: 0.0,
             maxUseHour_7: 0.0,
+            oldList:[],
             Hour_1:'',
             Hour_2:'',
             Hour_3:'',
@@ -1476,7 +1599,7 @@ export default {
         this.getUserInfo()
     },
     computed: {
-        ...mapGetters(['permissions', 'userId'])
+        ...mapGetters(['permissions', 'userId']),
     },
     methods: {
         // 获取个人信息
@@ -1759,7 +1882,11 @@ export default {
 
         // 提交
         submit_1() {
-            console.log(this.tableData_1);
+
+               // for (var i=0;i<this.tableData_1.length;i++){
+               //     this.oldList.push(this.tableData_1[i])
+               // }
+               // console.log(this.oldList);
             var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
@@ -1780,9 +1907,10 @@ export default {
                             this.selectWorkDay_1(this.day_1.hourId);
                         });
                         this.$message({
-                            message: '工时填报成！',
+                            message: '工时填报成功！',
                             type: 'success'
                         });
+                       this.reload();
                     })
                     .catch(() => {
                         this.$message({
@@ -1817,6 +1945,7 @@ export default {
                             message: '工时填报成！',
                             type: 'success'
                         });
+                        this.$router.go(0)
                     })
                     .catch(() => {
                         this.$message({
@@ -1851,6 +1980,7 @@ export default {
                             message: '工时填报成！',
                             type: 'success'
                         });
+                        this.$router.go(0)
                     })
                     .catch(() => {
                         this.$message({
@@ -1885,6 +2015,7 @@ export default {
                             message: '工时填报成！',
                             type: 'success'
                         });
+                        this.$router.go(0)
                     })
                     .catch(() => {
                         this.$message({
@@ -1919,6 +2050,7 @@ export default {
                             message: '工时填报成！',
                             type: 'success'
                         });
+                        this.$router.go(0)
                     })
                     .catch(() => {
                         this.$message({
@@ -1953,6 +2085,7 @@ export default {
                             message: '工时填报成！',
                             type: 'success'
                         });
+                        this.$router.go(0)
                     })
                     .catch(() => {
                         this.$message({
@@ -1987,6 +2120,7 @@ export default {
                             message: '工时填报成！',
                             type: 'success'
                         });
+                        this.$router.go(0)
                     })
                     .catch(() => {
                         this.$message({
@@ -2008,8 +2142,7 @@ export default {
                 this.dayHourInt_1 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 this.dayHourFloat_1 = parseFloat(hour);
-                this.maxUseHour_1 = parseFloat(hour);
-                console.log(this.dayHourInt_1)
+                this.maxUseHour_1 = parseFloat(hour)
             });
         },
         selectWorkDay_2(val) {
@@ -2102,12 +2235,14 @@ export default {
 
         // 获取项目产品验收人
         selectcItem(val) {
+            console.log(val)
             this.query.itemId = val;
             this.getApplyUser();
         },
 
         // 验收人
         getApplyUser() {
+            this.applyUserList = [{ value: 0, label: '无人验收' }]
             getApplyUserInfo(this.query).then(response => {
                 console.log(response);
                 // console.log(response);
@@ -2209,7 +2344,7 @@ export default {
         },
         // 工时规范
         open() {
-            let content = this.content.split('\n\n');
+            let content = this.content.split('');
             let newDatas = [];
             const h = this.$createElement;
             for (let i in content) {
@@ -2256,8 +2391,8 @@ export default {
                     }
                 }
               this.$copyText(
-                `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}\n
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}\n`
+                `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -2291,8 +2426,8 @@ ${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}\n
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}\n
+                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
 ${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
                   `
                 ).then(res => {
@@ -2337,9 +2472,9 @@ ${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}\n
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}\n
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}\n
+                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
 ${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
                   `
                 ).then(res => {
@@ -2393,10 +2528,10 @@ ${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}\n
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}\n
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}\n
-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}\n
+                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
+${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
 ${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}
                   `
                 ).then(res => {
@@ -2459,11 +2594,11 @@ ${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}\n
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}\n
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}\n
-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}\n
-${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}\n
+                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
+${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
+${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}
 ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?'已完成':'未完成'}-${this.tableData_1[4].complete!=100?`预计 ${this.tableData_1[4].completeTime} 完成`:''}-${this.tableData_1[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_1[4].useHour}
                   `
                 ).then(res => {
@@ -2510,8 +2645,8 @@ ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?
                    }
                }
              this.$copyText(
-               `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}\n
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}\n`
+               `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
@@ -2545,8 +2680,8 @@ ${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}\n
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}\n
+                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
 ${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
                  `
                ).then(res => {
@@ -2591,9 +2726,9 @@ ${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}\n
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}\n
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}\n
+                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
 ${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}
                  `
                ).then(res => {
@@ -2647,10 +2782,10 @@ ${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}\n
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}\n
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}\n
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}\n
+                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
+${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}
 ${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_2[3].useHour}
                  `
                ).then(res => {
@@ -2713,11 +2848,11 @@ ${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?
                   }
               }
               this.$copyText(
-                `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}\n
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}\n
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}\n
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}\n
-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_2[3].useHour}\n
+                `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
+${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}
+${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_2[3].useHour}
 ${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?'已完成':'未完成'}-${this.tableData_2[4].complete!=100?`预计 ${this.tableData_2[4].completeTime} 完成`:''}-${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_2[4].useHour}
                 `
               ).then(res => {
@@ -2763,8 +2898,8 @@ ${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?
                    }
                }
              this.$copyText(
-               `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}\n
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}\n`
+               `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
@@ -2798,8 +2933,8 @@ ${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}\n
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}\n
+                 `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
 ${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
                  `
                ).then(res => {
@@ -2844,9 +2979,9 @@ ${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}\n
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}\n
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}\n
+                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
 ${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}
                   `
                 ).then(res => {
@@ -2900,10 +3035,10 @@ ${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}\n
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}\n
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}\n
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}\n
+                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
+${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}
 ${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_3[3].useHour}
                   `
                 ).then(res => {
@@ -2966,11 +3101,11 @@ ${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}\n
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}\n
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}\n
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}\n
-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_3[3].useHour}\n
+                 `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
+${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}
+${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_3[3].useHour}
 ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?'已完成':'未完成'}-${this.tableData_3[4].complete!=100?`预计 ${this.tableData_3[4].completeTime} 完成`:''}-${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_3[4].useHour}
                  `
                ).then(res => {
@@ -3016,8 +3151,8 @@ ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}\n
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}\n`
+                `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3051,8 +3186,8 @@ ${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}\n
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}\n
+                  `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
 ${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
                   `
                 ).then(res => {
@@ -3097,9 +3232,9 @@ ${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}\n
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}\n
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}\n
+                   `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
 ${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}
                    `
                  ).then(res => {
@@ -3153,10 +3288,10 @@ ${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?
                       }
                   }
                   this.$copyText(
-                    `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}\n
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}\n
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}\n
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}\n
+                    `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
+${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}
 ${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_4[3].useHour}
                     `
                   ).then(res => {
@@ -3219,11 +3354,11 @@ ${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}\n
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}\n
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}\n
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}\n
-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_4[3].useHour}\n
+                  `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
+${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}
+${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_4[3].useHour}
 ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?'已完成':'未完成'}-${this.tableData_4[4].complete!=100?`预计 ${this.tableData_4[4].completeTime} 完成`:''}-${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_4[4].useHour}
                   `
                 ).then(res => {
@@ -3270,8 +3405,8 @@ ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}\n
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}\n`
+                `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3305,8 +3440,8 @@ ${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}\n
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}\n
+                  `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
 ${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
                   `
                 ).then(res => {
@@ -3351,9 +3486,9 @@ ${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}\n
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}\n
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}\n
+                   `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
 ${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}
                    `
                  ).then(res => {
@@ -3407,10 +3542,10 @@ ${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?
                       }
                   }
                   this.$copyText(
-                    `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}\n
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}\n
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}\n
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}\n
+                    `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
+${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}
 ${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_5[3].useHour}
                     `
                   ).then(res => {
@@ -3473,11 +3608,11 @@ ${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}\n
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}\n
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}\n
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}\n
-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_5[3].useHour}\n
+                  `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
+${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}
+${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_5[3].useHour}
 ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?'已完成':'未完成'}-${this.tableData_5[4].complete!=100?`预计 ${this.tableData_5[4].completeTime} 完成`:''}-${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_5[4].useHour}
                   `
                 ).then(res => {
@@ -3525,8 +3660,8 @@ ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}\n
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}\n`
+                `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3560,8 +3695,8 @@ ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}\n
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}\n
+                  `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
 ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
                   `
                 ).then(res => {
@@ -3606,9 +3741,9 @@ ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}\n
- ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}\n
- ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}\n
+                   `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+ ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
+ ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
  ${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}
                    `
                  ).then(res => {
@@ -3662,10 +3797,10 @@ ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?
                       }
                   }
                   this.$copyText(
-                    `$${this.day_6.day}-{this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}\n
-  ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}\n
-  ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}\n
-  ${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}\n
+                    `$${this.day_6.day}-{this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+  ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
+  ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
+  ${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}
   ${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_6[3].useHour}
                     `
                   ).then(res => {
@@ -3728,11 +3863,11 @@ ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}\n
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}\n
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}\n
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}\n
-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_6[3].useHour}\n
+                  `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
+${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
+${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}
+${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_6[3].useHour}
 ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?'已完成':'未完成'}-${this.tableData_6[4].complete!=100?`预计 ${this.tableData_6[4].completeTime} 完成`:''}-${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_6[4].useHour}
                   `
                 ).then(res => {
@@ -3779,8 +3914,8 @@ ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}\n
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}\n`
+                `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3814,8 +3949,8 @@ ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}\n
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}\n
+                  `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
 ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
                   `
                 ).then(res => {
@@ -3860,9 +3995,9 @@ ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}\n
- ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}\n
- ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}\n
+                   `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+ ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
+ ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
  ${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}
                    `
                  ).then(res => {
@@ -3916,10 +4051,10 @@ ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?
                       }
                   }
                   this.$copyText(
-                    `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}\n
-  ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}\n
-  ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}\n
-  ${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}\n
+                    `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+  ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
+  ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
+  ${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}
   ${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_7[3].useHour}
                     `
                   ).then(res => {
@@ -3982,11 +4117,11 @@ ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}\n
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}\n
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}\n
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}\n
-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_7[3].useHour}\n
+                  `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
+${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
+${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}
+${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_7[3].useHour}
 ${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?'已完成':'未完成'}-${this.tableData_7[4].complete!=100?`预计 ${this.tableData_7[4].completeTime} 完成`:''}-${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_7[4].useHour}
                   `
                 ).then(res => {

@@ -18,7 +18,7 @@
             </el-table-column>
             <el-table-column prop="applyUserName" min-width="80" label="申请人"></el-table-column>
             <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
-            <el-table-column min-width="80" label="自评积分">
+            <el-table-column label="自评积分">
                 <template slot-scope="scope">
                     <span>{{ scope.row.integral }} 分</span>
                 </template>
@@ -33,7 +33,7 @@
                     <p v-else></p>
                 </template>
             </el-table-column>
-            <el-table-column min-width="120" label="分类" :show-overflow-tooltip="true">
+            <el-table-column label="分类" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <p v-if="scope.row.category == '1' && scope.row.mainClassify == 1">
                         公司管理
@@ -105,16 +105,17 @@
                 </template>
             </el-table-column>
             <el-table-column prop="reason" min-width="150" label="工作内容" :show-overflow-tooltip="true"></el-table-column>
-            <el-table-column min-width="80" label="工时">
+            <el-table-column label="工时">
                 <template slot-scope="scope">
                     <span>{{ scope.row.useHour }} 小时</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="120" label="审批工时">
                 <template slot-scope="scope">
-                    <p v-show="scope.row.show">{{ scope.row.checkMin }} 小时</p>
+                    <p v-show="scope.row.show" v-if="scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
+                    <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p>
                     <el-input-number
-                        v-show='!scope.row.show'
+                        v-show="!scope.row.show"
                         v-model="scope.row.checkMin"
                         controls-position="right"
                         size="mini"
@@ -126,7 +127,13 @@
             <el-table-column min-width="100" label="反馈意见">
                 <template slot-scope="scope">
                     <p v-show="scope.row.show">{{ scope.row.summary }}</p>
-                    <el-input  v-show='!scope.row.show' v-model="scope.row.summary" size="mini" placeholder="请输入内容"></el-input>
+                    <el-input v-show="!scope.row.show" v-model="scope.row.summary" size="mini" placeholder="请输入内容"></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column min-width="180" label="完成进度">
+                <template slot-scope="scope">
+                    <el-tag v-if="scope.row.complete == '100'" type="success">已完成</el-tag>
+                    <el-tag v-else type="warning">完成 {{ scope.row.complete }}% 预计{{ scope.row.completeTime }}完成</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="操作" min-width="140" fixed="right">
@@ -167,7 +174,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            show:'',
+            show: '',
             query: {
                 userId: null,
                 status: '',
@@ -205,8 +212,8 @@ export default {
                     this.query.size = response.data.data.size;
                     this.list = response.data.data.records;
                     this.list.forEach(item => {
-                        this.$set(item, 'show', true)
-                    })
+                        this.$set(item, 'show', true);
+                    });
                     console.log(this.list);
                 })
                 .catch(() => {
@@ -223,21 +230,32 @@ export default {
         },
         // 单行审批
         updateManhourApprover(val) {
+            if (this.list[val].checkMin == this.list[val].useHour - 2 || this.list[val].checkMin == 0) {
+                this.list[val].checkMin = this.list[val].useHour;
+            }
+            // this.list[val].checkMin = String(this.list[val].checkMin);
+            // console.log(this.list[val].useHour,this.list[val].checkMin)
             // console.log(this.list[val]);
             updateManhourApprover(this.list[val]).then(res => {
                 console.log(res);
                 this.getManhourApproverPage();
             });
         },
+        
         // 一键审批
         updateManhourAll() {
-            // console.log(this.list);
-            updateManhourApproverAll(this.list).then(res => {
+            var Newlist = this.list.filter(item => item.status == 0);
+            for (var i = 0; i < Newlist.length; i++) {
+                if (Newlist[i].checkMin == Newlist[i].useHour - 2 || this.list[val].checkMin == 0) {
+                    Newlist[i].checkMin = Newlist[i].useHour;
+                }
+            }
+            updateManhourApproverAll(Newlist).then(res => {
                 console.log(res);
                 this.getManhourApproverPage();
                 this.show = true;
             });
-        },
+        }
     },
     mounted() {}
 };
