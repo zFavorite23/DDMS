@@ -34,7 +34,7 @@
                 </span>
                 <el-button type="info" style="margin-left: 3%" icon="el-icon-document-copy" circle @click="copyCode_1()"></el-button>
             </div>
-            <el-table :data="oldList" v-if='oldList.length!=0' style="width: 100%">
+            <el-table :data="oldList" v-if="oldList.length!=0" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
                         <el-select disabled :value="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory()">
@@ -1597,6 +1597,13 @@ export default {
         this.getAbnormalSeven();
         this.getItemVosWithUserId();
         this.getUserInfo()
+        var lists = JSON.parse(localStorage.getItem('oldList'))
+        if(lists.length!=0){
+            this.oldList = JSON.parse(localStorage.getItem('oldList'))
+        }else{
+            this.oldList = []
+        }
+
     },
     computed: {
         ...mapGetters(['permissions', 'userId']),
@@ -1883,10 +1890,10 @@ export default {
         // 提交
         submit_1() {
 
-               // for (var i=0;i<this.tableData_1.length;i++){
-               //     this.oldList.push(this.tableData_1[i])
-               // }
-               // console.log(this.oldList);
+               for (var i=0;i<this.tableData_1.length;i++){
+                   this.oldList.push(this.tableData_1[i])
+               }
+               localStorage.setItem('oldList',JSON.stringify(this.oldList))
             var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
@@ -2143,6 +2150,11 @@ export default {
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 this.dayHourFloat_1 = parseFloat(hour);
                 this.maxUseHour_1 = parseFloat(hour)
+                if(this.dayHourFloat_1<=0){
+                    this.oldList=[]
+                    localStorage.removeItem('oldList')
+                    this.reload();
+                }
             });
         },
         selectWorkDay_2(val) {
