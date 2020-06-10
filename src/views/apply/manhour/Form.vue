@@ -34,7 +34,7 @@
                 </span>
                 <el-button type="info" style="margin-left: 3%" icon="el-icon-document-copy" circle @click="copyCode_1()"></el-button>
             </div>
-            <el-table :data="oldList" v-if="oldList.length!=0" style="width: 100%">
+           <!-- <el-table :data="oldList" v-if="oldList.length!=0" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
                         <el-select disabled :value="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory()">
@@ -154,7 +154,7 @@
                     </template>
                 </el-table-column>
 
-            </el-table>
+            </el-table> -->
             <el-table :data="tableData_1" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
@@ -277,6 +277,7 @@
                             size="small"
                             controls-position="right"
                             :precision="1"
+                            step-strictly
                             :step="0.5"
                             :min="0.0"
                             :max="maxUseHour_1"
@@ -440,6 +441,7 @@
                             :step="0.5"
                             :min="0.0"
                             :max="maxUseHour_2"
+                            step-strictly
                         ></el-input-number>
                     </template>
                 </el-table-column>
@@ -599,6 +601,7 @@
                             :precision="1"
                             :step="0.5"
                             :min="0.0"
+                            step-strictly
                             :max="maxUseHour_3"
                         ></el-input-number>
                     </template>
@@ -759,6 +762,7 @@
                             :precision="1"
                             :step="0.5"
                             :min="0.0"
+                            step-strictly
                             :max="maxUseHour_4"
                         ></el-input-number>
                     </template>
@@ -919,6 +923,7 @@
                             :precision="1"
                             :step="0.5"
                             :min="0.0"
+                            step-strictly
                             :max="maxUseHour_5"
                         ></el-input-number>
                     </template>
@@ -1078,6 +1083,7 @@
                             controls-position="right"
                             :precision="1"
                             :step="0.5"
+                            step-strictly
                             :min="0.0"
                             :max="maxUseHour_6"
                         ></el-input-number>
@@ -1239,6 +1245,7 @@
                             :precision="1"
                             :step="0.5"
                             :min="0.0"
+                            step-strictly
                             :max="maxUseHour7"
                         ></el-input-number>
                     </template>
@@ -1597,12 +1604,12 @@ export default {
         this.getAbnormalSeven();
         this.getItemVosWithUserId();
         this.getUserInfo()
-        var lists = JSON.parse(localStorage.getItem('oldList'))
-        if(lists.length!=0){
-            this.oldList = JSON.parse(localStorage.getItem('oldList'))
-        }else{
-            this.oldList = []
-        }
+        // var lists = JSON.parse(localStorage.getItem('oldList'))
+        // if(lists.length!=0){
+        //     this.oldList = JSON.parse(localStorage.getItem('oldList'))
+        // }else{
+        //     this.oldList = []
+        // }
 
     },
     computed: {
@@ -1890,10 +1897,10 @@ export default {
         // 提交
         submit_1() {
 
-               for (var i=0;i<this.tableData_1.length;i++){
-                   this.oldList.push(this.tableData_1[i])
-               }
-               localStorage.setItem('oldList',JSON.stringify(this.oldList))
+               // for (var i=0;i<this.tableData_1.length;i++){
+               //     this.oldList.push(this.tableData_1[i])
+               // }
+               // localStorage.setItem('oldList',JSON.stringify(this.oldList))
             var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
@@ -1907,24 +1914,28 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_1)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_1(this.day_1.hourId);
+                if(this.tableData_1[0].integral!=0){
+                    addObj(this.tableData_1)
+                        .then(() => {
+                            this.$nextTick(() => {
+                                this.getAbnormalSeven();
+                                this.selectWorkDay_1(this.day_1.hourId);
+                            });
+                           this.reload();
+                        })
+                        .catch(() => {
+                             this.$alert('请查看是否有未填写！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                            });
                         });
-                        this.$message({
-                            message: '工时填报成功！',
-                            type: 'success'
-                        });
-                       this.reload();
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
+                }else {
+                    this.$message({
+                        message: '请选择评分！',
+                        type: 'warning'
                     });
+                }
+
             }
         },
         submit_2() {
@@ -1942,24 +1953,27 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_2)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_2(this.day_2.hourId);
+                if(this.tableData_2[0].integral!=0){
+                    addObj(this.tableData_2)
+                        .then(() => {
+                            this.$nextTick(() => {
+                                this.getAbnormalSeven();
+                                this.selectWorkDay_2(this.day_2.hourId);
+                            });
+                           this.reload();
+                        })
+                        .catch(() => {
+                             this.$alert('请查看是否有未填写！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                            });
                         });
-                        this.$message({
-                            message: '工时填报成！',
-                            type: 'success'
-                        });
-                        this.$router.go(0)
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
+                }else {
+                    this.$message({
+                        message: '请选择评分！',
+                        type: 'warning'
                     });
+                }
             }
         },
         submit_3() {
@@ -1977,24 +1991,27 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_3)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_3(this.day_3.hourId);
+                if(this.tableData_3[0].integral!=0){
+                    addObj(this.tableData_3)
+                        .then(() => {
+                            this.$nextTick(() => {
+                                this.getAbnormalSeven();
+                                this.selectWorkDay_3(this.day_3.hourId);
+                            });
+                           this.reload();
+                        })
+                        .catch(() => {
+                             this.$alert('请查看是否有未填写！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                            });
                         });
-                        this.$message({
-                            message: '工时填报成！',
-                            type: 'success'
-                        });
-                        this.$router.go(0)
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
+                }else {
+                    this.$message({
+                        message: '请选择评分！',
+                        type: 'warning'
                     });
+                }
             }
         },
         submit_4() {
@@ -2012,24 +2029,27 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_4)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_4(this.day_4.hourId);
+                if(this.tableData_4[0].integral!=0){
+                    addObj(this.tableData_4)
+                        .then(() => {
+                            this.$nextTick(() => {
+                                this.getAbnormalSeven();
+                                this.selectWorkDay_4(this.day_4.hourId);
+                            });
+                           this.reload();
+                        })
+                        .catch(() => {
+                             this.$alert('请查看是否有未填写！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                            });
                         });
-                        this.$message({
-                            message: '工时填报成！',
-                            type: 'success'
-                        });
-                        this.$router.go(0)
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
+                }else {
+                    this.$message({
+                        message: '请选择评分！',
+                        type: 'warning'
                     });
+                }
             }
         },
         submit_5() {
@@ -2047,24 +2067,27 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_5)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_5(this.day_5.hourId);
-                        });
-                        this.$message({
-                            message: '工时填报成！',
-                            type: 'success'
-                        });
-                        this.$router.go(0)
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
-                    });
+               if(this.tableData_5[0].integral!=0){
+                   addObj(this.tableData_5)
+                       .then(() => {
+                           this.$nextTick(() => {
+                               this.getAbnormalSeven();
+                               this.selectWorkDay_5(this.day_5.hourId);
+                           });
+                          this.reload();
+                       })
+                       .catch(() => {
+                            this.$alert('请查看是否有未填写！', '提示', {
+                              confirmButtonText: '确定',
+                              type: 'warning'
+                           });
+                       });
+               }else {
+                   this.$message({
+                       message: '请选择评分！',
+                       type: 'warning'
+                   });
+               }
             }
         },
         submit_6() {
@@ -2082,24 +2105,27 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_6)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_6(this.day_6.hourId);
+                if(this.tableData_6[0].integral!=0){
+                    addObj(this.tableData_6)
+                        .then(() => {
+                            this.$nextTick(() => {
+                                this.getAbnormalSeven();
+                                this.selectWorkDay_6(this.day_6.hourId);
+                            });
+                           this.reload();
+                        })
+                        .catch(() => {
+                             this.$alert('请查看是否有未填写！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                            });
                         });
-                        this.$message({
-                            message: '工时填报成！',
-                            type: 'success'
-                        });
-                        this.$router.go(0)
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
+                }else {
+                    this.$message({
+                        message: '请选择评分！',
+                        type: 'warning'
                     });
+                }
             }
         },
         submit_7() {
@@ -2117,24 +2143,27 @@ export default {
                     type: 'warning'
                 });
             } else {
-                addObj(this.tableData_7)
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_7(this.day_7.hourId);
+                if(this.tableData_7[0].integral!=0){
+                    addObj(this.tableData_7)
+                        .then(() => {
+                            this.$nextTick(() => {
+                                this.getAbnormalSeven();
+                                this.selectWorkDay_7(this.day_7.hourId);
+                            });
+                           this.reload();
+                        })
+                        .catch(() => {
+                             this.$alert('请查看是否有未填写！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                            });
                         });
-                        this.$message({
-                            message: '工时填报成！',
-                            type: 'success'
-                        });
-                        this.$router.go(0)
-                    })
-                    .catch(() => {
-                        this.$message({
-                            message: '工时填报失败！请查看是否有未填项！',
-                            type: 'warning'
-                        });
+                }else {
+                    this.$message({
+                        message: '请选择评分！',
+                        type: 'warning'
                     });
+                }
             }
         },
 
@@ -2148,13 +2177,24 @@ export default {
                 this.Hour_1 = clockHourInfo.hour
                 this.dayHourInt_1 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                var num2 = parseInt(hour)
+                var num3 = (hour - num2).toFixed(1)
+                    if (num3 < 0.5 && num3 != 0.0) {
+                        num3 = 0.5
+                        hour  = num2 + num3
+                    } else if (num3 = 0.0) {
+                        hour = num2
+                    }
+                    else {
+                        hour = Math.round(hour)
+                    }
                 this.dayHourFloat_1 = parseFloat(hour);
                 this.maxUseHour_1 = parseFloat(hour)
-                if(this.dayHourFloat_1<=0){
-                    this.oldList=[]
-                    localStorage.removeItem('oldList')
-                    this.reload();
-                }
+                // if(this.dayHourFloat_1<=0){
+                //     this.oldList=[]
+                //     localStorage.removeItem('oldList')
+                //     this.reload();
+                // }
             });
         },
         selectWorkDay_2(val) {
@@ -2166,6 +2206,17 @@ export default {
                 this.Hour_2 = clockHourInfo.hour
                 this.dayHourInt_2 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                var num2 = parseInt(hour)
+                var num3 = (hour - num2).toFixed(1)
+                    if (num3 < 0.5 && num3 != 0.0) {
+                        num3 = 0.5
+                        hour  = num2 + num3
+                    } else if (num3 = 0.0) {
+                        hour = num2
+                    }
+                    else {
+                        hour = Math.round(hour)
+                    }
                 this.dayHourFloat_2 = parseFloat(hour);
                 this.maxUseHour_2 = parseFloat(hour);
             });
@@ -2179,6 +2230,17 @@ export default {
                 this.Hour_3 = clockHourInfo.hour
                 this.dayHourInt_3 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                var num2 = parseInt(hour)
+                var num3 = (hour - num2).toFixed(1)
+                    if (num3 < 0.5 && num3 != 0.0) {
+                        num3 = 0.5
+                        hour  = num2 + num3
+                    } else if (num3 = 0.0) {
+                        hour = num2
+                    }
+                    else {
+                        hour = Math.round(hour)
+                    }
                 this.dayHourFloat_3 = parseFloat(hour);
                 this.maxUseHour_3 = parseFloat(hour);
             });
@@ -2192,6 +2254,17 @@ export default {
                 this.Hour_4 = clockHourInfo.hour
                 this.dayHourInt_4 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                var num2 = parseInt(hour)
+                var num3 = (hour - num2).toFixed(1)
+                    if (num3 < 0.5 && num3 != 0.0) {
+                        num3 = 0.5
+                        hour  = num2 + num3
+                    } else if (num3 = 0.0) {
+                        hour = num2
+                    }
+                    else {
+                        hour = Math.round(hour)
+                    }
                 this.dayHourFloat_4 = parseFloat(hour);
                 this.maxUseHour_4 = parseFloat(hour);
             });
@@ -2205,6 +2278,17 @@ export default {
                 this.Hour_5 = clockHourInfo.hour
                 this.dayHourInt_5 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                var num2 = parseInt(hour)
+                var num3 = (hour - num2).toFixed(1)
+                    if (num3 < 0.5 && num3 != 0.0) {
+                        num3 = 0.5
+                        hour  = num2 + num3
+                    } else if (num3 = 0.0) {
+                        hour = num2
+                    }
+                    else {
+                        hour = Math.round(hour)
+                    }
                 this.dayHourFloat_5 = parseFloat(hour);
                 this.maxUseHour_5 = parseFloat(hour);
             });
@@ -2218,6 +2302,17 @@ export default {
                 this.Hour_6 = clockHourInfo.hour
                 this.dayHourInt_6 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+                var num2 = parseInt(hour)
+                var num3 = (hour - num2).toFixed(1)
+                    if (num3 < 0.5 && num3 != 0.0) {
+                        num3 = 0.5
+                        hour  = num2 + num3
+                    } else if (num3 = 0.0) {
+                        hour = num2
+                    }
+                    else {
+                        hour = Math.round(hour)
+                    }
                 this.dayHourFloat_6 = parseFloat(hour);
                 this.maxUseHour_6 = parseFloat(hour);
             });
@@ -2231,6 +2326,7 @@ export default {
                 this.Hour_7 = clockHourInfo.hour
                 this.dayHourInt_7 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
+
                 this.dayHourFloat_7 = parseFloat(hour);
                 this.maxUseHour_7 = parseFloat(hour);
             });
@@ -2256,7 +2352,6 @@ export default {
         getApplyUser() {
             this.applyUserList = [{ value: 0, label: '无人验收' }]
             getApplyUserInfo(this.query).then(response => {
-                console.log(response);
                 // console.log(response);
                 response.data.data.forEach(element => {
                     this.applyUserList.push({
@@ -2264,7 +2359,9 @@ export default {
                         label: element.username
                     });
                 });
+                this.applyUserList=this.applyUserList.filter(item=>item.value!=this.query.userId)
             });
+            console.log(this.applyUserList);
         },
 
         // 未填报日期

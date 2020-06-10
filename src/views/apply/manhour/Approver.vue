@@ -233,15 +233,15 @@ export default {
             if (this.list[val].checkMin == this.list[val].useHour - 2 || this.list[val].checkMin == 0) {
                 this.list[val].checkMin = this.list[val].useHour;
             }
-            // this.list[val].checkMin = String(this.list[val].checkMin);
-            // console.log(this.list[val].useHour,this.list[val].checkMin)
-            // console.log(this.list[val]);
-            updateManhourApprover(this.list[val]).then(res => {
-                console.log(res);
-                this.getManhourApproverPage();
-            });
+            this.list[val].checkMin = parseFloat(this.list[val].checkMin);
+            console.log(typeof this.list[val].checkMin)
+            console.log(this.list[val])
+            // updateManhourApprover(this.list[val]).then(res => {
+            //     console.log(res);
+            //     this.getManhourApproverPage();
+            // });
         },
-        
+
         // 一键审批
         updateManhourAll() {
             var Newlist = this.list.filter(item => item.status == 0);
