@@ -1915,6 +1915,16 @@ export default {
                 });
             } else {
                 if(this.tableData_1[0].integral!=0){
+                    console.log(this.tableData_1)
+                    for(var i=0;i<this.tableData_1.length;i++){
+                        if(this.tableData_1[i].reason==''||this.tableData_1[i].useHour==0){
+                            this.$alert('请查看是否有未填写项！', '提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning'
+                            })
+                            return
+                        }
+                    }
                     addObj(this.tableData_1)
                         .then(() => {
                             this.$nextTick(() => {
@@ -1923,12 +1933,6 @@ export default {
                             });
                            this.reload();
                         })
-                        .catch(() => {
-                             this.$alert('请查看是否有未填写！', '提示', {
-                               confirmButtonText: '确定',
-                               type: 'warning'
-                            });
-                        });
                 }else {
                     this.$message({
                         message: '请选择评分！',
@@ -1954,6 +1958,15 @@ export default {
                 });
             } else {
                 if(this.tableData_2[0].integral!=0){
+                    for(var i=0;i<this.tableData_2.length;i++){
+                        if(this.tableData_2[i].reason==''||this.tableData_2[i].useHour==0){
+                            this.$alert('请查看是否有未填写项！', '提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning'
+                            })
+                            return
+                        }
+                    }
                     addObj(this.tableData_2)
                         .then(() => {
                             this.$nextTick(() => {
@@ -1962,12 +1975,6 @@ export default {
                             });
                            this.reload();
                         })
-                        .catch(() => {
-                             this.$alert('请查看是否有未填写！', '提示', {
-                               confirmButtonText: '确定',
-                               type: 'warning'
-                            });
-                        });
                 }else {
                     this.$message({
                         message: '请选择评分！',
@@ -1992,6 +1999,15 @@ export default {
                 });
             } else {
                 if(this.tableData_3[0].integral!=0){
+                    for(var i=0;i<this.tableData_3.length;i++){
+                        if(this.tableData_3[i].reason==''||this.tableData_3[i].useHour==0){
+                            this.$alert('请查看是否有未填写项！', '提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning'
+                            })
+                            return
+                        }
+                    }
                     addObj(this.tableData_3)
                         .then(() => {
                             this.$nextTick(() => {
@@ -2000,12 +2016,6 @@ export default {
                             });
                            this.reload();
                         })
-                        .catch(() => {
-                             this.$alert('请查看是否有未填写！', '提示', {
-                               confirmButtonText: '确定',
-                               type: 'warning'
-                            });
-                        });
                 }else {
                     this.$message({
                         message: '请选择评分！',
@@ -2030,6 +2040,15 @@ export default {
                 });
             } else {
                 if(this.tableData_4[0].integral!=0){
+                    for(var i=0;i<this.tableData_4.length;i++){
+                        if(this.tableData_4[i].reason==''||this.tableData_4[i].useHour==0){
+                            this.$alert('请查看是否有未填写项！', '提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning'
+                            })
+                            return
+                        }
+                    }
                     addObj(this.tableData_4)
                         .then(() => {
                             this.$nextTick(() => {
@@ -2038,12 +2057,6 @@ export default {
                             });
                            this.reload();
                         })
-                        .catch(() => {
-                             this.$alert('请查看是否有未填写！', '提示', {
-                               confirmButtonText: '确定',
-                               type: 'warning'
-                            });
-                        });
                 }else {
                     this.$message({
                         message: '请选择评分！',
@@ -2068,6 +2081,15 @@ export default {
                 });
             } else {
                if(this.tableData_5[0].integral!=0){
+                   for(var i=0;i<this.tableData_5.length;i++){
+                       if(this.tableData_5[i].reason==''||this.tableData_5[i].useHour==0){
+                           this.$alert('请查看是否有未填写项！', '提示', {
+                               confirmButtonText: '确定',
+                               type: 'warning'
+                           })
+                           return
+                       }
+                   }
                    addObj(this.tableData_5)
                        .then(() => {
                            this.$nextTick(() => {
@@ -2076,12 +2098,6 @@ export default {
                            });
                           this.reload();
                        })
-                       .catch(() => {
-                            this.$alert('请查看是否有未填写！', '提示', {
-                              confirmButtonText: '确定',
-                              type: 'warning'
-                           });
-                       });
                }else {
                    this.$message({
                        message: '请选择评分！',
@@ -2106,6 +2122,15 @@ export default {
                 });
             } else {
                 if(this.tableData_6[0].integral!=0){
+                    for(var i=0;i<this.tableData_6.length;i++){
+                        if(this.tableData_6[i].reason==''||this.tableData_6[i].useHour==0){
+                            this.$alert('请查看是否有未填写项！', '提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning'
+                            })
+                            return
+                        }
+                    }
                     addObj(this.tableData_6)
                         .then(() => {
                             this.$nextTick(() => {
@@ -2114,12 +2139,6 @@ export default {
                             });
                            this.reload();
                         })
-                        .catch(() => {
-                             this.$alert('请查看是否有未填写！', '提示', {
-                               confirmButtonText: '确定',
-                               type: 'warning'
-                            });
-                        });
                 }else {
                     this.$message({
                         message: '请选择评分！',
@@ -2144,6 +2163,15 @@ export default {
                 });
             } else {
                 if(this.tableData_7[0].integral!=0){
+                    for(var i=0;i<this.tableData_7.length;i++){
+                        if(this.tableData_7[i].reason==''||this.tableData_7[i].useHour==0){
+                            this.$alert('请查看是否有未填写项！', '提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning'
+                            })
+                            return
+                        }
+                    }
                     addObj(this.tableData_7)
                         .then(() => {
                             this.$nextTick(() => {
@@ -2152,12 +2180,6 @@ export default {
                             });
                            this.reload();
                         })
-                        .catch(() => {
-                             this.$alert('请查看是否有未填写！', '提示', {
-                               confirmButtonText: '确定',
-                               type: 'warning'
-                            });
-                        });
                 }else {
                     this.$message({
                         message: '请选择评分！',
