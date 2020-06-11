@@ -19,6 +19,11 @@ Vue.prototype.$echarts = echarts;
 import Print from "vue-print-nb";
 Vue.use(Print);
 
+// 复制功能
+import VueClipboard from 'vue-clipboard2'
+ 
+Vue.use(VueClipboard)
+
 // 注册全局组件（register global）
 Vue.component("icon-svg", IconSvg);
 

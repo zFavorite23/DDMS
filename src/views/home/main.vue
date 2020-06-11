@@ -416,7 +416,7 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour/form'
+                    path: '/apply/manhour'
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -579,7 +579,7 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour/approver'
+                    path: '/apply/manhour'
                 });
             } else if (id == 3) {
                 this.$router.push({

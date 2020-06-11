@@ -272,21 +272,26 @@ export default {
                 this.applyUserList = [];
                 this.formData.approverids = null;
                 response.data.data.forEach(element => {
-                    this.applyUserList.push({
-                        userId: element.userId,
-                        username: element.username,
-                        avatar: element.avatar
-                    });
-                    if (this.formData.approverids == null) {
-                        this.formData.approverids += element.userId;
-                    } else {
-                        this.formData.approverids += ',' + element.userId;
+                    if(element!=null){
+                        this.applyUserList.push({
+                            userId: element.userId,
+                            username: element.username,
+                            avatar: element.avatar
+                        });
+                        if (this.formData.approverids == null) {
+                            this.formData.approverids += element.userId;
+                        } else {
+                            this.formData.approverids += ',' + element.userId;
+                        }
                     }
+
+
                 });
             });
         },
         getItemVosWithUserId(userId) {
             getItemVosWithUserId(userId).then(response => {
+                console.log(response)
                 response.data.data.forEach(element => {
                     this.itemOptions.push({
                         value: element.itemId,

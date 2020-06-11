@@ -44,6 +44,7 @@
                     <td v-else-if="expenseInfo.type == 3">办公家具</td>
                     <td v-else-if="expenseInfo.type == 4">税款</td>
                     <td v-else-if="expenseInfo.type == 5">会议服务费</td>
+					<td v-else-if="expenseInfo.type == 6">管理费</td>
                     <td v-else></td>
                 </tr>
                 <tr>

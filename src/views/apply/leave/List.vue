@@ -76,7 +76,7 @@
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="100" label="审批人">
+            <el-table-column min-width="120" label="审批人">
                 <template slot-scope="scope">
                     <div
                         class="tag-group"

@@ -23,6 +23,7 @@
                     <el-radio v-if="formData.classify == 4" label="3">办公家具</el-radio>
                     <el-radio v-if="formData.classify == 4" label="4">税款</el-radio>
                     <el-radio v-if="formData.classify == 4" label="5">会议服务费</el-radio>
+                    <el-radio v-if="formData.classify == 4" label="6">管理费</el-radio>
                 </el-radio-group>
             </el-form-item>
 
