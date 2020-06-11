@@ -234,12 +234,12 @@ export default {
                 this.list[val].checkMin = this.list[val].useHour;
             }
             this.list[val].checkMin = parseFloat(this.list[val].checkMin);
-            console.log(typeof this.list[val].checkMin)
-            console.log(this.list[val])
-            // updateManhourApprover(this.list[val]).then(res => {
-            //     console.log(res);
-            //     this.getManhourApproverPage();
-            // });
+            // console.log(typeof this.list[val].checkMin)
+            // console.log(this.list[val])
+            updateManhourApprover(this.list[val]).then(res => {
+                console.log(res);
+                this.getManhourApproverPage();
+            });
         },
 
         // 一键审批

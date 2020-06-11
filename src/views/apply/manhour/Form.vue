@@ -4264,7 +4264,7 @@ ${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?
 }
 .invoiceRules {
     top: 0;
-}
+ }
 .top {
     display: flex;
     margin-top: 20px;
