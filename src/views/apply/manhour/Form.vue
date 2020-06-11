@@ -242,8 +242,11 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -403,8 +406,11 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -564,8 +570,11 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -725,9 +734,12 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
-                        </el-select>
+                       <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                           <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                       </el-select>
+                       <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                           <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                       </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
@@ -886,8 +898,11 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -1047,8 +1062,11 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -1208,8 +1226,11 @@
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -1583,6 +1604,7 @@ export default {
             ],
             userList:[],
             applyUserList: [{ value: 0, label: '无人验收' }],
+            applyUserList2: [{ value: 0, label: '无人验收' }],
             applyClockInfo: '',
             pickerOptions: {
                 disabledDate(time) {
@@ -1648,7 +1670,7 @@ export default {
 
         // 增加行
         addRow_1() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_1[0].integral,
@@ -1684,7 +1706,7 @@ export default {
             }
         },
         addRow_2() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_2[0].integral,
@@ -1719,7 +1741,7 @@ export default {
             }
         },
         addRow_3() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_3[0].integral,
@@ -1754,7 +1776,7 @@ export default {
             }
         },
         addRow_4() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_4[0].integral,
@@ -1789,7 +1811,7 @@ export default {
             }
         },
         addRow_5() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_5[0].integral,
@@ -1824,7 +1846,7 @@ export default {
             }
         },
         addRow_6() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_6[0].integral,
@@ -1859,7 +1881,7 @@ export default {
             }
         },
         addRow_7() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }];
+            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_7[0].integral,
@@ -2359,7 +2381,7 @@ export default {
             if (val == 2 || val == 3) {
                 this.getApplyUser();
             } else {
-                this.applyUserList = [{ value: 0, label: '无人验收' }];
+                this.applyUserList2 = [{ value: 0, label: '无人验收' }];
             }
         },
 
