@@ -36,147 +36,27 @@
                     </el-select>
                 </span>
             </div>
-           <!-- <el-table :data="oldList" v-if="oldList.length!=0" style="width: 100%">
-                <el-table-column align="center" prop="category" label="工作类别" width="140">
-                    <template slot-scope="scope">
-                        <el-select disabled :value="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory()">
-                            <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
-                    <template slot-scope="scope">
-                        <el-select  disabled v-if="scope.row.category == '1'" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select disabled  v-if="scope.row.category == '2'" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select disabled  v-if="scope.row.category == '3'" v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select  disabled v-if="scope.row.category == '4'" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="subClassify" label="子分类" width="180">
-                    <template slot-scope="scope">
-                        <el-select
-                            disabled
-                            v-if="scope.row.category == '1' && scope.row.mainClassify == '1'"
-                            v-model="scope.row.subClassify"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 120px;"
-                        >
-                            <el-option v-for="(item, index) in subClassifyOptions_1" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select
-                        disabled
-                            v-if="scope.row.category == '1' && scope.row.mainClassify == '2'"
-                            v-model="scope.row.subClassify"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 120px;"
-                        >
-                            <el-option v-for="(item, index) in subClassifyOptions_2" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select
-                            disabled
-                            v-if="scope.row.category == '1' && scope.row.mainClassify == '3'"
-                            v-model="scope.row.subClassify"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 120px;"
-                        >
-                            <el-option v-for="(item, index) in subClassifyOptions_3" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select
-                            disabled
-                            v-if="scope.row.category == '1' && scope.row.mainClassify == '4'"
-                            v-model="scope.row.subClassify"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 120px;"
-                        >
-                            <el-option v-for="(item, index) in subClassifyOptions_4" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select
-                            disabled
-                            v-if="scope.row.category == '1' && scope.row.mainClassify == '5'"
-                            v-model="scope.row.subClassify"
-                            placeholder="请选择"
-                            size="mini"
-                            style="width: 120px;"
-                        >
-                            <el-option v-for="(item, index) in subClassifyOptions_5" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select disabled v-if="scope.row.category == '2'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in subClassifyOptions_6" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select disabled v-if="scope.row.category == '3'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in subClassifyOptions_7" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                        <el-select disabled v-if="scope.row.category == '4'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="reason" label="工作内容" width="320">
-                    <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" disabled :value="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="approverids" label="验收人" width="140">
-                    <template slot-scope="scope">
-                        <el-select :value="scope.row.approverids" disabled placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="complete" label="完成情况" width="140">
-                    <template slot-scope="scope">
-                        <el-select :value="scope.row.complete" disabled placeholder="请选择" size="mini" style="width: 120px;">
-                            <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="completeTime" label="预计完成时间" width="220">
-                    <template slot-scope="scope">
-                        <el-date-picker :value="scope.row.completeTime" disabled style="width: 180px;" size="mini" placeholder="选择日期"></el-date-picker>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="useHour" label="工时" width="140">
-                    <template slot-scope="scope">
-                        <el-input-number
-                            disabled
-                            :value="scope.row.useHour"
-                            size="small"
-                            controls-position="right"
-                        ></el-input-number>
-                    </template>
-                </el-table-column>
 
-            </el-table> -->
-            <el-table :data="tableData_1" style="width: 100%">
+            <el-table :data="tableData_1"  style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_1[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '1'" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select  :disabled='tableData_1[0].integral == 0' v-if="scope.row.category == '1'" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '2'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select  :disabled='tableData_1[0].integral == 0' v-if="scope.row.category == '2'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '3'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select  :disabled='tableData_1[0].integral == 0' v-if="scope.row.category == '3'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '4'" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_1[0].integral == 0'  v-if="scope.row.category == '4'" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -239,26 +119,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_1[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_1[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_1[0].integral == 0' v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_1[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -282,6 +162,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                            :disabled='tableData_1[0].integral == 0'
                             @change="selectHour_1"
                             v-model="scope.row.useHour"
                             size="small"
@@ -296,8 +177,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_1(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_1()"></el-button>
+                        <el-button :disabled='tableData_1[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_1(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_1[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_1()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -332,23 +213,23 @@
             <el-table :data="tableData_2" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_2[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_2[0].integral == 0' v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_2[0].integral == 0' v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_2[0].integral == 0' v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_2[0].integral == 0' v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -411,26 +292,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_2[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select  :disabled='tableData_2[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_2[0].integral == 0'  v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_2[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -454,6 +335,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                        :disabled='tableData_2[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -467,8 +349,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_2(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_2()"></el-button>
+                        <el-button :disabled='tableData_2[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_2(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_2[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_2()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -503,23 +385,23 @@
             <el-table :data="tableData_3" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_3[0].integral == 0' v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -582,26 +464,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_3[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_3[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -625,6 +507,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                        :disabled='tableData_3[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -638,8 +521,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_3(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_3()"></el-button>
+                        <el-button :disabled='tableData_3[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_3(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_3[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_3()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -674,23 +557,23 @@
             <el-table :data="tableData_4" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_4[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_4[0].integral == 0' v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_4[0].integral == 0' v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_4[0].integral == 0' v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_4[0].integral == 0' v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -753,26 +636,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_4[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select  :disabled='tableData_4[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_4[0].integral == 0'  v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_4[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -796,6 +679,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                        :disabled='tableData_4[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -809,8 +693,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_4(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_4()"></el-button>
+                        <el-button :disabled='tableData_4[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_4(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_4[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_4()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -844,23 +728,23 @@
             <el-table :data="tableData_5" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_5[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select  :disabled='tableData_5[0].integral == 0' v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select  :disabled='tableData_5[0].integral == 0' v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select  :disabled='tableData_5[0].integral == 0' v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_5[0].integral == 0'  v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -923,26 +807,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_5[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_5[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_5[0].integral == 0' v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_5[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -966,6 +850,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                        :disabled='tableData_5[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -979,8 +864,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_5(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_5()"></el-button>
+                        <el-button :disabled='tableData_5[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_5(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_5[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_5()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -1015,23 +900,23 @@
             <el-table :data="tableData_6" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_6[0].integral == 0' v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -1094,26 +979,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_6[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_6[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -1137,6 +1022,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                        :disabled='tableData_6[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -1150,8 +1036,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_6(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_6()"></el-button>
+                        <el-button :disabled='tableData_6[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_6(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_6[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_6()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -1186,23 +1072,23 @@
             <el-table :data="tableData_7" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="mainClassify" label="主分类" width="180">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
+                        <el-select :disabled='tableData_7[0].integral == 0' v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -1265,26 +1151,26 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input :disabled='tableData_7[0].integral == 0' type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
                             <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
                             <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
+                        <el-select :disabled='tableData_7[0].integral == 0' v-model="scope.row.complete" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in completeOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -1308,6 +1194,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                        :disabled='tableData_7[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -1321,8 +1208,8 @@
                 </el-table-column>
                 <el-table-column align="center" prop="address" label="操作" width="140">
                     <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" circle @click="deleteRow_7(scope.$index)"></el-button>
-                        <el-button type="primary" icon="el-icon-plus" circle @click="addRow_7()"></el-button>
+                        <el-button :disabled='tableData_7[0].integral == 0' type="danger" icon="el-icon-delete" circle @click="deleteRow_7(scope.$index)"></el-button>
+                        <el-button :disabled='tableData_7[0].integral == 0' type="primary" icon="el-icon-plus" circle @click="addRow_7()"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -1680,13 +1567,6 @@ export default {
         this.getAbnormalSeven();
         this.getItemVosWithUserId();
         this.getUserInfo()
-        // var lists = JSON.parse(localStorage.getItem('oldList'))
-        // if(lists.length!=0){
-        //     this.oldList = JSON.parse(localStorage.getItem('oldList'))
-        // }else{
-        //     this.oldList = []
-        // }
-
     },
     computed: {
         ...mapGetters(['permissions', 'userId']),
@@ -1979,11 +1859,7 @@ export default {
 
         // 提交
         submit_1() {
-
-               // for (var i=0;i<this.tableData_1.length;i++){
-               //     this.oldList.push(this.tableData_1[i])
-               // }
-               // localStorage.setItem('oldList',JSON.stringify(this.oldList))
+            // console.log(this.tableData_1)
             var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
@@ -1997,7 +1873,7 @@ export default {
                     type: 'warning'
                 });
             } else {
-                if(this.tableData_1[0].integral!=0){
+                if(this.tableData_1.integral!=0){
                     console.log(this.tableData_1)
                     for(var i=0;i<this.tableData_1.length;i++){
                         if(this.tableData_1[i].reason==''||this.tableData_1[i].useHour==0){

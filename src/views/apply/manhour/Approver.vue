@@ -107,7 +107,7 @@
             </el-table-column>
             <el-table-column min-width="120" label="审批工时">
                 <template slot-scope="scope">
-                    <p v-show="scope.row.show" v-if="scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
+                    <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
                     <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p>
                     <el-input-number
                         v-show="!scope.row.show"
@@ -142,13 +142,14 @@
                             <el-button size="mini" type="primary" @click="scope.row.show = false">不通过</el-button>
                         </span>
                         <span v-if="scope.row.show == false">
-                            <el-button size="mini" type="primary" @click="updateManhourApprover(scope.$index)">确定</el-button>
+                            <el-button size="mini" type="primary" @click="okUpdate(scope.$index)">确定</el-button>
                             <el-button size="mini" type="primary" @click="scope.row.show = true">返回</el-button>
                         </span>
                     </span>
 
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete == '100'" type="success">同意</el-tag>
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete != '100'" type="warning">同意(未完成)</el-tag>
+                    <el-tag v-if="scope.row.status == 2" type="danger">已拒绝</el-tag>
                 </template>
             </el-table-column>
         </el-table>
@@ -226,14 +227,30 @@ export default {
             this.query.current = val;
             this.getManhourApproverPage();
         },
-        // 单行审批
+
+        // 通过审批
         updateManhourApprover(val) {
             if (this.list[val].checkMin == this.list[val].useHour - 2 || this.list[val].checkMin == 0) {
                 this.list[val].checkMin = this.list[val].useHour;
             }
             this.list[val].checkMin = parseFloat(this.list[val].checkMin);
-            // console.log(typeof this.list[val].checkMin)
-            // console.log(this.list[val])
+            this.$set(this.list[val], 'check', 1);
+            console.log(this.list[val]);
+            updateManhourApprover(this.list[val]).then(res => {
+                console.log(res);
+                this.getManhourApproverPage();
+            });
+        },
+
+        //  不通过审批
+        okUpdate(val) {
+            this.list[val].show = false;
+            if (this.list[val].checkMin == this.list[val].useHour - 2 || this.list[val].checkMin == 0) {
+                this.list[val].checkMin = this.list[val].useHour;
+            }
+            this.list[val].checkMin = parseFloat(this.list[val].checkMin);
+            this.$set(this.list[val], 'check', 2);
+            console.log(this.list[val]);
             updateManhourApprover(this.list[val]).then(res => {
                 console.log(res);
                 this.getManhourApproverPage();
