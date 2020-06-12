@@ -2737,6 +2737,8 @@ export default {
                 type: 'success'
             });
             // 验收人
+            var category_1 = ''
+            // 验收人
             var name_1 = ''
             var name_2 = ''
             var name_3 = ''
@@ -2749,6 +2751,13 @@ export default {
             var itemName_4=''
             var itemName_5=''
             if(this.tableData_1.length == 1){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_1[0].category){
+                        category_1 = this.categoryOptions[i].label
+                    }
+                }
+                console.log(category_1)
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_1[0].approverids){
@@ -2769,7 +2778,7 @@ export default {
                 }
               this.$copyText(
                 `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}`
+${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
