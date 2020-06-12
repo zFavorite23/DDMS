@@ -128,7 +128,10 @@
             <el-table-column min-width="180" label="完成进度">
                 <template slot-scope="scope">
                     <el-tag v-if="scope.row.complete == '100'" type="success">已完成</el-tag>
-                    <el-tag v-else type="warning">完成 {{ scope.row.complete }}% 预计{{ scope.row.completeTime }}完成</el-tag>
+                    <div v-else>
+                        <el-tag type="warning">完成 {{ scope.row.complete }}%</el-tag>
+                        <el-tag type="warning">预计{{ scope.row.completeTime }}完成</el-tag>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column label="操作" min-width="140" fixed="right">

@@ -16,16 +16,6 @@
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="100" label="验收人">
-                <template slot-scope="scope">
-                    <span v-if="scope.row.checkUserList != ''">
-                        <div class="tag-group" v-for="item in scope.row.checkUserList">
-                            <p>{{ item.checkUserName }}</p>
-                        </div>
-                    </span>
-                    <span v-else><p>无人验收</p></span>
-                </template>
-            </el-table-column>
 
             <el-table-column min-width="80" label="工作类别">
                 <template slot-scope="scope">
@@ -119,6 +109,16 @@
                     <p v-else>{{ scope.row.useHour }} 小时</p>
                 </template>
             </el-table-column>
+            <el-table-column min-width="100" label="验收人">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.checkUserList != ''">
+                        <div class="tag-group" v-for="item in scope.row.checkUserList">
+                            <p>{{ item.checkUserName }}</p>
+                        </div>
+                    </span>
+                    <span v-else><p>无人验收</p></span>
+                </template>
+            </el-table-column>
             <el-table-column min-width="120" label="反馈意见">
                 <template slot-scope="scope">
                     <p>{{ scope.row.summary }}</p>
@@ -127,7 +127,10 @@
             <el-table-column min-width="180" label="完成进度">
                 <template slot-scope="scope">
                     <el-tag v-if="scope.row.complete == '100'" type="success">已完成</el-tag>
-                    <el-tag v-else type="warning">完成 {{ scope.row.complete }}% 预计{{ scope.row.completeTime }}完成</el-tag>
+                    <div v-else>
+                        <el-tag type="warning">完成 {{ scope.row.complete }}%</el-tag>
+                        <el-tag type="warning">预计{{ scope.row.completeTime }}完成</el-tag>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column prop="status" min-width="100" label="审批状态">

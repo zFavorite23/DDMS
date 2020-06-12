@@ -2732,6 +2732,8 @@ export default {
 
         // 拷贝内容
         copyCode_1() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_1 = this.day_1.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -2757,7 +2759,6 @@ export default {
                         category_1 = this.categoryOptions[i].label
                     }
                 }
-                console.log(category_1)
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_1[0].approverids){
@@ -2777,7 +2778,7 @@ export default {
                     }
                 }
               this.$copyText(
-                `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+                `${day_1}--${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
 ${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}`
               ).then(res => {
                 console.log(res);
@@ -2785,12 +2786,24 @@ ${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].
               });
             }
             if(this.tableData_1.length == 2){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_1[0].category){
+                        category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_1[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_1[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
                 }
                 // 项目
@@ -2812,24 +2825,41 @@ ${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}`
+                  `${day_1}--${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_1.length == 3){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_1[0].category){
+                        category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_1[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_1[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_1[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
                 }
                 // 项目
@@ -2857,28 +2887,50 @@ ${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}`
+                  `${day_1}--${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_1.length == 4){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_1[0].category){
+                        category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_1[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_1[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_1[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_1[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
                 }
                 // 项目
@@ -2912,32 +2964,59 @@ ${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
-${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}`
+                  `${day_1}--${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_1.length == 5){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_1[0].category){
+                        category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_1[4].category){
+                        var category_5 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_1[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_1[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_1[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_1[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_1[4].approverids){
-                        name_5 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList4.length;i++){
+                    if(this.applyUserList4[i].value==this.tableData_1[4].approverids){
+                        name_5 = this.applyUserList4[i].label
                     }
                 }
                 // 项目
@@ -2977,12 +3056,12 @@ ${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_1.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
-${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}
-${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?'已完成':'未完成'}-${this.tableData_1[4].complete!=100?`预计 ${this.tableData_1[4].completeTime} 完成`:''}-${this.tableData_1[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_1[4].useHour}`
+                  `${day_1}--${this.userList.deptName}--${this.userList.username}--${this.tableData_1[0].integral}
+${category_1}-${itemName_1}-${this.tableData_1[0].reason}-${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}-${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_1[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_1[1].reason}-${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}-${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_1[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_1[2].reason}-${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[2].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}-${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_1[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_1[3].reason}-${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}-${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_1[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?'已完成':'未完成'}-${this.tableData_1[4].complete!=100?`预计 ${this.tableData_1[4].completeTime} 完成`:''}-${this.tableData_1[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_1[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -2990,7 +3069,10 @@ ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?
             }
 
         },
+
         copyCode_2() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_2 = this.day_2.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -3008,8 +3090,14 @@ ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?
             var itemName_4=''
             var itemName_5=''
            if(this.tableData_2.length == 1){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_2[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+               }
                // 验收人
-               for(var i=0;i<this.applyUserList.length;i++){
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_2[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
@@ -3027,20 +3115,32 @@ ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?
                    }
                }
              this.$copyText(
-               `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}`
+               `${day_2}--${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${category_1}-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
              });
            }
            if(this.tableData_2.length == 2){
-               for(var i=0;i<this.applyUserList.length;i++){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_2[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_2[1].category){
+                       var category_2 = this.categoryOptions[i].label
+                   }
+               }
+               // 验收人
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_2[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_2[1].approverids){
-                       name_2 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList1.length;i++){
+                   if(this.applyUserList1[i].value==this.tableData_2[1].approverids){
+                       name_2 = this.applyUserList1[i].label
                    }
                }
                // 项目
@@ -3062,24 +3162,41 @@ ${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}`
+                 `${day_2}--${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${category_1}-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
                });
            }
            if(this.tableData_2.length == 3){
-               for(var i=0;i<this.applyUserList.length;i++){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_2[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_2[1].category){
+                       var category_2 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_2[2].category){
+                       var category_3 = this.categoryOptions[i].label
+                   }
+               }
+               // 验收人
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_2[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_2[1].approverids){
-                       name_2 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList1.length;i++){
+                   if(this.applyUserList1[i].value==this.tableData_2[1].approverids){
+                       name_2 = this.applyUserList1[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_2[2].approverids){
-                       name_3 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList2.length;i++){
+                   if(this.applyUserList2[i].value==this.tableData_2[2].approverids){
+                       name_3 = this.applyUserList2[i].label
                    }
                }
                // 项目
@@ -3107,28 +3224,50 @@ ${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}`
+                 `${day_2}--${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${category_1}-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
                });
            }
            if(this.tableData_2.length == 4){
-               for(var i=0;i<this.applyUserList.length;i++){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_2[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_2[1].category){
+                       var category_2 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_2[2].category){
+                       var category_3 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_2[3].category){
+                       var category_4 = this.categoryOptions[i].label
+                   }
+               }
+               // 验收人
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_2[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_2[1].approverids){
-                       name_2 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList1.length;i++){
+                   if(this.applyUserList1[i].value==this.tableData_2[1].approverids){
+                       name_2 = this.applyUserList1[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_2[2].approverids){
-                       name_3 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList2.length;i++){
+                   if(this.applyUserList2[i].value==this.tableData_2[2].approverids){
+                       name_3 = this.applyUserList2[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_2[3].approverids){
-                       name_4 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList3.length;i++){
+                   if(this.applyUserList3[i].value==this.tableData_2[3].approverids){
+                       name_4 = this.applyUserList3[i].label
                    }
                }
                // 项目
@@ -3162,32 +3301,59 @@ ${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}
-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_2}/${this.tableData_2[3].useHour}`
+                 `${day_2}--${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${category_1}-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_2}/${this.tableData_2[3].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
                });
            }
            if(this.tableData_2.length == 5){
-              for(var i=0;i<this.applyUserList.length;i++){
+              // 工作类别
+              for(var i=0;i<this.categoryOptions.length;i++){
+                  if(this.categoryOptions[i].value==this.tableData_2[0].category){
+                      var category_1 = this.categoryOptions[i].label
+                  }
+                  if(this.categoryOptions[i].value==this.tableData_2[1].category){
+                      var category_2 = this.categoryOptions[i].label
+                  }
+                  if(this.categoryOptions[i].value==this.tableData_2[2].category){
+                      var category_3 = this.categoryOptions[i].label
+                  }
+                  if(this.categoryOptions[i].value==this.tableData_2[3].category){
+                      var category_4 = this.categoryOptions[i].label
+                  }
+                  if(this.categoryOptions[i].value==this.tableData_2[4].category){
+                      var category_5 = this.categoryOptions[i].label
+                  }
+              }
+              // 验收人
+              for(let i=0;i<this.applyUserList.length;i++){
                   if(this.applyUserList[i].value==this.tableData_2[0].approverids){
                       name_1 = this.applyUserList[i].label
                   }
-                  if(this.applyUserList[i].value==this.tableData_2[1].approverids){
-                      name_2 = this.applyUserList[i].label
+              }
+              for(let i=0;i<this.applyUserList1.length;i++){
+                  if(this.applyUserList1[i].value==this.tableData_2[1].approverids){
+                      name_2 = this.applyUserList1[i].label
                   }
-                  if(this.applyUserList[i].value==this.tableData_2[2].approverids){
-                      name_3 = this.applyUserList[i].label
+              }
+              for(let i=0;i<this.applyUserList2.length;i++){
+                  if(this.applyUserList2[i].value==this.tableData_2[2].approverids){
+                      name_3 = this.applyUserList2[i].label
                   }
-                  if(this.applyUserList[i].value==this.tableData_2[3].approverids){
-                      name_4 = this.applyUserList[i].label
+              }
+              for(let i=0;i<this.applyUserList3.length;i++){
+                  if(this.applyUserList3[i].value==this.tableData_2[3].approverids){
+                      name_4 = this.applyUserList3[i].label
                   }
-                  if(this.applyUserList[i].value==this.tableData_2[4].approverids){
-                      name_5 = this.applyUserList[i].label
+              }
+              for(let i=0;i<this.applyUserList4.length;i++){
+                  if(this.applyUserList4[i].value==this.tableData_2[4].approverids){
+                      name_5 = this.applyUserList4[i].label
                   }
               }
               // 项目
@@ -3227,19 +3393,22 @@ ${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?
                   }
               }
               this.$copyText(
-                `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}
-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_2}/${this.tableData_2[3].useHour}
-${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?'已完成':'未完成'}-${this.tableData_2[4].complete!=100?`预计 ${this.tableData_2[4].completeTime} 完成`:''}-${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_2}/${this.tableData_2[4].useHour}`
+                `${day_2}--${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
+${category_1}-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_2}/${this.tableData_2[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?'已完成':'未完成'}-${this.tableData_2[4].complete!=100?`预计 ${this.tableData_2[4].completeTime} 完成`:''}-${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_2}/${this.tableData_2[4].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
               });
           }
         },
+
         copyCode_3() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_3 = this.day_3.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -3257,8 +3426,14 @@ ${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?
            var itemName_4=''
            var itemName_5=''
            if(this.tableData_3.length == 1){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_3[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+               }
                // 验收人
-               for(var i=0;i<this.applyUserList.length;i++){
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_3[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
@@ -3276,20 +3451,32 @@ ${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?
                    }
                }
              this.$copyText(
-               `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}`
+               `${day_3}--${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${category_1}-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
              });
            }
            if(this.tableData_3.length == 2){
-               for(var i=0;i<this.applyUserList.length;i++){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_3[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_3[1].category){
+                       var category_2 = this.categoryOptions[i].label
+                   }
+               }
+               // 验收人
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_3[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_3[1].approverids){
-                       name_2 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList1.length;i++){
+                   if(this.applyUserList1[i].value==this.tableData_3[1].approverids){
+                       name_2 = this.applyUserList1[i].label
                    }
                }
                // 项目
@@ -3311,24 +3498,41 @@ ${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}`
+                 `${day_3}--${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${category_1}-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
                });
            }
            if(this.tableData_3.length == 3){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_3[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_3[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_3[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_3[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_3[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_3[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_3[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_3[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
                 }
                 // 项目
@@ -3356,28 +3560,50 @@ ${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}`
+                  `${day_3}--${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${category_1}-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
            if(this.tableData_3.length == 4){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_3[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_3[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_3[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_3[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_3[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_3[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_3[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_3[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_3[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_3[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_3[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
                 }
                 // 项目
@@ -3411,32 +3637,59 @@ ${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}
-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_3}/${this.tableData_3[3].useHour}`
+                  `${day_3}--${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${category_1}-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_3}/${this.tableData_3[3].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
            if(this.tableData_3.length == 5){
-               for(var i=0;i<this.applyUserList.length;i++){
+               // 工作类别
+               for(var i=0;i<this.categoryOptions.length;i++){
+                   if(this.categoryOptions[i].value==this.tableData_3[0].category){
+                       var category_1 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_3[1].category){
+                       var category_2 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_3[2].category){
+                       var category_3 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_3[3].category){
+                       var category_4 = this.categoryOptions[i].label
+                   }
+                   if(this.categoryOptions[i].value==this.tableData_3[4].category){
+                       var category_5 = this.categoryOptions[i].label
+                   }
+               }
+               // 验收人
+               for(let i=0;i<this.applyUserList.length;i++){
                    if(this.applyUserList[i].value==this.tableData_3[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_3[1].approverids){
-                       name_2 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList1.length;i++){
+                   if(this.applyUserList1[i].value==this.tableData_3[1].approverids){
+                       name_2 = this.applyUserList1[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_3[2].approverids){
-                       name_3 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList2.length;i++){
+                   if(this.applyUserList2[i].value==this.tableData_3[2].approverids){
+                       name_3 = this.applyUserList2[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_3[3].approverids){
-                       name_4 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList3.length;i++){
+                   if(this.applyUserList3[i].value==this.tableData_3[3].approverids){
+                       name_4 = this.applyUserList3[i].label
                    }
-                   if(this.applyUserList[i].value==this.tableData_3[4].approverids){
-                       name_5 = this.applyUserList[i].label
+               }
+               for(let i=0;i<this.applyUserList4.length;i++){
+                   if(this.applyUserList4[i].value==this.tableData_3[4].approverids){
+                       name_5 = this.applyUserList4[i].label
                    }
                }
                // 项目
@@ -3476,12 +3729,12 @@ ${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?
                    }
                }
                this.$copyText(
-                 `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}
-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_3}/${this.tableData_3[3].useHour}
-${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?'已完成':'未完成'}-${this.tableData_3[4].complete!=100?`预计 ${this.tableData_3[4].completeTime} 完成`:''}-${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_3}/${this.tableData_3[4].useHour}`
+                 `${day_3}--${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
+${category_1}-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_3}/${this.tableData_3[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?'已完成':'未完成'}-${this.tableData_3[4].complete!=100?`预计 ${this.tableData_3[4].completeTime} 完成`:''}-${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_3}/${this.tableData_3[4].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3489,6 +3742,8 @@ ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?
            }
         },
         copyCode_4() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_4 = this.day_4.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -3506,8 +3761,14 @@ ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?
             var itemName_4=''
             var itemName_5=''
             if(this.tableData_4.length == 1){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_4[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                }
                 // 验收人
-                for(var i=0;i<this.applyUserList.length;i++){
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_4[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
@@ -3525,20 +3786,32 @@ ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}`
+                `${day_4}--${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${category_1}-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
               });
             }
             if(this.tableData_4.length == 2){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_4[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_4[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_4[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_4[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_4[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
                 }
                 // 项目
@@ -3560,24 +3833,41 @@ ${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}`
+                  `${day_4}--${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${category_1}-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_4.length == 3){
-                 for(var i=0;i<this.applyUserList.length;i++){
+                 // 工作类别
+                 for(var i=0;i<this.categoryOptions.length;i++){
+                     if(this.categoryOptions[i].value==this.tableData_4[0].category){
+                         var category_1 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_4[1].category){
+                         var category_2 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_4[2].category){
+                         var category_3 = this.categoryOptions[i].label
+                     }
+                 }
+                 // 验收人
+                 for(let i=0;i<this.applyUserList.length;i++){
                      if(this.applyUserList[i].value==this.tableData_4[0].approverids){
                          name_1 = this.applyUserList[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_4[1].approverids){
-                         name_2 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList1.length;i++){
+                     if(this.applyUserList1[i].value==this.tableData_4[1].approverids){
+                         name_2 = this.applyUserList1[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_4[2].approverids){
-                         name_3 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList2.length;i++){
+                     if(this.applyUserList2[i].value==this.tableData_4[2].approverids){
+                         name_3 = this.applyUserList2[i].label
                      }
                  }
                  // 项目
@@ -3605,28 +3895,50 @@ ${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}`
+                   `${day_4}--${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${category_1}-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
                  });
             }
             if(this.tableData_4.length == 4){
-                  for(var i=0;i<this.applyUserList.length;i++){
+                  // 工作类别
+                  for(var i=0;i<this.categoryOptions.length;i++){
+                      if(this.categoryOptions[i].value==this.tableData_4[0].category){
+                          var category_1 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_4[1].category){
+                          var category_2 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_4[2].category){
+                          var category_3 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_4[3].category){
+                          var category_4 = this.categoryOptions[i].label
+                      }
+                  }
+                  // 验收人
+                  for(let i=0;i<this.applyUserList.length;i++){
                       if(this.applyUserList[i].value==this.tableData_4[0].approverids){
                           name_1 = this.applyUserList[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_4[1].approverids){
-                          name_2 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList1.length;i++){
+                      if(this.applyUserList1[i].value==this.tableData_4[1].approverids){
+                          name_2 = this.applyUserList1[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_4[2].approverids){
-                          name_3 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList2.length;i++){
+                      if(this.applyUserList2[i].value==this.tableData_4[2].approverids){
+                          name_3 = this.applyUserList2[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_4[3].approverids){
-                          name_4 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList3.length;i++){
+                      if(this.applyUserList3[i].value==this.tableData_4[3].approverids){
+                          name_4 = this.applyUserList3[i].label
                       }
                   }
                   // 项目
@@ -3660,32 +3972,59 @@ ${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?
                       }
                   }
                   this.$copyText(
-                    `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}
-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_4}/${this.tableData_4[3].useHour}`
+                    `${day_4}--${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${category_1}-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_4}/${this.tableData_4[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
                   });
             }
             if(this.tableData_4.length == 5){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_4[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_4[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_4[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_4[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_4[4].category){
+                        var category_5 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_4[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_4[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_4[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_4[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_4[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_4[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_4[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_4[4].approverids){
-                        name_5 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList4.length;i++){
+                    if(this.applyUserList4[i].value==this.tableData_4[4].approverids){
+                        name_5 = this.applyUserList4[i].label
                     }
                 }
                 // 项目
@@ -3725,12 +4064,12 @@ ${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}
-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_4}/${this.tableData_4[3].useHour}
-${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?'已完成':'未完成'}-${this.tableData_4[4].complete!=100?`预计 ${this.tableData_4[4].completeTime} 完成`:''}-${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_4}/${this.tableData_4[4].useHour}`
+                  `${day_4}--${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
+${category_1}-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_4}/${this.tableData_4[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?'已完成':'未完成'}-${this.tableData_4[4].complete!=100?`预计 ${this.tableData_4[4].completeTime} 完成`:''}-${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_4}/${this.tableData_4[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3739,6 +4078,8 @@ ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?
 
         },
         copyCode_5() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_5 = this.day_5.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -3756,8 +4097,14 @@ ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?
             var itemName_4=''
             var itemName_5=''
             if(this.tableData_5.length == 1){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_5[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                }
                 // 验收人
-                for(var i=0;i<this.applyUserList.length;i++){
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_5[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
@@ -3775,20 +4122,32 @@ ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}`
+                `${day_5}--${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${category_1}-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
               });
             }
             if(this.tableData_5.length == 2){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_5[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_5[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_5[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_5[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_5[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
                 }
                 // 项目
@@ -3810,24 +4169,41 @@ ${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}`
+                  `${day_5}--${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${category_1}-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_5.length == 3){
-                 for(var i=0;i<this.applyUserList.length;i++){
+                 // 工作类别
+                 for(var i=0;i<this.categoryOptions.length;i++){
+                     if(this.categoryOptions[i].value==this.tableData_5[0].category){
+                         var category_1 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_5[1].category){
+                         var category_2 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_5[2].category){
+                         var category_3 = this.categoryOptions[i].label
+                     }
+                 }
+                 // 验收人
+                 for(let i=0;i<this.applyUserList.length;i++){
                      if(this.applyUserList[i].value==this.tableData_5[0].approverids){
                          name_1 = this.applyUserList[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_5[1].approverids){
-                         name_2 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList1.length;i++){
+                     if(this.applyUserList1[i].value==this.tableData_5[1].approverids){
+                         name_2 = this.applyUserList1[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_5[2].approverids){
-                         name_3 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList2.length;i++){
+                     if(this.applyUserList2[i].value==this.tableData_5[2].approverids){
+                         name_3 = this.applyUserList2[i].label
                      }
                  }
                  // 项目
@@ -3855,28 +4231,50 @@ ${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}`
+                   `${day_5}--${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${category_1}-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
                  });
             }
             if(this.tableData_5.length == 4){
-                  for(var i=0;i<this.applyUserList.length;i++){
+                  // 工作类别
+                  for(var i=0;i<this.categoryOptions.length;i++){
+                      if(this.categoryOptions[i].value==this.tableData_5[0].category){
+                          var category_1 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_5[1].category){
+                          var category_2 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_5[2].category){
+                          var category_3 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_5[3].category){
+                          var category_4 = this.categoryOptions[i].label
+                      }
+                  }
+                  // 验收人
+                  for(let i=0;i<this.applyUserList.length;i++){
                       if(this.applyUserList[i].value==this.tableData_5[0].approverids){
                           name_1 = this.applyUserList[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_5[1].approverids){
-                          name_2 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList1.length;i++){
+                      if(this.applyUserList1[i].value==this.tableData_5[1].approverids){
+                          name_2 = this.applyUserList1[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_5[2].approverids){
-                          name_3 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList2.length;i++){
+                      if(this.applyUserList2[i].value==this.tableData_5[2].approverids){
+                          name_3 = this.applyUserList2[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_5[3].approverids){
-                          name_4 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList3.length;i++){
+                      if(this.applyUserList3[i].value==this.tableData_5[3].approverids){
+                          name_4 = this.applyUserList3[i].label
                       }
                   }
                   // 项目
@@ -3910,32 +4308,59 @@ ${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?
                       }
                   }
                   this.$copyText(
-                    `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}
-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_5}/${this.tableData_5[3].useHour}`
+                    `${day_5}--${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${category_1}-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_5}/${this.tableData_5[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
                   });
             }
             if(this.tableData_5.length == 5){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_5[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_5[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_5[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_5[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_5[4].category){
+                        var category_5 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_5[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_5[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_5[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_5[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_5[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_5[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_5[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_5[4].approverids){
-                        name_5 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList4.length;i++){
+                    if(this.applyUserList4[i].value==this.tableData_5[4].approverids){
+                        name_5 = this.applyUserList4[i].label
                     }
                 }
                 // 项目
@@ -3975,12 +4400,12 @@ ${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}
-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_5}/${this.tableData_5[3].useHour}
-${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?'已完成':'未完成'}-${this.tableData_5[4].complete!=100?`预计 ${this.tableData_5[4].completeTime} 完成`:''}-${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_5}/${this.tableData_5[4].useHour}`
+                  `${day_5}--${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
+${category_1}-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_5}/${this.tableData_5[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?'已完成':'未完成'}-${this.tableData_5[4].complete!=100?`预计 ${this.tableData_5[4].completeTime} 完成`:''}-${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_5}/${this.tableData_5[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3990,6 +4415,8 @@ ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?
 
         },
         copyCode_6() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_6 = this.day_6.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -4007,8 +4434,14 @@ ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?
             var itemName_4=''
             var itemName_5=''
             if(this.tableData_6.length == 1){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_6[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                }
                 // 验收人
-                for(var i=0;i<this.applyUserList.length;i++){
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_6[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
@@ -4026,20 +4459,32 @@ ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}`
+                `${day_6}--${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${category_1}-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
               });
             }
             if(this.tableData_6.length == 2){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_6[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_6[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_6[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_6[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_6[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
                 }
                 // 项目
@@ -4061,24 +4506,41 @@ ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}`
+                  `${day_6}--${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${category_1}-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_6.length == 3){
-                 for(var i=0;i<this.applyUserList.length;i++){
+                 // 工作类别
+                 for(var i=0;i<this.categoryOptions.length;i++){
+                     if(this.categoryOptions[i].value==this.tableData_6[0].category){
+                         var category_1 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_6[1].category){
+                         var category_2 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_6[2].category){
+                         var category_3 = this.categoryOptions[i].label
+                     }
+                 }
+                 // 验收人
+                 for(let i=0;i<this.applyUserList.length;i++){
                      if(this.applyUserList[i].value==this.tableData_6[0].approverids){
                          name_1 = this.applyUserList[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_6[1].approverids){
-                         name_2 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList1.length;i++){
+                     if(this.applyUserList1[i].value==this.tableData_6[1].approverids){
+                         name_2 = this.applyUserList1[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_6[2].approverids){
-                         name_3 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList2.length;i++){
+                     if(this.applyUserList2[i].value==this.tableData_6[2].approverids){
+                         name_3 = this.applyUserList2[i].label
                      }
                  }
                  // 项目
@@ -4106,28 +4568,50 @@ ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}`
+                   `${day_6}--${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${category_1}-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
                  });
             }
             if(this.tableData_6.length == 4){
-                  for(var i=0;i<this.applyUserList.length;i++){
+                  // 工作类别
+                  for(var i=0;i<this.categoryOptions.length;i++){
+                      if(this.categoryOptions[i].value==this.tableData_6[0].category){
+                          var category_1 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_6[1].category){
+                          var category_2 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_6[2].category){
+                          var category_3 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_6[3].category){
+                          var category_4 = this.categoryOptions[i].label
+                      }
+                  }
+                  // 验收人
+                  for(let i=0;i<this.applyUserList.length;i++){
                       if(this.applyUserList[i].value==this.tableData_6[0].approverids){
                           name_1 = this.applyUserList[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_6[1].approverids){
-                          name_2 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList1.length;i++){
+                      if(this.applyUserList1[i].value==this.tableData_6[1].approverids){
+                          name_2 = this.applyUserList1[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_6[2].approverids){
-                          name_3 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList2.length;i++){
+                      if(this.applyUserList2[i].value==this.tableData_6[2].approverids){
+                          name_3 = this.applyUserList2[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_6[3].approverids){
-                          name_4 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList3.length;i++){
+                      if(this.applyUserList3[i].value==this.tableData_6[3].approverids){
+                          name_4 = this.applyUserList3[i].label
                       }
                   }
                   // 项目
@@ -4161,32 +4645,59 @@ ${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?
                       }
                   }
                   this.$copyText(
-                    `$${this.day_6.day}-{this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}
-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_6}/${this.tableData_6[3].useHour}`
+                    `$${day_6}--{this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${category_1}-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_6}/${this.tableData_6[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
                   });
             }
             if(this.tableData_6.length == 5){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_6[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_6[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_6[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_6[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_6[4].category){
+                        var category_5 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_6[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_6[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_6[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_6[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_6[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_6[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_6[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_6[4].approverids){
-                        name_5 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList4.length;i++){
+                    if(this.applyUserList4[i].value==this.tableData_6[4].approverids){
+                        name_5 = this.applyUserList4[i].label
                     }
                 }
                 // 项目
@@ -4226,12 +4737,12 @@ ${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}
-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_6}/${this.tableData_6[3].useHour}
-${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?'已完成':'未完成'}-${this.tableData_6[4].complete!=100?`预计 ${this.tableData_6[4].completeTime} 完成`:''}-${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_6}/${this.tableData_6[4].useHour}`
+                  `${day_6}--${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
+${category_1}-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_6}/${this.tableData_6[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?'已完成':'未完成'}-${this.tableData_6[4].complete!=100?`预计 ${this.tableData_6[4].completeTime} 完成`:''}-${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_6}/${this.tableData_6[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4240,6 +4751,8 @@ ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?
 
         },
         copyCode_7() {
+            var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+            var day_7 = this.day_7.day.replace(reg, "$1 年 $2 月 $3 日");
             this.$message({
                 message: '已成功复制填报信息！',
                 type: 'success'
@@ -4257,8 +4770,14 @@ ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?
             var itemName_4=''
             var itemName_5=''
             if(this.tableData_7.length == 1){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_7[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                }
                 // 验收人
-                for(var i=0;i<this.applyUserList.length;i++){
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_7[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
@@ -4276,20 +4795,32 @@ ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?
                     }
                 }
               this.$copyText(
-                `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}`
+                `${day_7}--${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${category_1}-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
               });
             }
             if(this.tableData_7.length == 2){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_7[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_7[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_7[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_7[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_7[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
                 }
                 // 项目
@@ -4311,24 +4842,41 @@ ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}`
+                  `${day_7}--${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${category_1}-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
                 });
             }
             if(this.tableData_7.length == 3){
-                 for(var i=0;i<this.applyUserList.length;i++){
+                 // 工作类别
+                 for(var i=0;i<this.categoryOptions.length;i++){
+                     if(this.categoryOptions[i].value==this.tableData_7[0].category){
+                         var category_1 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_7[1].category){
+                         var category_2 = this.categoryOptions[i].label
+                     }
+                     if(this.categoryOptions[i].value==this.tableData_7[2].category){
+                         var category_3 = this.categoryOptions[i].label
+                     }
+                 }
+                 // 验收人
+                 for(let i=0;i<this.applyUserList.length;i++){
                      if(this.applyUserList[i].value==this.tableData_7[0].approverids){
                          name_1 = this.applyUserList[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_7[1].approverids){
-                         name_2 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList1.length;i++){
+                     if(this.applyUserList1[i].value==this.tableData_7[1].approverids){
+                         name_2 = this.applyUserList1[i].label
                      }
-                     if(this.applyUserList[i].value==this.tableData_7[2].approverids){
-                         name_3 = this.applyUserList[i].label
+                 }
+                 for(let i=0;i<this.applyUserList2.length;i++){
+                     if(this.applyUserList2[i].value==this.tableData_7[2].approverids){
+                         name_3 = this.applyUserList2[i].label
                      }
                  }
                  // 项目
@@ -4356,28 +4904,50 @@ ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?
                      }
                  }
                  this.$copyText(
-                   `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}`
+                   `${day_7}--${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${category_1}-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
                  });
             }
             if(this.tableData_7.length == 4){
-                  for(var i=0;i<this.applyUserList.length;i++){
+                  // 工作类别
+                  for(var i=0;i<this.categoryOptions.length;i++){
+                      if(this.categoryOptions[i].value==this.tableData_7[0].category){
+                          var category_1 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_7[1].category){
+                          var category_2 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_7[2].category){
+                          var category_3 = this.categoryOptions[i].label
+                      }
+                      if(this.categoryOptions[i].value==this.tableData_7[3].category){
+                          var category_4 = this.categoryOptions[i].label
+                      }
+                  }
+                  // 验收人
+                  for(let i=0;i<this.applyUserList.length;i++){
                       if(this.applyUserList[i].value==this.tableData_7[0].approverids){
                           name_1 = this.applyUserList[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_7[1].approverids){
-                          name_2 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList1.length;i++){
+                      if(this.applyUserList1[i].value==this.tableData_7[1].approverids){
+                          name_2 = this.applyUserList1[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_7[2].approverids){
-                          name_3 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList2.length;i++){
+                      if(this.applyUserList2[i].value==this.tableData_7[2].approverids){
+                          name_3 = this.applyUserList2[i].label
                       }
-                      if(this.applyUserList[i].value==this.tableData_7[3].approverids){
-                          name_4 = this.applyUserList[i].label
+                  }
+                  for(let i=0;i<this.applyUserList3.length;i++){
+                      if(this.applyUserList3[i].value==this.tableData_7[3].approverids){
+                          name_4 = this.applyUserList3[i].label
                       }
                   }
                   // 项目
@@ -4411,32 +4981,59 @@ ${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?
                       }
                   }
                   this.$copyText(
-                    `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}
-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_7}/${this.tableData_7[3].useHour}`
+                    `${day_7}--${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${category_1}-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_7}/${this.tableData_7[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
                   });
             }
             if(this.tableData_7.length == 5){
-                for(var i=0;i<this.applyUserList.length;i++){
+                // 工作类别
+                for(var i=0;i<this.categoryOptions.length;i++){
+                    if(this.categoryOptions[i].value==this.tableData_7[0].category){
+                        var category_1 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_7[1].category){
+                        var category_2 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_7[2].category){
+                        var category_3 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_7[3].category){
+                        var category_4 = this.categoryOptions[i].label
+                    }
+                    if(this.categoryOptions[i].value==this.tableData_7[4].category){
+                        var category_5 = this.categoryOptions[i].label
+                    }
+                }
+                // 验收人
+                for(let i=0;i<this.applyUserList.length;i++){
                     if(this.applyUserList[i].value==this.tableData_7[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_7[1].approverids){
-                        name_2 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList1.length;i++){
+                    if(this.applyUserList1[i].value==this.tableData_7[1].approverids){
+                        name_2 = this.applyUserList1[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_7[2].approverids){
-                        name_3 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList2.length;i++){
+                    if(this.applyUserList2[i].value==this.tableData_7[2].approverids){
+                        name_3 = this.applyUserList2[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_7[3].approverids){
-                        name_4 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList3.length;i++){
+                    if(this.applyUserList3[i].value==this.tableData_7[3].approverids){
+                        name_4 = this.applyUserList3[i].label
                     }
-                    if(this.applyUserList[i].value==this.tableData_7[4].approverids){
-                        name_5 = this.applyUserList[i].label
+                }
+                for(let i=0;i<this.applyUserList4.length;i++){
+                    if(this.applyUserList4[i].value==this.tableData_7[4].approverids){
+                        name_5 = this.applyUserList4[i].label
                     }
                 }
                 // 项目
@@ -4476,12 +5073,12 @@ ${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?
                     }
                 }
                 this.$copyText(
-                  `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}
-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_7}/${this.tableData_7[3].useHour}
-${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?'已完成':'未完成'}-${this.tableData_7[4].complete!=100?`预计 ${this.tableData_7[4].completeTime} 完成`:''}-${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_7}/${this.tableData_7[4].useHour}`
+                  `${day_7}--${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
+${category_1}-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${category_2}-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
+${category_3}-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}
+${category_4}-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_7}/${this.tableData_7[3].useHour}
+${category_5}-${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?'已完成':'未完成'}-${this.tableData_7[4].complete!=100?`预计 ${this.tableData_7[4].completeTime} 完成`:''}-${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_7}/${this.tableData_7[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
