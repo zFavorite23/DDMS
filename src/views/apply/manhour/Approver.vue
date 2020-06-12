@@ -4,10 +4,11 @@
             <span class="tit">工时审批 / 总数 : {{ total }}</span>
             <el-button size="mini" type="primary" style="margin-right: 30px;" @click="updateManhourAll">一键通过</el-button>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
-            <el-table-column width="50" label="序号">
-                <template scope="scope">
-                    <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
+        <el-table :data="list" :span-method="objectSpanMethod" stripe border v-loading="listLoading" style="width: 100%;">
+            <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
+            <el-table-column label="自评积分">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.integral }} 分</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="200" label="项目" :show-overflow-tooltip="true">
@@ -17,12 +18,6 @@
                 </template>
             </el-table-column>
             <el-table-column prop="applyUserName" min-width="80" label="申请人"></el-table-column>
-            <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
-            <el-table-column label="自评积分">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.integral }} 分</span>
-                </template>
-            </el-table-column>
 
             <el-table-column min-width="80" label="工作类别">
                 <template slot-scope="scope">
@@ -255,6 +250,63 @@ export default {
                 this.getManhourApproverPage();
                 this.show = true;
             });
+        },
+        //  合并
+        flitterData(arr) {
+            let spanOneArr = [],
+                spanTwoArr = [],
+                spanThreeArr = [],
+                concatOne = 0,
+                concatTwo = 0,
+                concatThree = 0;
+            arr.forEach((item, index) => {
+                if (index === 0) {
+                    spanOneArr.push(1);
+                    spanTwoArr.push(1);
+                    spanThreeArr.push(1);
+                } else {
+                    if (item.day === arr[index - 1].day) {
+                        //第一列需合并相同内容的判断条件
+                        spanOneArr[concatOne] += 1;
+                        spanOneArr.push(0);
+                    } else {
+                        spanOneArr.push(1);
+                        concatOne = index;
+                    }
+                    if (item.day === arr[index - 1].day && item.integral === arr[index - 1].integral) {
+                        //第二列需合并相同内容的判断条件
+                        spanTwoArr[concatTwo] += 1;
+                        spanTwoArr.push(0);
+                    } else {
+                        spanTwoArr.push(1);
+                        concatTwo = index;
+                    }
+                }
+            });
+            return {
+                one: spanOneArr,
+                two: spanTwoArr,
+                three: spanThreeArr
+            };
+        },
+
+        objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+            if (columnIndex === 0) {
+                const _row = this.flitterData(this.list).one[rowIndex];
+                const _col = _row > 0 ? 1 : 0;
+                return {
+                    rowspan: _row,
+                    colspan: _col
+                };
+            }
+            if (columnIndex === 1) {
+                const _row = this.flitterData(this.list).two[rowIndex];
+                const _col = _row > 0 ? 1 : 0;
+                return {
+                    rowspan: _row,
+                    colspan: _col
+                };
+            }
         }
     },
     mounted() {}

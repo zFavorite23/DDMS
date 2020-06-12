@@ -5,7 +5,7 @@
                 <fieldset>
                     <legend>未填报日期</legend>
                     <el-row :gutter="24">
-                        <el-col :span="3" v-for="(item, index) in dayOptions" :key="index">
+                        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3" v-for="(item, index) in dayOptions" :key="index">
                             <el-link type="danger" style="font-size: 1rem;">{{ item.day }}</el-link>
                         </el-col>
                     </el-row>
@@ -14,9 +14,11 @@
         </el-row>
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_1 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_1.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_1.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_1.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_1 > 0">
                     <el-rate
+                        class="hidden-xs-only hidden-sm-only"
                         disabled
                         show-score
                         text-color="#ff9900"
@@ -26,13 +28,13 @@
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_1}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_1[0].integral" :placeholder="String(tableData_1[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" style="margin-left: 3%" icon="el-icon-document-copy" circle @click="copyCode_1()"></el-button>
             </div>
            <!-- <el-table :data="oldList" v-if="oldList.length!=0" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
@@ -158,7 +160,7 @@
             <el-table :data="tableData_1" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory()">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -168,10 +170,10 @@
                         <el-select v-if="scope.row.category == '1'" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '2'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == '2'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == '3'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == '3'" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '4'" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -237,16 +239,20 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
                         <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -294,16 +300,19 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_1()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_1()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_1()">一键复制</el-button>
         </el-row>
 
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_2 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_2.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_2.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_2.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_2 > 0">
                     <el-rate
                         disabled
                         show-score
+                        class="hidden-xs-only hidden-sm-only"
                         text-color="#ff9900"
                         v-model="dayHourFloat_2"
                         :max="dayHourInt_2"
@@ -311,18 +320,18 @@
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_2}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_2[0].integral" :placeholder="String(tableData_2[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" icon="el-icon-document-copy" style="margin-left: 3%" circle @click="copyCode_2()"></el-button>
             </div>
             <el-table :data="tableData_2" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -332,10 +341,10 @@
                         <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -401,16 +410,20 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
                         <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -458,14 +471,17 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_2()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_2()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_2()">一键复制</el-button>
         </el-row>
 
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_3 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_3.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_3.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_3.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_3 > 0">
                     <el-rate
+                    class="hidden-xs-only hidden-sm-only"
                         disabled
                         show-score
                         text-color="#ff9900"
@@ -475,18 +491,18 @@
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_3}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_3[0].integral" :placeholder="String(tableData_3[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" icon="el-icon-document-copy" style="margin-left: 3%" circle @click="copyCode_3()"></el-button>
             </div>
             <el-table :data="tableData_3" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -496,10 +512,10 @@
                         <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -565,16 +581,20 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
                         <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -622,14 +642,17 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_3()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_3()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_3()">一键复制</el-button>
         </el-row>
 
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_4 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_4.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_4.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_4.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_4 > 0">
                     <el-rate
+                    class="hidden-xs-only hidden-sm-only"
                         disabled
                         show-score
                         text-color="#ff9900"
@@ -639,18 +662,18 @@
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_4}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_4[0].integral" :placeholder="String(tableData_4[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" icon="el-icon-document-copy" style="margin-left: 3%" circle @click="copyCode_4()"></el-button>
             </div>
             <el-table :data="tableData_4" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -660,10 +683,10 @@
                         <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -729,17 +752,21 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
-                       <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                           <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
-                       </el-select>
-                       <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                           <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
-                       </el-select>
+                        <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="complete" label="完成情况" width="140">
@@ -786,12 +813,14 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_4()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_4()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_4()">一键复制</el-button>
         </el-row>
 
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_5 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_5.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_5.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_5.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_5 > 0">
                     <el-rate
                         disabled
@@ -803,18 +832,18 @@
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_5}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_5[0].integral" :placeholder="String(tableData_5[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" icon="el-icon-document-copy" style="margin-left: 3%" circle @click="copyCode_5()"></el-button>
             </div>
             <el-table :data="tableData_5" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -824,10 +853,10 @@
                         <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -893,16 +922,20 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
                         <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -950,16 +983,19 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_5()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_5()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_5()">一键复制</el-button>
         </el-row>
 
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_6 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_6.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_6.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_6.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_6 > 0">
                     <el-rate
                         disabled
                         show-score
+                        class="hidden-xs-only hidden-sm-only"
                         text-color="#ff9900"
                         v-model="dayHourFloat_6"
                         :max="dayHourInt_6"
@@ -967,18 +1003,18 @@
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_6}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_6[0].integral" :placeholder="String(tableData_6[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" icon="el-icon-document-copy" style="margin-left: 3%" circle @click="copyCode_6()"></el-button>
             </div>
             <el-table :data="tableData_6" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -988,10 +1024,10 @@
                         <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -1057,16 +1093,20 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
                         <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -1114,35 +1154,38 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_6()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_6()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_6()">一键复制</el-button>
         </el-row>
 
         <el-row style="padding: 0 15px; margin-bottom: 30px;" v-if="day_7 != ''">
             <div class="top">
-                <span>未填报日期 : {{ day_7.day }}</span>
+                <span style='font-size:1rem' class="hidden-xs-only hidden-sm-only">未填报日期 : {{ day_7.day }}</span>
+                <span style='font-size:1rem' class="hidden-md-and-up">{{ day_7.day }}</span>
                 <span class="HourFloat" v-if="dayHourInt_7 > 0">
                     <el-rate
                         disabled
                         show-score
                         text-color="#ff9900"
+                        class="hidden-xs-only hidden-sm-only"
                         v-model="dayHourFloat_7"
                         :max="dayHourInt_7"
                         :icon-classes="['icon iconfont iconjitui', 'icon iconfont iconjitui', 'icon iconfont iconjitui']"
                         disabled-void-icon-class="icon iconfont iconjitui"
                         :colors="['#FF9900', '#FF9900', '#FF9900']"
                     ></el-rate>
+                    <span style='font-size:1rem;color: #ff9900;' class="hidden-md-and-up">{{dayHourFloat_7}} 小时</span>
                 </span>
                 <span>
                     <el-select v-model="tableData_7[0].integral" :placeholder="String(tableData_7[0].integral)" size="mini" style="width: 80px;">
                         <el-option v-for="(item, index) in integralOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
                 </span>
-                <el-button type="info" icon="el-icon-document-copy" style="margin-left: 3%" circle @click="copyCode_7()"></el-button>
             </div>
             <el-table :data="tableData_7" style="width: 100%">
                 <el-table-column align="center" prop="category" label="工作类别" width="140">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory">
+                        <el-select v-model="scope.row.category" placeholder="请选择" size="mini" style="width: 120px;" @change="selectcCategory($event,scope.$index)">
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </template>
@@ -1152,10 +1195,10 @@
                         <el-select v-if="scope.row.category == 1" v-model="scope.row.mainClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in mainClassifyOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 2" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in itemOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
-                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem" size="mini" style="width: 120px;">
+                        <el-select v-if="scope.row.category == 3" filterable v-model="scope.row.itemId" placeholder="请选择" @change="selectcItem($event,scope.$index)" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in productOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.itemId" disabled placeholder="无" size="mini" style="width: 120px;"></el-select>
@@ -1221,16 +1264,20 @@
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
                     <template slot-scope="scope">
-                        <el-input type="textarea" size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
+                        <el-input type="textarea" resize='none' size="mini" v-model="scope.row.reason" placeholder="请填写工作内容" maxlength="50" show-word-limit></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="approverids" label="验收人" width="140">
                     <template slot-scope="scope">
                         <el-select v-if="scope.row.category == '2'||scope.row.category == '3'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==0' v-for="(item, index) in applyUserList" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==1' v-for="(item, index) in applyUserList1" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==2' v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==3' v-for="(item, index) in applyUserList3" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-if='scope.$index==4' v-for="(item, index) in applyUserList4" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                         <el-select v-if="scope.row.category == '1'||scope.row.category == '4'" v-model="scope.row.approverids" placeholder="请选择" size="mini">
-                            <el-option v-for="(item, index) in applyUserList2" :label="item.label" :key="index" :value="item.value"></el-option>
+                            <el-option v-for="(item, index) in applyUserList5" :label="item.label" :key="index" :value="item.value"></el-option>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -1278,13 +1325,15 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <el-button type="primary" style="margin-left: 45%;margin-top: 3%;" @click="submit_7()">提交</el-button>
+            <el-button type="primary" style="margin-left: 40%;margin-top: 3%;" @click="submit_7()">提交</el-button>
+            <el-button type="success" style="margin-left: 1%;margin-top: 3%;" @click="copyCode_7()">一键复制</el-button>
         </el-row>
 
         <el-button type="primary" class="invoiceRules" @click="open">工时规范</el-button>
     </div>
 </template>
 <script>
+import 'element-ui/lib/theme-chalk/display.css';
 import { getUserInfo } from '../../../api/admin/user.js'
 import { addObj, editObj } from '../../../api/apply/manhour.js';
 import { getApplyUserInfo } from '../../../api/admin/user.js';
@@ -1604,7 +1653,11 @@ export default {
             ],
             userList:[],
             applyUserList: [{ value: 0, label: '无人验收' }],
+            applyUserList1: [{ value: 0, label: '无人验收' }],
             applyUserList2: [{ value: 0, label: '无人验收' }],
+            applyUserList3: [{ value: 0, label: '无人验收' }],
+            applyUserList4: [{ value: 0, label: '无人验收' }],
+            applyUserList5: [{ value: 0, label: '无人验收' }],
             applyClockInfo: '',
             pickerOptions: {
                 disabledDate(time) {
@@ -1647,30 +1700,43 @@ export default {
         },
         // 删除行
         deleteRow_1(index) {
-            this.tableData_1.splice(index, 1);
+            if (this.tableData_1.length > 1) {
+               this.tableData_1.splice(index, 1);;
+            }
         },
         deleteRow_2(index) {
-            this.tableData_2.splice(index, 1);
+            if (this.tableData_2.length > 1) {
+               this.tableData_2.splice(index, 1);;
+            }
         },
         deleteRow_3(index) {
-            this.tableData_3.splice(index, 1);
+           if (this.tableData_3.length > 1) {
+              this.tableData_3.splice(index, 1);;
+           }
         },
         deleteRow_4(index) {
-            this.tableData_4.splice(index, 1);
+            if (this.tableData_4.length > 1) {
+               this.tableData_4.splice(index, 1);;
+            }
         },
         deleteRow_5(index) {
-            this.tableData_5.splice(index, 1);
+            if (this.tableData_5.length > 1) {
+               this.tableData_5.splice(index, 1);;
+            }
         },
         deleteRow_6(index) {
-            this.tableData_6.splice(index, 1);
+            if (this.tableData_6.length > 1) {
+               this.tableData_6.splice(index, 1);;
+            }
         },
         deleteRow_7(index) {
-            this.tableData_7.splice(index, 1);
+            if (this.tableData_7.length > 1) {
+               this.tableData_7.splice(index, 1);;
+            }
         },
 
         // 增加行
         addRow_1() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_1[0].integral,
@@ -1706,7 +1772,6 @@ export default {
             }
         },
         addRow_2() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_2[0].integral,
@@ -1741,7 +1806,6 @@ export default {
             }
         },
         addRow_3() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_3[0].integral,
@@ -1776,7 +1840,6 @@ export default {
             }
         },
         addRow_4() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_4[0].integral,
@@ -1811,7 +1874,6 @@ export default {
             }
         },
         addRow_5() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_5[0].integral,
@@ -1846,7 +1908,6 @@ export default {
             }
         },
         addRow_6() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_6[0].integral,
@@ -1881,7 +1942,6 @@ export default {
             }
         },
         addRow_7() {
-            // this.applyUserList = [{ value: 0, label: '无人验收' }];
             var list = {
                 // 自评分
                 integral: this.tableData_7[0].integral,
@@ -2218,7 +2278,17 @@ export default {
                 this.tableData_1[0].day = clockHourInfo.day;
                 this.tableData_1[0].hourId = clockHourInfo.hourId;
                 this.tableData_1[0].integral = clockHourInfo.integral;
-                this.Hour_1 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_1  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_1 = hour1
+                    }
+                    else {
+                        this.Hour_1 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_1 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 var num2 = parseInt(hour)
@@ -2247,7 +2317,17 @@ export default {
                 this.tableData_2[0].day = clockHourInfo.day;
                 this.tableData_2[0].integral = clockHourInfo.integral;
                 this.tableData_2[0].hourId = clockHourInfo.hourId;
-                this.Hour_2 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_2  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_2 = hour1
+                    }
+                    else {
+                        this.Hour_2 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_2 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 var num2 = parseInt(hour)
@@ -2271,7 +2351,17 @@ export default {
                 this.tableData_3[0].day = clockHourInfo.day;
                 this.tableData_3[0].integral = clockHourInfo.integral;
                 this.tableData_3[0].hourId = clockHourInfo.hourId;
-                this.Hour_3 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_3  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_3 = hour1
+                    }
+                    else {
+                        this.Hour_3 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_3 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 var num2 = parseInt(hour)
@@ -2295,7 +2385,17 @@ export default {
                 this.tableData_4[0].day = clockHourInfo.day;
                 this.tableData_4[0].integral = clockHourInfo.integral;
                 this.tableData_4[0].hourId = clockHourInfo.hourId;
-                this.Hour_4 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_4  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_4 = hour1
+                    }
+                    else {
+                        this.Hour_4 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_4 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 var num2 = parseInt(hour)
@@ -2319,7 +2419,17 @@ export default {
                 this.tableData_5[0].day = clockHourInfo.day;
                 this.tableData_5[0].integral = clockHourInfo.integral;
                 this.tableData_5[0].hourId = clockHourInfo.hourId;
-                this.Hour_5 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_5  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_5 = hour1
+                    }
+                    else {
+                        this.Hour_5 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_5 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 var num2 = parseInt(hour)
@@ -2343,7 +2453,17 @@ export default {
                 this.tableData_6[0].day = clockHourInfo.day;
                 this.tableData_6[0].integral = clockHourInfo.integral;
                 this.tableData_6[0].hourId = clockHourInfo.hourId;
-                this.Hour_6 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_6  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_6 = hour1
+                    }
+                    else {
+                        this.Hour_6 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_6 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
                 var num2 = parseInt(hour)
@@ -2367,7 +2487,17 @@ export default {
                 this.tableData_7[0].day = clockHourInfo.day;
                 this.tableData_7[0].integral = clockHourInfo.integral;
                 this.tableData_7[0].hourId = clockHourInfo.hourId;
-                this.Hour_7 = clockHourInfo.hour
+                var hour1 = parseInt(clockHourInfo.hour)
+                var hour2 = (clockHourInfo.hour - hour1).toFixed(1)
+                    if (hour2 < 0.5 && hour2 != 0.0) {
+                        hour2 = 0.5
+                        this.Hour_7  = hour1 + hour2
+                    } else if (hour2 = 0.0) {
+                        this.Hour_7 = hour1
+                    }
+                    else {
+                        this.Hour_7 = Math.round(clockHourInfo.hour)
+                    }
                 this.dayHourInt_7 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
 
@@ -2377,33 +2507,76 @@ export default {
         },
 
         //  非项目产品时 验收人清空
-        selectcCategory(val) {
+        selectcCategory(val,index) {
             if (val == 2 || val == 3) {
-                this.getApplyUser();
+                this.getApplyUser(index);
             } else {
-                this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                this.applyUserList5 = [{ value: 0, label: '无人验收' }];
             }
         },
 
         // 获取项目产品验收人
-        selectcItem(val) {
+        selectcItem(val,index) {
             console.log(val)
             this.query.itemId = val;
-            this.getApplyUser();
+            this.getApplyUser(index);
         },
 
         // 验收人
-        getApplyUser() {
-            this.applyUserList = [{ value: 0, label: '无人验收' }]
+        getApplyUser(index) {
+            // this.applyUserList = [{ value: 0, label: '无人验收' }]
             getApplyUserInfo(this.query).then(response => {
-                // console.log(response);
-                response.data.data.forEach(element => {
-                    this.applyUserList.push({
-                        value: element.userId,
-                        label: element.username
+                console.log(response);
+                if(index==0){
+                    this.applyUserList = [{ value: 0, label: '无人验收' }]
+                    response.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
                     });
-                });
+                }
+                if(index==1){
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }]
+                    response.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                }
+                if(index==2){
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }]
+                    response.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                }
+                if(index==3){
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }]
+                    response.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                }
+                if(index==4){
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }]
+                    response.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                }
                 this.applyUserList = this.applyUserList.filter(item=>item.value!=this.query.userId)
+                this.applyUserList1 = this.applyUserList1.filter(item=>item.value!=this.query.userId)
+                this.applyUserList2 = this.applyUserList2.filter(item=>item.value!=this.query.userId)
+                this.applyUserList3 = this.applyUserList3.filter(item=>item.value!=this.query.userId)
+                this.applyUserList4 = this.applyUserList4.filter(item=>item.value!=this.query.userId)
                 // 去重
                 var newArr= []
                 var obj = {}
@@ -2414,6 +2587,46 @@ export default {
                     }
                 }
                 this.applyUserList = newArr
+
+                var newArr1= []
+                var obj1 = {}
+                for (var i = 0; i < this.applyUserList1.length; i++) {
+                    if (!obj1[this.applyUserList1[i].value]) {
+                       newArr1.push(this.applyUserList1[i]);
+                       obj1[this.applyUserList1[i].value] = true;
+                    }
+                }
+                this.applyUserList1 = newArr1
+
+                var newArr2= []
+                var obj2 = {}
+                for (var i = 0; i < this.applyUserList2.length; i++) {
+                    if (!obj2[this.applyUserList2[i].value]) {
+                       newArr2.push(this.applyUserList2[i]);
+                       obj2[this.applyUserList2[i].value] = true;
+                    }
+                }
+                this.applyUserList2 = newArr2
+
+                var newArr3= []
+                var obj3 = {}
+                for (var i = 0; i < this.applyUserList3.length; i++) {
+                    if (!obj3[this.applyUserList3[i].value]) {
+                       newArr3.push(this.applyUserList3[i]);
+                       obj3[this.applyUserList3[i].value] = true;
+                    }
+                }
+                this.applyUserList3 = newArr3
+
+                var newArr4= []
+                var obj4 = {}
+                for (var i = 0; i < this.applyUserList4.length; i++) {
+                    if (!obj4[this.applyUserList4[i].value]) {
+                       newArr4.push(this.applyUserList4[i]);
+                       obj4[this.applyUserList4[i].value] = true;
+                    }
+                }
+                this.applyUserList4 = newArr4
             });
             // console.log(this.applyUserList);
         },
@@ -2538,7 +2751,7 @@ export default {
             if(this.tableData_1.length == 1){
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
-                    if(this.applyUserList[i].value==this.tableData_1[0].i){
+                    if(this.applyUserList[i].value==this.tableData_1[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
                 }
@@ -2788,7 +3001,7 @@ ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?
            if(this.tableData_2.length == 1){
                // 验收人
                for(var i=0;i<this.applyUserList.length;i++){
-                   if(this.applyUserList[i].value==this.tableData_2[0].i){
+                   if(this.applyUserList[i].value==this.tableData_2[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
                }
@@ -2806,7 +3019,7 @@ ${itemName_5}-${this.tableData_1[4].reason}-${this.tableData_1[4].complete==100?
                }
              this.$copyText(
                `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}`
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
@@ -2841,8 +3054,8 @@ ${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?
                }
                this.$copyText(
                  `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}`
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -2886,9 +3099,9 @@ ${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?
                }
                this.$copyText(
                  `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}`
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
+${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -2941,10 +3154,10 @@ ${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?
                }
                this.$copyText(
                  `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}
-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_2[3].useHour}`
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
+${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}
+${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_2}/${this.tableData_2[3].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3006,11 +3219,11 @@ ${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?
               }
               this.$copyText(
                 `${this.day_2.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_2[0].integral}
-${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_2[0].useHour}
-${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_2[1].useHour}
-${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_2[2].useHour}
-${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_2[3].useHour}
-${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?'已完成':'未完成'}-${this.tableData_2[4].complete!=100?`预计 ${this.tableData_2[4].completeTime} 完成`:''}-${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_2[4].useHour}`
+${itemName_1}-${this.tableData_2[0].reason}-${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}-${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_2}/${this.tableData_2[0].useHour}
+${itemName_2}-${this.tableData_2[1].reason}-${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}-${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_2}/${this.tableData_2[1].useHour}
+${itemName_3}-${this.tableData_2[2].reason}-${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[2].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}-${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_2}/${this.tableData_2[2].useHour}
+${itemName_4}-${this.tableData_2[3].reason}-${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}-${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_2}/${this.tableData_2[3].useHour}
+${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?'已完成':'未完成'}-${this.tableData_2[4].complete!=100?`预计 ${this.tableData_2[4].completeTime} 完成`:''}-${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_2}/${this.tableData_2[4].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3037,7 +3250,7 @@ ${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?
            if(this.tableData_3.length == 1){
                // 验收人
                for(var i=0;i<this.applyUserList.length;i++){
-                   if(this.applyUserList[i].value==this.tableData_3[0].i){
+                   if(this.applyUserList[i].value==this.tableData_3[0].approverids){
                        name_1 = this.applyUserList[i].label
                    }
                }
@@ -3055,7 +3268,7 @@ ${itemName_5}-${this.tableData_2[4].reason}-${this.tableData_2[4].complete==100?
                }
              this.$copyText(
                `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}`
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
@@ -3090,8 +3303,8 @@ ${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?
                }
                this.$copyText(
                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}`
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3135,9 +3348,9 @@ ${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?
                 }
                 this.$copyText(
                   `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}`
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
+${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3190,10 +3403,10 @@ ${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?
                 }
                 this.$copyText(
                   `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}
-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_3[3].useHour}`
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
+${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}
+${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_3}/${this.tableData_3[3].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3255,11 +3468,11 @@ ${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?
                }
                this.$copyText(
                  `${this.day_3.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_3[0].integral}
-${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_3[0].useHour}
-${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_3[1].useHour}
-${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_3[2].useHour}
-${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_3[3].useHour}
-${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?'已完成':'未完成'}-${this.tableData_3[4].complete!=100?`预计 ${this.tableData_3[4].completeTime} 完成`:''}-${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_3[4].useHour}`
+${itemName_1}-${this.tableData_3[0].reason}-${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}-${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_3}/${this.tableData_3[0].useHour}
+${itemName_2}-${this.tableData_3[1].reason}-${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}-${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_3}/${this.tableData_3[1].useHour}
+${itemName_3}-${this.tableData_3[2].reason}-${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[2].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}-${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_3}/${this.tableData_3[2].useHour}
+${itemName_4}-${this.tableData_3[3].reason}-${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}-${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_3}/${this.tableData_3[3].useHour}
+${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?'已完成':'未完成'}-${this.tableData_3[4].complete!=100?`预计 ${this.tableData_3[4].completeTime} 完成`:''}-${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_3}/${this.tableData_3[4].useHour}`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3286,7 +3499,7 @@ ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?
             if(this.tableData_4.length == 1){
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
-                    if(this.applyUserList[i].value==this.tableData_4[0].i){
+                    if(this.applyUserList[i].value==this.tableData_4[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
                 }
@@ -3304,7 +3517,7 @@ ${itemName_5}-${this.tableData_3[4].reason}-${this.tableData_3[4].complete==100?
                 }
               this.$copyText(
                 `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}`
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3339,8 +3552,8 @@ ${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?
                 }
                 this.$copyText(
                   `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}`
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3384,9 +3597,9 @@ ${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?
                  }
                  this.$copyText(
                    `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}`
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
+${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -3439,10 +3652,10 @@ ${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?
                   }
                   this.$copyText(
                     `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}
-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_4[3].useHour}`
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
+${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}
+${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_4}/${this.tableData_4[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -3504,11 +3717,11 @@ ${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?
                 }
                 this.$copyText(
                   `${this.day_4.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_4[0].integral}
-${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_4[0].useHour}
-${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_4[1].useHour}
-${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_4[2].useHour}
-${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_4[3].useHour}
-${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?'已完成':'未完成'}-${this.tableData_4[4].complete!=100?`预计 ${this.tableData_4[4].completeTime} 完成`:''}-${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_4[4].useHour}`
+${itemName_1}-${this.tableData_4[0].reason}-${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}-${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_4}/${this.tableData_4[0].useHour}
+${itemName_2}-${this.tableData_4[1].reason}-${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}-${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_4}/${this.tableData_4[1].useHour}
+${itemName_3}-${this.tableData_4[2].reason}-${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}-${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_4}/${this.tableData_4[2].useHour}
+${itemName_4}-${this.tableData_4[3].reason}-${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}-${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_4}/${this.tableData_4[3].useHour}
+${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?'已完成':'未完成'}-${this.tableData_4[4].complete!=100?`预计 ${this.tableData_4[4].completeTime} 完成`:''}-${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_4}/${this.tableData_4[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3536,7 +3749,7 @@ ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?
             if(this.tableData_5.length == 1){
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
-                    if(this.applyUserList[i].value==this.tableData_5[0].i){
+                    if(this.applyUserList[i].value==this.tableData_5[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
                 }
@@ -3554,7 +3767,7 @@ ${itemName_5}-${this.tableData_4[4].reason}-${this.tableData_4[4].complete==100?
                 }
               this.$copyText(
                 `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}`
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3589,8 +3802,8 @@ ${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?
                 }
                 this.$copyText(
                   `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}`
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3634,9 +3847,9 @@ ${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?
                  }
                  this.$copyText(
                    `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}`
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
+${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -3689,10 +3902,10 @@ ${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?
                   }
                   this.$copyText(
                     `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}
-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_5[3].useHour}`
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
+${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}
+${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_5}/${this.tableData_5[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -3754,11 +3967,11 @@ ${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?
                 }
                 this.$copyText(
                   `${this.day_5.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_5[0].integral}
-${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_5[0].useHour}
-${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_5[1].useHour}
-${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_5[2].useHour}
-${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_5[3].useHour}
-${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?'已完成':'未完成'}-${this.tableData_5[4].complete!=100?`预计 ${this.tableData_5[4].completeTime} 完成`:''}-${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_5[4].useHour}`
+${itemName_1}-${this.tableData_5[0].reason}-${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}-${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_5}/${this.tableData_5[0].useHour}
+${itemName_2}-${this.tableData_5[1].reason}-${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}-${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_5}/${this.tableData_5[1].useHour}
+${itemName_3}-${this.tableData_5[2].reason}-${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}-${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_5}/${this.tableData_5[2].useHour}
+${itemName_4}-${this.tableData_5[3].reason}-${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}-${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_5}/${this.tableData_5[3].useHour}
+${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?'已完成':'未完成'}-${this.tableData_5[4].complete!=100?`预计 ${this.tableData_5[4].completeTime} 完成`:''}-${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_5}/${this.tableData_5[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3787,7 +4000,7 @@ ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?
             if(this.tableData_6.length == 1){
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
-                    if(this.applyUserList[i].value==this.tableData_6[0].i){
+                    if(this.applyUserList[i].value==this.tableData_6[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
                 }
@@ -3805,7 +4018,7 @@ ${itemName_5}-${this.tableData_5[4].reason}-${this.tableData_5[4].complete==100?
                 }
               this.$copyText(
                 `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}`
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3840,8 +4053,8 @@ ${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?
                 }
                 this.$copyText(
                   `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}`
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3885,9 +4098,9 @@ ${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?
                  }
                  this.$copyText(
                    `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}`
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
+${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -3940,10 +4153,10 @@ ${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?
                   }
                   this.$copyText(
                     `$${this.day_6.day}-{this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}
-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_6[3].useHour}`
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
+${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}
+${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_6}/${this.tableData_6[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -4005,11 +4218,11 @@ ${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?
                 }
                 this.$copyText(
                   `${this.day_6.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_6[0].useHour}
-${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_6[1].useHour}
-${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_6[2].useHour}
-${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_6[3].useHour}
-${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?'已完成':'未完成'}-${this.tableData_6[4].complete!=100?`预计 ${this.tableData_6[4].completeTime} 完成`:''}-${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_6[4].useHour}`
+${itemName_1}-${this.tableData_6[0].reason}-${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}-${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_6}/${this.tableData_6[0].useHour}
+${itemName_2}-${this.tableData_6[1].reason}-${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}-${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_6}/${this.tableData_6[1].useHour}
+${itemName_3}-${this.tableData_6[2].reason}-${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}-${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_6}/${this.tableData_6[2].useHour}
+${itemName_4}-${this.tableData_6[3].reason}-${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}-${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_6}/${this.tableData_6[3].useHour}
+${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?'已完成':'未完成'}-${this.tableData_6[4].complete!=100?`预计 ${this.tableData_6[4].completeTime} 完成`:''}-${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_6}/${this.tableData_6[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4037,7 +4250,7 @@ ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?
             if(this.tableData_7.length == 1){
                 // 验收人
                 for(var i=0;i<this.applyUserList.length;i++){
-                    if(this.applyUserList[i].value==this.tableData_7[0].i){
+                    if(this.applyUserList[i].value==this.tableData_7[0].approverids){
                         name_1 = this.applyUserList[i].label
                     }
                 }
@@ -4055,7 +4268,7 @@ ${itemName_5}-${this.tableData_6[4].reason}-${this.tableData_6[4].complete==100?
                 }
               this.$copyText(
                 `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}`
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -4090,8 +4303,8 @@ ${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?
                 }
                 this.$copyText(
                   `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}`
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4135,9 +4348,9 @@ ${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?
                  }
                  this.$copyText(
                    `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}`
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
+${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -4190,10 +4403,10 @@ ${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?
                   }
                   this.$copyText(
                     `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}
-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_7[3].useHour}`
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
+${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}
+${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_7}/${this.tableData_7[3].useHour}`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -4255,11 +4468,11 @@ ${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?
                 }
                 this.$copyText(
                   `${this.day_7.day}-${this.userList.deptName}--${this.userList.username}--${this.tableData_7[0].integral}
-${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_1}/${this.tableData_7[0].useHour}
-${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_1}/${this.tableData_7[1].useHour}
-${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_1}/${this.tableData_7[2].useHour}
-${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_1}/${this.tableData_7[3].useHour}
-${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?'已完成':'未完成'}-${this.tableData_7[4].complete!=100?`预计 ${this.tableData_7[4].completeTime} 完成`:''}-${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_1}/${this.tableData_7[4].useHour}`
+${itemName_1}-${this.tableData_7[0].reason}-${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}-${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}-${this.Hour_7}/${this.tableData_7[0].useHour}
+${itemName_2}-${this.tableData_7[1].reason}-${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}-${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}-${this.Hour_7}/${this.tableData_7[1].useHour}
+${itemName_3}-${this.tableData_7[2].reason}-${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}-${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}-${this.Hour_7}/${this.tableData_7[2].useHour}
+${itemName_4}-${this.tableData_7[3].reason}-${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}-${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}-${this.Hour_7}/${this.tableData_7[3].useHour}
+${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?'已完成':'未完成'}-${this.tableData_7[4].complete!=100?`预计 ${this.tableData_7[4].completeTime} 完成`:''}-${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}-${this.Hour_7}/${this.tableData_7[4].useHour}`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4281,9 +4494,6 @@ ${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?
 .el-rate__icon {
     font-size: 2rem !important;
 }
-.el-col .el-col-24{
-    margin-top: 5px!important;
-}
 .invoiceRules {
     top: 0;
  }
@@ -4304,7 +4514,7 @@ ${itemName_5}-${this.tableData_7[4].reason}-${this.tableData_7[4].complete==100?
 
 fieldset {
     padding: 20px;
-    margin-top: 30px;
+    margin-top: 35px;
     font-size: 1rem;
     color: #2d8cf0;
     /* border:#06c dashed 1px; */
