@@ -1228,6 +1228,7 @@ import { getAbnormalSeven, getClockHourInfo } from '../../../api/checkwork/hour.
 import { getItemVosWithUserId } from '../../../api/project/team.js';
 import { getStandardApplyInfoById } from '../../../api/standard/apply.js';
 import { mapGetters } from 'vuex';
+import {Message} from "element-ui";
 export default {
     inject:['reload'],
     data() {
@@ -2152,6 +2153,23 @@ export default {
             }
         },
 
+<<<<<<< HEAD
+=======
+        selectHour_1(val) {
+            var hour = 0;
+            for(var i=0;i<this.tableData_1.length;i++){
+                hour+=this.tableData_1[i].useHour;
+            }
+
+            if (this.maxUseHour_1 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
+>>>>>>> efa2416cb174de863c5282600f4c4a0112d1e6ff
 
         // 获取鸡腿数量 最大工时
         selectWorkDay_1(val) {

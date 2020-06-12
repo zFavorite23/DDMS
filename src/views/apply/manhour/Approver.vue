@@ -105,7 +105,7 @@
                     <span>{{ scope.row.useHour }} 小时</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="120" label="审批工时">
+            <el-table-column min-width="180" label="审批工时">
                 <template slot-scope="scope">
                     <!-- <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
                     <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p> -->
@@ -128,7 +128,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" min-width="140" fixed="right">
+            <el-table-column label="操作" min-width="180" fixed="right">
                 <template slot-scope="scope">
                     <span v-if="scope.row.status == 0">
                         <span v-if="scope.row.show == true">
