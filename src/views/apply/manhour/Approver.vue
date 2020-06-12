@@ -2,7 +2,7 @@
     <div>
         <div style="display: flex; justify-content: space-between;margin-bottom: 1%;">
             <span class="tit">工时审批 / 总数 : {{ total }}</span>
-            <el-button size="mini" type="primary" style="margin-right: 30px;" @click="updateManhourAll">一键通过</el-button>
+            <!-- <el-button size="mini" type="primary" style="margin-right: 30px;" @click="updateManhourAll">一键通过</el-button> -->
         </div>
         <el-table :data="list" :span-method="objectSpanMethod" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
@@ -107,16 +107,10 @@
             </el-table-column>
             <el-table-column min-width="120" label="审批工时">
                 <template slot-scope="scope">
-                    <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
-                    <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p>
-                    <el-input-number
-                        v-show="!scope.row.show"
-                        v-model="scope.row.checkMin"
-                        controls-position="right"
-                        size="mini"
-                        :max="Number(scope.row.useHour) + 2"
-                        :min="Number(scope.row.useHour) - 2"
-                    ></el-input-number>
+                    <!-- <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
+                    <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p> -->
+                    <!-- v-show="!scope.row.show" -->
+                    <el-input-number v-model="scope.row.checkMin" controls-position="right" size="mini" step-strictly :step="0.5" :max="10" :min="0.0"></el-input-number>
                 </template>
             </el-table-column>
             <el-table-column min-width="100" label="反馈意见">
