@@ -282,6 +282,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                            @change="selectHour_1"
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -2269,6 +2270,16 @@ export default {
                     });
                 }
             }
+        },
+
+        selectHour_1(val) {
+            var hour = 0;
+            for(var i=0;i<this.tableData_1.length;i++){
+                hour+=this.tableData_1[i].useHour;
+            }
+            console.log(hour)
+            this.maxUseHour_1 = this.dayHourFloat_1 - hour;
+            console.log(this.maxUseHour_1)
         },
 
         // 获取鸡腿数量 最大工时
