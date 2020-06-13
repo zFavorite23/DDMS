@@ -1644,7 +1644,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_1[this.tableData_1.length - 1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_1[this.tableData_1.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1652,7 +1652,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_1[this.tableData_1.length - 1].reason,
                 // 工时
                 useMin: '',
                 useHour: '',
@@ -1679,7 +1679,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_2[this.tableData_2.length - 1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_2[this.tableData_2.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1687,7 +1687,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_2[this.tableData_2.length - 1].reason,
                 useHour: '',
                 useMin: '',
                 // 填报日期
@@ -1713,7 +1713,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_3[this.tableData_3.lenght-1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_3[this.tableData_3.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1721,7 +1721,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_3[this.tableData_3.length - 1].reason,
                 useHour: '',
                 useMin: '',
                 // 填报日期
@@ -1747,7 +1747,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_4[this.tableData_4.length-1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_4[this.tableData_4.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1755,7 +1755,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_4[this.tableData_4.length - 1].reason,
                 useHour: '',
                 useMin: '',
                 // 填报日期
@@ -1781,7 +1781,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_5[this.tableData_5.length-1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_5[this.tableData_5.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1789,7 +1789,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_5[this.tableData_5.length - 1].reason,
                 useHour: '',
                 useMin: '',
                 // 填报日期
@@ -1815,7 +1815,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_6[this.tableData_6.length-1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_6[this.tableData_6.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1823,7 +1823,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_6[this.tableData_6.length - 1].reason,
                 useHour: '',
                 useMin: '',
                 // 填报日期
@@ -1849,7 +1849,7 @@ export default {
                 // 子分类
                 subClassify: this.tableData_[this.tableData_7.length-1].subClassify,
                 // 项目产品
-                itemId: null,
+                itemId: this.tableData_7[this.tableData_7.length - 1].itemId,
                 // 完成情况
                 complete: '100',
                 // 预计完成时间
@@ -1857,7 +1857,7 @@ export default {
                 // 验收人
                 approverids: 0,
                 // 工作内容
-                reason: '',
+                reason: this.tableData_7[this.tableData_7.length - 1].reason,
                 useHour: '',
                 useMin: '',
                 // 填报日期
