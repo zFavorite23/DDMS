@@ -162,6 +162,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                            @change="selectHour_1"
                             :disabled='tableData_1[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
@@ -334,6 +335,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                         @change="selectHour_2"
                         :disabled='tableData_2[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
@@ -506,7 +508,8 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
-                        :disabled='tableData_3[0].integral == 0'
+                            @change="selectHour_3"
+                            :disabled='tableData_3[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -678,6 +681,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                         @change="selectHour_4"
                         :disabled='tableData_4[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
@@ -849,6 +853,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                         @change="selectHour_5"
                         :disabled='tableData_5[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
@@ -1021,6 +1026,7 @@
                 <el-table-column align="center" prop="useHour" label="工时" width="140">
                     <template slot-scope="scope">
                         <el-input-number
+                         @change="selectHour_6"
                         :disabled='tableData_6[0].integral == 0'
                             v-model="scope.row.useHour"
                             size="small"
@@ -1194,6 +1200,7 @@
                     <template slot-scope="scope">
                         <el-input-number
                         :disabled='tableData_7[0].integral == 0'
+                         @change="selectHour_7"
                             v-model="scope.row.useHour"
                             size="small"
                             controls-position="right"
@@ -1627,15 +1634,15 @@ export default {
                 // 自评分
                 integral: this.tableData_1[0].integral,
                 // 个人id
-                userId: this.tableData_1[0].userId,
+                userId: this.tableData_1[this.tableData_1.length - 1].userId,
                 // 工时id
-                hourId: this.tableData_1[0].hourId,
+                hourId: this.tableData_1[this.tableData_1.length - 1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_1[this.tableData_1.length - 1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_1[this.tableData_1.length - 1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_1[this.tableData_1.length - 1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -1662,15 +1669,15 @@ export default {
                 // 自评分
                 integral: this.tableData_2[0].integral,
                 // 个人id
-                userId: this.tableData_2[0].userId,
+                userId: this.tableData_2[this.tableData_2.length - 1].userId,
                 // 工时id
-                hourId: this.tableData_2[0].hourId,
+                hourId: this.tableData_2[this.tableData_2.length - 1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_2[this.tableData_2.length - 1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_2[this.tableData_2.length - 1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_2[this.tableData_2.length - 1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -1696,15 +1703,15 @@ export default {
                 // 自评分
                 integral: this.tableData_3[0].integral,
                 // 个人id
-                userId: this.tableData_3[0].userId,
+                userId: this.tableData_3[this.tableData_3.lenght-1].userId,
                 // 工时id
-                hourId: this.tableData_3[0].hourId,
+                hourId: this.tableData_3[this.tableData_3.lenght-1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_3[this.tableData_3.lenght-1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_3[this.tableData_3.lenght-1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_3[this.tableData_3.lenght-1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -1730,15 +1737,15 @@ export default {
                 // 自评分
                 integral: this.tableData_4[0].integral,
                 // 个人id
-                userId: this.tableData_4[0].userId,
+                userId: this.tableData_4[this.tableData_4.length-1].userId,
                 // 工时id
-                hourId: this.tableData_4[0].hourId,
+                hourId: this.tableData_4[this.tableData_4.length-1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_4[this.tableData_4.length-1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_4[this.tableData_4.length-1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_4[this.tableData_4.length-1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -1764,15 +1771,15 @@ export default {
                 // 自评分
                 integral: this.tableData_5[0].integral,
                 // 个人id
-                userId: this.tableData_5[0].userId,
+                userId: this.tableData_5[this.tableData_5.length-1].userId,
                 // 工时id
-                hourId: this.tableData_5[0].hourId,
+                hourId: this.tableData_5[this.tableData_5.length-1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_5[this.tableData_5.length-1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_5[this.tableData_5.length-1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_5[this.tableData_5.length-1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -1798,15 +1805,15 @@ export default {
                 // 自评分
                 integral: this.tableData_6[0].integral,
                 // 个人id
-                userId: this.tableData_6[0].userId,
+                userId: this.tableData_6[this.tableData_6.length-1].userId,
                 // 工时id
-                hourId: this.tableData_6[0].hourId,
+                hourId: this.tableData_6[this.tableData_6.length-1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_6[this.tableData_6.length-1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_6[this.tableData_6.length-1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_6[this.tableData_6.length-1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -1832,15 +1839,15 @@ export default {
                 // 自评分
                 integral: this.tableData_7[0].integral,
                 // 个人id
-                userId: this.tableData_7[0].userId,
+                userId: this.tableData_[this.tableData_7.length-1].userId,
                 // 工时id
-                hourId: this.tableData_7[0].hourId,
+                hourId: this.tableData_[this.tableData_7.length-1].hourId,
                 // 类别
-                category: '1',
+                category: this.tableData_[this.tableData_7.length-1].category,
                 // 主分类
-                mainClassify: '',
+                mainClassify: this.tableData_[this.tableData_7.length-1].mainClassify,
                 // 子分类
-                subClassify: '',
+                subClassify: this.tableData_[this.tableData_7.length-1].subClassify,
                 // 项目产品
                 itemId: null,
                 // 完成情况
@@ -2153,10 +2160,8 @@ export default {
             }
         },
 
-<<<<<<< HEAD
-=======
         selectHour_1(val) {
-            var hour = 0;
+            let hour = 0;
             for(var i=0;i<this.tableData_1.length;i++){
                 hour+=this.tableData_1[i].useHour;
             }
@@ -2169,7 +2174,90 @@ export default {
                 });
             }
         },
->>>>>>> efa2416cb174de863c5282600f4c4a0112d1e6ff
+        selectHour_2(val) {
+            let hour = 0;
+            for(var i=0;i<this.tableData_2.length;i++){
+                hour+=this.tableData_2[i].useHour;
+            }
+
+            if (this.maxUseHour_2 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
+        selectHour_3(val) {
+            let hour = 0;
+            for(var i=0;i<this.tableData_3.length;i++){
+                hour+=this.tableData_3[i].useHour;
+            }
+
+            if (this.maxUseHour_3 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
+        selectHour_4(val) {
+            let hour = 0;
+            for(var i=0;i<this.tableData_4.length;i++){
+                hour+=this.tableData_4[i].useHour;
+            }
+
+            if (this.maxUseHour_4 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
+        selectHour_5(val) {
+            let hour = 0;
+            for(var i=0;i<this.tableData_5.length;i++){
+                hour+=this.tableData_5[i].useHour;
+            }
+
+            if (this.maxUseHour_5 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
+        selectHour_6(val) {
+            let hour = 0;
+            for(var i=0;i<this.tableData_6.length;i++){
+                hour+=this.tableData_6[i].useHour;
+            }
+
+            if (this.maxUseHour_6 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
+        selectHour_7(val) {
+            let hour = 0;
+            for(var i=0;i<this.tableData_7.length;i++){
+                hour+=this.tableData_7[i].useHour;
+            }
+
+            if (this.maxUseHour_7 < hour){
+                // this.useHourDisabled_1 = true;
+                Message({
+                    message: "请注意你的工时分配是否正确",
+                    type: "error"
+                });
+            }
+        },
 
         // 获取鸡腿数量 最大工时
         selectWorkDay_1(val) {
@@ -2679,7 +2767,7 @@ export default {
                 }
               this.$copyText(
                 `${day_1}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_1[0].integral}分---总工时${this.Hour_1}小时
-${category_1}---${itemName_1}---${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}${this.tableData_1[0].complete!=100?`---预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -2726,8 +2814,8 @@ ${category_1}---${itemName_1}---${this.tableData_1[0].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_1}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_1[0].integral}分---总工时${this.Hour_1}小时
-${category_1}---${itemName_1}---${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}${this.tableData_1[0].complete!=100?`---预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -2788,9 +2876,9 @@ ${category_2}---${itemName_2}---${this.tableData_1[1].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_1}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_1[0].integral}分---总工时${this.Hour_1}小时
-${category_1}---${itemName_1}---${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_1[2].reason}---${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}---${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_1[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}${this.tableData_1[0].complete!=100?`---预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_1[2].reason}---${this.tableData_1[2].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[2].completeTime} 完成`:''}---${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_1[2].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -2865,10 +2953,10 @@ ${category_3}---${itemName_3}---${this.tableData_1[2].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_1}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_1[0].integral}分---总工时${this.Hour_1}小时
-${category_1}---${itemName_1}---${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_1[2].reason}---${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}---${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_1[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_1[3].reason}---${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}---${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_1[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}${this.tableData_1[0].complete!=100?`---预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_1[2].reason}---${this.tableData_1[2].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[2].completeTime} 完成`:''}---${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_1[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_1[3].reason}---${this.tableData_1[3].complete==100?'已完成':'未完成'}${this.tableData_1[3].complete!=100?`---预计 ${this.tableData_1[3].completeTime} 完成`:''}---${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_1[3].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -2957,11 +3045,11 @@ ${category_4}---${itemName_4}---${this.tableData_1[3].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_1}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_1[0].integral}分---总工时${this.Hour_1}小时
-${category_1}---${itemName_1}---${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}-${this.tableData_1[0].complete!=100?`预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_1[2].reason}---${this.tableData_1[2].complete==100?'已完成':'未完成'}-${this.tableData_1[1].complete!=100?`预计 ${this.tableData_1[2].completeTime} 完成`:''}---${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_1[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_1[3].reason}---${this.tableData_1[3].complete==100?'已完成':'未完成'}-${this.tableData_1[3].complete!=100?`预计 ${this.tableData_1[3].completeTime} 完成`:''}---${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_1[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_1[4].reason}---${this.tableData_1[4].complete==100?'已完成':'未完成'}-${this.tableData_1[4].complete!=100?`预计 ${this.tableData_1[4].completeTime} 完成`:''}---${this.tableData_1[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_1[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_1[0].reason}---${this.tableData_1[0].complete==100?'已完成':'未完成'}${this.tableData_1[0].complete!=100?`---预计 ${this.tableData_1[0].completeTime} 完成`:''}---${this.tableData_1[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_1[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_1[1].reason}---${this.tableData_1[1].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[1].completeTime} 完成`:''}---${this.tableData_1[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_1[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_1[2].reason}---${this.tableData_1[2].complete==100?'已完成':'未完成'}${this.tableData_1[1].complete!=100?`---预计 ${this.tableData_1[2].completeTime} 完成`:''}---${this.tableData_1[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_1[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_1[3].reason}---${this.tableData_1[3].complete==100?'已完成':'未完成'}${this.tableData_1[3].complete!=100?`---预计 ${this.tableData_1[3].completeTime} 完成`:''}---${this.tableData_1[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_1[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_1[4].reason}---${this.tableData_1[4].complete==100?'已完成':'未完成'}${this.tableData_1[4].complete!=100?`---预计 ${this.tableData_1[4].completeTime} 完成`:''}---${this.tableData_1[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_1[4].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3016,7 +3104,7 @@ ${category_5}---${itemName_5}---${this.tableData_1[4].reason}---${this.tableData
                }
              this.$copyText(
                `${day_2}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_2[0].integral}分---总工时${this.Hour_2}小时
-${category_1}---${itemName_1}---${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}${this.tableData_2[0].complete!=100?`---预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
@@ -3063,8 +3151,8 @@ ${category_1}---${itemName_1}---${this.tableData_2[0].reason}---${this.tableData
                }
                this.$copyText(
                  `${day_2}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_2[0].integral}分---总工时${this.Hour_2}小时
-${category_1}---${itemName_1}---${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}${this.tableData_2[0].complete!=100?`---预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3125,9 +3213,9 @@ ${category_2}---${itemName_2}---${this.tableData_2[1].reason}---${this.tableData
                }
                this.$copyText(
                  `${day_2}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_2[0].integral}分---总工时${this.Hour_2}小时
-${category_1}---${itemName_1}---${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_2[2].reason}---${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}---${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_2[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}${this.tableData_2[0].complete!=100?`---预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_2[2].reason}---${this.tableData_2[2].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[2].completeTime} 完成`:''}---${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_2[2].useHour}小时`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3202,10 +3290,10 @@ ${category_3}---${itemName_3}---${this.tableData_2[2].reason}---${this.tableData
                }
                this.$copyText(
                  `${day_2}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_2[0].integral}分---总工时${this.Hour_2}小时
-${category_1}---${itemName_1}---${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_2[2].reason}---${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}---${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_2[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_2[3].reason}---${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}---${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_2[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}${this.tableData_2[0].complete!=100?`---预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_2[2].reason}---${this.tableData_2[2].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[2].completeTime} 完成`:''}---${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_2[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_2[3].reason}---${this.tableData_2[3].complete==100?'已完成':'未完成'}${this.tableData_2[3].complete!=100?`---预计 ${this.tableData_2[3].completeTime} 完成`:''}---${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_2[3].useHour}小时`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3294,11 +3382,11 @@ ${category_4}---${itemName_4}---${this.tableData_2[3].reason}---${this.tableData
               }
               this.$copyText(
                 `${day_2}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_2[0].integral}分---总工时${this.Hour_2}小时
-${category_1}---${itemName_1}---${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}-${this.tableData_2[0].complete!=100?`预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_2[2].reason}---${this.tableData_2[2].complete==100?'已完成':'未完成'}-${this.tableData_2[1].complete!=100?`预计 ${this.tableData_2[2].completeTime} 完成`:''}---${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_2[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_2[3].reason}---${this.tableData_2[3].complete==100?'已完成':'未完成'}-${this.tableData_2[3].complete!=100?`预计 ${this.tableData_2[3].completeTime} 完成`:''}---${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_2[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_2[4].reason}---${this.tableData_2[4].complete==100?'已完成':'未完成'}-${this.tableData_2[4].complete!=100?`预计 ${this.tableData_2[4].completeTime} 完成`:''}---${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_2[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_2[0].reason}---${this.tableData_2[0].complete==100?'已完成':'未完成'}${this.tableData_2[0].complete!=100?`---预计 ${this.tableData_2[0].completeTime} 完成`:''}---${this.tableData_2[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_2[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_2[1].reason}---${this.tableData_2[1].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[1].completeTime} 完成`:''}---${this.tableData_2[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_2[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_2[2].reason}---${this.tableData_2[2].complete==100?'已完成':'未完成'}${this.tableData_2[1].complete!=100?`---预计 ${this.tableData_2[2].completeTime} 完成`:''}---${this.tableData_2[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_2[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_2[3].reason}---${this.tableData_2[3].complete==100?'已完成':'未完成'}${this.tableData_2[3].complete!=100?`---预计 ${this.tableData_2[3].completeTime} 完成`:''}---${this.tableData_2[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_2[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_2[4].reason}---${this.tableData_2[4].complete==100?'已完成':'未完成'}${this.tableData_2[4].complete!=100?`---预计 ${this.tableData_2[4].completeTime} 完成`:''}---${this.tableData_2[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_2[4].useHour}小时`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3352,7 +3440,7 @@ ${category_5}---${itemName_5}---${this.tableData_2[4].reason}---${this.tableData
                }
              this.$copyText(
                `${day_3}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_3[0].integral}分---总工时${this.Hour_3}小时
-${category_1}---${itemName_1}---${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}${this.tableData_3[0].complete!=100?`---预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时`
              ).then(res => {
                console.log(res);
                // this.$toast("已成功复制，可直接去粘贴");
@@ -3399,8 +3487,8 @@ ${category_1}---${itemName_1}---${this.tableData_3[0].reason}---${this.tableData
                }
                this.$copyText(
                  `${day_3}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_3[0].integral}分---总工时${this.Hour_3}小时
-${category_1}---${itemName_1}---${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}${this.tableData_3[0].complete!=100?`---预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3461,9 +3549,9 @@ ${category_2}---${itemName_2}---${this.tableData_3[1].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_3}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_3[0].integral}分---总工时${this.Hour_3}小时
-${category_1}---${itemName_1}---${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_3[2].reason}---${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}---${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_3[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}${this.tableData_3[0].complete!=100?`---预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_3[2].reason}---${this.tableData_3[2].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[2].completeTime} 完成`:''}---${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_3[2].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3538,10 +3626,10 @@ ${category_3}---${itemName_3}---${this.tableData_3[2].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_3}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_3[0].integral}分---总工时${this.Hour_3}小时
-${category_1}---${itemName_1}---${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_3[2].reason}---${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}---${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_3[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_3[3].reason}---${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}---${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_3[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}${this.tableData_3[0].complete!=100?`---预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_3[2].reason}---${this.tableData_3[2].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[2].completeTime} 完成`:''}---${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_3[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_3[3].reason}---${this.tableData_3[3].complete==100?'已完成':'未完成'}${this.tableData_3[3].complete!=100?`---预计 ${this.tableData_3[3].completeTime} 完成`:''}---${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_3[3].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3630,11 +3718,11 @@ ${category_4}---${itemName_4}---${this.tableData_3[3].reason}---${this.tableData
                }
                this.$copyText(
                  `${day_3}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_3[0].integral}分---总工时${this.Hour_3}小时
-${category_1}---${itemName_1}---${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}-${this.tableData_3[0].complete!=100?`预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_3[2].reason}---${this.tableData_3[2].complete==100?'已完成':'未完成'}-${this.tableData_3[1].complete!=100?`预计 ${this.tableData_3[2].completeTime} 完成`:''}---${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_3[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_3[3].reason}---${this.tableData_3[3].complete==100?'已完成':'未完成'}-${this.tableData_3[3].complete!=100?`预计 ${this.tableData_3[3].completeTime} 完成`:''}---${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_3[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_3[4].reason}---${this.tableData_3[4].complete==100?'已完成':'未完成'}-${this.tableData_3[4].complete!=100?`预计 ${this.tableData_3[4].completeTime} 完成`:''}---${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_3[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_3[0].reason}---${this.tableData_3[0].complete==100?'已完成':'未完成'}${this.tableData_3[0].complete!=100?`---预计 ${this.tableData_3[0].completeTime} 完成`:''}---${this.tableData_3[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_3[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_3[1].reason}---${this.tableData_3[1].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[1].completeTime} 完成`:''}---${this.tableData_3[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_3[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_3[2].reason}---${this.tableData_3[2].complete==100?'已完成':'未完成'}${this.tableData_3[1].complete!=100?`---预计 ${this.tableData_3[2].completeTime} 完成`:''}---${this.tableData_3[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_3[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_3[3].reason}---${this.tableData_3[3].complete==100?'已完成':'未完成'}${this.tableData_3[3].complete!=100?`---预计 ${this.tableData_3[3].completeTime} 完成`:''}---${this.tableData_3[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_3[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_3[4].reason}---${this.tableData_3[4].complete==100?'已完成':'未完成'}${this.tableData_3[4].complete!=100?`---预计 ${this.tableData_3[4].completeTime} 完成`:''}---${this.tableData_3[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_3[4].useHour}小时`
                ).then(res => {
                  console.log(res);
                  // this.$toast("已成功复制，可直接去粘贴");
@@ -3687,7 +3775,7 @@ ${category_5}---${itemName_5}---${this.tableData_3[4].reason}---${this.tableData
                 }
               this.$copyText(
                 `${day_4}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_4[0].integral}分---总工时${this.Hour_4}小时
-${category_1}---${itemName_1}---${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}${this.tableData_4[0].complete!=100?`---预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -3734,8 +3822,8 @@ ${category_1}---${itemName_1}---${this.tableData_4[0].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_4}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_4[0].integral}分---总工时${this.Hour_4}小时
-${category_1}---${itemName_1}---${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}${this.tableData_4[0].complete!=100?`---预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}${this.tableData_4[1].complete!=100?`---预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -3796,9 +3884,9 @@ ${category_2}---${itemName_2}---${this.tableData_4[1].reason}---${this.tableData
                  }
                  this.$copyText(
                    `${day_4}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_4[0].integral}分---总工时${this.Hour_4}小时
-${category_1}---${itemName_1}---${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_4[2].reason}---${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}---${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_4[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}${this.tableData_4[0].complete!=100?`---预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}${this.tableData_4[1].complete!=100?`---预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_4[2].reason}---${this.tableData_4[2].complete==100?'已完成':'未完成'}${this.tableData_4[1].complete!=100?`---预计 ${this.tableData_4[2].completeTime} 完成`:''}---${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_4[2].useHour}小时`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -3873,10 +3961,10 @@ ${category_3}---${itemName_3}---${this.tableData_4[2].reason}---${this.tableData
                   }
                   this.$copyText(
                     `${day_4}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_4[0].integral}分---总工时${this.Hour_4}小时
-${category_1}---${itemName_1}---${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_4[2].reason}---${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}---${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_4[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_4[3].reason}---${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}---${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_4[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}${this.tableData_4[0].complete!=100?`---预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}${this.tableData_4[1].complete!=100?`---预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_4[2].reason}---${this.tableData_4[2].complete==100?'已完成':'未完成'}${this.tableData_4[2].complete!=100?`---预计 ${this.tableData_4[2].completeTime} 完成`:''}---${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_4[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_4[3].reason}---${this.tableData_4[3].complete==100?'已完成':'未完成'}${this.tableData_4[3].complete!=100?`---预计 ${this.tableData_4[3].completeTime} 完成`:''}---${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_4[3].useHour}小时`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -3965,11 +4053,11 @@ ${category_4}---${itemName_4}---${this.tableData_4[3].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_4}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_4[0].integral}分---总工时${this.Hour_4}小时
-${category_1}---${itemName_1}---${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}-${this.tableData_4[0].complete!=100?`预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}-${this.tableData_4[1].complete!=100?`预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_4[2].reason}---${this.tableData_4[2].complete==100?'已完成':'未完成'}-${this.tableData_4[2].complete!=100?`预计 ${this.tableData_4[2].completeTime} 完成`:''}---${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_4[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_4[3].reason}---${this.tableData_4[3].complete==100?'已完成':'未完成'}-${this.tableData_4[3].complete!=100?`预计 ${this.tableData_4[3].completeTime} 完成`:''}---${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_4[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_4[4].reason}---${this.tableData_4[4].complete==100?'已完成':'未完成'}-${this.tableData_4[4].complete!=100?`预计 ${this.tableData_4[4].completeTime} 完成`:''}---${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_4[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_4[0].reason}---${this.tableData_4[0].complete==100?'已完成':'未完成'}${this.tableData_4[0].complete!=100?`---预计 ${this.tableData_4[0].completeTime} 完成`:''}---${this.tableData_4[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_4[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_4[1].reason}---${this.tableData_4[1].complete==100?'已完成':'未完成'}${this.tableData_4[1].complete!=100?`---预计 ${this.tableData_4[1].completeTime} 完成`:''}---${this.tableData_4[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_4[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_4[2].reason}---${this.tableData_4[2].complete==100?'已完成':'未完成'}${this.tableData_4[2].complete!=100?`---预计 ${this.tableData_4[2].completeTime} 完成`:''}---${this.tableData_4[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_4[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_4[3].reason}---${this.tableData_4[3].complete==100?'已完成':'未完成'}${this.tableData_4[3].complete!=100?`---预计 ${this.tableData_4[3].completeTime} 完成`:''}---${this.tableData_4[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_4[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_4[4].reason}---${this.tableData_4[4].complete==100?'已完成':'未完成'}${this.tableData_4[4].complete!=100?`---预计 ${this.tableData_4[4].completeTime} 完成`:''}---${this.tableData_4[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_4[4].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4023,7 +4111,7 @@ ${category_5}---${itemName_5}---${this.tableData_4[4].reason}---${this.tableData
                 }
               this.$copyText(
                 `${day_5}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_5[0].integral}分---总工时${this.Hour_5}小时
-${category_1}---${itemName_1}---${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}${this.tableData_5[0].complete!=100?`---预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -4070,8 +4158,8 @@ ${category_1}---${itemName_1}---${this.tableData_5[0].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_5}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_5[0].integral}分---总工时${this.Hour_5}小时
-${category_1}---${itemName_1}---${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}${this.tableData_5[0].complete!=100?`---预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}${this.tableData_5[1].complete!=100?`---预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4132,9 +4220,9 @@ ${category_2}---${itemName_2}---${this.tableData_5[1].reason}---${this.tableData
                  }
                  this.$copyText(
                    `${day_5}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_5[0].integral}分---总工时${this.Hour_5}小时
-${category_1}---${itemName_1}---${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_5[2].reason}---${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}---${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_5[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}${this.tableData_5[0].complete!=100?`---预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}${this.tableData_5[1].complete!=100?`---预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_5[2].reason}---${this.tableData_5[2].complete==100?'已完成':'未完成'}${this.tableData_5[1].complete!=100?`---预计 ${this.tableData_5[2].completeTime} 完成`:''}---${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_5[2].useHour}小时`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -4209,10 +4297,10 @@ ${category_3}---${itemName_3}---${this.tableData_5[2].reason}---${this.tableData
                   }
                   this.$copyText(
                     `${day_5}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_5[0].integral}分---总工时${this.Hour_5}小时
-${category_1}---${itemName_1}---${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_5[2].reason}---${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}---${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_5[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_5[3].reason}---${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}---${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_5[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}${this.tableData_5[0].complete!=100?`---预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}${this.tableData_5[1].complete!=100?`---预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_5[2].reason}---${this.tableData_5[2].complete==100?'已完成':'未完成'}${this.tableData_5[2].complete!=100?`---预计 ${this.tableData_5[2].completeTime} 完成`:''}---${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_5[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_5[3].reason}---${this.tableData_5[3].complete==100?'已完成':'未完成'}${this.tableData_5[3].complete!=100?`---预计 ${this.tableData_5[3].completeTime} 完成`:''}---${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_5[3].useHour}小时`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -4301,11 +4389,11 @@ ${category_4}---${itemName_4}---${this.tableData_5[3].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_5}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_5[0].integral}分---总工时${this.Hour_5}小时
-${category_1}---${itemName_1}---${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}-${this.tableData_5[0].complete!=100?`预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}-${this.tableData_5[1].complete!=100?`预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_5[2].reason}---${this.tableData_5[2].complete==100?'已完成':'未完成'}-${this.tableData_5[2].complete!=100?`预计 ${this.tableData_5[2].completeTime} 完成`:''}---${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_5[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_5[3].reason}---${this.tableData_5[3].complete==100?'已完成':'未完成'}-${this.tableData_5[3].complete!=100?`预计 ${this.tableData_5[3].completeTime} 完成`:''}---${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_5[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_5[4].reason}---${this.tableData_5[4].complete==100?'已完成':'未完成'}-${this.tableData_5[4].complete!=100?`预计 ${this.tableData_5[4].completeTime} 完成`:''}---${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_5[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_5[0].reason}---${this.tableData_5[0].complete==100?'已完成':'未完成'}${this.tableData_5[0].complete!=100?`---预计 ${this.tableData_5[0].completeTime} 完成`:''}---${this.tableData_5[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_5[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_5[1].reason}---${this.tableData_5[1].complete==100?'已完成':'未完成'}${this.tableData_5[1].complete!=100?`---预计 ${this.tableData_5[1].completeTime} 完成`:''}---${this.tableData_5[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_5[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_5[2].reason}---${this.tableData_5[2].complete==100?'已完成':'未完成'}${this.tableData_5[2].complete!=100?`---预计 ${this.tableData_5[2].completeTime} 完成`:''}---${this.tableData_5[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_5[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_5[3].reason}---${this.tableData_5[3].complete==100?'已完成':'未完成'}${this.tableData_5[3].complete!=100?`---预计 ${this.tableData_5[3].completeTime} 完成`:''}---${this.tableData_5[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_5[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_5[4].reason}---${this.tableData_5[4].complete==100?'已完成':'未完成'}${this.tableData_5[4].complete!=100?`---预计 ${this.tableData_5[4].completeTime} 完成`:''}---${this.tableData_5[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_5[4].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4360,7 +4448,7 @@ ${category_5}---${itemName_5}---${this.tableData_5[4].reason}---${this.tableData
                 }
               this.$copyText(
                 `${day_6}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_6[0].integral}分---总工时${this.Hour_6}小时
-${category_1}---${itemName_1}---${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}${this.tableData_6[0].complete!=100?`---预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -4407,8 +4495,8 @@ ${category_1}---${itemName_1}---${this.tableData_6[0].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_6}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_6[0].integral}分---总工时${this.Hour_6}小时
-${category_1}---${itemName_1}---${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}${this.tableData_6[0].complete!=100?`---预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}${this.tableData_6[1].complete!=100?`---预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4469,9 +4557,9 @@ ${category_2}---${itemName_2}---${this.tableData_6[1].reason}---${this.tableData
                  }
                  this.$copyText(
                    `${day_6}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_6[0].integral}分---总工时${this.Hour_6}小时
-${category_1}---${itemName_1}---${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_6[2].reason}---${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}---${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_6[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}${this.tableData_6[0].complete!=100?`---预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}${this.tableData_6[1].complete!=100?`---预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_6[2].reason}---${this.tableData_6[2].complete==100?'已完成':'未完成'}${this.tableData_6[1].complete!=100?`---预计 ${this.tableData_6[2].completeTime} 完成`:''}---${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_6[2].useHour}小时`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -4546,10 +4634,10 @@ ${category_3}---${itemName_3}---${this.tableData_6[2].reason}---${this.tableData
                   }
                   this.$copyText(
                     `${day_6}--{this.userList.deptName}--${this.userList.username}--${this.tableData_6[0].integral}
-${category_1}---${itemName_1}---${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_6[2].reason}---${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}---${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_6[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_6[3].reason}---${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}---${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_6[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}${this.tableData_6[0].complete!=100?`---预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}${this.tableData_6[1].complete!=100?`---预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_6[2].reason}---${this.tableData_6[2].complete==100?'已完成':'未完成'}${this.tableData_6[2].complete!=100?`---预计 ${this.tableData_6[2].completeTime} 完成`:''}---${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_6[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_6[3].reason}---${this.tableData_6[3].complete==100?'已完成':'未完成'}${this.tableData_6[3].complete!=100?`---预计 ${this.tableData_6[3].completeTime} 完成`:''}---${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_6[3].useHour}小时`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -4638,11 +4726,11 @@ ${category_4}---${itemName_4}---${this.tableData_6[3].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_6}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_6[0].integral}分---总工时${this.Hour_6}小时
-${category_1}---${itemName_1}---${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}-${this.tableData_6[0].complete!=100?`预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}-${this.tableData_6[1].complete!=100?`预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_6[2].reason}---${this.tableData_6[2].complete==100?'已完成':'未完成'}-${this.tableData_6[2].complete!=100?`预计 ${this.tableData_6[2].completeTime} 完成`:''}---${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_6[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_6[3].reason}---${this.tableData_6[3].complete==100?'已完成':'未完成'}-${this.tableData_6[3].complete!=100?`预计 ${this.tableData_6[3].completeTime} 完成`:''}---${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_6[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_6[4].reason}---${this.tableData_6[4].complete==100?'已完成':'未完成'}-${this.tableData_6[4].complete!=100?`预计 ${this.tableData_6[4].completeTime} 完成`:''}---${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_6[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_6[0].reason}---${this.tableData_6[0].complete==100?'已完成':'未完成'}${this.tableData_6[0].complete!=100?`---预计 ${this.tableData_6[0].completeTime} 完成`:''}---${this.tableData_6[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_6[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_6[1].reason}---${this.tableData_6[1].complete==100?'已完成':'未完成'}${this.tableData_6[1].complete!=100?`---预计 ${this.tableData_6[1].completeTime} 完成`:''}---${this.tableData_6[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_6[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_6[2].reason}---${this.tableData_6[2].complete==100?'已完成':'未完成'}${this.tableData_6[2].complete!=100?`---预计 ${this.tableData_6[2].completeTime} 完成`:''}---${this.tableData_6[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_6[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_6[3].reason}---${this.tableData_6[3].complete==100?'已完成':'未完成'}${this.tableData_6[3].complete!=100?`---预计 ${this.tableData_6[3].completeTime} 完成`:''}---${this.tableData_6[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_6[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_6[4].reason}---${this.tableData_6[4].complete==100?'已完成':'未完成'}${this.tableData_6[4].complete!=100?`---预计 ${this.tableData_6[4].completeTime} 完成`:''}---${this.tableData_6[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_6[4].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4696,7 +4784,7 @@ ${category_5}---${itemName_5}---${this.tableData_6[4].reason}---${this.tableData
                 }
               this.$copyText(
                 `${day_7}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_7[0].integral}分---总工时${this.Hour_7}小时
-${category_1}---${itemName_1}---${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}${this.tableData_7[0].complete!=100?`---预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时`
               ).then(res => {
                 console.log(res);
                 // this.$toast("已成功复制，可直接去粘贴");
@@ -4743,8 +4831,8 @@ ${category_1}---${itemName_1}---${this.tableData_7[0].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_7}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_7[0].integral}分---总工时${this.Hour_7}小时
-${category_1}---${itemName_1}---${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}${this.tableData_7[0].complete!=100?`---预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}${this.tableData_7[1].complete!=100?`---预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");
@@ -4805,9 +4893,9 @@ ${category_2}---${itemName_2}---${this.tableData_7[1].reason}---${this.tableData
                  }
                  this.$copyText(
                    `${day_7}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_7[0].integral}分---总工时${this.Hour_7}小时
-${category_1}---${itemName_1}---${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_7[2].reason}---${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}---${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_7[2].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}${this.tableData_7[0].complete!=100?`---预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}${this.tableData_7[1].complete!=100?`---预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_7[2].reason}---${this.tableData_7[2].complete==100?'已完成':'未完成'}${this.tableData_7[1].complete!=100?`---预计 ${this.tableData_7[2].completeTime} 完成`:''}---${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_7[2].useHour}小时`
                  ).then(res => {
                    console.log(res);
                    // this.$toast("已成功复制，可直接去粘贴");
@@ -4882,10 +4970,10 @@ ${category_3}---${itemName_3}---${this.tableData_7[2].reason}---${this.tableData
                   }
                   this.$copyText(
                     `${day_7}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_7[0].integral}分---总工时${this.Hour_7}小时
-${category_1}---${itemName_1}---${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_7[2].reason}---${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}---${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_7[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_7[3].reason}---${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}---${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_7[3].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}${this.tableData_7[0].complete!=100?`---预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}${this.tableData_7[1].complete!=100?`---预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_7[2].reason}---${this.tableData_7[2].complete==100?'已完成':'未完成'}${this.tableData_7[2].complete!=100?`---预计 ${this.tableData_7[2].completeTime} 完成`:''}---${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_7[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_7[3].reason}---${this.tableData_7[3].complete==100?'已完成':'未完成'}${this.tableData_7[3].complete!=100?`---预计 ${this.tableData_7[3].completeTime} 完成`:''}---${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_7[3].useHour}小时`
                   ).then(res => {
                     console.log(res);
                     // this.$toast("已成功复制，可直接去粘贴");
@@ -4974,11 +5062,11 @@ ${category_4}---${itemName_4}---${this.tableData_7[3].reason}---${this.tableData
                 }
                 this.$copyText(
                   `${day_7}---${this.userList.deptName}-${this.userList.username}---自评分${this.tableData_7[0].integral}分---总工时${this.Hour_7}小时
-${category_1}---${itemName_1}---${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}-${this.tableData_7[0].complete!=100?`预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
-${category_2}---${itemName_2}---${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}-${this.tableData_7[1].complete!=100?`预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时
-${category_3}---${itemName_3}---${this.tableData_7[2].reason}---${this.tableData_7[2].complete==100?'已完成':'未完成'}-${this.tableData_7[2].complete!=100?`预计 ${this.tableData_7[2].completeTime} 完成`:''}---${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_7[2].useHour}小时
-${category_4}---${itemName_4}---${this.tableData_7[3].reason}---${this.tableData_7[3].complete==100?'已完成':'未完成'}-${this.tableData_7[3].complete!=100?`预计 ${this.tableData_7[3].completeTime} 完成`:''}---${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_7[3].useHour}小时
-${category_5}---${itemName_5}---${this.tableData_7[4].reason}---${this.tableData_7[4].complete==100?'已完成':'未完成'}-${this.tableData_7[4].complete!=100?`预计 ${this.tableData_7[4].completeTime} 完成`:''}---${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_7[4].useHour}小时`
+${category_1}---${itemName_1!=''?`${itemName_1}---`:''}${this.tableData_7[0].reason}---${this.tableData_7[0].complete==100?'已完成':'未完成'}${this.tableData_7[0].complete!=100?`---预计 ${this.tableData_7[0].completeTime} 完成`:''}---${this.tableData_7[0].approverids == 0?'无人验收':`${name_1}验收`}---${this.tableData_7[0].useHour}小时
+${category_2}---${itemName_2!=''?`${itemName_2}---`:''}${this.tableData_7[1].reason}---${this.tableData_7[1].complete==100?'已完成':'未完成'}${this.tableData_7[1].complete!=100?`---预计 ${this.tableData_7[1].completeTime} 完成`:''}---${this.tableData_7[1].approverids == 0?'无人验收':`${name_2}验收`}---${this.tableData_7[1].useHour}小时
+${category_3}---${itemName_3!=''?`${itemName_3}---`:''}${this.tableData_7[2].reason}---${this.tableData_7[2].complete==100?'已完成':'未完成'}${this.tableData_7[2].complete!=100?`---预计 ${this.tableData_7[2].completeTime} 完成`:''}---${this.tableData_7[2].approverids == 0?'无人验收':`${name_3}验收`}---${this.tableData_7[2].useHour}小时
+${category_4}---${itemName_4!=''?`${itemName_4}---`:''}${this.tableData_7[3].reason}---${this.tableData_7[3].complete==100?'已完成':'未完成'}${this.tableData_7[3].complete!=100?`---预计 ${this.tableData_7[3].completeTime} 完成`:''}---${this.tableData_7[3].approverids == 0?'无人验收':`${name_4}验收`}---${this.tableData_7[3].useHour}小时
+${category_5}---${itemName_5!=''?`${itemName_5}---`:''}${this.tableData_7[4].reason}---${this.tableData_7[4].complete==100?'已完成':'未完成'}${this.tableData_7[4].complete!=100?`---预计 ${this.tableData_7[4].completeTime} 完成`:''}---${this.tableData_7[4].approverids == 0?'无人验收':`${name_5}验收`}---${this.tableData_7[4].useHour}小时`
                 ).then(res => {
                   console.log(res);
                   // this.$toast("已成功复制，可直接去粘贴");

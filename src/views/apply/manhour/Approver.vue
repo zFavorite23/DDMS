@@ -206,8 +206,11 @@ export default {
                     this.list = response.data.data.records;
                     this.list.forEach(item => {
                         this.$set(item, 'show', true);
+                        if (item.checkMin == null || item.checkMin == 0) {
+                            item.checkMin = item.useHour;
+                        }
+                        console.log(item);
                     });
-                    console.log(this.list);
                 })
                 .catch(() => {
                     this.listLoading = false;
