@@ -11,7 +11,7 @@
                     <span>{{ scope.row.integral }} 分</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="200" label="项目" :show-overflow-tooltip="true">
+            <el-table-column min-width="160" label="项目" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <span v-if="scope.row.alias == null || scope.row.alias == ''">与项目无关</span>
                     <span v-else>{{ scope.row.alias }}</span>
@@ -99,7 +99,7 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column prop="reason" min-width="150" label="工作内容" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="reason" min-width="120" label="工作内容" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column label="工时">
                 <template slot-scope="scope">
                     <span>{{ scope.row.useHour }} 小时</span>
@@ -110,13 +110,12 @@
                     <!-- <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
                     <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p> -->
                     <!-- v-show="!scope.row.show" -->
-                    <el-input-number v-model="scope.row.checkMin" controls-position="right" size="mini" step-strictly :step="0.5" :max="10" :min="0.0"></el-input-number>
+                    <el-input-number v-model="scope.row.checkMin" controls-position="right" size="mini" step-strictly :step="0.5" :max="24" :min="0.0"></el-input-number>
                 </template>
             </el-table-column>
-            <el-table-column min-width="100" label="反馈意见">
+            <el-table-column min-width="180" label="反馈意见">
                 <template slot-scope="scope">
-                    <p v-show="scope.row.show">{{ scope.row.summary }}</p>
-                    <el-input v-show="!scope.row.show" v-model="scope.row.summary" size="mini" placeholder="请输入内容"></el-input>
+                    <el-input v-model="scope.row.summary" size="mini" placeholder="请输入内容"></el-input>
                 </template>
             </el-table-column>
             <el-table-column min-width="180" label="完成进度">
