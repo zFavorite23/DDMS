@@ -3,6 +3,14 @@
         <div class="" id="myCanvas">
             <span class="tit">工时 / 总数 : {{ total }}</span>
         </div>
+        <el-form :inline="true" :model="query">
+            <el-form-item>
+                <el-select clearable v-model="query.status" placeholder="请选择">
+                    <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item><el-button type="primary" size="medium" v-on:click="getManhourPage()" icon="el-icon-search">搜索</el-button></el-form-item>
+        </el-form>
         <el-table :data="list" :span-method="objectSpanMethod" stripe border v-loading="listLoading" style="width: 100%;" ref="imageTofile">
             <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
             <el-table-column label="自评积分">
@@ -138,6 +146,7 @@
                     <el-tag v-if="scope.row.status == 0" type="warning">审批中</el-tag>
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete == '100'" type="success">同意</el-tag>
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete != '100'" type="warning">同意(未完成)</el-tag>
+                    <el-tag v-if="scope.row.status == 2" type="danger">已拒绝</el-tag>
                 </template>
             </el-table-column>
         </el-table>
@@ -234,14 +243,16 @@ export default {
             }
         };
     },
+    props: ["status"],
     created() {
         window.localStorage.removeItem('editManhourInfo');
-        this.query.status = this.$route.query.status;
+        this.query.status = this.status;
         if (!this.query.status) {
             this.query.status = '';
         }
         this.query.userId = this.userId;
         this.getManhourPage();
+        // console.log(this.status)
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])

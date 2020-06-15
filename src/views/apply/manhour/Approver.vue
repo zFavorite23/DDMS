@@ -4,6 +4,14 @@
             <span class="tit">工时审批 / 总数 : {{ total }}</span>
             <!-- <el-button size="mini" type="primary" style="margin-right: 30px;" @click="updateManhourAll">一键通过</el-button> -->
         </div>
+        <el-form :inline="true" :model="query">
+            <el-form-item>
+                <el-select clearable v-model="query.status" placeholder="请选择">
+                    <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item><el-button type="primary" size="medium" v-on:click="getManhourApproverPage()" icon="el-icon-search">搜索</el-button></el-form-item>
+        </el-form>
         <el-table :data="list" :span-method="objectSpanMethod" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
             <el-table-column label="自评积分">
@@ -178,6 +186,24 @@ export default {
     data() {
         return {
             show: '',
+            statusOptions: [
+                {
+                    value: '',
+                    label: '全部'
+                },
+                {
+                    value: '0',
+                    label: '审批中'
+                },
+                {
+                    value: '1',
+                    label: '同意'
+                },
+                {
+                    value: '2',
+                    label: '拒绝'
+                }
+            ],
             query: {
                 userId: null,
                 status: '',
@@ -192,9 +218,10 @@ export default {
             listType: '2'
         };
     },
+    props: ["status"],
     created() {
         window.localStorage.removeItem('editManhourInfo');
-        this.query.status = this.$route.query.status;
+        this.query.status = this.status;
         if (!this.query.status) {
             this.query.status = '';
         }
