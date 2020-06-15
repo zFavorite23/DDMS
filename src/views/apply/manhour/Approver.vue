@@ -110,12 +110,23 @@
                     <!-- <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
                     <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p> -->
                     <!-- v-show="!scope.row.show" -->
-                    <el-input-number v-model="scope.row.checkMin" controls-position="right" size="mini" step-strictly :step="0.5" :max="24" :min="0.0"></el-input-number>
+                    <el-input-number
+                        v-if="scope.row.status == 0"
+                        v-model="scope.row.checkMin"
+                        controls-position="right"
+                        size="mini"
+                        step-strictly
+                        :step="0.5"
+                        :max="24"
+                        :min="0.0"
+                    ></el-input-number>
+                    <span v-else>{{scope.row.checkMin}} 小时</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="180" label="反馈意见">
                 <template slot-scope="scope">
-                    <el-input v-model="scope.row.summary" size="mini" placeholder="请输入内容"></el-input>
+                    <el-input v-if="scope.row.status == 0" v-model="scope.row.summary" size="mini" placeholder="请输入内容"></el-input>
+                    <span v-else>{{ scope.row.summary }}</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="180" label="完成进度">
@@ -132,12 +143,12 @@
                     <span v-if="scope.row.status == 0">
                         <span v-if="scope.row.show == true">
                             <el-button size="mini" type="primary" @click="updateManhourApprover(scope.$index)">通过</el-button>
-                            <el-button size="mini" type="primary" @click="scope.row.show = false">不通过</el-button>
+                            <el-button size="mini" type="primary" @click="okUpdate(scope.$index)">不通过</el-button>
                         </span>
-                        <span v-if="scope.row.show == false">
+                        <!-- <span v-if="scope.row.show == false">
                             <el-button size="mini" type="primary" @click="okUpdate(scope.$index)">确定</el-button>
                             <el-button size="mini" type="primary" @click="scope.row.show = true">返回</el-button>
-                        </span>
+                        </span> -->
                     </span>
 
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete == '100'" type="success">同意</el-tag>
@@ -254,19 +265,19 @@ export default {
         },
 
         // 一键审批
-        updateManhourAll() {
-            var Newlist = this.list.filter(item => item.status == 0);
-            for (var i = 0; i < Newlist.length; i++) {
-                if (Newlist[i].checkMin == Newlist[i].useHour - 2 || this.list[val].checkMin == 0) {
-                    Newlist[i].checkMin = Newlist[i].useHour;
-                }
-            }
-            updateManhourApproverAll(Newlist).then(res => {
-                console.log(res);
-                this.getManhourApproverPage();
-                this.show = true;
-            });
-        },
+        // updateManhourAll() {
+        //     var Newlist = this.list.filter(item => item.status == 0);
+        //     for (var i = 0; i < Newlist.length; i++) {
+        //         if (Newlist[i].checkMin == Newlist[i].useHour - 2 || this.list[val].checkMin == 0) {
+        //             Newlist[i].checkMin = Newlist[i].useHour;
+        //         }
+        //     }
+        //     updateManhourApproverAll(Newlist).then(res => {
+        //         console.log(res);
+        //         this.getManhourApproverPage();
+        //         this.show = true;
+        //     });
+        // },
         //  合并
         flitterData(arr) {
             let spanOneArr = [],
