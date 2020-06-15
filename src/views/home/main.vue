@@ -119,7 +119,7 @@
                             <el-table-column prop="applyUserName" label="申请人" :span="8"></el-table-column>
                             <el-table-column prop="status" label="操作" :span="8">
                                 <template slot-scope="scope">
-                                    <el-button type="warning" size="mini" v-if="scope.row.status == '0'" @click.native="checkApplyInfo(scope.row)">去审批</el-button>
+                                    <el-button type="warning"  size="mini" v-if="scope.row.status == '0'" @click.native="checkApplyInfo(scope.row)">去审批</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -350,7 +350,7 @@ export default {
             getApproverPage(this.query)
                 .then(response => {
                     const list = response.data.data.records;
-                    console.log(list)
+                    console.log(list);
                     list.forEach((item, index) => {
                         this.tableDataR.push({
                             toId: item.toId,
@@ -365,7 +365,10 @@ export default {
         checkApplyInfo(row) {
             if (row.msgType == '1') {
                 this.$router.push({
-                    path: '/apply/manhour'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'approver'
+                    }
                 });
             }
             if (row.msgType == '2') {
@@ -457,7 +460,11 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour?status=0'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status:'0'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -497,7 +504,11 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour?status=1'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status:'1'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -538,7 +549,11 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour?status=2'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status:'2'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -579,7 +594,10 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'approver'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -620,7 +638,11 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour/approver?status=0'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'approver',
+                        status2:'0'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -660,7 +682,11 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour/approver?status=1'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'approver',
+                        status2:'1'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -701,7 +727,11 @@ export default {
                 });
             } else if (id == 2) {
                 this.$router.push({
-                    path: '/apply/manhour/approver?status=2'
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'approver',
+                        status2:'2'
+                    }
                 });
             } else if (id == 3) {
                 this.$router.push({
@@ -788,6 +818,9 @@ export default {
 <style scoped>
 .el-row {
     background-color: #ffffff;
+}
+.el-button {
+    height: 32px;
 }
 @media screen and (max-width: 550px) {
     .el-col-8 {
