@@ -98,6 +98,13 @@ module.exports = {
                     "^/quartz": "/quartz"
                 }
             },
+            "/act": {
+                target: url,
+                ws: true,
+                pathRewrite: {
+                    "^/act": "/act"
+                }
+            },
             "/weixin": {
                 target: url,
                 ws: true,

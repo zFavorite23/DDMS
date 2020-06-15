@@ -107,11 +107,15 @@ import Performance from "../views/admin/Performance.vue";
 import Menu from "../views/other/Menu.vue";
 import Role from "../views/other/Role.vue";
 import Quartz from "../views/other/Quartz.vue";
+import Act from "../views/other/Act.vue";
+import ActDesign from "../views/other/Act_Design.vue";
 import Log from "../views/other/Log.vue";
+
 
 import WeixinFans from "../views/weixin/Fans.vue";
 import WeixinTemplate from "../views/weixin/Template.vue";
 import WeixinAccount from "../views/weixin/Account.vue";
+import Act_Design from "../views/other/Act_Design";
 
 // Vue.use(VueRouter);
 
@@ -657,6 +661,17 @@ export const asyncRouterMap = [
                 path: "quartz",
                 component: Quartz,
                 name: "任务管理"
+            },
+            {
+                path: "act",
+                component: Act,
+                name: "模型管理"
+            },
+            {
+                path: "act_design/:id",
+                component: Act_Design,
+                name: "模型设计",
+                hidden: true
             },
             {
                 path: "log",
