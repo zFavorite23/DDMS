@@ -120,7 +120,7 @@
                         :max="24"
                         :min="0.0"
                     ></el-input-number>
-                    <span v-else>{{scope.row.checkMin}} 小时</span>
+                    <span v-else>{{ scope.row.checkMin }} 小时</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="180" label="反馈意见">
@@ -300,7 +300,7 @@ export default {
                         spanOneArr.push(1);
                         concatOne = index;
                     }
-                    if (item.day === arr[index - 1].day && item.integral === arr[index - 1].integral) {
+                    if (item.day === arr[index - 1].day && item.integral === arr[index - 1].integral && item.applyUserName === arr[index - 1].applyUserName) {
                         //第二列需合并相同内容的判断条件
                         spanTwoArr[concatTwo] += 1;
                         spanTwoArr.push(0);
