@@ -7,15 +7,15 @@
         <!--                <span>少量的邪恶足以抵消全部高贵的品质, 害得人声名狼藉</span>-->
         <!--            </div>-->
         <!--        </el-tab-pane>-->
-        <el-tab-pane label="工时填报" name="from"><From v-if="'from' === activeName" /></el-tab-pane>
-        <el-tab-pane label="填报管理" name="info"><Info v-if="'info' === activeName" /><</el-tab-pane>
-        <el-tab-pane label="我的审批" name="approver"><Approver v-if="'approver' === activeName" /></el-tab-pane>
+        <el-tab-pane label="工时填报" name="from"><From  v-if="'from' === activeName" /></el-tab-pane>
+        <el-tab-pane label="填报管理" name="info"><Info :status='status' v-if="'info' === activeName" /></el-tab-pane>
+        <el-tab-pane label="我的审批" name="approver"><Approver :status='status2' v-if="'approver' === activeName" /></el-tab-pane>
     </el-tabs>
 </template>
 
 <script>
 import From from './Form.vue';
-import Info from './Info.vue'
+import Info from './Info.vue';
 import Approver from './Approver.vue';
 export default {
     components: {
@@ -25,8 +25,19 @@ export default {
     },
     data() {
         return {
-            activeName: 'from'
+            activeName: 'from',
+            status: '',
+            status2:''
         };
+    },
+
+    methods: {},
+    created() {
+        if (this.$route.query.activeName != null) {
+            this.activeName = this.$route.query.activeName;
+        }
+        this.status = this.$route.query.status;
+        this.status2 = this.$route.query.status2;
     }
 };
 </script>

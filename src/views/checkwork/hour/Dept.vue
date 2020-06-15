@@ -17,8 +17,8 @@
                     <el-table-column prop="workTotalNum" min-width="100" label="应上班天数"></el-table-column>
                     <el-table-column prop="restTotalNum" min-width="100" label="假期上班天数"></el-table-column>
                     <el-table-column prop="totalNum" min-width="100" label="总上班天数"></el-table-column>
-                    <el-table-column min-width="100" label="总评分"></el-table-column>
-                    <el-table-column min-width="100" label="平均评分"></el-table-column>
+                    <el-table-column prop="integralNum" min-width="100" label="总评分"></el-table-column>
+                    <el-table-column prop="avgIntegral" min-width="100" label="平均评分"></el-table-column>
                     <el-table-column prop="sumNum" min-width="100" label="总工时"></el-table-column>
                     <el-table-column prop="avgNum" min-width="100" label="平均工时"></el-table-column>
                     <el-table-column prop="radix" min-width="100" label="基数"></el-table-column>

@@ -40,7 +40,7 @@ export function putObj(data) {
 // 列表
 export function getClockNum(query) {
     return axios({
-        url: "/checkwork/month/num",
+        url: "/checkwork/month/num/" + query.userId + "/" + query.month,
         method: "get",
         params: query
     });

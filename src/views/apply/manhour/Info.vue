@@ -3,32 +3,25 @@
         <div class="" id="myCanvas">
             <span class="tit">工时 / 总数 : {{ total }}</span>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" ref="imageTofile">
-            <el-table-column width="50" label="序号">
-                <template scope="scope">
-                    <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
+        <el-form :inline="true" :model="query">
+            <el-form-item>
+                <el-select clearable v-model="query.status" placeholder="请选择">
+                    <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item><el-button type="primary" size="medium" v-on:click="getManhourPage()" icon="el-icon-search">搜索</el-button></el-form-item>
+        </el-form>
+        <el-table :data="list" :span-method="objectSpanMethod" stripe border v-loading="listLoading" style="width: 100%;" ref="imageTofile">
+            <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
+            <el-table-column label="自评积分">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.integral }} 分</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="200" label="项目" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <span v-if="scope.row.alias == null || scope.row.alias == ''">与项目无关</span>
                     <span v-else>{{ scope.row.alias }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column min-width="100" label="验收人">
-                <template slot-scope="scope">
-                    <span v-if="scope.row.checkUserList != ''">
-                        <div class="tag-group" v-for="item in scope.row.checkUserList">
-                            <p>{{ item.checkUserName }}</p>
-                        </div>
-                    </span>
-                    <span v-else><p>无人验收</p></span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
-            <el-table-column label="自评积分">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.integral }} 分</span>
                 </template>
             </el-table-column>
 
@@ -124,6 +117,16 @@
                     <p v-else>{{ scope.row.useHour }} 小时</p>
                 </template>
             </el-table-column>
+            <el-table-column min-width="100" label="验收人">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.checkUserList != ''">
+                        <div class="tag-group" v-for="item in scope.row.checkUserList">
+                            <p>{{ item.checkUserName }}</p>
+                        </div>
+                    </span>
+                    <span v-else><p>无人验收</p></span>
+                </template>
+            </el-table-column>
             <el-table-column min-width="120" label="反馈意见">
                 <template slot-scope="scope">
                     <p>{{ scope.row.summary }}</p>
@@ -132,7 +135,10 @@
             <el-table-column min-width="180" label="完成进度">
                 <template slot-scope="scope">
                     <el-tag v-if="scope.row.complete == '100'" type="success">已完成</el-tag>
-                    <el-tag v-else type="warning">完成 {{ scope.row.complete }}% 预计{{ scope.row.completeTime }}完成</el-tag>
+                    <div v-else>
+                        <el-tag type="warning">完成 {{ scope.row.complete }}%</el-tag>
+                        <el-tag type="warning">预计{{ scope.row.completeTime }}完成</el-tag>
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column prop="status" min-width="100" label="审批状态">
@@ -140,6 +146,7 @@
                     <el-tag v-if="scope.row.status == 0" type="warning">审批中</el-tag>
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete == '100'" type="success">同意</el-tag>
                     <el-tag v-if="scope.row.status == 1 && scope.row.complete != '100'" type="warning">同意(未完成)</el-tag>
+                    <el-tag v-if="scope.row.status == 2" type="danger">已拒绝</el-tag>
                 </template>
             </el-table-column>
         </el-table>
@@ -236,14 +243,16 @@ export default {
             }
         };
     },
+    props: ["status"],
     created() {
         window.localStorage.removeItem('editManhourInfo');
-        this.query.status = this.$route.query.status;
+        this.query.status = this.status;
         if (!this.query.status) {
             this.query.status = '';
         }
         this.query.userId = this.userId;
         this.getManhourPage();
+        // console.log(this.status)
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -332,6 +341,63 @@ export default {
                         });
                 }
             });
+        },
+        //  合并
+        flitterData(arr) {
+            let spanOneArr = [],
+                spanTwoArr = [],
+                spanThreeArr = [],
+                concatOne = 0,
+                concatTwo = 0,
+                concatThree = 0;
+            arr.forEach((item, index) => {
+                if (index === 0) {
+                    spanOneArr.push(1);
+                    spanTwoArr.push(1);
+                    spanThreeArr.push(1);
+                } else {
+                    if (item.day === arr[index - 1].day) {
+                        //第一列需合并相同内容的判断条件
+                        spanOneArr[concatOne] += 1;
+                        spanOneArr.push(0);
+                    } else {
+                        spanOneArr.push(1);
+                        concatOne = index;
+                    }
+                    if (item.day === arr[index - 1].day && item.integral === arr[index - 1].integral) {
+                        //第二列需合并相同内容的判断条件
+                        spanTwoArr[concatTwo] += 1;
+                        spanTwoArr.push(0);
+                    } else {
+                        spanTwoArr.push(1);
+                        concatTwo = index;
+                    }
+                }
+            });
+            return {
+                one: spanOneArr,
+                two: spanTwoArr,
+                three: spanThreeArr
+            };
+        },
+
+        objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+            if (columnIndex === 0) {
+                const _row = this.flitterData(this.list).one[rowIndex];
+                const _col = _row > 0 ? 1 : 0;
+                return {
+                    rowspan: _row,
+                    colspan: _col
+                };
+            }
+            if (columnIndex === 1) {
+                const _row = this.flitterData(this.list).two[rowIndex];
+                const _col = _row > 0 ? 1 : 0;
+                return {
+                    rowspan: _row,
+                    colspan: _col
+                };
+            }
         }
     },
     mounted() {}
