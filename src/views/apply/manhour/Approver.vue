@@ -246,7 +246,7 @@ export default {
                         if (item.checkMin == null || item.checkMin == 0) {
                             item.checkMin = item.useHour;
                         }
-                        console.log(item);
+                        // console.log(item);
                     });
                 })
                 .catch(() => {
