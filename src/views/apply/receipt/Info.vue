@@ -66,6 +66,8 @@
                     <td v-else-if="receiptInfo.content == 22">*软件*系统软件产品</td>
                     <td v-else-if="receiptInfo.content == 23">*硬件*</td>
                     <td v-else-if="receiptInfo.content == 24">*现代服务*服务费</td>
+                    <td v-else-if="receiptInfo.content == 25">*工程服务*</td>
+                    <td v-else-if="receiptInfo.content == 26">*现代服务*</td>
                     <td v-else>{{ receiptInfo.content }}</td>
                 </tr>
                 <tr>

@@ -55,6 +55,8 @@
                     <span v-else-if="scope.row.content == 22">*软件*系统软件产品</span>
                     <span v-else-if="scope.row.content == 23">*硬件*</span>
                     <span v-else-if="scope.row.content == 24">*现代服务*服务费</span>
+                    <span v-else-if="scope.row.content == 25">*工程服务*</span>
+                    <span v-else-if="scope.row.content == 26">*现代服务*</span>
                     <span v-else>{{ scope.row.content }}</span>
                 </template>
             </el-table-column>
