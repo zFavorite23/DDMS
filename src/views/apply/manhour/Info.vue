@@ -293,6 +293,10 @@ export default {
 
         // 复制
         copyCode(row) {
+            this.$message({
+                message: '已成功复制到粘贴板！',
+                 type: 'success'
+            });
             var copyList = this.list.filter(item => item.hourId == row.hourId);
             // 总工时
             var Hour = 0;
