@@ -239,11 +239,11 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getItemList();
+            this.getItemPartVosWithUserIdPage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            this.getItemList();
+            this.getItemPartVosWithUserIdPage();
         }
     },
     mounted() {}

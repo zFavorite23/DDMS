@@ -276,11 +276,11 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getItemList();
+            this.getItemAdminVosWithUserIdPage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            this.getItemList();
+            this.getItemAdminVosWithUserIdPage();
         },
         // 删除
         handleDel(index, row) {
@@ -290,7 +290,7 @@ export default {
                 }).then(() => {
                     deleteItem(row.itemId).then(res => {
                         if (res.data.data) {
-                            this.getItemList();
+                            this.getItemAdminVosWithUserIdPage();
                         }
                     });
                 });

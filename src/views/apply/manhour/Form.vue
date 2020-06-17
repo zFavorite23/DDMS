@@ -2078,9 +2078,9 @@ export default {
                 // 自评分
                 integral: this.tableData_1[0].integral,
                 // 个人id
-                userId: this.tableData_1[this.tableData_1.length - 1].userId,
+                userId: this.tableData_1[0].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_1[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2124,9 +2124,9 @@ export default {
                 // 自评分
                 integral: this.tableData_2[0].integral,
                 // 个人id
-                userId: this.tableData_2[this.tableData_2.length - 1].userId,
+                userId: this.tableData_2[0].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_2[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2172,7 +2172,7 @@ export default {
                 // 个人id
                 userId: this.tableData_3[this.tableData_3.length - 1].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_3[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2218,7 +2218,7 @@ export default {
                 // 个人id
                 userId: this.tableData_4[this.tableData_4.length - 1].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_4[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2264,7 +2264,7 @@ export default {
                 // 个人id
                 userId: this.tableData_5[this.tableData_5.length - 1].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_5[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2310,7 +2310,7 @@ export default {
                 // 个人id
                 userId: this.tableData_6[this.tableData_6.length - 1].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_6[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2356,7 +2356,7 @@ export default {
                 // 个人id
                 userId: this.tableData7[this.tableData7.length - 1].userId,
                 // 工时id
-                hourId: '',
+                hourId: this.tableData_7[0].hourId,
                 // 类别
                 category: '',
                 // 主分类
@@ -2388,7 +2388,7 @@ export default {
         // 提交
         submit_1() {
 
-            // console.log(this.tableData_1)
+            console.log(this.tableData_1)
             var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
