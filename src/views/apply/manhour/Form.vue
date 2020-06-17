@@ -2387,8 +2387,7 @@ export default {
 
         // 提交
         submit_1() {
-
-            console.log(this.tableData_1)
+            console.log(this.tableData_1);
             var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
@@ -2405,7 +2404,7 @@ export default {
                 if (this.tableData_1.integral != 0) {
                     console.log(this.tableData_1);
                     for (var i = 0; i < this.tableData_1.length; i++) {
-                        if (this.tableData_1[i].reason == '' || this.tableData_1[i].useHour == 0) {
+                        if (this.tableData_1[i].reason == '' || this.tableData_1[i].useHour == 0 || this.tableData_1[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2419,6 +2418,13 @@ export default {
                             this.selectWorkDay_1(this.day_1.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2445,7 +2451,7 @@ export default {
             } else {
                 if (this.tableData_2[0].integral != 0) {
                     for (var i = 0; i < this.tableData_2.length; i++) {
-                        if (this.tableData_2[i].reason == '' || this.tableData_2[i].useHour == 0) {
+                        if (this.tableData_2[i].reason == '' || this.tableData_2[i].useHour == 0 || this.tableData_2[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2459,6 +2465,13 @@ export default {
                             this.selectWorkDay_2(this.day_2.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2485,7 +2498,7 @@ export default {
             } else {
                 if (this.tableData_3[0].integral != 0) {
                     for (var i = 0; i < this.tableData_3.length; i++) {
-                        if (this.tableData_3[i].reason == '' || this.tableData_3[i].useHour == 0) {
+                        if (this.tableData_3[i].reason == '' || this.tableData_3[i].useHour == 0 || this.tableData_3[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2499,6 +2512,13 @@ export default {
                             this.selectWorkDay_3(this.day_3.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2525,7 +2545,7 @@ export default {
             } else {
                 if (this.tableData_4[0].integral != 0) {
                     for (var i = 0; i < this.tableData_4.length; i++) {
-                        if (this.tableData_4[i].reason == '' || this.tableData_4[i].useHour == 0) {
+                        if (this.tableData_4[i].reason == '' || this.tableData_4[i].useHour == 0 || this.tableData_4[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2539,6 +2559,13 @@ export default {
                             this.selectWorkDay_4(this.day_4.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2565,7 +2592,7 @@ export default {
             } else {
                 if (this.tableData_5[0].integral != 0) {
                     for (var i = 0; i < this.tableData_5.length; i++) {
-                        if (this.tableData_5[i].reason == '' || this.tableData_5[i].useHour == 0) {
+                        if (this.tableData_5[i].reason == '' || this.tableData_5[i].useHour == 0 || this.tableData_5[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2579,6 +2606,13 @@ export default {
                             this.selectWorkDay_5(this.day_5.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2605,7 +2639,7 @@ export default {
             } else {
                 if (this.tableData_6[0].integral != 0) {
                     for (var i = 0; i < this.tableData_6.length; i++) {
-                        if (this.tableData_6[i].reason == '' || this.tableData_6[i].useHour == 0) {
+                        if (this.tableData_6[i].reason == '' || this.tableData_6[i].useHour == 0 || this.tableData_6[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2619,6 +2653,13 @@ export default {
                             this.selectWorkDay_6(this.day_6.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2645,7 +2686,7 @@ export default {
             } else {
                 if (this.tableData_7[0].integral != 0) {
                     for (var i = 0; i < this.tableData_7.length; i++) {
-                        if (this.tableData_7[i].reason == '' || this.tableData_7[i].useHour == 0) {
+                        if (this.tableData_7[i].reason == '' || this.tableData_7[i].useHour == 0 || this.tableData_7[i].subClassify == '') {
                             this.$alert('请查看是否有未填写项！', '提示', {
                                 confirmButtonText: '确定',
                                 type: 'warning'
@@ -2659,6 +2700,13 @@ export default {
                             this.selectWorkDay_7(this.day_7.hourId);
                         });
                         this.reload();
+                        this.$router.push({
+                            path: `/apply/manhour`,
+                            query: {
+                                activeName: 'info',
+                                status: ''
+                            }
+                        });
                     });
                 } else {
                     this.$message({
@@ -2780,8 +2828,11 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_1 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_1 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_1 = hour1 + hour2;
                 } else {
                     this.Hour_1 = Math.round(clockHourInfo.hour);
                 }
@@ -2792,8 +2843,11 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
+                } else if (num3 == 0.5) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
                 } else {
                     hour = Math.round(hour);
                 }
@@ -2819,6 +2873,9 @@ export default {
                     this.Hour_2 = hour1 + hour2;
                 } else if ((hour2 = 0.0)) {
                     this.Hour_2 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_2 = hour1 + hour2;
                 } else {
                     this.Hour_2 = Math.round(clockHourInfo.hour);
                 }
@@ -2831,6 +2888,9 @@ export default {
                     hour = num2 + num3;
                 } else if ((num3 = 0.0)) {
                     hour = num2;
+                } else if (num3 == 0.5) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
                 } else {
                     hour = Math.round(hour);
                 }
@@ -2851,6 +2911,9 @@ export default {
                     this.Hour_3 = hour1 + hour2;
                 } else if ((hour2 = 0.0)) {
                     this.Hour_3 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_3 = hour1 + hour2;
                 } else {
                     this.Hour_3 = Math.round(clockHourInfo.hour);
                 }
@@ -2863,7 +2926,10 @@ export default {
                     hour = num2 + num3;
                 } else if ((num3 = 0.0)) {
                     hour = num2;
-                } else {
+                } else if ((num3 == 0.5)) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
+                }  else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_3 = parseFloat(hour);
@@ -2883,6 +2949,9 @@ export default {
                     this.Hour_4 = hour1 + hour2;
                 } else if ((hour2 = 0.0)) {
                     this.Hour_4 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_4 = hour1 + hour2;
                 } else {
                     this.Hour_4 = Math.round(clockHourInfo.hour);
                 }
@@ -2895,7 +2964,10 @@ export default {
                     hour = num2 + num3;
                 } else if ((num3 = 0.0)) {
                     hour = num2;
-                } else {
+                } else if ((num3 == 0.5)) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
+                }  else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_4 = parseFloat(hour);
@@ -2915,6 +2987,9 @@ export default {
                     this.Hour_5 = hour1 + hour2;
                 } else if ((hour2 = 0.0)) {
                     this.Hour_5 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_5 = hour1 + hour2;
                 } else {
                     this.Hour_5 = Math.round(clockHourInfo.hour);
                 }
@@ -2927,7 +3002,10 @@ export default {
                     hour = num2 + num3;
                 } else if ((num3 = 0.0)) {
                     hour = num2;
-                } else {
+                } else if ((num3 == 0.5)) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
+                }  else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_5 = parseFloat(hour);
@@ -2947,6 +3025,9 @@ export default {
                     this.Hour_6 = hour1 + hour2;
                 } else if ((hour2 = 0.0)) {
                     this.Hour_6 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_6 = hour1 + hour2;
                 } else {
                     this.Hour_6 = Math.round(clockHourInfo.hour);
                 }
@@ -2959,7 +3040,10 @@ export default {
                     hour = num2 + num3;
                 } else if ((num3 = 0.0)) {
                     hour = num2;
-                } else {
+                } else if ((num3 == 0.5)) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
+                }  else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_6 = parseFloat(hour);
@@ -2979,12 +3063,27 @@ export default {
                     this.Hour_7 = hour1 + hour2;
                 } else if ((hour2 = 0.0)) {
                     this.Hour_7 = hour1;
+                } else if (hour2 == 0.5) {
+                    hour2 = 0.5;
+                    this.Hour_7 = hour1 + hour2;
                 } else {
                     this.Hour_7 = Math.round(clockHourInfo.hour);
                 }
                 this.dayHourInt_7 = Math.ceil(clockHourInfo.hour);
                 var hour = parseFloat((parseFloat(clockHourInfo.hour) - parseFloat(clockHourInfo.useHour)).toString()).toFixed(1);
-
+                var num2 = parseInt(hour);
+                var num3 = (hour - num2).toFixed(1);
+                if (num3 < 0.5 && num3 != 0.0) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
+                } else if ((num3 = 0.0)) {
+                    hour = num2;
+                } else if ((num3 == 0.5)) {
+                    num3 = 0.5;
+                    hour = num2 + num3;
+                }  else {
+                    hour = Math.round(hour);
+                }
                 this.dayHourFloat_7 = parseFloat(hour);
                 this.maxUseHour_7 = parseFloat(hour);
             });
