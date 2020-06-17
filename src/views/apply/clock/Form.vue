@@ -280,6 +280,7 @@ export default {
         },
         getStandardApplyInfo() {
             getStandardApplyInfoById(5).then(response => {
+                console.log(response)
                 if (response.data.data) {
                     const data = response.data.data;
                     this.content = data.content;

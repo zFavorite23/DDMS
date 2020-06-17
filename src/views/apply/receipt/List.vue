@@ -4,6 +4,11 @@
             <span class="tit">开票 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
                 <el-form-item>
+                    <el-select :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
+                        <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
                     <el-select clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
@@ -22,6 +27,11 @@
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column width="120" label="申请人">
+                <template scope="scope">
+                    <span>{{ scope.row.applyUserName }}</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">
@@ -98,6 +108,7 @@
     </div>
 </template>
 <script>
+import { getUserList } from '../../../api/admin/user.js';
 import { getReceiptPage, deleteObj, receiptMigration } from '../../../api/apply/receipt.js';
 // import {getUserInfo} from "../../../api/admin/user.js";
 import { mapGetters } from 'vuex';
@@ -133,7 +144,9 @@ export default {
             listLoading: false,
             list: [],
             number: '',
-            listType: '1'
+            listType: '1',
+            userOptions: [],
+            disabled: false
         };
     },
     created() {
@@ -142,8 +155,12 @@ export default {
         if (!this.query.status) {
             this.query.status = '';
         }
+        if (this.userId != 1) {
+            this.disabled = true;
+        }
         this.query.userId = this.userId;
         this.getReceiptPage();
+        this.getUserList();
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -163,6 +180,18 @@ export default {
                 .catch(() => {
                     this.listLoading = false;
                 });
+        },
+        getUserList() {
+            getUserList().then(response => {
+                console.log(response);
+                response.data.data.forEach(element => {
+                    //console.log(element)
+                    this.userOptions.push({
+                        value: element.userId,
+                        label: element.username
+                    });
+                });
+            });
         },
         handleSizeChange(val) {
             this.query.size = val;
