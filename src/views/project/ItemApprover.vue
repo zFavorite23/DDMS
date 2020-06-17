@@ -302,11 +302,11 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getItemList();
+            this.getItemApproverVosWithUserIdPage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            this.getItemList();
+            this.getItemApproverVosWithUserIdPage();
         }
     },
     mounted() {}
