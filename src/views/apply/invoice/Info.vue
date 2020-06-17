@@ -359,6 +359,7 @@ export default {
             console.log(this.formData)
             updateInvoiceApprover(this.formData)
                 .then(res => {
+                    console.log(res)
                     if (res.data.data) {
                         this.backHistory();
                     }
