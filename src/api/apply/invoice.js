@@ -104,6 +104,19 @@ export function getInvoiceApproverList(invoiceId) {
 }
 
 /**
+ * 根据报销申请ID查询拒绝历史信息
+ * @param invoiceId
+ * @returns {AxiosPromise}
+ */
+export function getInvoiceRefuse(invoiceId) {
+    return axios({
+        url: `/apply/invoice/approver/list/refuse/${invoiceId}`,
+        method: "get"
+    });
+}
+
+
+/**
  * 审批报销申请
  * @param data
  * @returns {*}
