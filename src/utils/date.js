@@ -82,3 +82,16 @@ export function formatTime(date, fmt) {
     }
     return fmt;
 }
+
+export function fun_date(num) {
+    var date1 = new Date();
+    //今天时间
+    var time1 = date1.getFullYear() + "-" + (date1.getMonth() + 1) + "-" + date1.getDate()
+    console.log(time1);
+    var date2 = new Date(date1);
+    date2.setDate(date1.getDate() + num);
+    //num是正数表示之后的时间，num负数表示之前的时间，0表示今天
+    var time2 = date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate();
+    console.log(time2);
+    return time2;
+}

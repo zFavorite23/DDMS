@@ -133,7 +133,7 @@
                             </td>
                         </tr>
                         <tr v-else v-for="(item, index) in RefuseInfo" :key="index">
-                            <td v-if="index == 0" :rowspan="RefuseInfo.length">审批历史</td>
+                            <td v-if="index == 0" :rowspan="RefuseInfo.length">拒绝历史</td>
                             <td colspan="3" style="height: 100px;">
                                 <div style="color: #65CEA7;margin-top: 22px;">
                                     {{ item.checkUserName }}

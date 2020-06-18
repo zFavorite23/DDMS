@@ -45,6 +45,7 @@
         data() {
             return {
                 query: {
+                    userId: null,
                     startDay: dateFormat(new Date()).substr(0, 7) + "-01",
                     endDay: dateFormat(new Date()),
                     sortType: "1"
@@ -134,9 +135,10 @@
             };
         },
         computed: {
-            ...mapGetters(["permissions"])
+            ...mapGetters(["permissions", "userId"])
         },
         created() {
+            this.query.userId = this.userId;
             this.getPieChart();
             this.$nextTick(function() {
                 this.drawBar();

@@ -13,6 +13,7 @@
             <el-form-item><el-button type="primary" size="medium" v-on:click="getManhourApproverPage()" icon="el-icon-search">搜索</el-button></el-form-item>
         </el-form>
         <el-table :data="list" :span-method="objectSpanMethod" stripe border v-loading="listLoading" style="width: 100%;">
+            <el-table-column prop="applyUserName" min-width="80" label="申请人"></el-table-column>
             <el-table-column prop="day" min-width="100" label="申请日期"></el-table-column>
             <el-table-column label="自评积分">
                 <template slot-scope="scope">
@@ -25,7 +26,7 @@
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="applyUserName" min-width="80" label="申请人"></el-table-column>
+
 
             <el-table-column min-width="80" label="工作类别">
                 <template slot-scope="scope">
@@ -345,22 +346,22 @@ export default {
         },
 
         objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-            if (columnIndex === 0) {
-                const _row = this.flitterData(this.list).one[rowIndex];
-                const _col = _row > 0 ? 1 : 0;
-                return {
-                    rowspan: _row,
-                    colspan: _col
-                };
-            }
-            if (columnIndex === 1) {
-                const _row = this.flitterData(this.list).two[rowIndex];
-                const _col = _row > 0 ? 1 : 0;
-                return {
-                    rowspan: _row,
-                    colspan: _col
-                };
-            }
+            // if (columnIndex === 0) {
+            //     const _row = this.flitterData(this.list).one[rowIndex];
+            //     const _col = _row > 0 ? 1 : 0;
+            //     return {
+            //         rowspan: _row,
+            //         colspan: _col
+            //     };
+            // }
+            // if (columnIndex === 1) {
+            //     const _row = this.flitterData(this.list).two[rowIndex];
+            //     const _col = _row > 0 ? 1 : 0;
+            //     return {
+            //         rowspan: _row,
+            //         colspan: _col
+            //     };
+            // }
         }
     },
     mounted() {}
