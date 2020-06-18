@@ -76,6 +76,7 @@
                                 <el-dropdown-item :command="composeValue(4, scope.row)">请假</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
+                        <el-tag type="danger" v-if="scope.row.status == 2 || scope.row.status == 3 || (scope.row.status == 4 && scope.row.isShow == true)">已过期</el-tag>
                     </template>
                 </el-table-column>
             </el-table>
@@ -211,8 +212,6 @@ export default {
                     this.list.forEach(item => {
                         if (item.status == 2 || item.status == 3 || item.status == 4) {
                             this.$set(item, 'isShow', false);
-                        } else {
-                            this.$set(item, 'isShow', null);
                         }
                         if (new Date(item.day.replace(reg, '/')) < new Date(time_2.replace(reg, '/'))) {
                             item.isShow = true;
