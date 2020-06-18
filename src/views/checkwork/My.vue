@@ -71,9 +71,8 @@
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item :command="composeValue(1, scope.row)">未打卡</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue(2, scope.row)">出差</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue(3, scope.row)">外出</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue(4, scope.row)">请假</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue(2, scope.row)">外出</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue(3, scope.row)">请假</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                         <el-tag type="danger" v-if="scope.row.status == 2 || scope.row.status == 3 || (scope.row.status == 4 && scope.row.isShow == true)">已过期</el-tag>
@@ -283,15 +282,10 @@ export default {
             }
             if (command.button == 2) {
                 this.$router.push({
-                    path: '/apply/businesstrip/form'
-                });
-            }
-            if (command.button == 3) {
-                this.$router.push({
                     path: '/apply/goout/form'
                 });
             }
-            if (command.button == 4) {
+            if (command.button == 3) {
                 this.$router.push({
                     path: '/apply/leave/form'
                 });
@@ -303,6 +297,6 @@ export default {
 <style type="text/scss" lang="scss">
 .el-dropdown-link {
     cursor: pointer;
-    color: #409eff;
+    color: #fff;
 }
 </style>
