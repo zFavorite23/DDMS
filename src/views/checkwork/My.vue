@@ -64,7 +64,7 @@
                 <el-table-column prop="createTime" min-width="160" label="创建时间"></el-table-column>
                 <el-table-column label="操作" min-width="100">
                     <template slot-scope="scope">
-                        <el-dropdown v-if="scope.row.status == 2 || scope.row.status == 3 || scope.row.status == 4" trigger="click" @command="handleCommand">
+                        <el-dropdown v-if="scope.row.status == 2 || scope.row.status == 3 || (scope.row.status == 4 && !scope.row.isShow)" trigger="click" @command="handleCommand">
                             <el-button type="primary" size="mini" class="el-dropdown-link">
                                 异常申请
                                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -199,7 +199,27 @@ export default {
                     this.query.size = response.data.data.size;
                     this.list = response.data.data.records;
                     this.setdates(this.list);
+                    // 当前减去7天的日期
+                    var time = new Date().setDate(new Date().getDate() - 7);
+                    var date = new Date(time);
+                    const Y = date.getFullYear() + '-';
+                    const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                    const D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                    var time_2 = Y + M + D;
+                    let reg = new RegExp('-', 'g');
 
+                    this.list.forEach(item => {
+                        if (item.status == 2 || item.status == 3 || item.status == 4) {
+                            this.$set(item, 'isShow', false);
+                        } else {
+                            this.$set(item, 'isShow', null);
+                        }
+                        if (new Date(item.day.replace(reg, '/')) < new Date(time_2.replace(reg, '/'))) {
+                            item.isShow = true;
+                        }
+                    });
+
+                    // console.log(this.list);
                     // this.getStatisticsUserId();
                 })
                 .catch(() => {
@@ -252,72 +272,30 @@ export default {
                 row: row
             };
         },
+
         handleCommand(command) {
             //this.$message('click on item ' + command);
-            //  当前列日期
-            var str = command.row.day.toString();
-            var time_1 = str.replace('/-/g', '/');
-            console.log(time_1);
-
-            // 当前减去7天的日期
-            var time = new Date().setDate(new Date().getDate() - 7);
-            var date = new Date(time);
-            const Y = date.getFullYear() + '-';
-            const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-            const D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-            var time_2 = Y + M + D;
-
-            console.log(time_2);
-            let reg = new RegExp('-', 'g');
 
             window.localStorage.setItem('applyClockInfo', JSON.stringify(command.row));
             if (command.button == 1) {
-                if (new Date(time_1.replace(reg, '/')) < new Date(time_2.replace(reg, '/'))) {
-                    this.$alert('您已超过七天未填报，无法再进行此操作！', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                    });
-                } else {
-                    this.$router.push({
-                        path: '/apply/clock/form'
-                    });
-                }
+                this.$router.push({
+                    path: '/apply/clock/form'
+                });
             }
             if (command.button == 2) {
-                if (new Date(time_1.replace(reg, '/')) < new Date(time_2.replace(reg, '/'))) {
-                    this.$alert('您已超过七天未填报，无法再进行此操作！', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                    });
-                } else {
-                    this.$router.push({
-                        path: '/apply/businesstrip/form'
-                    });
-                }
+                this.$router.push({
+                    path: '/apply/businesstrip/form'
+                });
             }
             if (command.button == 3) {
-                if (new Date(time_1.replace(reg, '/')) < new Date(time_2.replace(reg, '/'))) {
-                    this.$alert('您已超过七天未填报，无法再进行此操作！', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                    });
-                } else {
-                    this.$router.push({
-                        path: '/apply/goout/form'
-                    });
-                }
+                this.$router.push({
+                    path: '/apply/goout/form'
+                });
             }
             if (command.button == 4) {
-                if (new Date(time_1.replace(reg, '/')) < new Date(time_2.replace(reg, '/'))) {
-                    this.$alert('您已超过七天未填报，无法再进行此操作！', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                    });
-                } else {
-                    this.$router.push({
-                        path: '/apply/leave/form'
-                    });
-                }
+                this.$router.push({
+                    path: '/apply/leave/form'
+                });
             }
         }
     }
