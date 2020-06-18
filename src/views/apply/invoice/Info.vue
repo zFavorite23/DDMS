@@ -126,6 +126,26 @@
                                 </el-button>
                             </td>
                         </tr>
+                        <tr v-if="RefuseInfo.length == 0">
+                            <td>审批历史</td>
+                            <td colspan="3">
+                                <el-tag type="warning">第{{ RefuseInfo.length + 1 }}次审批</el-tag>
+                            </td>
+                        </tr>
+                        <tr v-else v-for="(item, index) in RefuseInfo" :key="index">
+                            <td v-if="index == 0" :rowspan="RefuseInfo.length">审批历史</td>
+                            <td colspan="3" style="height: 100px;">
+                                <div style="color: #65CEA7;margin-top: 22px;">
+                                    {{ item.checkUserName }}
+                                    <i class="el-icon-time" style="color: #000;margin-left: 10px;margin-right: 5px" v-if="item.check > 0"></i>
+                                    <span style="color: #000" v-if="item.check > 0">{{ item.updateTime }}</span>
+                                </div>
+                                <div style="color: #000000;margin-top: 15px;font-size: 12px">
+                                    <el-tag type="warning">第{{ index + 1 }}次审批</el-tag>
+                                    审批意见：{{ item.summary }}
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div><p class="name">审批结果</p></div>
@@ -240,7 +260,7 @@
     </div>
 </template>
 <script>
-import { getInvoiceInfo, affirmInvoice, getInvoiceApproverList, updateInvoiceApprover } from '../../../api/apply/invoice.js';
+import { getInvoiceInfo, affirmInvoice, getInvoiceApproverList, updateInvoiceApprover, getInvoiceRefuse } from '../../../api/apply/invoice.js';
 import { print } from '../../../utils/utils';
 import { mapGetters } from 'vuex';
 
@@ -279,7 +299,8 @@ export default {
             url: '',
             urls1: [],
             urls2: [],
-            showViewer: false // 显示查看器
+            showViewer: false, // 显示查看器
+            RefuseInfo: []
         };
     },
     computed: {
@@ -289,9 +310,16 @@ export default {
         this.invoiceId = this.$route.params.invoiceId;
         this.formData.checkUserId = this.userId;
         this.getInvoiceInfo();
+        this.getInvoiceRefuse();
         // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
     },
     methods: {
+        getInvoiceRefuse() {
+            getInvoiceRefuse(this.invoiceId).then(res => {
+                console.log(res);
+                this.RefuseInfo = res.data.data;
+            });
+        },
         getInvoiceInfo() {
             getInvoiceInfo(this.invoiceId).then(response => {
                 this.invoiceInfo = response.data.data;
@@ -327,7 +355,7 @@ export default {
         },
         getInvoiceApproverList() {
             getInvoiceApproverList(this.invoiceId).then(response => {
-                console.log(response)
+                // console.log(response);
                 this.approverList = response.data.data;
                 this.approverList.forEach((item, index) => {
                     if (item.check == 0 && item.isBeing == 1 && item.userId == this.formData.checkUserId) {
@@ -356,10 +384,10 @@ export default {
             }
         },
         onSubmit() {
-            console.log(this.formData)
+            // console.log(this.formData);
             updateInvoiceApprover(this.formData)
                 .then(res => {
-                    console.log(res)
+                    // console.log(res);
                     if (res.data.data) {
                         this.backHistory();
                     }
