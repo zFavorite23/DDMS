@@ -10,13 +10,17 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "autoprefixer": "^9.8.0",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "browserslist": "^4.12.0",
+    "caniuse-lite": "^1.0.30001081",
     "canvas2image": "^1.0.5",
     "cropperjs": "^1.5.7",
     "crypto-js": "^3.3.0",
     "echarts": "^4.8.0",
     "element-ui": "^2.13.2",
+    "file-saver": "^2.0.2",
     "html2canvas": "^1.0.0-rc.5",
     "js-base64": "^2.5.2",
     "js-cookie": "^2.2.0",
@@ -28,7 +32,8 @@
     "vue-print-nb": "^1.5.0",
     "vue-router": "^3.3.3",
     "vuedraggable": "^2.17.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "xlsx": "^0.16.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
