@@ -193,6 +193,7 @@ export default {
             this.listLoading = true;
             fetchList(this.query)
                 .then(response => {
+					console.log(response)
                     this.loading = false;
                     this.listLoading = false;
                     this.total = response.data.data.total;

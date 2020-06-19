@@ -11,18 +11,20 @@
         </el-form>
 
         <div id="userBar" class="bar"></div>
-        <div style="margin-top: 650px;">
+
+        <div style="margin-top: 650px; position: relative;">
+            <el-button type="primary" size="medium" style="position: absolute;top: -50px;right: 50px;" @click="exportExcel()">导出</el-button>
             <el-row>
-                <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
+                <el-table :data="list" id="out-table" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'workTotalNum', order: 'ascending' }">
                     <el-table-column prop="userName" min-width="100" label="姓名"></el-table-column>
-                    <el-table-column prop="workTotalNum" min-width="100" label="应上班天数"></el-table-column>
-                    <el-table-column prop="restTotalNum" min-width="100" label="假期上班天数"></el-table-column>
-                    <el-table-column prop="totalNum" min-width="100" label="总上班天数"></el-table-column>
-                    <el-table-column prop="integralNum" min-width="100" label="总评分"></el-table-column>
-                    <el-table-column prop="avgIntegral" min-width="100" label="平均评分"></el-table-column>
-                    <el-table-column prop="sumNum" min-width="100" label="总工时"></el-table-column>
-                    <el-table-column prop="avgNum" min-width="100" label="平均工时"></el-table-column>
-                    <el-table-column prop="radix" min-width="100" label="基数"></el-table-column>
+                    <el-table-column prop="workTotalNum" sortable min-width="100" label="应上班天数"></el-table-column>
+                    <el-table-column prop="restTotalNum" sortable min-width="100" label="假期上班天数"></el-table-column>
+                    <el-table-column prop="totalNum" sortable min-width="100" label="总上班天数"></el-table-column>
+                    <el-table-column prop="integralNum" sortable min-width="100" label="总评分"></el-table-column>
+                    <el-table-column prop="avgIntegral" sortable min-width="100" label="平均评分"></el-table-column>
+                    <el-table-column prop="sumNum" sortable min-width="100" label="总工时"></el-table-column>
+                    <el-table-column prop="avgNum" sortable min-width="100" label="平均工时"></el-table-column>
+                    <el-table-column prop="radix" sortable min-width="100" label="基数"></el-table-column>
                 </el-table>
             </el-row>
         </div>
@@ -30,6 +32,9 @@
 </template>
 
 <script>
+// 表格导出
+import FileSaver from 'file-saver';
+import XLSX from 'xlsx';
 import { getHourRadixUser } from '../../../api/checkwork/hour.js';
 import { dateFormat } from '../../../utils/date.js';
 import { mapGetters } from 'vuex';
@@ -131,7 +136,7 @@ export default {
             this.listLoading = true;
             getHourRadixUser(this.query)
                 .then(response => {
-					console.log(response)
+                    console.log(response);
                     this.listLoading = false;
                     this.list = response.data.data;
                     this.list.forEach((item, index) => {
@@ -154,6 +159,18 @@ export default {
             window.addEventListener('resize', function() {
                 bar.resize();
             });
+        },
+        exportExcel() {
+            /* out-table关联导出的dom节点  */
+            var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'));
+            /* get binary string as output */
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
+            try {
+                FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '个人工时统计.xlsx');
+            } catch (e) {
+                if (typeof console !== 'undefined') console.log(e, wbout);
+            }
+            return wbout;
         }
     }
 };
