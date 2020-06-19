@@ -4,12 +4,12 @@
             <span class="tit">未打卡 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
+                    <el-select style="width:120px" :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
                         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select clearable v-model="query.status" placeholder="请选择">
+                    <el-select style="width:120px" clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>

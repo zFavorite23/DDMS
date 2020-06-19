@@ -2055,12 +2055,6 @@ export default {
                 this.tableData_7.splice(index, 1);
             }
         },
-        open() {
-            this.$alert('请优先选择评分！', '提示', {
-                confirmButtonText: '确定',
-                type: 'warning'
-            });
-        },
         // 增加行
         addRow_1() {
             var maxHour = 0;
@@ -2388,333 +2382,318 @@ export default {
         // 提交
         submit_1() {
             console.log(this.tableData_1);
-            var num = 0;
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
                     this.tableData_1[i].useMin = this.tableData_1[i].useHour * 60;
                 }
-                num += this.tableData_1[i].useHour;
             }
-            if (num > this.dayHourFloat_1) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_1.integral != 0) {
-                    console.log(this.tableData_1);
-                    for (var i = 0; i < this.tableData_1.length; i++) {
-                        if (this.tableData_1[i].reason == '' || this.tableData_1[i].useHour == 0 || this.tableData_1[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_1).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_1(this.day_1.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_1.length; i++) {
+                if (this.tableData_1[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_1[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_1[i].complete != 100 && this.tableData_1[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_1).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_1(this.day_1.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
         submit_2() {
             console.log(this.tableData_2);
-            var num = 0;
             for (var i = 0; i < this.tableData_2.length; i++) {
                 if (this.tableData_2[i].useHour > 0) {
                     this.tableData_2[i].useMin = this.tableData_2[i].useHour * 60;
                 }
-                num += this.tableData_2[i].useHour;
             }
-            if (num > this.dayHourFloat_2) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_2[0].integral != 0) {
-                    for (var i = 0; i < this.tableData_2.length; i++) {
-                        if (this.tableData_2[i].reason == '' || this.tableData_2[i].useHour == 0 || this.tableData_2[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_2).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_2(this.day_2.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_2.length; i++) {
+                if (this.tableData_2[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_2[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_2[i].complete != 100 && this.tableData_2[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_2).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_2(this.day_2.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
         submit_3() {
             console.log(this.tableData_3);
-            var num = 0;
             for (var i = 0; i < this.tableData_3.length; i++) {
                 if (this.tableData_3[i].useHour > 0) {
                     this.tableData_3[i].useMin = this.tableData_3[i].useHour * 60;
                 }
-                num += this.tableData_3[i].useHour;
             }
-            if (num > this.dayHourFloat_3) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_3[0].integral != 0) {
-                    for (var i = 0; i < this.tableData_3.length; i++) {
-                        if (this.tableData_3[i].reason == '' || this.tableData_3[i].useHour == 0 || this.tableData_3[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_3).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_3(this.day_3.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_3.length; i++) {
+                if (this.tableData_3[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_3[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_3[i].complete != 100 && this.tableData_3[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_3).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_3(this.day_3.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
         submit_4() {
             console.log(this.tableData_4);
-            var num = 0;
             for (var i = 0; i < this.tableData_4.length; i++) {
                 if (this.tableData_4[i].useHour > 0) {
                     this.tableData_4[i].useMin = this.tableData_4[i].useHour * 60;
                 }
-                num += this.tableData_4[i].useHour;
             }
-            if (num > this.dayHourFloat_4) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_4[0].integral != 0) {
-                    for (var i = 0; i < this.tableData_4.length; i++) {
-                        if (this.tableData_4[i].reason == '' || this.tableData_4[i].useHour == 0 || this.tableData_4[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_4).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_4(this.day_4.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_4.length; i++) {
+                if (this.tableData_4[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_4[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_4[i].complete != 100 && this.tableData_4[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_4).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_4(this.day_4.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
         submit_5() {
             console.log(this.tableData_5);
-            var num = 0;
             for (var i = 0; i < this.tableData_5.length; i++) {
                 if (this.tableData_5[i].useHour > 0) {
                     this.tableData_5[i].useMin = this.tableData_5[i].useHour * 60;
                 }
-                num += this.tableData_5[i].useHour;
             }
-            if (num > this.dayHourFloat_5) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_5[0].integral != 0) {
-                    for (var i = 0; i < this.tableData_5.length; i++) {
-                        if (this.tableData_5[i].reason == '' || this.tableData_5[i].useHour == 0 || this.tableData_5[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_5).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_5(this.day_5.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_5.length; i++) {
+                if (this.tableData_5[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_5[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_5[i].complete != 100 && this.tableData_5[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_5).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_5(this.day_5.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
         submit_6() {
             console.log(this.tableData_6);
-            var num = 0;
             for (var i = 0; i < this.tableData_6.length; i++) {
                 if (this.tableData_6[i].useHour > 0) {
                     this.tableData_6[i].useMin = this.tableData_6[i].useHour * 60;
                 }
-                num += this.tableData_6[i].useHour;
             }
-            if (num > this.dayHourFloat_6) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_6[0].integral != 0) {
-                    for (var i = 0; i < this.tableData_6.length; i++) {
-                        if (this.tableData_6[i].reason == '' || this.tableData_6[i].useHour == 0 || this.tableData_6[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_6).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_6(this.day_6.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_6.length; i++) {
+                if (this.tableData_6[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_6[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_6[i].complete != 100 && this.tableData_6[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_6).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_6(this.day_6.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
         submit_7() {
             console.log(this.tableData_7);
-            var num = 0;
             for (var i = 0; i < this.tableData_7.length; i++) {
                 if (this.tableData_7[i].useHour > 0) {
                     this.tableData_7[i].useMin = this.tableData_7[i].useHour * 60;
                 }
-                num += this.tableData_7[i].useHour;
             }
-            if (num > this.dayHourFloat_7) {
-                this.$message({
-                    message: '填报工时超过未填报工时数，请重新选择！',
-                    type: 'warning'
-                });
-            } else {
-                if (this.tableData_7[0].integral != 0) {
-                    for (var i = 0; i < this.tableData_7.length; i++) {
-                        if (this.tableData_7[i].reason == '' || this.tableData_7[i].useHour == 0 || this.tableData_7[i].subClassify == '') {
-                            this.$alert('请查看是否有未填写项！', '提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning'
-                            });
-                            return;
-                        }
-                    }
-                    addObj(this.tableData_7).then(() => {
-                        this.$nextTick(() => {
-                            this.getAbnormalSeven();
-                            this.selectWorkDay_7(this.day_7.hourId);
-                        });
-                        this.reload();
-                        this.$router.push({
-                            path: `/apply/manhour`,
-                            query: {
-                                activeName: 'info',
-                                status: ''
-                            }
-                        });
-                    });
-                } else {
-                    this.$message({
-                        message: '请选择评分！',
+            for (var i = 0; i < this.tableData_7.length; i++) {
+                if (this.tableData_7[i].subClassify == '') {
+                    this.$alert('请选择子分类！', '提示', {
+                        confirmButtonText: '确定',
                         type: 'warning'
                     });
+                    return;
+                }
+                if (this.tableData_7[i].reason == '') {
+                    this.$alert('请填写工作内容！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
+                }
+                if (this.tableData_7[i].complete != 100 && this.tableData_7[i].completeTime == '') {
+                    this.$alert('请选择预计完成时间！', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning'
+                    });
+                    return;
                 }
             }
+            addObj(this.tableData_7).then(() => {
+                this.$nextTick(() => {
+                    this.getAbnormalSeven();
+                    this.selectWorkDay_7(this.day_7.hourId);
+                });
+                this.reload();
+                this.$router.push({
+                    path: `/apply/manhour`,
+                    query: {
+                        activeName: 'info',
+                        status: ''
+                    }
+                });
+            });
         },
 
         selectHour_1(val) {
@@ -2871,7 +2850,7 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_2 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_2 = hour1;
                 } else if (hour2 == 0.5) {
                     hour2 = 0.5;
@@ -2886,7 +2865,7 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
                 } else if (num3 == 0.5) {
                     num3 = 0.5;
@@ -2909,7 +2888,7 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_3 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_3 = hour1;
                 } else if (hour2 == 0.5) {
                     hour2 = 0.5;
@@ -2924,12 +2903,12 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
-                } else if ((num3 == 0.5)) {
+                } else if (num3 == 0.5) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                }  else {
+                } else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_3 = parseFloat(hour);
@@ -2947,7 +2926,7 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_4 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_4 = hour1;
                 } else if (hour2 == 0.5) {
                     hour2 = 0.5;
@@ -2962,12 +2941,12 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
-                } else if ((num3 == 0.5)) {
+                } else if (num3 == 0.5) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                }  else {
+                } else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_4 = parseFloat(hour);
@@ -2985,7 +2964,7 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_5 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_5 = hour1;
                 } else if (hour2 == 0.5) {
                     hour2 = 0.5;
@@ -3000,12 +2979,12 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
-                } else if ((num3 == 0.5)) {
+                } else if (num3 == 0.5) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                }  else {
+                } else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_5 = parseFloat(hour);
@@ -3023,7 +3002,7 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_6 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_6 = hour1;
                 } else if (hour2 == 0.5) {
                     hour2 = 0.5;
@@ -3038,12 +3017,12 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
-                } else if ((num3 == 0.5)) {
+                } else if (num3 == 0.5) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                }  else {
+                } else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_6 = parseFloat(hour);
@@ -3061,7 +3040,7 @@ export default {
                 if (hour2 < 0.5 && hour2 != 0.0) {
                     hour2 = 0.5;
                     this.Hour_7 = hour1 + hour2;
-                } else if ((hour2 = 0.0)) {
+                } else if (hour2 == 0.0) {
                     this.Hour_7 = hour1;
                 } else if (hour2 == 0.5) {
                     hour2 = 0.5;
@@ -3076,12 +3055,12 @@ export default {
                 if (num3 < 0.5 && num3 != 0.0) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                } else if ((num3 = 0.0)) {
+                } else if (num3 == 0.0) {
                     hour = num2;
-                } else if ((num3 == 0.5)) {
+                } else if (num3 == 0.5) {
                     num3 = 0.5;
                     hour = num2 + num3;
-                }  else {
+                } else {
                     hour = Math.round(hour);
                 }
                 this.dayHourFloat_7 = parseFloat(hour);

@@ -4,23 +4,23 @@
             <span class="tit">报销 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
+                    <el-select style="width:120px" :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
                         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item><el-input v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
+                <el-form-item><el-input style="width:120px" v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
                 <el-form-item>
-                    <el-select clearable v-model="query.status" placeholder="请选择">
+                    <el-select style="width:120px" clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select clearable v-model="query.classify" placeholder="总分类">
+                    <el-select style="width:120px" clearable v-model="query.classify" placeholder="总分类">
                         <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select v-model="query.orderBy" placeholder="排序方式">
+                    <el-select style="width:140px" v-model="query.orderBy" placeholder="排序方式">
                         <el-option v-for="item in orderByOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
