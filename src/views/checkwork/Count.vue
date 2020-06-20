@@ -17,7 +17,7 @@
                 <el-form-item><el-button type="primary" size="medium" @click="exportExcel()">导出</el-button></el-form-item>
             </el-form>
         </div>
-        <el-table id="out-table" :data="list" border stripe style="width: 100%" :default-sort="{ prop: 'lateNum', order: 'ascending' }">
+        <el-table id="out-table" :data="list" border stripe style="width: 100%" :default-sort="{ prop: 'fineNum', order: 'descending' }">
             <el-table-column label="姓名">
                 <template slot-scope="scope">
                     <span>{{ scope.row.userName }}</span>
