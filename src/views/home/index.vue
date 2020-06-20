@@ -113,6 +113,12 @@
                         </div>
 
                         <el-dropdown-menu slot="dropdown">
+							<el-dropdown-item @click.native="See()"
+							    ><span>软件产品</span></el-dropdown-item
+							>
+							<el-dropdown-item @click.native="See()"
+							    ><span>物联网平台</span></el-dropdown-item
+							>
                             <el-dropdown-item @click.native="handleUserInfo()"
                                 ><span>基本资料</span></el-dropdown-item
                             >
@@ -309,6 +315,10 @@ export default {
     },
     mounted() {},
     methods: {
+        See (e) {
+         window.open('https://www.baidu.com','_blank')
+
+        },
         toggleSideBar() {
             this.$store.dispatch("ToggleSideBar");
         },

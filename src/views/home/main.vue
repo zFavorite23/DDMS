@@ -12,19 +12,20 @@
                                 <el-col class="left navBody" :span="8">
                                     <div class="nav1" v-on:click="apply0($event)" :id="item.id">
                                         <p class="navTit">审核</p>
-                                        <p class="navVal">{{ item.check }}</p>
+                                        <p class="navVal">{{ item.check > 999 ? '999' : item.check }}</p>
                                     </div>
                                 </el-col>
                                 <el-col class="left navBody" :span="8">
                                     <div class="nav2" v-on:click="apply1($event)" :id="item.id">
                                         <p class="navTit">同意</p>
-                                        <p class="navVal">{{ item.agree }}</p>
+                                        <p class="navVal">{{ item.agree > 999 ? '999' : item.agree }}</p>
                                     </div>
                                 </el-col>
+
                                 <el-col class="navBody" :span="8">
                                     <div class="nav3" v-on:click="apply2($event)" :id="item.id">
                                         <p class="navTit">拒绝</p>
-                                        <p class="navVal">{{ item.disagree }}</p>
+                                        <p class="navVal">{{ item.disagree > 999 ? '999' : item.disagree }}</p>
                                     </div>
                                 </el-col>
                             </div>
@@ -43,19 +44,19 @@
                                 <el-col class="left navBody" :span="8">
                                     <div class="nav1" v-on:click="check0($event)" :id="item.id">
                                         <p class="navTit">审核</p>
-                                        <p class="navVal">{{ item.check }}</p>
+                                        <p class="navVal">{{ item.check > 999 ? '999' : item.check }}</p>
                                     </div>
                                 </el-col>
                                 <el-col class="left navBody" :span="8">
                                     <div class="nav2" v-on:click="check1($event)" :id="item.id">
                                         <p class="navTit">同意</p>
-                                        <p class="navVal">{{ item.agree }}</p>
+                                        <p class="navVal">{{ item.agree > 999 ? '999' : item.agree }}</p>
                                     </div>
                                 </el-col>
                                 <el-col class="navBody" :span="8">
                                     <div class="nav3" v-on:click="check2($event)" :id="item.id">
                                         <p class="navTit">拒绝</p>
-                                        <p class="navVal">{{ item.disagree }}</p>
+                                        <p class="navVal">{{ item.disagree > 999 ? '999' : item.disagree }}</p>
                                     </div>
                                 </el-col>
                             </div>
@@ -119,7 +120,7 @@
                             <el-table-column prop="applyUserName" label="申请人" :span="8"></el-table-column>
                             <el-table-column prop="status" label="操作" :span="8">
                                 <template slot-scope="scope">
-                                    <el-button type="warning"  size="mini" v-if="scope.row.status == '0'" @click.native="checkApplyInfo(scope.row)">去审批</el-button>
+                                    <el-button type="warning" size="mini" v-if="scope.row.status == '0'" @click.native="checkApplyInfo(scope.row)">去审批</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -301,6 +302,12 @@ export default {
         this.getCheckStatistics();
         this.getApplyPage();
         this.getApproverPage();
+
+        if(!window.sessionStorage.getItem('storge')){
+            this.open();
+            window.sessionStorage.setItem('storge','true')
+        }
+
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -463,7 +470,7 @@ export default {
                     path: `/apply/manhour`,
                     query: {
                         activeName: 'info',
-                        status:'0'
+                        status: '0'
                     }
                 });
             } else if (id == 3) {
@@ -507,7 +514,7 @@ export default {
                     path: `/apply/manhour`,
                     query: {
                         activeName: 'info',
-                        status:'1'
+                        status: '1'
                     }
                 });
             } else if (id == 3) {
@@ -552,7 +559,7 @@ export default {
                     path: `/apply/manhour`,
                     query: {
                         activeName: 'info',
-                        status:'2'
+                        status: '2'
                     }
                 });
             } else if (id == 3) {
@@ -641,7 +648,7 @@ export default {
                     path: `/apply/manhour`,
                     query: {
                         activeName: 'approver',
-                        status2:'0'
+                        status2: '0'
                     }
                 });
             } else if (id == 3) {
@@ -685,7 +692,7 @@ export default {
                     path: `/apply/manhour`,
                     query: {
                         activeName: 'approver',
-                        status2:'1'
+                        status2: '1'
                     }
                 });
             } else if (id == 3) {
@@ -730,7 +737,7 @@ export default {
                     path: `/apply/manhour`,
                     query: {
                         activeName: 'approver',
-                        status2:'2'
+                        status2: '2'
                     }
                 });
             } else if (id == 3) {
@@ -809,6 +816,13 @@ export default {
             }
             return new Blob([ia], {
                 type: 'image/jpeg'
+            });
+        },
+        open() {
+            this.$alert('本次更新XXXXXXXXXXXXXX', '公告', {
+                confirmButtonText: '我已阅读',
+                showClose: false,
+                center: true
             });
         }
     }
