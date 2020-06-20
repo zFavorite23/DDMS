@@ -31,6 +31,7 @@
                     <p v-else-if="scope.row.category == 2">项目</p>
                     <p v-else-if="scope.row.category == 3">产品</p>
                     <p v-else-if="scope.row.category == 4">长身体</p>
+                    <p v-else-if="scope.row.category == 5">市场营销</p>
                     <p v-else></p>
                 </template>
             </el-table-column>
@@ -54,7 +55,6 @@
                         <span v-if="scope.row.subClassify == 4">账务处理</span>
                         <span v-if="scope.row.subClassify == 5">预算</span>
                         <span v-if="scope.row.subClassify == 6">补贴申报</span>
-                        <span v-if="scope.row.subClassify == 7">v</span>
                     </p>
                     <p v-if="scope.row.category == '1' && scope.row.mainClassify == 3">
                         人事管理
@@ -91,6 +91,7 @@
                         <span v-if="scope.row.subClassify == 3">售前</span>
                         <span v-if="scope.row.subClassify == 4">交付</span>
                         <span v-if="scope.row.subClassify == 5">产品</span>
+                        <span v-if="scope.row.subClassify == 6">运维</span>
                     </p>
 
                     <p v-if="scope.row.category == '3'">
@@ -102,6 +103,28 @@
                         <span v-if="scope.row.subClassify == 1">学习</span>
                         <span v-if="scope.row.subClassify == 2">吃饭</span>
                         <span v-if="scope.row.subClassify == 3">睡觉</span>
+                    </p>
+
+                    <p v-if="scope.row.category == '5' && scope.row.mainClassify == 1">
+                        销售渠道
+                        <br />
+                        <span v-if="scope.row.subClassify == 1">销售咨询</span>
+                        <span v-if="scope.row.subClassify == 2">渠道维护</span>
+                        <span v-if="scope.row.subClassify == 3">客户拜访</span>
+                    </p>
+
+                    <p v-if="scope.row.category == '5' && scope.row.mainClassify == 2">
+                        售前策划
+                        <br />
+                        <span v-if="scope.row.subClassify == 1">售前初设</span>
+                        <span v-if="scope.row.subClassify == 2">产品册更新</span>
+                    </p>
+
+                    <p v-if="scope.row.category == '5' && scope.row.mainClassify == 3">
+                        品牌营销
+                        <br />
+                        <span v-if="scope.row.subClassify == 1">讲座宣传</span>
+                        <span v-if="scope.row.subClassify == 2">营销软文</span>
                     </p>
                 </template>
             </el-table-column>

@@ -100,6 +100,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_1[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -158,6 +168,33 @@
                         <el-select v-if="scope.row.category == '4'" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -196,7 +233,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_1[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4'|| scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -338,6 +375,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_2[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -396,6 +443,33 @@
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -429,7 +503,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_2[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4' || scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -571,6 +645,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_3[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -629,6 +713,33 @@
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -662,7 +773,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_3[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4' || scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -804,6 +915,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_4[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -862,6 +983,33 @@
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -895,7 +1043,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_4[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4' || scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -1036,6 +1184,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_5[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -1094,6 +1252,33 @@
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -1127,7 +1312,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_5[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4' || scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -1269,6 +1454,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_6[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -1327,6 +1522,33 @@
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -1360,7 +1582,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_6[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4' || scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -1502,6 +1724,16 @@
                             size="mini"
                             style="width: 120px;"
                         ></el-select>
+                        <el-select
+                            :disabled="tableData_7[0].integral == 0"
+                            v-if="scope.row.category == '5'"
+                            v-model="scope.row.mainClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in mainClassifyOptions2" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="subClassify" label="子分类" width="180">
@@ -1560,6 +1792,33 @@
                         <el-select v-if="scope.row.category == 4" v-model="scope.row.subClassify" placeholder="请选择" size="mini" style="width: 120px;">
                             <el-option v-for="(item, index) in subClassifyOptions_8" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '1'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_9" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '2'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_10" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                        <el-select
+                            v-if="scope.row.category == '5' && scope.row.mainClassify == '3'"
+                            v-model="scope.row.subClassify"
+                            placeholder="请选择"
+                            size="mini"
+                            style="width: 120px;"
+                        >
+                            <el-option v-for="(item, index) in subClassifyOptions_11" :key="index" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="reason" label="工作内容" width="320">
@@ -1593,7 +1852,7 @@
                         </el-select>
                         <el-select
                             :disabled="tableData_7[0].integral == 0"
-                            v-if="scope.row.category == '1' || scope.row.category == '4'"
+                            v-if="scope.row.category == '1' || scope.row.category == '4' || scope.row.category == '5'"
                             v-model="scope.row.approverids"
                             placeholder="请选择"
                             size="mini"
@@ -1909,13 +2168,25 @@ export default {
                 { value: 4, label: '4分' },
                 { value: 5, label: '5分' }
             ],
-            categoryOptions: [{ value: '1', label: '管理' }, { value: '2', label: '项目' }, { value: '3', label: '产品' }, { value: '4', label: '长身体' }],
+            categoryOptions: [
+                { value: '1', label: '管理' },
+                { value: '2', label: '项目' },
+                { value: '3', label: '产品' },
+                { value: '4', label: '长身体' },
+                { value: '5', label: '市场营销' }
+            ],
             mainClassifyOptions: [
                 { value: '1', label: '公司管理' },
                 { value: '2', label: '财务管理' },
                 { value: '3', label: '人事管理' },
                 { value: '4', label: '部门管理' },
                 { value: '5', label: '工厂管理' }
+            ],
+
+            mainClassifyOptions2: [
+                { value: '1', label: '销售渠道' },
+                { value: '2', label: '售前策划' },
+                { value: '3', label: '品牌营销' }
             ],
             subClassifyOptions_1: [
                 { value: '1', label: '公司战略规划' },
@@ -1955,10 +2226,14 @@ export default {
                 { value: '2', label: '销售' },
                 { value: '3', label: '售前' },
                 { value: '4', label: '交付' },
-                { value: '5', label: '产品' }
+                { value: '5', label: '产品' },
+                { value: '6', label: '运维' }
             ],
             subClassifyOptions_7: [{ value: '1', label: '管理' }, { value: '2', label: '交付' }],
             subClassifyOptions_8: [{ value: '1', label: '学习' }, { value: '2', label: '吃饭' }, { value: '3', label: '长身体' }],
+            subClassifyOptions_9: [{ value: '1', label: '销售咨询' }, { value: '2', label: '渠道维护' }, { value: '3', label: '客户拜访' }],
+            subClassifyOptions_10: [{ value: '1', label: '售前初设' }, { value: '2', label: '产品册更新' }],
+            subClassifyOptions_11: [{ value: '1', label: '讲座宣传' }, { value: '2', label: '营销软文' }],
             itemOptions: [],
             productOptions: [],
             completeOptions: [
