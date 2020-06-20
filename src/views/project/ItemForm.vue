@@ -265,7 +265,7 @@ export default {
                 status: '0',
                 endDate: '',
                 contractAmountYuan: 0,
-                approverids: '10'
+                approverids: ''
             },
             statusOptions: [
                 {
@@ -406,6 +406,12 @@ export default {
             this.$router.go(-1);
         },
         onSubmit() {
+            if (this.formData.type == 1) {
+                this.formData.approverids = '12';
+            }
+            if (this.formData.type == 2) {
+                this.formData.approverids = '14';
+            }
             this.$refs['formData'].validate(valid => {
                 if (valid) {
                     var aliasList = this.formData.alias.split('-');
