@@ -4,7 +4,7 @@
             <span class="tit" style="color: #1e6abc">请假 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select style="width:120px" :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
+                    <el-select style="width:120px" clearable :disabled="disabled" v-model="query.userId" filterable placeholder="请选择">
                         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
@@ -148,7 +148,7 @@ export default {
         if (!this.query.status) {
             this.query.status = '';
         }
-        if (this.userId != 1) {
+        if (this.userId != 1 && this.userId != 9 && this.userId != 11 && this.userId != 87) {
             this.disabled = true;
         }
         this.query.userId = this.userId;

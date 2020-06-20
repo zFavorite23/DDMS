@@ -23,7 +23,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'priceYuan', order: 'descending' }">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -52,7 +52,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="proportion" min-width="80" label="开票比例"></el-table-column>
-            <el-table-column min-width="80" label="开票金额">
+            <el-table-column min-width="100" label="开票金额" prop="priceYuan" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.priceYuan }} 元</span>
                 </template>

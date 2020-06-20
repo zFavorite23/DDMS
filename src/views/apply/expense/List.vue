@@ -24,7 +24,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'priceYuan', order: 'descending' }">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -90,7 +90,7 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column min-width="80" label="金额">
+            <el-table-column min-width="80" label="金额" prop="priceYuan" :sort-method="sortChange" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.priceYuan }} 元</span>
                 </template>
@@ -192,6 +192,10 @@ export default {
         ...mapGetters(['permissions', 'userId'])
     },
     methods: {
+        sortChange(a, b) {
+            //排序
+            return a.priceYuan - b.priceYuan;
+        },
         getExpenseList() {
             this.listLoading = true;
             getExpenseList(this.query)

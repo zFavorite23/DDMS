@@ -4,7 +4,7 @@
             <span class="tit">我审批的采购申请 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select clearable v-model="query.status" placeholder="请选择">
+                    <el-select  style="width:120px" clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
@@ -18,7 +18,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'priceYuan', order: 'descending' }">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -32,7 +32,7 @@
             </el-table-column>
             <el-table-column prop="applyUserName" min-width="120" label="申请人"></el-table-column>
             <el-table-column prop="proportion" min-width="80" label="开票比例"></el-table-column>
-            <el-table-column min-width="80" label="开票金额">
+            <el-table-column min-width="100" label="开票金额" prop="priceYuan" sortable :sort-method="sortChange">
                 <template slot-scope="scope">
                     <span>{{ scope.row.priceYuan }} 元</span>
                 </template>
@@ -137,6 +137,10 @@ export default {
         ...mapGetters(['permissions', 'userId'])
     },
     methods: {
+        sortChange(a, b) {
+            //排序
+            return a.priceYuan - b.priceYuan;
+        },
         getReceiptApproverPage() {
             this.listLoading = true;
             getReceiptApproverPage(this.query)

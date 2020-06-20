@@ -19,11 +19,11 @@
                         <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item>
+                <!-- <el-form-item>
                     <el-select style="width:140px" v-model="query.orderBy" placeholder="排序方式">
                         <el-option v-for="item in orderByOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item><el-button type="primary" size="medium" v-on:click="getInvoicePage()" icon="el-icon-search">搜索</el-button></el-form-item>
                 <el-form-item>
                     <router-link to="/apply/invoice/form"><el-button type="primary" size="medium" @change="clearCon">添加申请</el-button></router-link>
@@ -34,7 +34,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'createTime', order: 'descending' }">
             <el-table-column width="80" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -88,9 +88,9 @@
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="180" label="时间">
+            <el-table-column min-width="180" label="时间" prop="invoiceTime" sortable>
                 <template slot-scope="scope">
-                    <p v-if="scope.row.payTime">支付：{{ scope.row.payTime }}</p>
+                    <!-- <p v-if="scope.row.payTime">支付：{{ scope.row.payTime }}</p> -->
                     <p>发票：{{ scope.row.invoiceTime }}</p>
                 </template>
             </el-table-column>
@@ -118,10 +118,10 @@
                     <el-tag v-if="scope.row.isAffirm == 1" type="success">是</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column min-width="160" label="金额(元)" :show-overflow-tooltip="true">
+            <el-table-column min-width="160" label="金额(元)" :show-overflow-tooltip="true" prop="invoicePriceYuan" :sort-method="sortChange" sortable>
                 <template slot-scope="scope">
                     <p>发票：{{ scope.row.invoicePriceYuan }} 元</p>
-                    <p>支付：{{ scope.row.payPriceYuan }} 元</p>
+                    <!-- <p>支付：{{ scope.row.payPriceYuan }} 元</p> -->
                 </template>
             </el-table-column>
             <el-table-column prop="status" min-width="100" label="审批状态">
@@ -131,7 +131,7 @@
                     <el-tag v-if="scope.row.status == 2" type="danger">拒绝</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column min-width="160" label="创建时间" :show-overflow-tooltip="true">
+            <el-table-column min-width="160" label="创建时间" :show-overflow-tooltip="true" prop="createTime" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.createTime }}</span>
                 </template>
@@ -270,6 +270,10 @@ export default {
         ...mapGetters(['permissions', 'userId'])
     },
     methods: {
+        sortChange(a, b) {
+            //排序
+            return a.invoicePriceYuan - b.invoicePriceYuan;
+        },
         openList(val) {
             if (val == 2) {
                 this.$router.push({
