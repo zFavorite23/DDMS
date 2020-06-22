@@ -3,76 +3,31 @@
         <div class="">
             <span class="tit">节假日管理 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
-                <el-form-item>
-                    <el-input
-                        clearable
-                        v-model="query.likeKeyWords"
-                        placeholder="关键字"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button
-                        type="primary"
-                        size="medium"
-                        v-on:click="getHolidayList()"
-                        icon="el-icon-search"
-                        >搜索</el-button
-                    >
-                </el-form-item>
+                <el-form-item><el-input style="width:120px" clearable v-model="query.likeKeyWords" placeholder="关键字"></el-input></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" v-on:click="getHolidayList()" icon="el-icon-search">搜索</el-button></el-form-item>
                 <!--                <el-form-item>-->
                 <!--                    <el-button type="primary" size="medium" @click="handleModal()" v-if="holiday_btn_add">新增</el-button>-->
                 <!--                </el-form-item>-->
             </el-form>
         </div>
-        <el-table
-            :data="list"
-            stripe
-            border
-            v-loading="listLoading"
-            style="width: 100%;"
-        >
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="50" label="序号">
-                <template scope="scope"
-                    ><span
-                        >{{
-                            scope.$index + (query.current - 1) * query.size + 1
-                        }}
-                    </span></template
-                >
+                <template scope="scope">
+                    <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
+                </template>
             </el-table-column>
-            <el-table-column
-                prop="week"
-                min-width="120"
-                label="周"
-            ></el-table-column>
-            <el-table-column
-                prop="explain"
-                min-width="120"
-                label="说明"
-            ></el-table-column>
-            <el-table-column
-                prop="day"
-                min-width="120"
-                label="日期"
-            ></el-table-column>
+            <el-table-column prop="week" min-width="120" label="周"></el-table-column>
+            <el-table-column prop="explain" min-width="120" label="说明"></el-table-column>
+            <el-table-column prop="day" min-width="120" label="日期"></el-table-column>
             <el-table-column min-width="120" label="类型">
                 <template slot-scope="scope">
-                    <el-tag v-if="scope.row.type == '1'" type="success"
-                        >上班</el-tag
-                    >
-                    <el-tag v-if="scope.row.type == '2'" type="danger"
-                        >休息</el-tag
-                    >
+                    <el-tag v-if="scope.row.type == '1'" type="success">上班</el-tag>
+                    <el-tag v-if="scope.row.type == '2'" type="danger">休息</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="操作" min-width="160">
                 <template slot-scope="scope">
-                    <el-button
-                        size="mini"
-                        v-if="holiday_btn_edit"
-                        @click.native="handleModal(scope.row)"
-                        >编辑</el-button
-                    >
+                    <el-button size="mini" v-if="holiday_btn_edit" @click.native="handleModal(scope.row)">编辑</el-button>
                     <!--                    <el-button v-if="holiday_btn_del" size="mini" type="danger" @click.native="handleDel(scope.$index, scope.row)">删除</el-button>-->
                 </template>
             </el-table-column>
@@ -86,34 +41,14 @@
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
             :total="total"
-        >
-        </el-pagination>
+        ></el-pagination>
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
-            <el-form
-                :model="formData"
-                :rules="rules"
-                ref="formData"
-                label-width="80px"
-            >
+            <el-form :model="formData" :rules="rules" ref="formData" label-width="80px">
                 <el-form-item label="星期" prop="week">
-                    <el-input
-                        type="text"
-                        placeholder="请输入名称"
-                        v-model="formData.week"
-                        auto-complete="off"
-                        maxlength="20"
-                        show-word-limit
-                    ></el-input>
+                    <el-input type="text" placeholder="请输入名称" v-model="formData.week" auto-complete="off" maxlength="20" show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item label="说明" prop="explain">
-                    <el-input
-                        type="text"
-                        placeholder="请输入名称"
-                        v-model="formData.explain"
-                        auto-complete="off"
-                        maxlength="20"
-                        show-word-limit
-                    ></el-input>
+                    <el-input type="text" placeholder="请输入名称" v-model="formData.explain" auto-complete="off" maxlength="20" show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item label="日期" prop="day">
                     <el-date-picker
@@ -123,8 +58,7 @@
                         type="date"
                         placeholder="选择日期"
                         style="width: 100%"
-                    >
-                    </el-date-picker>
+                    ></el-date-picker>
                 </el-form-item>
                 <el-form-item label="类型" prop="type">
                     <el-radio-group v-model="formData.type">
@@ -134,35 +68,25 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button
-                    type="primary"
-                    @click="handleSubmit"
-                    :loading="saving"
-                    >提 交</el-button
-                >
+                <el-button type="primary" @click="handleSubmit" :loading="saving">提 交</el-button>
                 <el-button @click="dialogVisible = false">取 消</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
-import {
-    fetchList,
-    addObj,
-    putObj,
-    delObj
-} from "../../../api/checkwork/holiday.js";
-import { mapGetters } from "vuex";
+import { fetchList, addObj, putObj, delObj } from '../../../api/checkwork/holiday.js';
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
             query: {
-                likeKeyWords: "",
+                likeKeyWords: '',
                 current: 1,
                 size: 10
             },
             total: 0,
-            dialogTitle: "",
+            dialogTitle: '',
             listLoading: false,
             dialogVisible: false,
             saving: false,
@@ -173,35 +97,31 @@ export default {
                 }
             },
             formData: {
-                id: "",
-                week: "",
-                explain: "",
-                day: "",
-                type: "2"
+                id: '',
+                week: '',
+                explain: '',
+                day: '',
+                type: '2'
             },
             holiday_btn_add: false,
             holiday_btn_edit: false,
             holiday_btn_del: false,
             rules: {
-                week: [{ required: true, message: "请输入星期" }],
-                explain: [{ required: true, message: "请输入说明" }],
-                day: [
-                    { required: true, message: "请选择日期", trigger: "change" }
-                ],
-                type: [
-                    { required: true, message: "请选择类型", trigger: "change" }
-                ]
+                week: [{ required: true, message: '请输入星期' }],
+                explain: [{ required: true, message: '请输入说明' }],
+                day: [{ required: true, message: '请选择日期', trigger: 'change' }],
+                type: [{ required: true, message: '请选择类型', trigger: 'change' }]
             }
         };
     },
     created() {
         this.getHolidayList();
-        this.holiday_btn_add = this.permissions["dd_holiday_add"];
-        this.holiday_btn_edit = this.permissions["dd_holiday_edit"];
-        this.holiday_btn_del = this.permissions["dd_holiday_del"];
+        this.holiday_btn_add = this.permissions['dd_holiday_add'];
+        this.holiday_btn_edit = this.permissions['dd_holiday_edit'];
+        this.holiday_btn_del = this.permissions['dd_holiday_del'];
     },
     computed: {
-        ...mapGetters(["permissions"])
+        ...mapGetters(['permissions'])
     },
     methods: {
         getHolidayList() {
@@ -222,7 +142,7 @@ export default {
 
         handleModal(data) {
             if (data) {
-                this.dialogTitle = "编辑节假日 - " + data.day;
+                this.dialogTitle = '编辑节假日 - ' + data.day;
                 this.formData.newData = false;
                 this.formData.id = data.id;
                 this.formData.week = data.week;
@@ -230,18 +150,18 @@ export default {
                 this.formData.day = data.day;
                 this.formData.type = data.type;
             } else {
-                this.dialogTitle = "添加节假日";
+                this.dialogTitle = '添加节假日';
                 this.formData.newData = true;
-                this.formData.id = "";
-                this.formData.week = "";
-                this.formData.explain = "";
-                this.formData.day = "";
-                this.formData.type = "2";
+                this.formData.id = '';
+                this.formData.week = '';
+                this.formData.explain = '';
+                this.formData.day = '';
+                this.formData.type = '2';
             }
             this.dialogVisible = true;
         },
         handleSubmit() {
-            this.$refs["formData"].validate(valid => {
+            this.$refs['formData'].validate(valid => {
                 if (valid) {
                     this.saving = true;
                     if (!this.formData.newData) {
@@ -273,8 +193,8 @@ export default {
         // 删除
         handleDel(index, row) {
             if (row.id) {
-                this.$confirm("确认删除 " + row.day + " 吗?", "提示", {
-                    type: "warning"
+                this.$confirm('确认删除 ' + row.day + ' 吗?', '提示', {
+                    type: 'warning'
                 }).then(() => {
                     delObj(row.id).then(res => {
                         if (res.data.data) {

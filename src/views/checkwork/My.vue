@@ -5,6 +5,7 @@
             <el-form :inline="true" :model="query">
                 <el-form-item>
                     <el-date-picker
+                    style="width:160px"
                         v-model="query.selectMonth"
                         :picker-options="expireTimeOption"
                         type="month"

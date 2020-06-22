@@ -2,10 +2,10 @@
     <div id="divID" style="width: 100%; color: #1f2d3d;">
         <el-form :inline="true" :model="query">
             <el-form-item label="开始日期：">
-                <el-date-picker v-model="query.startDay" type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
+                <el-date-picker  v-model="query.startDay" type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item label="结束日期：">
-                <el-date-picker v-model="query.endDay" type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
+                <el-date-picker  v-model="query.endDay" type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item><el-button type="primary" size="medium" v-on:click="getHourRadix()" icon="el-icon-search">搜索</el-button></el-form-item>
         </el-form>

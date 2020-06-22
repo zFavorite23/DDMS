@@ -3,12 +3,13 @@
         <div>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select v-model="query.userId" filterable placeholder="请选择">
+                    <el-select style="width:120px" v-model="query.userId" filterable placeholder="请选择">
                         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-date-picker
+					style="width:160px"
                         v-model="query.selectMonth"
                         :picker-options="expireTimeOption"
                         type="month"
