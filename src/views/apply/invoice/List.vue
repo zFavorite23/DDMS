@@ -148,7 +148,7 @@
             class="right"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="query.current"
+            :current-page.sync="query.current"
             :page-sizes="[10, 20, 50, 100]"
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
@@ -254,6 +254,10 @@ export default {
         };
     },
     created() {
+        let page = sessionStorage.getItem('page2');
+        if (page != null) {
+            this.query.current = Number(page);
+        }
         window.localStorage.removeItem('editInvoiceInfo');
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
@@ -268,6 +272,16 @@ export default {
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
+    },
+    watch: {
+        'query.userId'() {
+            let page = sessionStorage.getItem('page2');
+            if (this.query.userId != this.userId) {
+                this.query.current = 1;
+            }
+            sessionStorage.setItem('page2', this.query.current);
+            deep: true;
+        }
     },
     methods: {
         sortChange(a, b) {
@@ -322,6 +336,7 @@ export default {
         },
         handleCurrentChange(val) {
             this.query.current = val;
+            sessionStorage.setItem('page2', val);
             this.getInvoicePage();
         },
         handleModal(data) {
