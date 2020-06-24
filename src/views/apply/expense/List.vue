@@ -10,7 +10,7 @@
                 </el-form-item>
                 <el-form-item><el-input style="width:120px" v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
                 <el-form-item>
-                    <el-select style="width:120px"  clearable v-model="query.status" placeholder="请选择">
+                    <el-select style="width:120px" clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
@@ -24,7 +24,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'priceYuan', order: 'descending' }">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ order: 'descending' }">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -33,6 +33,11 @@
             <el-table-column width="120" label="申请人">
                 <template scope="scope">
                     <span>{{ scope.row.applyUserName }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column width="160" label="申请时间" sortable prop="createTime">
+                <template scope="scope">
+                    <span>{{ scope.row.createTime }}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="name" min-width="120" label="名称" :show-overflow-tooltip="true"></el-table-column>
@@ -90,7 +95,7 @@
                     </p>
                 </template>
             </el-table-column>
-            <el-table-column min-width="80" label="金额" prop="priceYuan" :sort-method="sortChange" sortable>
+            <el-table-column min-width="120" label="金额" prop="priceYuan" :sort-method="sortChange" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.priceYuan }} 元</span>
                 </template>
@@ -124,7 +129,7 @@
             class="right"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="query.current"
+            :current-page.sync="query.current"
             :page-sizes="[10, 20, 50, 100]"
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
@@ -176,7 +181,13 @@ export default {
         };
     },
     created() {
+        let page = sessionStorage.getItem('page');
+        if (page != null) {
+            this.query.current = Number(page);
+        }
+
         window.localStorage.removeItem('editExpenseInfo');
+
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
             this.query.status = '';
@@ -185,11 +196,22 @@ export default {
             this.disabled = true;
         }
         this.query.userId = this.userId;
+
         this.getExpenseList();
         this.getUserList();
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
+    },
+    watch: {
+        'query.userId'() {
+            let page = sessionStorage.getItem('page');
+            if (this.query.userId != this.userId) {
+                this.query.current = 1;
+            }
+            sessionStorage.setItem('page', this.query.current);
+            deep: true;
+        }
     },
     methods: {
         sortChange(a, b) {
@@ -225,11 +247,12 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getLoglist();
+            this.getExpenseList();
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            this.getLoglist();
+            sessionStorage.setItem('page', val);
+            this.getExpenseList();
         },
         handleInfo(data) {
             this.$router.push({
