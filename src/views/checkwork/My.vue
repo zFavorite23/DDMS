@@ -5,7 +5,7 @@
             <el-form :inline="true" :model="query">
                 <el-form-item>
                     <el-date-picker
-                    style="width:160px"
+                        style="width:160px"
                         v-model="query.selectMonth"
                         :picker-options="expireTimeOption"
                         type="month"
@@ -65,7 +65,11 @@
                 <el-table-column prop="createTime" min-width="160" label="创建时间"></el-table-column>
                 <el-table-column label="操作" min-width="100">
                     <template slot-scope="scope">
-                        <el-dropdown v-if="scope.row.status == 2 || scope.row.status == 3 || (scope.row.status == 4 && !scope.row.isShow)" trigger="click" @command="handleCommand">
+                        <el-dropdown
+                            v-if="(scope.row.status == 2 || scope.row.status == 3 || scope.row.status == 4) && scope.row.isShow == false"
+                            trigger="click"
+                            @command="handleCommand"
+                        >
                             <el-button type="primary" size="mini" class="el-dropdown-link">
                                 异常申请
                                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -76,7 +80,7 @@
                                 <el-dropdown-item :command="composeValue(3, scope.row)">请假</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <el-tag type="danger" v-if="scope.row.status == 2 || scope.row.status == 3 || (scope.row.status == 4 && scope.row.isShow == true)">已过期</el-tag>
+                        <el-tag type="danger" v-if="(scope.row.status == 2 || scope.row.status == 3 || scope.row.status == 4) && scope.row.isShow == true">已过期</el-tag>
                     </template>
                 </el-table-column>
             </el-table>
@@ -194,6 +198,7 @@ export default {
             this.listLoading = true;
             getPageList(this.query)
                 .then(response => {
+                    // console.log(response);
                     this.listLoading = false;
                     this.total = response.data.data.total;
                     this.query.current = response.data.data.current;
