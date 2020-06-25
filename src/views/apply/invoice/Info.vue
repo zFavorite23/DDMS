@@ -384,17 +384,29 @@ export default {
             }
         },
         onSubmit() {
-            // console.log(this.formData);
-            updateInvoiceApprover(this.formData)
-                .then(res => {
-                    // console.log(res);
-                    if (res.data.data) {
-                        this.backHistory();
-                    }
+            this.$confirm('请审批人审核发票信息、报销内容、项目名称后再同意，一经同意后流程不能逆转。', '温馨提示：', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                showClose: false
+            })
+                .then(() => {
+                    updateInvoiceApprover(this.formData)
+                        .then(res => {
+                            // console.log(res);
+                            if (res.data.data) {
+                                this.backHistory();
+                            }
+                        })
+                        .finally(() => {
+                            this.saving = false;
+                        });
                 })
-                .finally(() => {
+                .catch(() => {
                     this.saving = false;
                 });
+
+            // console.log(this.formData);
         },
         backHistory() {
             this.$router.go(-1);

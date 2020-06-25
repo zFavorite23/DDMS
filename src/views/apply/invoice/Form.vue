@@ -157,7 +157,7 @@
                 </div>
             </el-form-item>
             <el-form-item v-if="isSave" style="text-align: center" class="save">
-                <el-button v-if='query.companyId==1' type="primary" disabled>保存</el-button>
+                <el-button v-if="query.companyId == 1" type="primary" disabled>保存</el-button>
                 <el-button v-else type="primary" @click="onSubmit" :loading="saving">保存</el-button>
                 <el-button @click="backHistory">取消</el-button>
             </el-form-item>
@@ -301,12 +301,12 @@ export default {
     },
     created() {
         const editInvoiceInfo = JSON.parse(window.localStorage.getItem('editInvoiceInfo'));
-        console.log(editInvoiceInfo)
+        console.log(editInvoiceInfo);
         if (editInvoiceInfo) {
             this.formData.newData = false;
             this.formData.invoiceId = editInvoiceInfo.invoiceId;
             this.formData.companyId = editInvoiceInfo.companyId;
-            this.query.companyId=editInvoiceInfo.companyId
+            this.query.companyId = editInvoiceInfo.companyId;
             this.formData.itemId = editInvoiceInfo.itemId;
             this.query.itemId = editInvoiceInfo.itemId;
             this.formData.classify = editInvoiceInfo.classify;
@@ -323,7 +323,7 @@ export default {
             this.formData.payPriceYuan = editInvoiceInfo.payPriceYuan;
             this.formData.payImgNum = editInvoiceInfo.payImgNum;
             this.formData.payImg = editInvoiceInfo.payImg;
-            this.applyUserList = editInvoiceInfo.checkUserList
+            this.applyUserList = editInvoiceInfo.checkUserList;
             //console.log(editInvoiceInfo.invoiceImg)
 
             if (editInvoiceInfo.payImg) {
@@ -360,8 +360,6 @@ export default {
         this.query.userId = this.userId;
         this.uploadUrl = `${window.location.origin}/apply/invoice/upload`;
         //this.open()
-
-
     },
     computed: {
         ...mapGetters(['permissions', 'userId', 'companyId'])
@@ -411,7 +409,6 @@ export default {
             });
         },
         getApplyUser() {
-            console.log("2222")
             if (this.formData.classify != 10) {
                 if (this.formData.isFull == '1') {
                     this.query.priceYuan = this.formData.payPriceYuan;
@@ -473,27 +470,38 @@ export default {
                 if (valid) {
                     this.saving = true;
                     console.log(this.formData.newData);
-                    if (!this.formData.newData) {
-                        editObj(this.formData)
-                            .then(res => {
-                                if (res.data.data) {
-                                    this.backHistory();
-                                }
-                            })
-                            .finally(() => {
-                                this.saving = false;
-                            });
-                    } else {
-                        addObj(this.formData)
-                            .then(res => {
-                                if (res.data.data) {
-                                    this.backHistory();
-                                }
-                            })
-                            .finally(() => {
-                                this.saving = false;
-                            });
-                    }
+                    this.$confirm('请申请人复核发票信息、发票内容、发票金额后再提交，一经提交后流程不能逆转。', '温馨提示：', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                        showClose: false
+                    })
+                        .then(() => {
+                            if (!this.formData.newData) {
+                                editObj(this.formData)
+                                    .then(res => {
+                                        if (res.data.data) {
+                                            this.backHistory();
+                                        }
+                                    })
+                                    .finally(() => {
+                                        this.saving = false;
+                                    });
+                            } else {
+                                addObj(this.formData)
+                                    .then(res => {
+                                        if (res.data.data) {
+                                            this.backHistory();
+                                        }
+                                    })
+                                    .finally(() => {
+                                        this.saving = false;
+                                    });
+                            }
+                        })
+                        .catch(() => {
+                            this.saving = false;
+                        });
                 }
             });
         },
