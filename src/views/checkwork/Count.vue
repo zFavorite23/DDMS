@@ -119,7 +119,7 @@ export default {
                     this.total = response.data.data.total;
                     this.list = response.data.data;
                     this.list.forEach(item => {
-                        this.$set(item, 'fineNum', item.lateNum * 50 + item.absenteeismNum * 100);
+                        this.$set(item, 'fineNum', item.earlyNum *50 + item.lateNum * 50 + item.absenteeismNum * 100);
                     });
                     // console.log(this.list)
                 })
