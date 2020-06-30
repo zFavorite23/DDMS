@@ -148,7 +148,7 @@ export default {
         if (!this.query.status) {
             this.query.status = '';
         }
-        if (this.userId != 1 && this.userId != 9 && this.userId != 11 && this.userId != 87) {
+        if (this.userId != 1 && this.userId != 9 && this.userId != 11 && this.userId != 87 && this.userId != 77) {
             this.disabled = true;
         }
         this.query.userId = this.userId;
