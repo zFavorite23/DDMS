@@ -26,110 +26,12 @@
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-
-
-            <el-table-column min-width="80" label="工作类别">
-                <template slot-scope="scope">
-                    <p v-if="scope.row.category == 1">管理</p>
-                    <p v-else-if="scope.row.category == 2">项目</p>
-                    <p v-else-if="scope.row.category == 3">产品</p>
-                    <p v-else-if="scope.row.category == 4">长身体</p>
-                    <p v-else-if="scope.row.category == 5">市场营销</p>
-                    <p v-else></p>
-                </template>
+            <el-table-column prop="categoryName" min-width="80" label="工作类别">
             </el-table-column>
-            <el-table-column label="分类" :show-overflow-tooltip="true">
+            <el-table-column label="分类" min-width="130" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
-                    <p v-if="scope.row.category == '1' && scope.row.mainClassify == 1">
-                        公司管理
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">公司战略规划</span>
-                        <span v-if="scope.row.subClassify == 2">客户对接</span>
-                        <span v-if="scope.row.subClassify == 3">项目对接</span>
-                        <span v-if="scope.row.subClassify == 4">人员管理及招聘</span>
-                        <span v-if="scope.row.subClassify == 5">其他事务</span>
-                    </p>
-                    <p v-if="scope.row.category == '1' && scope.row.mainClassify == 2">
-                        财务管理
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">开票</span>
-                        <span v-if="scope.row.subClassify == 2">支付</span>
-                        <span v-if="scope.row.subClassify == 3">税筹</span>
-                        <span v-if="scope.row.subClassify == 4">账务处理</span>
-                        <span v-if="scope.row.subClassify == 5">预算</span>
-                        <span v-if="scope.row.subClassify == 6">补贴申报</span>
-                        <span v-if="scope.row.subClassify == 7">v</span>
-                    </p>
-                    <p v-if="scope.row.category == '1' && scope.row.mainClassify == 3">
-                        人事管理
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">薪酬福利管理</span>
-                        <span v-if="scope.row.subClassify == 2">考勤管理</span>
-                        <span v-if="scope.row.subClassify == 3">员工入职手续办理</span>
-                        <span v-if="scope.row.subClassify == 4">招聘</span>
-                        <span v-if="scope.row.subClassify == 5">培训</span>
-                        <span v-if="scope.row.subClassify == 6">员工关系管理</span>
-                        <span v-if="scope.row.subClassify == 7">其他事务</span>
-                    </p>
-                    <p v-if="scope.row.category == '1' && scope.row.mainClassify == 4">
-                        部门管理
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">人员招聘</span>
-                        <span v-if="scope.row.subClassify == 2">人员管理及培训</span>
-                        <span v-if="scope.row.subClassify == 3">部门发展计划</span>
-                        <span v-if="scope.row.subClassify == 4">工作流程</span>
-                        <span v-if="scope.row.subClassify == 5">其他日常事务</span>
-                    </p>
-                    <p v-if="scope.row.category == '1' && scope.row.mainClassify == 5">
-                        工厂管理
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">工厂备料</span>
-                        <span v-if="scope.row.subClassify == 2">环境卫生</span>
-                        <span v-if="scope.row.subClassify == 3">房租水电</span>
-                        <span v-if="scope.row.subClassify == 4">其他事务</span>
-                    </p>
-
-                    <p v-if="scope.row.category == '2'">
-                        <span v-if="scope.row.subClassify == 1">管理</span>
-                        <span v-if="scope.row.subClassify == 2">销售</span>
-                        <span v-if="scope.row.subClassify == 3">售前</span>
-                        <span v-if="scope.row.subClassify == 4">交付</span>
-                        <span v-if="scope.row.subClassify == 5">产品</span>
-                        <span v-if="scope.row.subClassify == 6">运维</span>
-                    </p>
-
-                    <p v-if="scope.row.category == '3'">
-                        <span v-if="scope.row.subClassify == 1">管理</span>
-                        <span v-if="scope.row.subClassify == 2">交付</span>
-                    </p>
-
-                    <p v-if="scope.row.category == '4'">
-                        <span v-if="scope.row.subClassify == 1">学习</span>
-                        <span v-if="scope.row.subClassify == 2">吃饭</span>
-                        <span v-if="scope.row.subClassify == 3">睡觉</span>
-                    </p>
-                    
-                    <p v-if="scope.row.category == '5' && scope.row.mainClassify == 1">
-                        销售渠道
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">销售咨询</span>
-                        <span v-if="scope.row.subClassify == 2">渠道维护</span>
-                        <span v-if="scope.row.subClassify == 3">客户拜访</span>
-                    </p>
-                    
-                    <p v-if="scope.row.category == '5' && scope.row.mainClassify == 2">
-                        售前策划
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">售前初设</span>
-                        <span v-if="scope.row.subClassify == 2">产品册更新</span>
-                    </p>
-                    
-                    <p v-if="scope.row.category == '5' && scope.row.mainClassify == 3">
-                        品牌营销
-                        <br />
-                        <span v-if="scope.row.subClassify == 1">讲座宣传</span>
-                        <span v-if="scope.row.subClassify == 2">营销软文</span>
-                    </p>
+                    <p>{{ scope.row.mainClassifyName }}</p>
+                    <p>{{ scope.row.subClassifyName }}</p>
                 </template>
             </el-table-column>
             <el-table-column prop="reason" min-width="120" label="工作内容" :show-overflow-tooltip="true"></el-table-column>
@@ -261,6 +163,7 @@ export default {
             this.listLoading = true;
             getManhourApproverPage(this.query)
                 .then(response => {
+                    console.log(response)
                     this.listLoading = false;
                     this.total = response.data.data.total;
                     this.query.current = response.data.data.current;
