@@ -17,13 +17,25 @@ export function getManhourPage(query) {
 }
 
 /**
- * 查询工时申请详情
+ * 工作类别筛选
  * @param manhourId
  * @returns {*}
  */
 export function getManhourInfo(manhourId) {
     return axios({
         url: "/apply/manhour/info/" + manhourId,
+        method: "get"
+    });
+}
+
+/**
+ * 查询工时申请详情
+ * @param manhourId
+ * @returns {*}
+ */
+export function selectCategory(id,userId) {
+    return axios({
+        url: `/apply/region/getManhourType/${id}/${userId}`,
         method: "get"
     });
 }
@@ -186,5 +198,3 @@ export function updateManhourApprover(data) {
         data: data
     });
 }
-
-
