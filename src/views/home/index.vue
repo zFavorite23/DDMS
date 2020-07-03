@@ -7,7 +7,7 @@
         >
             <div class="logo">
                 <!--图片logo-->
-                <img src="../../assets/logo.png" />
+                <img src="../../assets/DDMS.png" />
                 <!--文字logo-->
                 <span>后台</span>
             </div>
