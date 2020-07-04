@@ -18,13 +18,15 @@
                         </tr>
                         <tr>
                             <td width="100">总分类</td>
-                            <td v-if="invoiceInfo.classify == 7">办公用品</td>
+                            <td>{{ invoiceInfo.categoryName }}</td>
+                            <!-- <td v-if="invoiceInfo.classify == 7">办公用品</td>
                             <td v-if="invoiceInfo.classify == 8">固定资产</td>
                             <td v-if="invoiceInfo.classify == 9">管理费用</td>
                             <td v-if="invoiceInfo.classify == 10">人员补助</td>
-                            <td v-if="invoiceInfo.classify == 11">项目报销</td>
+                            <td v-if="invoiceInfo.classify == 11">项目报销</td> -->
                             <td width="100">明细分类</td>
-                            <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 1">办公文具</td>
+                            <td>{{ invoiceInfo.subClassifyName }}</td>
+                            <!-- <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 1">办公文具</td>
                             <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 2">办公耗材</td>
                             <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 3">日杂百货</td>
                             <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 4">财务用品</td>
@@ -49,7 +51,7 @@
                             <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 4">设备采购</td>
                             <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 5">办公费</td>
                             <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 6">市内交通</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 7">会议费</td>
+                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 7">会议费</td> -->
                         </tr>
                         <tr>
                             <td>是否找票</td>
@@ -323,6 +325,7 @@ export default {
         getInvoiceInfo() {
             getInvoiceInfo(this.invoiceId).then(response => {
                 this.invoiceInfo = response.data.data;
+                console.log(this.invoiceInfo)
                 this.invoiceInfo.invoiceTimeCh = moment(this.invoiceInfo.invoiceTime).format('YYYY年MM月DD日');
                 this.invoiceInfo.payTimeCh = moment(this.invoiceInfo.payTime).format('YYYY年MM月DD日');
                 this.urls1 = [];

@@ -47,7 +47,9 @@
             </el-table-column>
             <el-table-column min-width="160" label="分类">
                 <template slot-scope="scope">
-                    <p v-if="scope.row.classify == 7">办公用品</p>
+                    <p>{{ scope.row.categoryName }}</p>
+                    <p>{{ scope.row.subClassifyName }}</p>
+                    <!-- <p v-if="scope.row.classify == 7">办公用品</p>
                     <p v-else-if="scope.row.classify == 8">固定资产</p>
                     <p v-else-if="scope.row.classify == 9">管理费用</p>
                     <p v-else-if="scope.row.classify == 10">人员补助</p>
@@ -79,7 +81,7 @@
                     <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 4">设备采购</p>
                     <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 5">办公费</p>
                     <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 6">市内交通</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 7">会议费</p>
+                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 7">会议费</p> -->
                 </template>
             </el-table-column>
             <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">
@@ -158,7 +160,7 @@
 </template>
 <script>
 import { getUserList } from '../../../api/admin/user.js';
-import { getInvoicePage, deleteObj, invoiceMigration } from '../../../api/apply/invoice.js';
+import { getInvoicePage, deleteObj, invoiceMigration, getInvoices } from '../../../api/apply/invoice.js';
 // import {getUserInfo} from "../../../api/admin/user.js";
 import { mapGetters } from 'vuex';
 export default {
@@ -195,52 +197,6 @@ export default {
                 {
                     value: '',
                     label: '全部'
-                },
-                {
-                    value: '7',
-                    label: '办公用品'
-                },
-                {
-                    value: '8',
-                    label: '固定资产'
-                },
-                {
-                    value: '9',
-                    label: '管理费用'
-                },
-                {
-                    value: '10',
-                    label: '人员补助'
-                },
-                {
-                    value: '11',
-                    label: '项目报销'
-                }
-            ],
-            orderByOptions: [
-                {
-                    value: 'create_time_asc',
-                    label: '创建时间正序'
-                },
-                {
-                    value: 'create_time_desc',
-                    label: '创建时间倒序'
-                },
-                {
-                    value: 'invoice_time_asc',
-                    label: '发票时间正序'
-                },
-                {
-                    value: 'invoice_time_desc',
-                    label: '发票时间倒序'
-                },
-                {
-                    value: 'pay_time_asc',
-                    label: '支付时间正序'
-                },
-                {
-                    value: 'pay_time_desc',
-                    label: '支付时间倒序'
                 }
             ],
             pages: 0,
@@ -269,6 +225,7 @@ export default {
         this.query.userId = this.userId;
         this.getInvoicePage();
         this.getUserList();
+        this.getInvoices('100000');
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -284,6 +241,16 @@ export default {
         }
     },
     methods: {
+        getInvoices(id) {
+            getInvoices(id, this.userId).then(res => {
+                res.data.data.invoiceType.forEach(item => {
+                    this.classifyOptions.push({
+                        value: item.id,
+                        label: item.name
+                    });
+                });
+            });
+        },
         sortChange(a, b) {
             //排序
             return a.invoicePriceYuan - b.invoicePriceYuan;

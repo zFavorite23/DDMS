@@ -56,17 +56,19 @@
 
             <el-table-column min-width="100" label="总分类">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.classify == 7">办公用品</span>
+                    <span>{{ scope.row.categoryName }}</span>
+                    <!-- <span v-if="scope.row.classify == 7">办公用品</span>
                     <span v-if="scope.row.classify == 8">固定资产</span>
                     <span v-if="scope.row.classify == 9">管理费用</span>
                     <span v-if="scope.row.classify == 10">人员补助</span>
                     <span v-if="scope.row.classify == 11">项目报销</span>
-                    <span v-if="scope.row.classify == 12">产品报销</span>
+                    <span v-if="scope.row.classify == 12">产品报销</span> -->
                 </template>
             </el-table-column>
             <el-table-column min-width="100" label="明细分类">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.classify == 7 && scope.row.type == 1">办公文具</span>
+                    <span>{{ scope.row.subClassifyName }}</span>
+                    <!-- <span v-if="scope.row.classify == 7 && scope.row.type == 1">办公文具</span>
                     <span v-if="scope.row.classify == 7 && scope.row.type == 2">办公耗材</span>
                     <span v-if="scope.row.classify == 7 && scope.row.type == 3">日杂百货</span>
                     <span v-if="scope.row.classify == 7 && scope.row.type == 4">财务用品v</span>
@@ -91,7 +93,7 @@
                     <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 4">设备采购</span>
                     <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 5">办公费</span>
                     <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 6">市内交通</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 7">会议费</span>
+                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 7">会议费</span> -->
                 </template>
             </el-table-column>
             <el-table-column min-width="80" label="是否找票">
@@ -147,7 +149,7 @@
     </div>
 </template>
 <script>
-import { getInvoiceApproverPage } from '../../../api/apply/invoice.js';
+import { getInvoiceApproverPage,getInvoices } from '../../../api/apply/invoice.js';
 import { getUserList } from '../../../api/admin/user.js';
 // import {getUserInfo} from "../../../api/admin/user.js";
 import { mapGetters } from 'vuex';
@@ -187,54 +189,9 @@ export default {
                 {
                     value: '',
                     label: '全部'
-                },
-                {
-                    value: '7',
-                    label: '办公用品'
-                },
-                {
-                    value: '8',
-                    label: '固定资产'
-                },
-                {
-                    value: '9',
-                    label: '管理费用'
-                },
-                {
-                    value: '10',
-                    label: '人员补助'
-                },
-                {
-                    value: '11',
-                    label: '项目报销'
                 }
             ],
-            orderByOptions: [
-                {
-                    value: 'create_time_asc',
-                    label: '创建时间正序'
-                },
-                {
-                    value: 'create_time_desc',
-                    label: '创建时间倒序'
-                },
-                {
-                    value: 'invoice_time_asc',
-                    label: '发票时间正序'
-                },
-                {
-                    value: 'invoice_time_desc',
-                    label: '发票时间倒序'
-                },
-                {
-                    value: 'pay_time_asc',
-                    label: '支付时间正序'
-                },
-                {
-                    value: 'pay_time_desc',
-                    label: '支付时间倒序'
-                }
-            ],
+
             pages: 0,
             total: 0,
             listLoading: false,
@@ -252,11 +209,22 @@ export default {
         this.query.userId = this.userId;
         this.getUserList();
         this.getInvoiceApproverPage();
+         this.getInvoices('100000');
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
     },
     methods: {
+        getInvoices(id) {
+            getInvoices(id, this.userId).then(res => {
+                res.data.data.invoiceType.forEach(item => {
+                    this.classifyOptions.push({
+                        value: item.id,
+                        label: item.name
+                    });
+                });
+            });
+        },
         sortChange(a, b) {
             //排序
             return a.invoicePriceYuan - b.invoicePriceYuan;
