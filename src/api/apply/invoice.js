@@ -15,6 +15,17 @@ export function getInvoicePage(query) {
         params: query
     });
 }
+
+/**
+ * 报销分类
+ */
+export function getInvoices(id,userId) {
+    return axios({
+        url: `/apply/invoicestype/getInvoices/${id}/${userId}`,
+        method: "get",
+    });
+}
+
 /**
  * 查询报销申请详情
  * @param invoiceId
