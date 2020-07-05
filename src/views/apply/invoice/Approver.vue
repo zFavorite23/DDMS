@@ -14,11 +14,6 @@
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item>
-                    <el-select style="width:120px" clearable v-model="query.classify" placeholder="总分类">
-                        <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
-                    </el-select>
-                </el-form-item>
                 <!-- <el-form-item>
                     <el-select v-model="query.orderBy" placeholder="排序方式">
                         <el-option v-for="item in orderByOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
@@ -54,46 +49,11 @@
             </el-table-column>
             <el-table-column prop="applyUserName" min-width="120" label="申请人"></el-table-column>
 
-            <el-table-column min-width="100" label="总分类">
+            <el-table-column min-width="160" label="分类">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.categoryName }}</span>
-                    <!-- <span v-if="scope.row.classify == 7">办公用品</span>
-                    <span v-if="scope.row.classify == 8">固定资产</span>
-                    <span v-if="scope.row.classify == 9">管理费用</span>
-                    <span v-if="scope.row.classify == 10">人员补助</span>
-                    <span v-if="scope.row.classify == 11">项目报销</span>
-                    <span v-if="scope.row.classify == 12">产品报销</span> -->
-                </template>
-            </el-table-column>
-            <el-table-column min-width="100" label="明细分类">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.subClassifyName }}</span>
-                    <!-- <span v-if="scope.row.classify == 7 && scope.row.type == 1">办公文具</span>
-                    <span v-if="scope.row.classify == 7 && scope.row.type == 2">办公耗材</span>
-                    <span v-if="scope.row.classify == 7 && scope.row.type == 3">日杂百货</span>
-                    <span v-if="scope.row.classify == 7 && scope.row.type == 4">财务用品v</span>
-                    <span v-if="scope.row.classify == 7 && scope.row.type == 5">电子设备及工具</span>
-
-                    <span v-if="scope.row.classify == 8 && scope.row.type == 1">办公设备</span>
-                    <span v-if="scope.row.classify == 8 && scope.row.type == 2">办公家具</span>
-
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 1">市内交通</span>
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 2">办公费用</span>
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 3">运输</span>
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 4">业务招待费</span>
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 5">会议费</span>
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 6">差旅费</span>
-                    <span v-if="scope.row.classify == 9 && scope.row.type == 7">福利费</span>
-
-                    <span v-if="scope.row.classify == 10 && scope.row.type == 1">住房补助</span>
-
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 1">差旅费</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 2">业务招待费</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 3">外协</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 4">设备采购</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 5">办公费</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 6">市内交通</span>
-                    <span v-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 7">会议费</span> -->
+                    <p v-if = "scope.row.type1Name">{{ scope.row.type1Name }}</p>
+                    <p v-if = "scope.row.type2Name">{{ scope.row.type2Name }}</p>
+                    <p v-if = "scope.row.type3Name">{{ scope.row.type3Name }}</p>
                 </template>
             </el-table-column>
             <el-table-column min-width="80" label="是否找票">
@@ -161,7 +121,6 @@ export default {
                 likeKeyWords: '',
                 applyUserId: null,
                 status: '',
-                classify: '',
                 orderBy: 'create_time_asc',
                 current: 1,
                 size: 10

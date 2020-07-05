@@ -11,7 +11,7 @@ export default {
 
             },
             id: null,
-            bdTokenUrl: "http://127.0.0.1:9999/act/modeler.html?modelId="
+            bdTokenUrl: "http://oa.dreamdeck.cn/act/modeler.html?modelId="
         };
     },
     computed: {

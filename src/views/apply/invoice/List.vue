@@ -47,41 +47,9 @@
             </el-table-column>
             <el-table-column min-width="160" label="分类">
                 <template slot-scope="scope">
-                    <p>{{ scope.row.categoryName }}</p>
-                    <p>{{ scope.row.subClassifyName }}</p>
-                    <!-- <p v-if="scope.row.classify == 7">办公用品</p>
-                    <p v-else-if="scope.row.classify == 8">固定资产</p>
-                    <p v-else-if="scope.row.classify == 9">管理费用</p>
-                    <p v-else-if="scope.row.classify == 10">人员补助</p>
-                    <p v-else-if="scope.row.classify == 11">项目报销</p>
-                    <p v-else-if="scope.row.classify == 12">产品报销</p>
-
-                    <p v-if="scope.row.classify == 7 && scope.row.type == 1">办公文具</p>
-                    <p v-else-if="scope.row.classify == 7 && scope.row.type == 2">办公耗材</p>
-                    <p v-else-if="scope.row.classify == 7 && scope.row.type == 3">日杂百货</p>
-                    <p v-else-if="scope.row.classify == 7 && scope.row.type == 4">财务用品v</p>
-                    <p v-else-if="scope.row.classify == 7 && scope.row.type == 5">电子设备及工具</p>
-
-                    <p v-else-if="scope.row.classify == 8 && scope.row.type == 1">办公设备</p>
-                    <p v-else-if="scope.row.classify == 8 && scope.row.type == 2">办公家具</p>
-
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 1">市内交通</p>
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 2">办公费用</p>
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 3">运输</p>
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 4">业务招待费</p>
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 5">会议费</p>
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 6">差旅费</p>
-                    <p v-else-if="scope.row.classify == 9 && scope.row.type == 7">福利费</p>
-
-                    <p v-else-if="scope.row.classify == 10 && scope.row.type == 1">住房补助</p>
-
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 1">差旅费</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 2">业务招待费</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 3">外协</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 4">设备采购</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 5">办公费</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 6">市内交通</p>
-                    <p v-else-if="(scope.row.classify == 11 || scope.row.classify == 12) && scope.row.type == 7">会议费</p> -->
+                    <p v-if = "scope.row.type1Name">{{ scope.row.type1Name }}</p>
+                    <p v-if = "scope.row.type2Name">{{ scope.row.type2Name }}</p>
+                    <p v-if = "scope.row.type3Name">{{ scope.row.type3Name }}</p>
                 </template>
             </el-table-column>
             <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">

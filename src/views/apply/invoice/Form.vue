@@ -6,24 +6,15 @@
                     <el-option v-for="(item, index) in companyOptions" :value="item.value" :key="index" :label="item.label" :disabled="item.disabled"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="总分类：" prop="classify">
-                <el-radio-group v-model="formData.classify" @change="classifyChange">
+            <el-form-item label="总分类：" prop="type1">
+                <el-radio-group v-model="formData.type1" @change="classifyChange">
                     <el-radio v-for="(item, index) in sumClassifyOptions" :label="item.id" :key="index">{{ item.name }}</el-radio>
-                    <!-- <el-radio label="7">办公用品</el-radio>
-                    <el-radio label="8">固定资产</el-radio>
-                    <el-radio label="9">管理费用</el-radio>
-                    <el-radio label="10">人员补助</el-radio>
-                    <el-radio label="11">项目报销</el-radio>
-                    <el-radio label="12">产品报销</el-radio> -->
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="主分类：" prop="mainClassify">
-                <!-- <el-radio-group v-model="formData.mainClassify" @change="classifyChange2">
-                    <el-radio v-for="(item, index) in mainClassifyOptions" :label="item.id" :key="index">{{ item.name }}</el-radio>
-                </el-radio-group> -->
+            <el-form-item label="主分类：" prop="type2">
                 <el-cascader
-                    v-model="formData.mainClassify"
+                    v-model="formData.type2"
                     :options="mainClassifyOptions"
                     :props="{ expandTrigger: 'hover' }"
                     :show-all-levels="false"
@@ -33,54 +24,13 @@
                 ></el-cascader>
             </el-form-item>
 
-            <el-form-item label="明细分类：" prop="type">
-                <el-radio-group v-model="formData.type">
+            <el-form-item label="明细分类：" prop="type3">
+                <el-radio-group v-model="formData.type3">
                     <el-radio v-for="(item, index) in subClassifyOptions" :label="item.id" :key="index">{{ item.name }}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
-            <!-- <el-form-item label="项目：" prop="itemId" v-if="formData.classify == 11">
-                <el-select v-model="formData.itemId" placeholder="请选择" filterable @change="selectItem">
-                    <el-option v-for="(item, index) in itemOptions" :value="item.value" :key="index" :label="item.label"></el-option>
-                </el-select>
-            </el-form-item>
 
-            <el-form-item label="产品：" prop="itemId" v-if="formData.classify == 12">
-                <el-select v-model="formData.itemId" placeholder="请选择" filterable @change="selectItem">
-                    <el-option v-for="(item, index) in productOptions" :value="item.value" :key="index" :label="item.label"></el-option>
-                </el-select>
-            </el-form-item> -->
-
-            <!-- <el-form-item label="明细分类：" prop="type">
-                <el-radio-group v-model="formData.type">
-                    <el-radio v-if="formData.classify == 7" label="1">办公文具</el-radio>
-                    <el-radio v-if="formData.classify == 7" label="2">办公耗材</el-radio>
-                    <el-radio v-if="formData.classify == 7" label="3">日杂百货</el-radio>
-                    <el-radio v-if="formData.classify == 7" label="4">财务用品</el-radio>
-                    <el-radio v-if="formData.classify == 7" label="5">电子设备及工具</el-radio>
-
-                    <el-radio v-if="formData.classify == 8" label="1">办公设备</el-radio>
-                    <el-radio v-if="formData.classify == 8" label="2">办公家具</el-radio>
-
-                    <el-radio v-if="formData.classify == 9" label="1">市内交通</el-radio>
-                    <el-radio v-if="formData.classify == 9" label="2">办公费用</el-radio>
-                    <el-radio v-if="formData.classify == 9" label="3">运输</el-radio>
-                    <el-radio v-if="formData.classify == 9" label="4">业务招待费</el-radio>
-                    <el-radio v-if="formData.classify == 9" label="5">会议费</el-radio>
-                    <el-radio v-if="formData.classify == 9" label="6">差旅费</el-radio>
-                    <el-radio v-if="formData.classify == 9" label="7">福利费</el-radio>
-
-                    <el-radio v-if="formData.classify == 10" label="1">住房补助</el-radio>
-
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="1">差旅费</el-radio>
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="2">业务招待费</el-radio>
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="3">外协</el-radio>
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="4">设备采购</el-radio>
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="5">办公费</el-radio>
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="6">市内交通</el-radio>
-                    <el-radio v-if="formData.classify == 11 || formData.classify == 12" label="7">会议费</el-radio>
-                </el-radio-group>
-            </el-form-item> -->
             <el-form-item label="是否找的票：" prop="isFull">
                 <el-radio-group v-model="formData.isFull">
                     <el-radio label="1">是</el-radio>
@@ -103,7 +53,7 @@
                     show-word-limit
                 ></el-input>
             </el-form-item>
-            <div v-if="formData.isFull == '1' && formData.classify != '10'">
+            <div v-if="formData.isFull == '1' && formData.type1 != '10'">
                 <div style="">
                     <el-form-item label="支付时间：" prop="payTime" style="margin-right:20px;float: left">
                         <el-date-picker v-model="formData.payTime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
@@ -213,10 +163,9 @@ export default {
                 companyId: null,
                 itemId: null,
                 userId: null,
-                classify: '',
-                mainClassify: '',
-                // subClassify: '',
-                type: '',
+                type1: '',
+                type2: '',
+                type3: '',
                 isFull: '0',
                 invoiceType: '2',
                 invoiceDesc: '',
@@ -255,21 +204,21 @@ export default {
             rules: {
                 companyId: [{ required: true, message: '请选择公司', trigger: 'change' }],
                 itemId: [{ required: true, message: '请选择项目', trigger: 'change' }],
-                classify: [
+                type1: [
                     {
                         required: true,
                         message: '请选择总分类',
                         trigger: 'change'
                     }
                 ],
-                mainClassify: [
+                type2: [
                     {
                         required: true,
                         message: '请选择主分类',
                         trigger: 'change'
                     }
                 ],
-                type: [
+                type3: [
                     {
                         required: true,
                         message: '请选择明细分类',
@@ -343,13 +292,13 @@ export default {
             this.query.companyId = editInvoiceInfo.companyId;
             this.formData.itemId = editInvoiceInfo.itemId;
             this.query.itemId = editInvoiceInfo.itemId;
-            this.formData.classify = editInvoiceInfo.classify;
+            this.formData.type1 = editInvoiceInfo.type1;
             if(editInvoiceInfo.itemId!=null){
-                this.formData.mainClassify = [editInvoiceInfo.mainClassify,editInvoiceInfo.itemId]
+                this.formData.type2 = [editInvoiceInfo.type2,editInvoiceInfo.itemId]
             }else {
-                this.formData.mainClassify = [editInvoiceInfo.mainClassify]
+                this.formData.type2 = [editInvoiceInfo.type2]
             }
-            this.formData.type = editInvoiceInfo.type;
+            this.formData.type3 = editInvoiceInfo.type3;
             this.formData.isFull = editInvoiceInfo.isFull;
             this.formData.invoiceType = editInvoiceInfo.invoiceType;
             this.formData.invoiceDesc = editInvoiceInfo.invoiceDesc;
@@ -364,7 +313,7 @@ export default {
             this.formData.payImg = editInvoiceInfo.payImg;
             this.applyUserList = editInvoiceInfo.checkUserList;
             //console.log(editInvoiceInfo.invoiceImg)
-            getInvoices(this.formData.classify, this.userId).then(res => {
+            getInvoices(this.formData.type1, this.userId).then(res => {
                 res.data.data.invoiceType.forEach(item => {
                     this.mainClassifyOptions.push({
                         value: item.id,
@@ -373,7 +322,7 @@ export default {
                     });
                 });
             });
-            getInvoices(this.formData.mainClassify[0], this.userId).then(res => {
+            getInvoices(this.formData.type2[0], this.userId).then(res => {
                 this.subClassifyOptions = res.data.data.invoiceType;
             });
             if (editInvoiceInfo.payImg) {
@@ -408,7 +357,7 @@ export default {
         this.getApplyUser(this.userId);
         this.formData.userId = this.userId;
         this.query.userId = this.userId;
-        this.getInvoices('100000', this.query.userId);
+        this.getInvoices('-1', this.query.userId);
         this.uploadUrl = `${window.location.origin}/apply/invoice/upload`;
         //this.open()
     },
@@ -546,8 +495,9 @@ export default {
             this.formData.companyId = null;
             this.formData.itemId = null;
             this.formData.userId = null;
-            this.formData.classify = '';
-            this.formData.type = '';
+            this.formData.type1 = '';
+            this.formData.type2 = '';
+            this.formData.type3 = '';
             this.formData.isFull = '0';
             this.formData.invoiceType = '2';
             this.formData.invoiceDesc = '';
@@ -563,7 +513,7 @@ export default {
             this.$router.go(-1);
         },
         onSubmit() {
-            this.formData.mainClassify = this.formData.mainClassify[0];
+            this.formData.type2 = this.formData.type2[0];
             console.log(this.formData);
             this.$refs['formData'].validate(valid => {
                 if (valid) {

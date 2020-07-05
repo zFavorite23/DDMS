@@ -28,6 +28,10 @@
                     >
                 </el-form-item>
             </el-form>
+            <el-radio-group v-model="listType" style="float: right;" @change="openList">
+                <el-radio-button label="1">模型管理</el-radio-button>
+                <el-radio-button label="2">流程管理</el-radio-button>
+            </el-radio-group>
         </div>
         <el-table
             :data="list"
@@ -172,6 +176,7 @@ export default {
                 current: 1,
                 size: 10
             },
+            listType: '1',
             pages: 0,
             total: 0,
             dialogTitle: "",
@@ -218,11 +223,11 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getJobList();
+            this.getModelPage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            this.getJobList();
+            this.getModelPage();
         },
         handleModal(data) {
             if (data) {
@@ -303,7 +308,14 @@ export default {
                     });
                 });
             }
-        }
+        },
+        openList(val) {
+            if (val == 2) {
+                this.$router.push({
+                    path: '/other/process'
+                });
+            }
+        },
     },
     mounted() {}
 };

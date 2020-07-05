@@ -108,6 +108,7 @@ import Menu from "../views/other/Menu.vue";
 import Role from "../views/other/Role.vue";
 import Quartz from "../views/other/Quartz.vue";
 import Act from "../views/other/Act.vue";
+import Process from "../views/other/Process.vue";
 import ActDesign from "../views/other/Act_Design.vue";
 import Log from "../views/other/Log.vue";
 
@@ -671,6 +672,12 @@ export const asyncRouterMap = [
                 path: "act_design/:id",
                 component: Act_Design,
                 name: "模型设计",
+                hidden: true
+            },
+            {
+                path: "process",
+                component: Process,
+                name: "流程管理",
                 hidden: true
             },
             {
