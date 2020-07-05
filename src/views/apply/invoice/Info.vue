@@ -209,8 +209,8 @@
                     <div style="width: 90%;margin-left:3%;">
                         <span style="color: #1f2d3d;display: inline-block;padding: 10px 10px 10px 0px;float: left; width: 40%;">
                             单位:
-                            <span v-if="invoiceInfo.companyId == '2'">北京甲板智慧科技有限公司</span>
-                            <span v-if="invoiceInfo.companyId == '3'">北京甲板数字科技有限公司</span>
+                            <span v-if="invoiceInfo.companyId == '1'">北京甲板智慧科技有限公司</span>
+                            <span v-if="invoiceInfo.companyId == '2'">北京甲板数字科技有限公司</span>
                         </span>
                         <span style="color: #1f2d3d;display: inline-block;padding: 10px 0;float: left; width: 30%;">{{ invoiceInfo.invoiceTimeCh }}</span>
                         <span style="color: #1f2d3d;display: inline-block;padding: 10px 10px;float: right;text-align: right; margin-right: -3%;width: 20%;">
@@ -302,7 +302,7 @@ export default {
             urls1: [],
             urls2: [],
             showViewer: false, // 显示查看器
-            RefuseInfo: []
+            RefuseInfo: [],
         };
     },
     computed: {

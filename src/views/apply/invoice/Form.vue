@@ -93,7 +93,13 @@
             <div style="">
                 <el-form-item label="发票时间：" prop="invoiceTime" style="margin-right:20px;float: left">
                     <!--                    <el-input type="text" placeholder="请输入发票日期" v-model="formData.invoiceData" show-word-limit></el-input>-->
-                    <el-date-picker v-model="formData.invoiceTime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+                    <el-date-picker
+                        v-model="formData.invoiceTime"
+                        :picker-options="pickerOptions1"
+                        type="date"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="发票金额：" prop="invoicePriceYuan" style="margin-right:20px;float: left">
                     <el-input type="text" placeholder="请输入发票金额" v-model="formData.invoicePriceYuan" @blur="getApplyUser" show-word-limit></el-input>
@@ -279,7 +285,12 @@ export default {
             isDisabled: false,
             sumClassifyOptions: [],
             mainClassifyOptions: [],
-            subClassifyOptions: []
+            subClassifyOptions: [],
+            pickerOptions1: {
+                disabledDate(time) {
+                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 94 || time.getTime() > new Date().getTime() + 3600 * 1000 * 24 * 0;
+                }
+            }
         };
     },
     created() {
