@@ -99,7 +99,7 @@
     </div>
 </template>
 <script>
-import { getManhourPage, deleteObj, completeObj } from '../../../api/apply/manhour.js';
+import { getManhourPage, deleteObj, completeObj, selectCategory } from '../../../api/apply/manhour.js';
 import { getUserInfo } from '../../../api/admin/user.js';
 import { mapGetters } from 'vuex';
 export default {
@@ -143,18 +143,7 @@ export default {
                     return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 10 || time.getTime() > new Date().getTime() + 3600 * 1000 * 24 * 20;
                 }
             },
-            categoryOptions: [
-                { value: '110000', label: '管理' },
-                { value: '120000', label: '营销' },
-                { value: '130000', label: '销售' },
-                { value: '140000', label: '商务' },
-                { value: '150000', label: '售前' },
-                { value: '160000', label: '交付-项目定制' },
-                { value: '170000', label: '交付-项目产品' },
-                { value: '180000', label: '交付-现场与运维' },
-                { value: '190000', label: '产品研发' },
-                { value: '200000', label: '长身体' }
-            ]
+            categoryOptions: []
         };
     },
     props: ['status'],
@@ -168,11 +157,22 @@ export default {
         this.getManhourPage();
         // console.log(this.status)
         this.getUserInfo();
+        this.selectCategory('-1', this.userId);
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
     },
     methods: {
+        selectCategory(id, userId) {
+            selectCategory(id, userId).then(res => {
+                res.data.data.ddRegions.forEach(item => {
+                    this.categoryOptions.push({
+                        value: item.id,
+                        label: item.name
+                    });
+                });
+            });
+        },
         // 获取个人信息
         getUserInfo() {
             getUserInfo(this.query.userId).then(res => {
