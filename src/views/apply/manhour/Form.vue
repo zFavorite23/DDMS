@@ -1491,7 +1491,7 @@ export default {
         this.query.userId = this.userId;
         this.getUserInfo();
         this.getAbnormalSeven();
-        this.selectCategory('100000', this.userId);
+        this.selectCategory('-1', this.userId);
         // this.getItemVosWithUserId();
         this.tableData_1[0].category = undefined;
     },
