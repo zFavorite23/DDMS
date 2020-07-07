@@ -303,7 +303,7 @@
                             placeholder="请选择"
                             size="mini"
                             style="width: 120px;"
-                            @change="selectcCategory($event, scope.$index)"
+                            @change="selectcCategory2($event, scope.$index)"
                         >
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
@@ -320,7 +320,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify2($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
@@ -331,7 +331,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify2($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
@@ -342,7 +342,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify2($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
@@ -353,7 +353,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify2($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
@@ -364,7 +364,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify2($event, scope.$index)"
                         ></el-cascader>
                     </template>
                 </el-table-column>
@@ -489,7 +489,7 @@
                             placeholder="请选择"
                             size="mini"
                             style="width: 120px;"
-                            @change="selectcCategory($event, scope.$index)"
+                            @change="selectcCategory3($event, scope.$index)"
                         >
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
@@ -506,7 +506,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify3($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
@@ -517,7 +517,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify3($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
@@ -528,7 +528,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify3($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
@@ -539,7 +539,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify3($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
@@ -550,7 +550,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify3($event, scope.$index)"
                         ></el-cascader>
                     </template>
                 </el-table-column>
@@ -675,7 +675,7 @@
                             placeholder="请选择"
                             size="mini"
                             style="width: 120px;"
-                            @change="selectcCategory($event, scope.$index)"
+                            @change="selectcCategory4($event, scope.$index)"
                         >
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
@@ -692,7 +692,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify4($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
@@ -703,7 +703,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify4($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
@@ -714,7 +714,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify4($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
@@ -725,7 +725,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify4($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
@@ -736,7 +736,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify4($event, scope.$index)"
                         ></el-cascader>
                     </template>
                 </el-table-column>
@@ -860,7 +860,7 @@
                             placeholder="请选择"
                             size="mini"
                             style="width: 120px;"
-                            @change="selectcCategory($event, scope.$index)"
+                            @change="selectcCategory5($event, scope.$index)"
                         >
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
@@ -877,7 +877,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify5($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
@@ -888,7 +888,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify5($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
@@ -899,7 +899,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify5($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
@@ -910,7 +910,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify5($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
@@ -921,7 +921,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify5($event, scope.$index)"
                         ></el-cascader>
                     </template>
                 </el-table-column>
@@ -1046,7 +1046,7 @@
                             placeholder="请选择"
                             size="mini"
                             style="width: 120px;"
-                            @change="selectcCategory($event, scope.$index)"
+                            @change="selectcCategory6($event, scope.$index)"
                         >
                             <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item.label" :value="item.value"></el-option>
                         </el-select>
@@ -1063,7 +1063,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify6($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
@@ -1074,7 +1074,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify6($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
@@ -1085,7 +1085,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify6($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
@@ -1096,7 +1096,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify6($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
@@ -1107,7 +1107,7 @@
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
                             size="mini"
-                            @change="selectcMainClassify($event, scope.$index)"
+                            @change="selectcMainClassify6($event, scope.$index)"
                         ></el-cascader>
                     </template>
                 </el-table-column>
@@ -1494,6 +1494,11 @@ export default {
         this.selectCategory('-1', this.userId);
         // this.getItemVosWithUserId();
         this.tableData_1[0].category = undefined;
+        this.tableData_2[0].category = undefined;
+        this.tableData_3[0].category = undefined;
+        this.tableData_4[0].category = undefined;
+        this.tableData_5[0].category = undefined;
+        this.tableData_6[0].category = undefined;
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -2764,6 +2769,346 @@ export default {
                 });
             }
         },
+        //  获取主分类
+        selectcCategory2(val, index) {
+            console.log(val, index);
+            // 清空数据
+            this.tableData_2[index].mainClassify = '';
+            this.tableData_2[index].subClassify = '';
+            // 获取主分类
+            if (index == 0) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions1 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions1.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions2.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions3.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions4.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions5.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+        },
+        //  获取主分类
+        selectcCategory3(val, index) {
+            console.log(val, index);
+            // 清空数据
+            this.tableData_3[index].mainClassify = '';
+            this.tableData_3[index].subClassify = '';
+            // 获取主分类
+            if (index == 0) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions1 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions1.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions2.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions3.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions4.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions5.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+        },
+        //  获取主分类
+        selectcCategory4(val, index) {
+            console.log(val, index);
+            // 清空数据
+            this.tableData_4[index].mainClassify = '';
+            this.tableData_4[index].subClassify = '';
+            // 获取主分类
+            if (index == 0) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions1 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions1.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions2.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions3.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions4.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions5.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+        },
+        //  获取主分类
+        selectcCategory5(val, index) {
+            console.log(val, index);
+            // 清空数据
+            this.tableData_5[index].mainClassify = '';
+            this.tableData_5[index].subClassify = '';
+            // 获取主分类
+            if (index == 0) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions1 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions1.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions2.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions3.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions4.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions5.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+        },
+        //  获取主分类
+        selectcCategory6(val, index) {
+            console.log(val, index);
+            // 清空数据
+            this.tableData_6[index].mainClassify = '';
+            this.tableData_6[index].subClassify = '';
+            // 获取主分类
+            if (index == 0) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions1 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions1.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions2.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions3.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions4.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val, this.userId).then(res => {
+                    this.mainClassifyOptions5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.mainClassifyOptions5.push({
+                            value: item.id,
+                            label: item.name,
+                            children: item.children
+                        });
+                    });
+                });
+            }
+        },
 
         //  工作子分类
         selectcMainClassify(val, index) {
@@ -3257,6 +3602,1301 @@ export default {
                     this.applyUserList9 = this.applyUserList9.filter(item => item.value != this.query.userId);
                 });
             }
+        },
+        //  工作子分类
+        selectcMainClassify2(val, index) {
+            this.tableData_2[index].subClassify = '';
+            this.tableData_2[index].itemId = null;
+
+            // 获取子类
+            if (index == 0) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_1 = [];
+                    console.log(res)
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_1.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_2.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_3.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_4.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_5.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+
+            // 判断长度 获取项目id
+            if (val.length > 1 && val.length < 3) {
+                this.tableData_2[index].itemId = val[1];
+                this.query.itemId  = val[1]
+                console.log(this.query)
+            } else if (val.length == 3){
+                this.tableData_2[index].itemId = val[2];
+                this.query.itemId  = val[2]
+                console.log(this.query)
+            }else {
+                this.tableData_2[index].itemId = null;
+            }
+            // 获取验收人
+            if (val.length > 1 && index == 0) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr = [];
+                    var obj = {};
+                    for (var i = 0; i < this.applyUserList.length; i++) {
+                        if (!obj[this.applyUserList[i].value]) {
+                            newArr.push(this.applyUserList[i]);
+                            obj[this.applyUserList[i].value] = true;
+                        }
+                    }
+                    this.applyUserList = newArr;
+                });
+            } else if (val.length == 1 && index == 0) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 1) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr1 = [];
+                    var obj1 = {};
+                    for (var i = 0; i < this.applyUserList1.length; i++) {
+                        if (!obj1[this.applyUserList1[i].value]) {
+                            newArr1.push(this.applyUserList1[i]);
+                            obj1[this.applyUserList1[i].value] = true;
+                        }
+                    }
+                    this.applyUserList1 = newArr1;
+                });
+            } else if (val.length == 1 && index == 1) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 2) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    console.log(res);
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr2 = [];
+                    var obj2 = {};
+                    for (var i = 0; i < this.applyUserList2.length; i++) {
+                        if (!obj2[this.applyUserList2[i].value]) {
+                            newArr2.push(this.applyUserList2[i]);
+                            obj2[this.applyUserList2[i].value] = true;
+                        }
+                    }
+                    this.applyUserList2 = newArr2;
+                });
+            } else if (val.length == 1 && index == 2) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 3) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr3 = [];
+                    var obj3 = {};
+                    for (var i = 0; i < this.applyUserList3.length; i++) {
+                        if (!obj3[this.applyUserList3[i].value]) {
+                            newArr3.push(this.applyUserList3[i]);
+                            obj3[this.applyUserList3[i].value] = true;
+                        }
+                    }
+                    this.applyUserList3 = newArr3;
+                });
+            } else if (val.length == 1 && index == 3) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 4) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr4 = [];
+                    var obj4 = {};
+                    for (var i = 0; i < this.applyUserList4.length; i++) {
+                        if (!obj4[this.applyUserList4[i].value]) {
+                            newArr4.push(this.applyUserList4[i]);
+                            obj4[this.applyUserList4[i].value] = true;
+                        }
+                    }
+                    this.applyUserList4 = newArr4;
+                });
+            } else if (val.length == 1 && index == 4) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                });
+            }
+
+        },
+        //  工作子分类
+        selectcMainClassify3(val, index) {
+            this.tableData_3[index].subClassify = '';
+            this.tableData_3[index].itemId = null;
+
+            // 获取子类
+            if (index == 0) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_1 = [];
+                    console.log(res)
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_1.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_2.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_3.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_4.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_5.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+
+            // 判断长度 获取项目id
+            if (val.length > 1 && val.length < 3) {
+                this.tableData_3[index].itemId = val[1];
+                this.query.itemId  = val[1]
+                console.log(this.query)
+            } else if (val.length == 3){
+                this.tableData_3[index].itemId = val[2];
+                this.query.itemId  = val[2]
+                console.log(this.query)
+            }else {
+                this.tableData_3[index].itemId = null;
+            }
+            // 获取验收人
+            if (val.length > 1 && index == 0) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr = [];
+                    var obj = {};
+                    for (var i = 0; i < this.applyUserList.length; i++) {
+                        if (!obj[this.applyUserList[i].value]) {
+                            newArr.push(this.applyUserList[i]);
+                            obj[this.applyUserList[i].value] = true;
+                        }
+                    }
+                    this.applyUserList = newArr;
+                });
+            } else if (val.length == 1 && index == 0) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 1) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr1 = [];
+                    var obj1 = {};
+                    for (var i = 0; i < this.applyUserList1.length; i++) {
+                        if (!obj1[this.applyUserList1[i].value]) {
+                            newArr1.push(this.applyUserList1[i]);
+                            obj1[this.applyUserList1[i].value] = true;
+                        }
+                    }
+                    this.applyUserList1 = newArr1;
+                });
+            } else if (val.length == 1 && index == 1) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 2) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    console.log(res);
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr2 = [];
+                    var obj2 = {};
+                    for (var i = 0; i < this.applyUserList2.length; i++) {
+                        if (!obj2[this.applyUserList2[i].value]) {
+                            newArr2.push(this.applyUserList2[i]);
+                            obj2[this.applyUserList2[i].value] = true;
+                        }
+                    }
+                    this.applyUserList2 = newArr2;
+                });
+            } else if (val.length == 1 && index == 2) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 3) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr3 = [];
+                    var obj3 = {};
+                    for (var i = 0; i < this.applyUserList3.length; i++) {
+                        if (!obj3[this.applyUserList3[i].value]) {
+                            newArr3.push(this.applyUserList3[i]);
+                            obj3[this.applyUserList3[i].value] = true;
+                        }
+                    }
+                    this.applyUserList3 = newArr3;
+                });
+            } else if (val.length == 1 && index == 3) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 4) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr4 = [];
+                    var obj4 = {};
+                    for (var i = 0; i < this.applyUserList4.length; i++) {
+                        if (!obj4[this.applyUserList4[i].value]) {
+                            newArr4.push(this.applyUserList4[i]);
+                            obj4[this.applyUserList4[i].value] = true;
+                        }
+                    }
+                    this.applyUserList4 = newArr4;
+                });
+            } else if (val.length == 1 && index == 4) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                });
+            }
+
+        },
+        //  工作子分类
+        selectcMainClassify4(val, index) {
+            this.tableData_4[index].subClassify = '';
+            this.tableData_4[index].itemId = null;
+
+            // 获取子类
+            if (index == 0) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_1 = [];
+                    console.log(res)
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_1.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_2.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_3.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_4.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_5.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+
+            // 判断长度 获取项目id
+            if (val.length > 1 && val.length < 3) {
+                this.tableData_4[index].itemId = val[1];
+                this.query.itemId  = val[1]
+                console.log(this.query)
+            } else if (val.length == 3){
+                this.tableData_4[index].itemId = val[2];
+                this.query.itemId  = val[2]
+                console.log(this.query)
+            }else {
+                this.tableData_4[index].itemId = null;
+            }
+            // 获取验收人
+            if (val.length > 1 && index == 0) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr = [];
+                    var obj = {};
+                    for (var i = 0; i < this.applyUserList.length; i++) {
+                        if (!obj[this.applyUserList[i].value]) {
+                            newArr.push(this.applyUserList[i]);
+                            obj[this.applyUserList[i].value] = true;
+                        }
+                    }
+                    this.applyUserList = newArr;
+                });
+            } else if (val.length == 1 && index == 0) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 1) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr1 = [];
+                    var obj1 = {};
+                    for (var i = 0; i < this.applyUserList1.length; i++) {
+                        if (!obj1[this.applyUserList1[i].value]) {
+                            newArr1.push(this.applyUserList1[i]);
+                            obj1[this.applyUserList1[i].value] = true;
+                        }
+                    }
+                    this.applyUserList1 = newArr1;
+                });
+            } else if (val.length == 1 && index == 1) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 2) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    console.log(res);
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr2 = [];
+                    var obj2 = {};
+                    for (var i = 0; i < this.applyUserList2.length; i++) {
+                        if (!obj2[this.applyUserList2[i].value]) {
+                            newArr2.push(this.applyUserList2[i]);
+                            obj2[this.applyUserList2[i].value] = true;
+                        }
+                    }
+                    this.applyUserList2 = newArr2;
+                });
+            } else if (val.length == 1 && index == 2) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 3) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr3 = [];
+                    var obj3 = {};
+                    for (var i = 0; i < this.applyUserList3.length; i++) {
+                        if (!obj3[this.applyUserList3[i].value]) {
+                            newArr3.push(this.applyUserList3[i]);
+                            obj3[this.applyUserList3[i].value] = true;
+                        }
+                    }
+                    this.applyUserList3 = newArr3;
+                });
+            } else if (val.length == 1 && index == 3) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 4) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr4 = [];
+                    var obj4 = {};
+                    for (var i = 0; i < this.applyUserList4.length; i++) {
+                        if (!obj4[this.applyUserList4[i].value]) {
+                            newArr4.push(this.applyUserList4[i]);
+                            obj4[this.applyUserList4[i].value] = true;
+                        }
+                    }
+                    this.applyUserList4 = newArr4;
+                });
+            } else if (val.length == 1 && index == 4) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                });
+            }
+
+        },
+        //  工作子分类
+        selectcMainClassify5(val, index) {
+            this.tableData_5[index].subClassify = '';
+            this.tableData_5[index].itemId = null;
+
+            // 获取子类
+            if (index == 0) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_1 = [];
+                    console.log(res)
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_1.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_2.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_3.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_4.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_5.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+
+            // 判断长度 获取项目id
+            if (val.length > 1 && val.length < 3) {
+                this.tableData_5[index].itemId = val[1];
+                this.query.itemId  = val[1]
+                console.log(this.query)
+            } else if (val.length == 3){
+                this.tableData_5[index].itemId = val[2];
+                this.query.itemId  = val[2]
+                console.log(this.query)
+            }else {
+                this.tableData_5[index].itemId = null;
+            }
+            // 获取验收人
+            if (val.length > 1 && index == 0) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr = [];
+                    var obj = {};
+                    for (var i = 0; i < this.applyUserList.length; i++) {
+                        if (!obj[this.applyUserList[i].value]) {
+                            newArr.push(this.applyUserList[i]);
+                            obj[this.applyUserList[i].value] = true;
+                        }
+                    }
+                    this.applyUserList = newArr;
+                });
+            } else if (val.length == 1 && index == 0) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 1) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr1 = [];
+                    var obj1 = {};
+                    for (var i = 0; i < this.applyUserList1.length; i++) {
+                        if (!obj1[this.applyUserList1[i].value]) {
+                            newArr1.push(this.applyUserList1[i]);
+                            obj1[this.applyUserList1[i].value] = true;
+                        }
+                    }
+                    this.applyUserList1 = newArr1;
+                });
+            } else if (val.length == 1 && index == 1) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 2) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    console.log(res);
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr2 = [];
+                    var obj2 = {};
+                    for (var i = 0; i < this.applyUserList2.length; i++) {
+                        if (!obj2[this.applyUserList2[i].value]) {
+                            newArr2.push(this.applyUserList2[i]);
+                            obj2[this.applyUserList2[i].value] = true;
+                        }
+                    }
+                    this.applyUserList2 = newArr2;
+                });
+            } else if (val.length == 1 && index == 2) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 3) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr3 = [];
+                    var obj3 = {};
+                    for (var i = 0; i < this.applyUserList3.length; i++) {
+                        if (!obj3[this.applyUserList3[i].value]) {
+                            newArr3.push(this.applyUserList3[i]);
+                            obj3[this.applyUserList3[i].value] = true;
+                        }
+                    }
+                    this.applyUserList3 = newArr3;
+                });
+            } else if (val.length == 1 && index == 3) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 4) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr4 = [];
+                    var obj4 = {};
+                    for (var i = 0; i < this.applyUserList4.length; i++) {
+                        if (!obj4[this.applyUserList4[i].value]) {
+                            newArr4.push(this.applyUserList4[i]);
+                            obj4[this.applyUserList4[i].value] = true;
+                        }
+                    }
+                    this.applyUserList4 = newArr4;
+                });
+            } else if (val.length == 1 && index == 4) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                });
+            }
+
+        },
+        //  工作子分类
+        selectcMainClassify6(val, index) {
+            this.tableData_6[index].subClassify = '';
+            this.tableData_6[index].itemId = null;
+
+            // 获取子类
+            if (index == 0) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_1 = [];
+                    console.log(res)
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_1.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 1) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_2 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_2.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 2) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_3 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_3.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 3) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_4 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_4.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+            if (index == 4) {
+                selectCategory(val[0], this.userId).then(res => {
+                    // 清空数据
+                    this.subClassifyOptions_5 = [];
+                    res.data.data.ddRegions.forEach(item => {
+                        this.subClassifyOptions_5.push({
+                            value: item.id,
+                            label: item.name
+                        });
+                    });
+                });
+            }
+
+            // 判断长度 获取项目id
+            if (val.length > 1 && val.length < 3) {
+                this.tableData_6[index].itemId = val[1];
+                this.query.itemId  = val[1]
+                console.log(this.query)
+            } else if (val.length == 3){
+                this.tableData_6[index].itemId = val[2];
+                this.query.itemId  = val[2]
+                console.log(this.query)
+            }else {
+                this.tableData_6[index].itemId = null;
+            }
+            // 获取验收人
+            if (val.length > 1 && index == 0) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr = [];
+                    var obj = {};
+                    for (var i = 0; i < this.applyUserList.length; i++) {
+                        if (!obj[this.applyUserList[i].value]) {
+                            newArr.push(this.applyUserList[i]);
+                            obj[this.applyUserList[i].value] = true;
+                        }
+                    }
+                    this.applyUserList = newArr;
+                });
+            } else if (val.length == 1 && index == 0) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList = this.applyUserList.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 1) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr1 = [];
+                    var obj1 = {};
+                    for (var i = 0; i < this.applyUserList1.length; i++) {
+                        if (!obj1[this.applyUserList1[i].value]) {
+                            newArr1.push(this.applyUserList1[i]);
+                            obj1[this.applyUserList1[i].value] = true;
+                        }
+                    }
+                    this.applyUserList1 = newArr1;
+                });
+            } else if (val.length == 1 && index == 1) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList1 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList1.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList1 = this.applyUserList1.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 2) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    console.log(res);
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr2 = [];
+                    var obj2 = {};
+                    for (var i = 0; i < this.applyUserList2.length; i++) {
+                        if (!obj2[this.applyUserList2[i].value]) {
+                            newArr2.push(this.applyUserList2[i]);
+                            obj2[this.applyUserList2[i].value] = true;
+                        }
+                    }
+                    this.applyUserList2 = newArr2;
+                });
+            } else if (val.length == 1 && index == 2) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList2 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList2.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList2 = this.applyUserList2.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 3) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr3 = [];
+                    var obj3 = {};
+                    for (var i = 0; i < this.applyUserList3.length; i++) {
+                        if (!obj3[this.applyUserList3[i].value]) {
+                            newArr3.push(this.applyUserList3[i]);
+                            obj3[this.applyUserList3[i].value] = true;
+                        }
+                    }
+                    this.applyUserList3 = newArr3;
+                });
+            } else if (val.length == 1 && index == 3) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList3 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList3.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList3 = this.applyUserList3.filter(item => item.value != this.query.userId);
+                });
+            }
+            if (val.length > 1 && index == 4) {
+                getApplyUserInfo(this.query).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                    // 去重
+                    var newArr4 = [];
+                    var obj4 = {};
+                    for (var i = 0; i < this.applyUserList4.length; i++) {
+                        if (!obj4[this.applyUserList4[i].value]) {
+                            newArr4.push(this.applyUserList4[i]);
+                            obj4[this.applyUserList4[i].value] = true;
+                        }
+                    }
+                    this.applyUserList4 = newArr4;
+                });
+            } else if (val.length == 1 && index == 4) {
+                getDeptUserList(this.userList.deptId).then(res => {
+                    this.applyUserList4 = [{ value: 0, label: '无人验收' }];
+                    res.data.data.forEach(element => {
+                        this.applyUserList4.push({
+                            value: element.userId,
+                            label: element.username
+                        });
+                    });
+                    // 去除自己
+                    this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
+                });
+            }
+
         },
 
         // 未填报日期
