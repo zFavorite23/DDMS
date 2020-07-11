@@ -354,6 +354,7 @@ export default {
                         });
                     }
                 });
+                console.log(this.fileList2);
             }
         }
         this.getItemVosWithUserId(this.userId);
@@ -471,11 +472,13 @@ export default {
             } else {
                 this.query.priceYuan = this.formData.invoicePriceYuan;
             }
+            
+            console.log(this.query)
 
             getApplyUserInfo(this.query).then(response => {
                 this.applyUserList = [];
                 this.formData.approverids = null;
-                // console.log(response)
+                console.log(response)
                 response.data.data.forEach(element => {
                     this.applyUserList.push({
                         userId: element.userId,

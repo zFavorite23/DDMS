@@ -18,14 +18,14 @@
                         </tr>
                         <tr>
                             <td width="100">总分类</td>
-                            <td>{{ invoiceInfo.categoryName }}</td>
+                            <td>{{ invoiceInfo.type1Name }}</td>
                             <!-- <td v-if="invoiceInfo.classify == 7">办公用品</td>
                             <td v-if="invoiceInfo.classify == 8">固定资产</td>
                             <td v-if="invoiceInfo.classify == 9">管理费用</td>
                             <td v-if="invoiceInfo.classify == 10">人员补助</td>
                             <td v-if="invoiceInfo.classify == 11">项目报销</td> -->
                             <td width="100">明细分类</td>
-                            <td>{{ invoiceInfo.subClassifyName }}</td>
+                            <td>{{ invoiceInfo.type3Name }}</td>
                             <!-- <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 1">办公文具</td>
                             <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 2">办公耗材</td>
                             <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 3">日杂百货</td>
