@@ -5,10 +5,22 @@ if (process.env.NODE_ENV === "development") {
     Vue.use(VueRouter);
 }
 
-import { ROUTER_MODE } from "../config/app";
+import {
+    ROUTER_MODE
+} from "../config/app";
 
 import Home from "../views/home/index.vue";
 import mainInfo from "../views/home/message.vue";
+
+// 采购管理
+import purchaseList from '../views/purchase/purchaseApply/List.vue'
+import purchaseApprover from '../views/purchase/purchaseApply/Approver.vue'
+import purchaseInfo from '../views/purchase/purchaseApply/Info.vue'
+import purchaseForm from '../views/purchase/purchaseApply/Form.vue'
+import executeList from '../views/purchase/execute/List.vue'
+import executeInfo from '../views/purchase/execute/Info.vue'
+import executeEdit from '../views/purchase/execute/Edit.vue'
+
 // 考勤管理
 import CheckworkMy from "../views/checkwork/My.vue";
 import CheckworkAll from "../views/checkwork/All.vue";
@@ -126,8 +138,7 @@ const main = r =>
     require.ensure([], () => r(require("../views/home/main.vue")), "home");
 
 // 注意 权限字段 authRule （严格区分大小写）
-export const constantRouterMap = [
-    {
+export const constantRouterMap = [{
         path: "/login",
         component: login,
         name: "登录",
@@ -147,12 +158,10 @@ export const constantRouterMap = [
         icon: "zhuye",
         name: "我的主页",
         noDropdown: true,
-        children: [
-            {
-                path: "main",
-                component: main
-            }
-        ]
+        children: [{
+            path: "main",
+            component: main
+        }]
     },
     {
         path: "/readme1",
@@ -169,15 +178,13 @@ export default new VueRouter({
     strict: process.env.NODE_ENV !== "production"
 });
 
-export const asyncRouterMap = [
-    {
+export const asyncRouterMap = [{
         path: "/checkwork",
         redirect: "/checkwork/my",
         component: Home,
         icon: "guanliyuan1",
         name: "考勤管理",
-        children: [
-            {
+        children: [{
                 path: "my",
                 component: CheckworkMy,
                 name: "我的考勤"
@@ -225,8 +232,7 @@ export const asyncRouterMap = [
         component: Home,
         icon: "",
         name: "考勤管理",
-        children: [
-            {
+        children: [{
                 path: "index",
                 component: AbilityIndex,
                 name: "炸弹投递"
@@ -264,8 +270,7 @@ export const asyncRouterMap = [
         redirect: "/apply/manhour",
         component: Home,
         name: "审批管理",
-        children: [
-            {
+        children: [{
                 path: "manhour",
                 component: ManhourList,
                 name: "工时",
@@ -429,7 +434,10 @@ export const asyncRouterMap = [
                 path: "expense",
                 component: ExpenseList,
                 name: "支出列表",
-                hidden: true
+                hidden: true,
+                // meta: {
+                //     keepAlive: true // 组件缓存
+                // }
             },
             {
                 path: "expense/approver",
@@ -488,8 +496,7 @@ export const asyncRouterMap = [
         // icon: "guanggao",
         name: "CRM",
         // noDropdown: true,
-        children: [
-            {
+        children: [{
                 path: "firstpartyList",
                 component: FirstPartyList,
                 name: "客户管理",
@@ -510,8 +517,7 @@ export const asyncRouterMap = [
         icon: "guanggao",
         name: "项目管理",
         // noDropdown: true,
-        children: [
-            {
+        children: [{
                 path: "item",
                 component: Item,
                 name: "全部项目"
@@ -554,8 +560,7 @@ export const asyncRouterMap = [
         component: Home,
         icon: "guanggao",
         name: "财务管理",
-        children: [
-            {
+        children: [{
                 path: "invoice",
                 component: FinanceInvoice,
                 name: "报销"
@@ -583,8 +588,7 @@ export const asyncRouterMap = [
         component: Home,
         icon: "guanggao",
         name: "标准文档",
-        children: [
-            {
+        children: [{
                 path: "apply",
                 component: StandardApply,
                 name: "审批规范"
@@ -602,8 +606,7 @@ export const asyncRouterMap = [
         component: Home,
         icon: "guanggao",
         name: "系统管理",
-        children: [
-            {
+        children: [{
                 path: "user",
                 component: User,
                 name: "员工"
@@ -647,8 +650,7 @@ export const asyncRouterMap = [
         component: Home,
         icon: "guanggao",
         name: "其他管理",
-        children: [
-            {
+        children: [{
                 path: "menu",
                 component: Menu,
                 name: "菜单管理"
@@ -693,8 +695,7 @@ export const asyncRouterMap = [
         component: Home,
         icon: "guanggao",
         name: "微信管理",
-        children: [
-            {
+        children: [{
                 path: "menu",
                 component: Menu,
                 name: "菜单管理"
@@ -725,5 +726,55 @@ export const asyncRouterMap = [
                 name: "账号管理"
             }
         ]
-    }
+    },
+    {
+        path: "/purchase",
+        redirect: "/purchase/form",
+        component: Home,
+        name: "采购管理",
+        children: [{
+                path: "form",
+                component: purchaseList,
+                name: "采购列表",
+                hidden: true
+            },
+            {
+                path: "purchaseApply/approver",
+                component: purchaseApprover,
+                name: "我的采购审批",
+                hidden: true
+            },
+            {
+                path: "purchaseApply/info/:purchaseId",
+                component: purchaseInfo,
+                name: "采购详情",
+                hidden: true
+            },
+            {
+                path: "purchaseApply/form",
+                component: purchaseForm,
+                name: "采购申请",
+                hidden: true
+            },
+            {
+                path: "/purchase/execute",
+                component: executeList,
+                name: "采购执行单",
+                hidden: true
+            },
+            {
+                path: "/purchase/Info/:purchaseId",
+                component: executeInfo,
+                name: "采购详情",
+                hidden: true
+            },
+            {
+                path: "/purchase/Edit",
+                component: executeEdit,
+                name: "采购编辑",
+                hidden: true
+            },
+
+        ]
+    },
 ];
