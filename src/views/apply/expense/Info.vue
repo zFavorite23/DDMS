@@ -14,38 +14,17 @@
                 </tr>
                 <tr>
                     <td>总分类</td>
-                    <td v-if="expenseInfo.classify == 1">项目</td>
-                    <td v-else-if="expenseInfo.classify == 2">产品</td>
-                    <td v-else-if="expenseInfo.classify == 3">库存</td>
-                    <td v-else-if="expenseInfo.classify == 4">其他</td>
-                    <td v-else></td>
+                    <td>{{ expenseInfo.type1Name }}</td>
                 </tr>
 
-                <tr v-if="expenseInfo.classify == 1">
-                    <td style="width: 35%;">项目</td>
+                <tr v-if="expenseInfo.itemId != null">
+                    <td style="width: 35%;">项目&产品</td>
                     <td v-if="expenseInfo.alias != null">{{ expenseInfo.alias }}</td>
                     <td v-else>与项目无关</td>
                 </tr>
-                <tr v-if="expenseInfo.classify == 2">
-                    <td style="width: 35%;">产品</td>
-                    <td v-if="expenseInfo.alias != null">{{ expenseInfo.alias }}</td>
-                    <td v-else>与项目无关</td>
-                </tr>
-                <tr v-if="expenseInfo.classify == 3">
+                <tr>
                     <td>明细分类</td>
-                    <td v-if="expenseInfo.type == 1">研发库存</td>
-                    <td v-else-if="expenseInfo.type == 2">产品库存</td>
-                    <td v-else></td>
-                </tr>
-                <tr v-if="expenseInfo.classify == 4">
-                    <td>明细分类</td>
-                    <td v-if="expenseInfo.type == 1">工具采购</td>
-                    <td v-else-if="expenseInfo.type == 2">办公用品</td>
-                    <td v-else-if="expenseInfo.type == 3">办公家具</td>
-                    <td v-else-if="expenseInfo.type == 4">税款</td>
-                    <td v-else-if="expenseInfo.type == 5">会议服务费</td>
-					<td v-else-if="expenseInfo.type == 6">管理费</td>
-                    <td v-else></td>
+                    <td>{{ expenseInfo.type3Name }}</td>
                 </tr>
                 <tr>
                     <td>申请人</td>

@@ -4,16 +4,39 @@
             <el-form-item label="名称：" prop="name">
                 <el-input v-model="formData.name" placeholder="请填写采购名称或支出名称" maxlength="50" show-word-limit></el-input>
             </el-form-item>
-            <el-form-item label="总分类：" prop="classify">
+            <!-- <el-form-item label="总分类：" prop="classify">
                 <el-radio-group v-model="formData.classify" @change="classifyChange">
                     <el-radio label="1">项目</el-radio>
                     <el-radio label="2">产品</el-radio>
                     <el-radio label="3">库存</el-radio>
                     <el-radio label="4">其他</el-radio>
                 </el-radio-group>
+            </el-form-item> -->
+            <el-form-item label="总分类：" prop="type1">
+                <el-radio-group v-model="formData.type1" @change="classifyChange">
+                    <el-radio v-for="(item, index) in sumClassifyOptions" :label="item.id" :key="index">{{ item.name }}</el-radio>
+                </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="明细分类：" prop="type" v-if="formData.classify == '3' || formData.classify == '4'">
+            <el-form-item label="主分类：" prop="type2">
+                <el-cascader
+                    v-model="formData.type2"
+                    :options="mainClassifyOptions"
+                    :props="{ expandTrigger: 'hover' }"
+                    :show-all-levels="false"
+                    filterable
+                    size="mini"
+                    @change="classifyChange2"
+                ></el-cascader>
+            </el-form-item>
+
+            <el-form-item label="明细分类：" prop="type3">
+                <el-radio-group v-model="formData.type3">
+                    <el-radio v-for="(item, index) in subClassifyOptions" :label="item.id" :key="index">{{ item.name }}</el-radio>
+                </el-radio-group>
+            </el-form-item>
+
+            <!-- <el-form-item label="明细分类：" prop="type" v-if="formData.classify == '3' || formData.classify == '4'">
                 <el-radio-group v-model="formData.type">
                     <el-radio v-if="formData.classify == 3" label="1">研发库存</el-radio>
                     <el-radio v-if="formData.classify == 3" label="2">产品库存</el-radio>
@@ -25,9 +48,9 @@
                     <el-radio v-if="formData.classify == 4" label="5">会议服务费</el-radio>
                     <el-radio v-if="formData.classify == 4" label="6">管理费</el-radio>
                 </el-radio-group>
-            </el-form-item>
+            </el-form-item> -->
 
-            <el-form-item label="项目：" prop="itemId" v-if="formData.classify == '1'">
+            <!-- <el-form-item label="项目：" prop="itemId" v-if="formData.classify == '1'">
                 <el-select v-model="formData.itemId" placeholder="请选择" filterable @change="selectItem">
                     <el-option v-for="(item, index) in itemOptions1" :value="item.value" :key="index" :label="item.label"></el-option>
                 </el-select>
@@ -36,7 +59,7 @@
                 <el-select v-model="formData.itemId" placeholder="请选择" filterable @change="selectItem">
                     <el-option v-for="(item, index) in itemOptions2" :value="item.value" :key="index" :label="item.label"></el-option>
                 </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="是否对公：" prop="isPublic">
                 <el-radio-group v-model="formData.isPublic" class="box" @change="selectIsPublic">
                     <el-radio label="1">是</el-radio>
@@ -171,7 +194,7 @@
     </div>
 </template>
 <script>
-import { addObj, editObj } from '../../../api/apply/expense.js';
+import { addObj, editObj, getExpense } from '../../../api/apply/expense.js';
 import { getApplyUserInfo } from '../../../api/admin/user.js';
 import { getItemVosWithUserId } from '../../../api/project/team.js';
 import { getSupplierAll } from '../../../api/customer/supplier.js';
@@ -194,8 +217,9 @@ export default {
                 newData: true,
                 expenseId: null,
                 name: '',
-                classify: '1',
-                type: null,
+                type1: '',
+                type2: '',
+                type3: '',
                 itemId: null,
                 userId: '',
                 isPublic: '1',
@@ -229,14 +253,21 @@ export default {
             supplierOptions: [],
             rules: {
                 name: [{ required: true, message: '请填写名称' }],
-                classify: [
+                type1: [
                     {
                         required: true,
                         message: '请选择总分类',
                         trigger: 'change'
                     }
                 ],
-                type: [
+                type2: [
+                    {
+                        required: true,
+                        message: '请选择主分类',
+                        trigger: 'change'
+                    }
+                ],
+                type3: [
                     {
                         required: true,
                         message: '请选择明细分类',
@@ -278,7 +309,10 @@ export default {
                 detailed: [{ required: true, message: '请填写用途及明细' }]
             },
             saving: false,
-            applyUserList: []
+            applyUserList: [],
+            sumClassifyOptions: [],
+            mainClassifyOptions: [],
+            subClassifyOptions: []
         };
     },
     created() {
@@ -289,6 +323,45 @@ export default {
         this.query.userId = this.userId;
         this.uploadUrl = `${window.location.origin}/apply/expense/upload`;
 
+        const editPurchaseInfo = JSON.parse(window.localStorage.getItem('editPurchaseInfo'));
+        console.log
+        if (editPurchaseInfo) {
+            this.formData.name = editPurchaseInfo.name;
+            this.formData.type1 = editPurchaseInfo.type1;
+            if (editPurchaseInfo.itemId != null) {
+                this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
+            } else {
+                this.formData.type2 = [editPurchaseInfo.type2];
+            }
+            getExpense(this.formData.type1, this.userId).then(res => {
+                res.data.data.expenseType.forEach(item => {
+                    this.mainClassifyOptions.push({
+                        value: item.id,
+                        label: item.name,
+                        children: item.children
+                    });
+                });
+            });
+            getExpense(this.formData.type2[0], this.userId).then(res => {
+                this.subClassifyOptions = res.data.data.expenseType;
+            });
+            this.formData.type3 = editPurchaseInfo.type3;
+
+            if (editPurchaseInfo.purchaseImg) {
+                editPurchaseInfo.purchaseImg.split(',').forEach((item, index) => {
+                    if (item) {
+                        this.fileList2.push({
+                            url: `${window.location.origin}/apply/expense/` + item
+                        });
+                    }
+                });
+            }
+            this.formData.bankAccount = editPurchaseInfo.bankAccount;
+            this.formData.bankName = editPurchaseInfo.bankName;
+            this.formData.companyName = editPurchaseInfo.companyName;
+            this.formData.isPublic = editPurchaseInfo.isOpen;
+        }
+
         const editExpenseInfo = JSON.parse(window.localStorage.getItem('editExpenseInfo'));
         if (editExpenseInfo) {
             this.formData.newData = false;
@@ -298,6 +371,27 @@ export default {
             this.formData.type = editExpenseInfo.type;
             this.formData.itemId = editExpenseInfo.itemId;
             this.query.itemId = editExpenseInfo.itemId;
+
+            this.formData.type1 = editExpenseInfo.type1;
+            if (editExpenseInfo.itemId != null) {
+                this.formData.type2 = [editExpenseInfo.type2, editExpenseInfo.itemId];
+            } else {
+                this.formData.type2 = [editExpenseInfo.type2];
+            }
+            getExpense(this.formData.type1, this.userId).then(res => {
+                res.data.data.expenseType.forEach(item => {
+                    this.mainClassifyOptions.push({
+                        value: item.id,
+                        label: item.name,
+                        children: item.children
+                    });
+                });
+            });
+            getExpense(this.formData.type2[0], this.userId).then(res => {
+                this.subClassifyOptions = res.data.data.expenseType;
+            });
+            this.formData.type3 = editExpenseInfo.type3;
+
             this.formData.isPublic = editExpenseInfo.isPublic;
             this.formData.isTackInvoice = editExpenseInfo.isTackInvoice;
             this.formData.invoiceType = editExpenseInfo.invoiceType;
@@ -320,7 +414,6 @@ export default {
             this.formData.invoiceImg = editExpenseInfo.invoiceImg;
             this.formData.contract = editExpenseInfo.contract;
             this.formData.arrivalTime = editExpenseInfo.arrivalTime;
-
             if (editExpenseInfo.invoiceImg) {
                 editExpenseInfo.invoiceImg.split(',').forEach((item, index) => {
                     if (item) {
@@ -344,16 +437,62 @@ export default {
         } else {
             this.getApplyUser();
         }
+
+        this.getExpense('100000', this.userId);
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
     },
     methods: {
-        classifyChange(val) {
-            this.formData.itemId = '';
-            this.query.itemId = '';
-            this.getApplyUser();
+        getExpense(id, userId) {
+            getExpense(id, userId).then(res => {
+                this.sumClassifyOptions = res.data.data.expenseType;
+            });
         },
+
+        // 主分类
+        classifyChange(val) {
+            console.log(val);
+
+            this.mainClassifyOptions = [];
+            this.subClassifyOptions = [];
+
+            getExpense(val, this.userId).then(res => {
+                // console.log(res)
+                res.data.data.expenseType.forEach(item => {
+                    this.mainClassifyOptions.push({
+                        value: item.id,
+                        label: item.name,
+                        children: item.children
+                    });
+                });
+            });
+        },
+
+        // 明细分类
+        classifyChange2(val) {
+            this.query.itemId = null;
+            this.formData.itemId = null;
+            getExpense(val[0], this.userId).then(res => {
+                // console.log(res)
+                this.subClassifyOptions = res.data.data.expenseType;
+            });
+
+            // 获取项目id
+            if (val.length > 1 && val.length < 3) {
+                this.query.itemId = val[1];
+                this.formData.itemId = val[1];
+                this.getApplyUser();
+            } else if (val.length == 3) {
+                this.query.itemId = val[2];
+                this.formData.itemId = val[2];
+                this.getApplyUser();
+            } else {
+                this.query.itemId = null;
+                this.formData.itemId = null;
+            }
+        },
+
         selectIsPublic(val) {
             this.query.isPublic = val;
             if (val == 0) {
@@ -366,17 +505,17 @@ export default {
             }
             this.getApplyUser();
         },
-        selectItem(val) {
-            if (val == null || val == '') {
-                this.query.itemId = null;
-                this.formData.itemId = null;
-                this.getApplyUser();
-            } else {
-                this.query.itemId = val;
-                this.formData.itemId = val;
-                this.getApplyUser();
-            }
-        },
+        // selectItem(val) {
+        //     if (val == null || val == '') {
+        //         this.query.itemId = null;
+        //         this.formData.itemId = null;
+        //         this.getApplyUser();
+        //     } else {
+        //         this.query.itemId = val;
+        //         this.formData.itemId = val;
+        //         this.getApplyUser();
+        //     }
+        // },
         getApplyUser() {
             this.query.priceYuan = this.formData.priceYuan;
             getApplyUserInfo(this.query).then(response => {
@@ -444,6 +583,7 @@ export default {
         },
         backHistory() {
             window.localStorage.removeItem('editExpenseInfo');
+            window.localStorage.removeItem('editPurchaseInfo');
             this.formData.newData = true;
             this.formData.expenseId = null;
             this.formData.itemId = null;
@@ -463,6 +603,8 @@ export default {
             this.$router.go(-1);
         },
         onSubmit() {
+            this.formData.type2 = this.formData.type2[0];
+            console.log(this.formData);
             this.$refs['formData'].validate(valid => {
                 if (valid) {
                     //console.log(this.formData)
