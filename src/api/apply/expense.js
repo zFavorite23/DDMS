@@ -141,3 +141,14 @@ export function expenseMigration() {
         method: "get"
     });
 }
+
+/**
+ * 支出分类
+ * @returns {*}
+ */
+export function getExpense(id,userId) {
+    return axios({
+        url: `/apply/exepensetype/getExpense/${id}/${userId}`,
+        method: "get"
+    });
+}
