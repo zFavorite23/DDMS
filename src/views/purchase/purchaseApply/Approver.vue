@@ -14,7 +14,7 @@
                         <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search">搜索</el-button></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" @click="getPurchaseApprover()"  icon="el-icon-search">搜索</el-button></el-form-item>
                 <el-form-item>
                     <router-link to="/purchase/purchaseApply/form"><el-button type="primary" size="medium">添加申请</el-button></router-link>
                 </el-form-item>
@@ -176,6 +176,10 @@ export default {
     created() {
         this.query.userId = this.userId;
         this.getPurchaseApprover();
+        this.query.status = this.$route.query.status;
+        if (!this.query.status) {
+            this.query.status = '';
+        }
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])

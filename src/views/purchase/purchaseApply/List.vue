@@ -197,6 +197,10 @@ export default {
         this.getUserList();
         this.getPurchasePage();
         this.getPurchase('100000');
+        this.query.status = this.$route.query.status;
+        if (!this.query.status) {
+            this.query.status = '';
+        }
         window.localStorage.removeItem('editPurchaseInfo');
     },
     computed: {
