@@ -83,6 +83,7 @@
                                     <span v-else-if="scope.row.msgType == '6'">报销</span>
                                     <span v-else-if="scope.row.msgType == '7'">支出</span>
                                     <span v-else-if="scope.row.msgType == '8'">开票</span>
+                                    <span v-else-if="scope.row.msgType == '9'">采购</span>
                                     <span v-else></span>
                                 </template>
                             </el-table-column>
@@ -114,6 +115,7 @@
                                     <span v-else-if="scope.row.msgType == '6'">报销</span>
                                     <span v-else-if="scope.row.msgType == '7'">支出</span>
                                     <span v-else-if="scope.row.msgType == '8'">开票</span>
+                                    <span v-else-if="scope.row.msgType == '9'">采购</span>
                                     <span v-else></span>
                                 </template>
                             </el-table-column>
@@ -212,6 +214,13 @@ export default {
                     agree: '0',
                     disagree: '0',
                     id: 9
+                },
+                {
+                    title: '采购申请',
+                    check: '0',
+                    agree: '0',
+                    disagree: '0',
+                    id: 10
                 }
             ],
             tableDataL: [
@@ -280,6 +289,13 @@ export default {
                     agree: '0',
                     disagree: '0',
                     id: 9
+                },
+                {
+                    title: '采购审批',
+                    check: '0',
+                    agree: '0',
+                    disagree: '0',
+                    id: 10
                 }
             ],
             tableDataR: [
@@ -303,11 +319,10 @@ export default {
         this.getApplyPage();
         this.getApproverPage();
 
-        if(!window.sessionStorage.getItem('storge')){
+        if (!window.sessionStorage.getItem('storge')) {
             this.open();
-            window.sessionStorage.setItem('storge','true')
+            window.sessionStorage.setItem('storge', 'true');
         }
-
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -330,6 +345,7 @@ export default {
             getCheckStatistics(this.query.userId)
                 .then(response => {
                     const list = response.data.data;
+                    console.log(list)
                     list.forEach((item, index) => {
                         this.navTotal[index].title = item.name;
                         this.navTotal[index].check = item.num0;
@@ -416,6 +432,12 @@ export default {
                     path: '/apply/receipt/info/' + row.toId
                 });
             }
+            // 采购
+            if (row.msgType == '9') {
+                this.$router.push({
+                    path: '/purchase/purchaseApply/info/' + row.toId
+                });
+            }
         },
         applyAdd(event) {
             // var el = event.currentTarget.innerHTML;
@@ -455,6 +477,10 @@ export default {
             } else if (id == 9) {
                 this.$router.push({
                     path: '/apply/receipt/form'
+                });
+            } else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/purchaseApply/form'
                 });
             }
         },
@@ -501,6 +527,10 @@ export default {
                 this.$router.push({
                     path: '/apply/receipt?status=0'
                 });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/form?status=0'
+                });
             }
         },
         apply1(event) {
@@ -544,6 +574,10 @@ export default {
             } else if (id == 9) {
                 this.$router.push({
                     path: '/apply/receipt?status=1'
+                });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/form?status=1'
                 });
             }
         },
@@ -590,6 +624,10 @@ export default {
                 this.$router.push({
                     path: '/apply/receipt?status=2'
                 });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/form?status=2'
+                });
             }
         },
         checkList(event) {
@@ -633,6 +671,10 @@ export default {
             } else if (id == 9) {
                 this.$router.push({
                     path: '/apply/receipt/approver'
+                });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/purchaseApply/approver'
                 });
             }
         },
@@ -679,6 +721,10 @@ export default {
                 this.$router.push({
                     path: '/apply/receipt/approver?status=0'
                 });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/purchaseApply/approver?status=0'
+                });
             }
         },
         check1(event) {
@@ -722,6 +768,10 @@ export default {
             } else if (id == 9) {
                 this.$router.push({
                     path: '/apply/receipt/approver?status=1'
+                });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/purchaseApply/approver?status=1'
                 });
             }
         },
@@ -767,6 +817,10 @@ export default {
             } else if (id == 9) {
                 this.$router.push({
                     path: '/apply/receipt/approver?status=2'
+                });
+            }else if (id == 10) {
+                this.$router.push({
+                    path: '/purchase/purchaseApply/approver?status=2'
                 });
             }
         },
