@@ -138,8 +138,9 @@ export default {
             purchaseInfo: '',
             approverList: [],
             formData: {
+                userId: null,
                 approverId: null,
-                checkUserId: null,
+                userId: null,
                 check: '1',
                 summary: '同意',
                 principalId: ''
@@ -162,7 +163,7 @@ export default {
     created() {
         this.purchaseId = this.$route.params.purchaseId;
         this.getPurchaseInfo();
-        this.formData.checkUserId = this.userId;
+        this.formData.userId = this.userId;
         this.getBusinessDept(this.query);
     },
     methods: {
@@ -173,10 +174,10 @@ export default {
             getPurchaseInfo(this.purchaseId).then(res => {
                 this.purchaseInfo = res.data.data;
                 console.log(this.purchaseInfo);
-                this.formData.principalId=this.purchaseInfo.principalId
+                this.formData.principalId = this.purchaseInfo.principalId;
                 this.approverList = res.data.data.checkUserList;
                 this.approverList.forEach((item, index) => {
-                    if (item.check == 0 && item.isBeing == 1 && item.userId == this.formData.checkUserId) {
+                    if (item.check == 0 && item.isBeing == 1 && item.userId == this.formData.userId) {
                         this.formData.approverId = item.approverId;
                         this.showCheck = true;
                     }
@@ -192,26 +193,17 @@ export default {
         },
         onSubmit() {
             this.$refs['formData'].validate(valid => {
+                console.log(this.formData);
+
                 if (valid) {
-                    this.$confirm('请审批人审核发票信息、报销内容、项目名称后再同意，一经同意后流程不能逆转。', '温馨提示：', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning',
-                        showClose: false
-                    })
-                        .then(() => {
-                            updatePurchaseApprover(this.formData)
-                                .then(res => {
-                                    // console.log(res);
-                                    if (res.data.data) {
-                                        this.backHistory();
-                                    }
-                                })
-                                .finally(() => {
-                                    this.saving = false;
-                                });
+                    updatePurchaseApprover(this.formData)
+                        .then(res => {
+                            // console.log(res);
+                            if (res.data.data) {
+                                this.backHistory();
+                            }
                         })
-                        .catch(() => {
+                        .finally(() => {
                             this.saving = false;
                         });
 
