@@ -191,7 +191,7 @@ export default {
         ...mapGetters(['permissions', 'userId'])
     },
     created() {
-        this.query.principalId = 92;
+        this.query.principalId = this.userId;
         this.getUserList();
         this.getPurchasePage();
     },

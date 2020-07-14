@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td>京东/淘宝链接</td>
-                            <td colspan="3">{{ purchaseInfo.buyUrl }}</td>
+                            <td colspan="3"><el-link type="primary" :href="purchaseInfo.buyUrl" target="_blank">链接</el-link></td>
                         </tr>
                         <tr>
                             <td>备注</td>
@@ -58,6 +58,14 @@
                         <tr>
                             <td>型号参数</td>
                             <td colspan="3">{{ purchaseInfo.model }}</td>
+                        </tr>
+                        <tr>
+                            <td>型号参数图片</td>
+                            <td colspan="3" v-if="purchaseInfo.purchaseImg">
+                                <el-image v-for="(url, index) in urls2" :key="url" :src="url" lazy @click="onPreview2(index)"></el-image>
+                                <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
+                            </td>
+                            <td colspan="3" v-else><span>无</span></td>
                         </tr>
                         <tr>
                             <td>状态</td>
@@ -131,12 +139,18 @@
 <script>
 import { getPurchaseInfo, updatePurchaseApprover, getBusinessDept } from '../../../api/purchase/purchase.js';
 import { mapGetters } from 'vuex';
+import ElImageViewer from 'element-ui/packages/image/src/image-viewer';
+
 export default {
+    components: { ElImageViewer },
     data() {
         return {
             purchaseId: null,
             purchaseInfo: '',
             approverList: [],
+            url: '',
+            urls2: [],
+            showViewer: false, // 显示查看器
             formData: {
                 userId: null,
                 approverId: null,
@@ -182,6 +196,14 @@ export default {
                         this.showCheck = true;
                     }
                 });
+                this.urls2 = [];
+                if (this.purchaseInfo.purchaseImg) {
+                    this.purchaseInfo.purchaseImg.split(',').forEach((item, index) => {
+                        if (item) {
+                            this.urls2.push(`${window.location.origin}/apply/purchase/` + item);
+                        }
+                    });
+                }
             });
         },
         selectChcek() {
@@ -221,6 +243,14 @@ export default {
                     });
                 });
             });
+        },
+        closeViewer() {
+            this.showViewer = false;
+            this.url = '';
+        },
+        onPreview2(val) {
+            this.url = this.urls2[val];
+            this.showViewer = true;
         }
     }
 };
