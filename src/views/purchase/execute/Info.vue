@@ -45,11 +45,15 @@
                         </tr>
                         <tr>
                             <td>京东/淘宝链接</td>
-                            <td colspan="3">{{ purchaseInfo.buyUrl }}</td>
+                            <td colspan="3"><el-link type="primary" :href="purchaseInfo.buyUrl" target="_blank">链接</el-link></td>
                         </tr>
                         <tr>
                             <td>备注</td>
                             <td colspan="3">{{ purchaseInfo.remark }}</td>
+                        </tr>
+                        <tr>
+                            <td>收货地址</td>
+                            <td colspan="3">{{ purchaseInfo.contact }}</td>
                         </tr>
                         <tr>
                             <td>预计到货时间</td>
@@ -58,6 +62,14 @@
                         <tr>
                             <td>型号参数</td>
                             <td colspan="3">{{ purchaseInfo.model }}</td>
+                        </tr>
+                        <tr>
+                            <td>型号参数图片</td>
+                            <td colspan="3" v-if="purchaseInfo.purchaseImg">
+                                <el-image v-for="(url, index) in urls1" :key="url" :src="url" lazy @click="onPreview1(index)"></el-image>
+                                <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
+                            </td>
+                            <td colspan="3" v-else><span>无</span></td>
                         </tr>
                         <tr>
                             <td>状态</td>
@@ -183,6 +195,7 @@ export default {
             approverList: [],
             url: '',
             urls2: [],
+            urls1: [],
             showViewer: false // 显示查看器
         };
     },
@@ -203,10 +216,18 @@ export default {
                 console.log(this.purchaseInfo);
                 this.approverList = res.data.data.checkUserList;
                 this.urls2 = [];
+                this.urls1 = [];
                 if (this.purchaseInfo.pactImg) {
                     this.purchaseInfo.pactImg.split(',').forEach((item, index) => {
                         if (item) {
                             this.urls2.push(`${window.location.origin}/apply/purchase/` + item);
+                        }
+                    });
+                }
+                if (this.purchaseInfo.purchaseImg) {
+                    this.purchaseInfo.purchaseImg.split(',').forEach((item, index) => {
+                        if (item) {
+                            this.urls1.push(`${window.location.origin}/apply/purchase/` + item);
                         }
                     });
                 }
@@ -219,7 +240,11 @@ export default {
         onPreview2(val) {
             this.url = this.urls2[val];
             this.showViewer = true;
-        }
+        },
+        onPreview1(val) {
+            this.url = this.urls1[val];
+            this.showViewer = true;
+        },
     }
 };
 </script>

@@ -15,11 +15,11 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                   <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
-                       <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
-                   </el-select>
+                    <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
+                        <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search" @click='getPurchasePage'>搜索</el-button></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search" @click="getPurchasePage">搜索</el-button></el-form-item>
             </el-form>
         </div>
 
@@ -122,7 +122,7 @@
             <el-table-column label="操作" min-width="180" fixed="right">
                 <template slot-scope="scope">
                     <el-button size="mini" type="primary" @click.native="lookModal(scope.row)">查看</el-button>
-                    <el-button size="mini"  @click.native="handleModal(scope.row)">编辑</el-button>
+                    <el-button size="mini" @click.native="handleModal(scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -141,7 +141,7 @@
 
 <script>
 import { getUserList } from '../../../api/admin/user.js';
-import { getPurchasePage,getPurchase } from '../../../api/purchase/purchase.js';
+import { getPurchasePage, getPurchase } from '../../../api/purchase/purchase.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
@@ -193,7 +193,7 @@ export default {
     },
     created() {
         this.query.principalId = this.userId;
-        this.query.userId=this.userId;
+        // this.query.userId=this.userId;
         this.getUserList();
         this.getPurchasePage();
         this.getPurchase('100000');
