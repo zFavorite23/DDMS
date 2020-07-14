@@ -15,11 +15,11 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select style="width:120px" clearable v-model="query.classify" placeholder="总分类">
-                        <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
-                    </el-select>
+                   <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
+                       <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                   </el-select>
                 </el-form-item>
-                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search">搜索</el-button></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search" @click='getPurchasePage'>搜索</el-button></el-form-item>
             </el-form>
         </div>
 
@@ -141,7 +141,7 @@
 
 <script>
 import { getUserList } from '../../../api/admin/user.js';
-import { getPurchasePage } from '../../../api/purchase/purchase.js';
+import { getPurchasePage,getPurchase } from '../../../api/purchase/purchase.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
@@ -153,7 +153,8 @@ export default {
                 orderBy: 'create_time_desc',
                 likeKeyWords: '',
                 current: 1,
-                size: 10
+                size: 10,
+                type1: ''
             },
             list: [],
             pages: 0,
@@ -192,10 +193,22 @@ export default {
     },
     created() {
         this.query.principalId = this.userId;
+        this.query.userId=this.userId;
         this.getUserList();
         this.getPurchasePage();
+        this.getPurchase('100000');
     },
     methods: {
+        getPurchase(id) {
+            getPurchase(id, this.userId).then(res => {
+                res.data.data.purchaseType.forEach(item => {
+                    this.classifyOptions.push({
+                        value: item.id,
+                        label: item.name
+                    });
+                });
+            });
+        },
         getPurchasePage() {
             getPurchasePage(this.query).then(res => {
                 console.log(res);

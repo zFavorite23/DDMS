@@ -10,7 +10,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select style="width:120px" clearable v-model="query.classify" placeholder="总分类">
+                    <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
                         <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
@@ -176,6 +176,7 @@ export default {
     created() {
         this.query.userId = this.userId;
         this.getPurchaseApprover();
+        this.getPurchase('100000');
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
             this.query.status = '';
@@ -191,6 +192,16 @@ export default {
                     path: '/purchase/form'
                 });
             }
+        },
+        getPurchase(id) {
+            getPurchase(id, this.userId).then(res => {
+                res.data.data.purchaseType.forEach(item => {
+                    this.classifyOptions.push({
+                        value: item.id,
+                        label: item.name
+                    });
+                });
+            });
         },
         getPurchaseApprover() {
             getPurchaseApprover(this.query).then(res => {
