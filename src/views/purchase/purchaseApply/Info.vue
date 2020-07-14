@@ -37,11 +37,11 @@
                         </tr>
                         <tr>
                             <td>总价</td>
-                            <td colspan="3">{{ purchaseInfo.guessPrice }}</td>
+                            <td colspan="3">{{ purchaseInfo.guessPriceYuan }}</td>
                         </tr>
                         <tr>
                             <td>具体需求</td>
-                            <td colspan="3">{{ purchaseInfo.demand }}关</td>
+                            <td colspan="3">{{ purchaseInfo.demand }}</td>
                         </tr>
                         <tr>
                             <td>京东/淘宝链接</td>
