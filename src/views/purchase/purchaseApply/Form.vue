@@ -47,7 +47,9 @@
                 <el-col :span="12">
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="需求数量：" prop="num"><el-input v-model.number="formData.num" placeholder="请输入数量"></el-input></el-form-item>
+                            <el-form-item label="需求数量：" prop="num">
+                                <el-input v-model.number="formData.num" onKeypress="return(/[\d]/.test(String.fromCharCode(event.keyCode)))" placeholder="请输入数量"></el-input>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item label="单位：" prop="unit"><el-input v-model="formData.unit" placeholder="请输入单位"></el-input></el-form-item>
@@ -64,7 +66,7 @@
                     <el-row>
                         <el-col :span="12">
                             <el-form-item label="预估单价：" prop="price">
-                                <el-input @blur="getApplyUserInfo" v-model.number="formData.price" placeholder="请输入单价"></el-input>
+                                <el-input @blur="getApplyUserInfo" v-model="formData.price" placeholder="请输入单价"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
@@ -125,7 +127,6 @@
 </template>
 
 <script>
-import { getApplyUserInfo } from '../../../api/admin/user.js';
 import { getPurchase, ApplyPurchase, getApprover, editApplyPurchase } from '../../../api/purchase/purchase.js';
 import { mapGetters } from 'vuex';
 export default {
@@ -303,7 +304,7 @@ export default {
         totalPrice: {
             get() {
                 this.formData.guessPrice = this.formData.num * this.formData.price;
-                return this.formData.guessPrice;
+                return this.formData.guessPrice.toFixed(2);
             },
             set(value) {
                 this.formData.guessPrice = value;
@@ -408,36 +409,36 @@ export default {
         // 提交
         onSubmit() {
             this.formData.type2 = this.formData.type2[0];
-			console.log(this.formData)
-            this.$refs['formData'].validate(valid => {
-                if (valid) {
-                    this.saving = true;
+            console.log(this.formData);
+            // this.$refs['formData'].validate(valid => {
+            //     if (valid) {
+            //         this.saving = true;
 
-                    if (!this.formData.newData) {
-                        console.log(this.formData);
-                        editApplyPurchase(this.formData)
-                            .then(res => {
-                                console.log(res);
-                                if (res.data.data) {
-                                    this.backHistory();
-                                }
-                            })
-                            .finally(() => {
-                                this.saving = false;
-                            });
-                    } else {
-                        ApplyPurchase(this.formData)
-                            .then(res => {
-                                if (res.data.data) {
-                                    this.backHistory();
-                                }
-                            })
-                            .finally(() => {
-                                this.saving = false;
-                            });
-                    }
-                }
-            });
+            //         if (!this.formData.newData) {
+            //             console.log(this.formData);
+            //             editApplyPurchase(this.formData)
+            //                 .then(res => {
+            //                     console.log(res);
+            //                     if (res.data.data) {
+            //                         this.backHistory();
+            //                     }
+            //                 })
+            //                 .finally(() => {
+            //                     this.saving = false;
+            //                 });
+            //         } else {
+            //             ApplyPurchase(this.formData)
+            //                 .then(res => {
+            //                     if (res.data.data) {
+            //                         this.backHistory();
+            //                     }
+            //                 })
+            //                 .finally(() => {
+            //                     this.saving = false;
+            //                 });
+            //         }
+            //     }
+            // });
         },
 
         // 取消
