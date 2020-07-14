@@ -93,11 +93,11 @@ export function updatePurchaseApprover(data) {
 /**
  * 采购审批人
  */
-export function getApprover(query) {
+export function getApprover(data) {
     return axios({
         url: `/apply/purchase/approver/getApprover`,
-        method: "get",
-        params: query
+        method: "post",
+        data
     });
 }
 
