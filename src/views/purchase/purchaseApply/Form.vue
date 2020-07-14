@@ -65,8 +65,8 @@
                 <el-col :span="12">
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="预估单价：" prop="price">
-                                <el-input @blur="getApplyUserInfo" v-model="formData.price" placeholder="请输入单价"></el-input>
+                            <el-form-item label="预估单价：" prop="priceYuan">
+                                <el-input @blur="getApplyUserInfo" v-model="formData.priceYuan" placeholder="请输入单价"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
@@ -139,7 +139,7 @@ export default {
                 itemId: null,
                 type1: null,
                 type: 6,
-                price: 0
+                guessPriceYuan: 0
             },
             formData: {
                 newData: true,
@@ -190,7 +190,9 @@ export default {
                 invoiceStatus: null,
                 companyName: null,
                 bankName: null,
-                bankAccount: null
+                bankAccount: null,
+                guessPriceYuan: '',
+                priceYuan: ''
             },
 
             rules: {
@@ -208,7 +210,7 @@ export default {
                 num: [{ required: true, message: '请填写数量', trigger: 'change' }],
                 unit: [{ required: true, message: '请填写单位', trigger: 'change' }],
                 model: [{ required: true, message: '请填写型号参数', trigger: 'change' }],
-                price: [{ required: true, message: '请填写单价', trigger: 'change' }],
+                priceYuan: [{ required: true, message: '请填写单价', trigger: 'change' }],
                 contact: [{ required: true, message: '请选择收货地址', trigger: 'change' }]
             },
             saving: false,
@@ -248,8 +250,10 @@ export default {
             this.formData.demand = editPurchaseInfo.demand;
             this.formData.num = editPurchaseInfo.num;
             this.formData.unit = editPurchaseInfo.unit;
-            this.formData.price = editPurchaseInfo.price * 0.01;
-            this.formData.guessPrice = editPurchaseInfo.guessPrice * 0.01;
+            // this.formData.price = editPurchaseInfo.price * 0.01;
+            // this.formData.guessPrice = editPurchaseInfo.guessPrice * 0.01;
+            this.formData.priceYuan = editPurchaseInfo.priceYuan;
+            this.formData.guessPriceYuan = editPurchaseInfo.guessPriceYuan;
             this.formData.remark = editPurchaseInfo.remark;
             this.formData.purchaseImg = editPurchaseInfo.purchaseImg;
             this.formData.contact = editPurchaseInfo.contact;
@@ -303,11 +307,11 @@ export default {
         // 计算总价
         totalPrice: {
             get() {
-                this.formData.guessPrice = this.formData.num * this.formData.price;
-                return this.formData.guessPrice.toFixed(2);
+                this.formData.guessPriceYuan = this.formData.num * this.formData.priceYuan;
+                return this.formData.guessPriceYuan.toFixed(2);
             },
             set(value) {
-                this.formData.guessPrice = value;
+                this.formData.guessPriceYuan = value;
             }
         }
     },
@@ -358,7 +362,7 @@ export default {
         },
 
         getApplyUserInfo() {
-            this.query.guessPrice = this.formData.guessPrice;
+            this.query.guessPriceYuan = this.formData.guessPriceYuan;
             this.query.type1 = this.formData.type1;
             getApprover(this.query).then(response => {
                 this.applyUserList = [];
@@ -409,36 +413,37 @@ export default {
         // 提交
         onSubmit() {
             this.formData.type2 = this.formData.type2[0];
+            this.formData.price = +this.formData.price;
             console.log(this.formData);
-            // this.$refs['formData'].validate(valid => {
-            //     if (valid) {
-            //         this.saving = true;
+            this.$refs['formData'].validate(valid => {
+                if (valid) {
+                    this.saving = true;
 
-            //         if (!this.formData.newData) {
-            //             console.log(this.formData);
-            //             editApplyPurchase(this.formData)
-            //                 .then(res => {
-            //                     console.log(res);
-            //                     if (res.data.data) {
-            //                         this.backHistory();
-            //                     }
-            //                 })
-            //                 .finally(() => {
-            //                     this.saving = false;
-            //                 });
-            //         } else {
-            //             ApplyPurchase(this.formData)
-            //                 .then(res => {
-            //                     if (res.data.data) {
-            //                         this.backHistory();
-            //                     }
-            //                 })
-            //                 .finally(() => {
-            //                     this.saving = false;
-            //                 });
-            //         }
-            //     }
-            // });
+                    if (!this.formData.newData) {
+                        console.log(this.formData);
+                        editApplyPurchase(this.formData)
+                            .then(res => {
+                                console.log(res);
+                                if (res.data.data) {
+                                    this.backHistory();
+                                }
+                            })
+                            .finally(() => {
+                                this.saving = false;
+                            });
+                    } else {
+                        ApplyPurchase(this.formData)
+                            .then(res => {
+                                if (res.data.data) {
+                                    this.backHistory();
+                                }
+                            })
+                            .finally(() => {
+                                this.saving = false;
+                            });
+                    }
+                }
+            });
         },
 
         // 取消
