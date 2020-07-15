@@ -62,7 +62,7 @@
                     <span>{{ scope.row.num }}</span>
                 </template>
             </el-table-column>
-            <el-table-column width="80" label="单位">
+            <el-table-column width="80" label="单价">
                 <template slot-scope="scope">
                     <span>{{ scope.row.priceYuan }}</span>
                 </template>

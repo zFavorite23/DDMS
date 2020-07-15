@@ -66,10 +66,10 @@
                 <el-col :span="12">
                     <el-row>
                         <el-col :span="12">
-                            <el-form-item label="预估单价："><el-input v-model.number="formData.price" disabled placeholder="请输入单价"></el-input></el-form-item>
+                            <el-form-item label="预估单价："><el-input v-model.number="formData.priceYuan" disabled placeholder="请输入单价"></el-input></el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item label="预估总价："><el-input v-model.number="totalPrice" disabled placeholder="请输入总价"></el-input></el-form-item>
+                            <el-form-item label="预估总价："><el-input v-model.number="formData.guessPriceYuan" disabled placeholder="请输入总价"></el-input></el-form-item>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -266,7 +266,9 @@ export default {
                 invoiceStatus: null,
                 companyName: null,
                 bankName: null,
-                bankAccount: null
+                bankAccount: null,
+                guessPriceYuan: '',
+                priceYuan: ''
             },
 
             userOptions: [
@@ -357,7 +359,7 @@ export default {
         };
     },
     created() {
-        this.formData.userId = this.userId;
+        // this.formData.userId = this.userId;
         this.query.userId = this.userId;
         this.getPurchase('100000', this.userId);
         this.uploadUrl = `${window.location.origin}/apply/purchase/upload`;
@@ -366,17 +368,6 @@ export default {
     },
     computed: {
         ...mapGetters(['permissions', 'userId']),
-
-        // 计算总价
-        totalPrice: {
-            get() {
-                this.formData.totalPrice = this.formData.num * this.formData.price;
-                return this.formData.totalPrice;
-            },
-            set(value) {
-                this.formData.totalPrice = value;
-            }
-        }
     },
     methods: {
         // 获取总类
@@ -409,8 +400,10 @@ export default {
                 this.formData.demand = editPurchaseInfo.demand;
                 this.formData.num = editPurchaseInfo.num;
                 this.formData.unit = editPurchaseInfo.unit;
-                this.formData.price = editPurchaseInfo.price * 0.01;
-                this.formData.guessPrice = editPurchaseInfo.guessPrice * 0.01;
+                // this.formData.price = editPurchaseInfo.price * 0.01;
+                // this.formData.guessPrice = editPurchaseInfo.guessPrice * 0.01;
+                this.formData.priceYuan = editPurchaseInfo.priceYuan;
+                this.formData.guessPriceYuan = editPurchaseInfo.guessPriceYuan;
                 this.formData.remark = editPurchaseInfo.remark;
                 this.formData.purchaseImg = editPurchaseInfo.purchaseImg;
                 this.formData.contact = editPurchaseInfo.contact;
@@ -534,7 +527,7 @@ export default {
                 this.formData.payStatus = '';
                 this.formData.purchaseStatus = '';
             }
-            console.log(this.formData)
+            console.log(this.formData);
         }
     }
 };

@@ -413,7 +413,6 @@ export default {
         // 提交
         onSubmit() {
             this.formData.type2 = this.formData.type2[0];
-            this.formData.price = +this.formData.price;
             console.log(this.formData);
             this.$refs['formData'].validate(valid => {
                 if (valid) {

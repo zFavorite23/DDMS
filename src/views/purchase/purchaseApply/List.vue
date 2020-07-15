@@ -229,6 +229,7 @@ export default {
         // 列表
         getPurchasePage() {
             getPurchasePage(this.query).then(res => {
+                console.log(res)
                 this.total = res.data.data.total;
                 this.query.current = res.data.data.current;
                 this.query.size = res.data.data.size;
