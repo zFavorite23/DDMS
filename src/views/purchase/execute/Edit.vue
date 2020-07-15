@@ -132,7 +132,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12" v-if="formData.isOpen != 2">
-                    <el-form-item label="合同金额：" prop="name"><el-input show-word-limit v-model.number="formData.pactPrice"></el-input></el-form-item>
+                    <el-form-item label="合同金额：" prop="name"><el-input show-word-limit v-model="formData.pactPriceYuan"></el-input></el-form-item>
                 </el-col>
             </el-row>
 
@@ -177,6 +177,7 @@
                 <el-button type="primary" size="mini" @click="goExpense">去支出</el-button>
             </el-form-item>
 
+            <el-form-item label="实际支付金额：" v-if="formData.isOpen == 2"><el-input v-model="formData.relPriceYuan" show-word-limit></el-input></el-form-item>
             <el-form-item label="采购状态：">
                 <el-radio-group v-model="formData.purchaseType">
                     <el-radio label="1">进行中</el-radio>
@@ -268,7 +269,9 @@ export default {
                 bankName: null,
                 bankAccount: null,
                 guessPriceYuan: '',
-                priceYuan: ''
+                priceYuan: '',
+                relPriceYuan:'',
+                pactPriceYuan:''
             },
 
             userOptions: [
@@ -367,7 +370,7 @@ export default {
         this.getPurchaseInfo();
     },
     computed: {
-        ...mapGetters(['permissions', 'userId']),
+        ...mapGetters(['permissions', 'userId'])
     },
     methods: {
         // 获取总类
@@ -400,9 +403,8 @@ export default {
                 this.formData.demand = editPurchaseInfo.demand;
                 this.formData.num = editPurchaseInfo.num;
                 this.formData.unit = editPurchaseInfo.unit;
-                // this.formData.price = editPurchaseInfo.price * 0.01;
-                // this.formData.guessPrice = editPurchaseInfo.guessPrice * 0.01;
                 this.formData.priceYuan = editPurchaseInfo.priceYuan;
+                this.formData.pactPriceYuan = editPurchaseInfo.pactPriceYuan;
                 this.formData.guessPriceYuan = editPurchaseInfo.guessPriceYuan;
                 this.formData.remark = editPurchaseInfo.remark;
                 this.formData.purchaseImg = editPurchaseInfo.purchaseImg;
@@ -432,6 +434,7 @@ export default {
                 this.formData.companyName = editPurchaseInfo.companyName;
                 this.formData.bankName = editPurchaseInfo.bankName;
                 this.formData.bankAccount = editPurchaseInfo.bankAccount;
+                this.formData.relPriceYuan = editPurchaseInfo.relPriceYuan;
                 editPurchaseInfo.checkUserList.forEach(item => {
                     this.applyUserList.push({
                         userId: item.checkUserId,

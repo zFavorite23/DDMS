@@ -143,7 +143,7 @@
                         </tr>
                         <tr v-if="purchaseInfo.isOpen != 2">
                             <td>合同金额</td>
-                            <td colspan="3">{{ purchaseInfo.pactPrice * 0.01 }}</td>
+                            <td colspan="3">{{ purchaseInfo.pactPriceYuan }}</td>
                         </tr>
                         <tr v-if="purchaseInfo.isOpen != 2">
                             <td>合同附件图片</td>
@@ -151,6 +151,11 @@
                                 <el-image v-for="(url, index) in urls2" :key="url" :src="url" lazy @click="onPreview2(index)"></el-image>
                                 <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
                             </td>
+                            <td colspan="3" v-else>无</td>
+                        </tr>
+                        <tr v-if="purchaseInfo.isOpen != 1">
+                            <td>实付金额</td>
+                            <td colspan="3">{{ purchaseInfo.relPriceYuan == 0.0 ? '' : purchaseInfo.relPriceYuan }}</td>
                         </tr>
                         <tr>
                             <td width="100">物流公司</td>
@@ -171,7 +176,7 @@
                             <td>报销状态</td>
                             <td colspan="3">{{ purchaseInfo.payStatus == 1 ? '已报销' : '未报销' }}</td>
                         </tr>
-                        <tr v-if="purchaseInfo.isOpen == 1">
+                        <tr>
                             <td>备注信息</td>
                             <td colspan="3">{{ purchaseInfo.performNote }}</td>
                         </tr>
@@ -244,7 +249,7 @@ export default {
         onPreview1(val) {
             this.url = this.urls1[val];
             this.showViewer = true;
-        },
+        }
     }
 };
 </script>

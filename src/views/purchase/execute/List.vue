@@ -44,6 +44,12 @@
                     <span>{{ scope.row.name }}</span>
                 </template>
             </el-table-column>
+            <el-table-column width="50" label="是否对公">
+                <template slot-scope="scope">
+                    <el-tag v-if="scope.row.isOpen == 1" size="mini" type="success">是</el-tag>
+                    <el-tag v-if="scope.row.isOpen == 2" size="mini" type="danger">否</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column width="110" label="分类" :show-overflow-tooltip="true">
                 >
                 <template slot-scope="scope">
@@ -70,6 +76,11 @@
             <el-table-column width="80" label="总价">
                 <template slot-scope="scope">
                     <span>{{ scope.row.guessPriceYuan }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column width="80" label="实付款">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.relPriceYuan == 0.0 ? '' : scope.row.relPriceYuan }}</span>
                 </template>
             </el-table-column>
             <el-table-column width="200" label="审批人">
