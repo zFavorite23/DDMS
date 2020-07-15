@@ -324,11 +324,10 @@ export default {
         this.uploadUrl = `${window.location.origin}/apply/expense/upload`;
 
         const editPurchaseInfo = JSON.parse(window.localStorage.getItem('editPurchaseInfo'));
-        console.log
         if (editPurchaseInfo) {
             this.formData.name = editPurchaseInfo.name;
             this.formData.type1 = editPurchaseInfo.type1;
-            if (editPurchaseInfo.itemId != null) {
+            if (editPurchaseInfo.itemId != 0) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
             } else {
                 this.formData.type2 = [editPurchaseInfo.type2];
