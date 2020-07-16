@@ -78,9 +78,10 @@
                     <span>{{ scope.row.guessPriceYuan }}</span>
                 </template>
             </el-table-column>
-            <el-table-column width="80" label="实付款">
+            <el-table-column width="80" label="实付款/合同额">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.relPriceYuan == 0.0 ? '' : scope.row.relPriceYuan }}</span>
+                    <span v-if="scope.row.isOpen == 1">{{ scope.row.pactPriceYuan == 0.0 ? '' : scope.row.pactPriceYuan }}</span>
+                    <span v-if="scope.row.isOpen == 2">{{ scope.row.relPriceYuan == 0.0 ? '' : scope.row.relPriceYuan }}</span>
                 </template>
             </el-table-column>
             <el-table-column width="200" label="审批人">
@@ -231,12 +232,12 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getInvoicePage();
+            this.getPurchasePage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
             sessionStorage.setItem('page2', val);
-            this.getInvoicePage();
+            this.getPurchasePage();
         },
 
         getUserList() {
