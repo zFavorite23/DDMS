@@ -1469,7 +1469,7 @@ export default {
             applyClockInfo: '',
             pickerOptions: {
                 disabledDate(time) {
-                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 1 || time.getTime() > new Date().getTime() + 3600 * 1000 * 24 * 20;
+                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 1 
                 }
             },
             hourNum: 0.5,
