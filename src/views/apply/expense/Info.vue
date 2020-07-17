@@ -17,10 +17,11 @@
                     <td>{{ expenseInfo.type1Name }}</td>
                 </tr>
 
-                <tr v-if="expenseInfo.itemId != null">
+                <tr>
                     <td style="width: 35%;">项目&产品</td>
-                    <td v-if="expenseInfo.alias != null">{{ expenseInfo.alias }}</td>
-                    <td v-else>与项目无关</td>
+                    <td colspan="3" v-if="expenseInfo.alias != null && expenseInfo.aliasNext == null">{{ expenseInfo.alias }}</td>
+                    <td colspan="3" v-else-if="expenseInfo.alias != null && expenseInfo.aliasNext != null">{{ expenseInfo.aliasNext }} / {{ expenseInfo.alias }}</td>
+                    <td colspan="3" v-else>与项目无关</td>
                 </tr>
                 <tr>
                     <td>明细分类</td>

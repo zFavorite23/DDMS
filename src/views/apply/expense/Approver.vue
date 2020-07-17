@@ -19,7 +19,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'priceYuan', order: 'descending' }">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" >
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>

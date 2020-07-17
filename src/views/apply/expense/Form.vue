@@ -242,7 +242,9 @@ export default {
                 invoiceImg: '',
                 contract: '',
                 arrivalTime: '',
-                approverids: null
+                approverids: null,
+                aliasNext: '',
+                itemNextId: null
             },
             companyNameLable: '公司名称：',
             priceYuanLabel: '支出金额：',
@@ -324,11 +326,15 @@ export default {
         this.uploadUrl = `${window.location.origin}/apply/expense/upload`;
 
         const editPurchaseInfo = JSON.parse(window.localStorage.getItem('editPurchaseInfo'));
+        console.log(editPurchaseInfo)
         if (editPurchaseInfo) {
             this.formData.name = editPurchaseInfo.name;
             this.formData.type1 = editPurchaseInfo.type1;
-            if (editPurchaseInfo.itemId != 0) {
+            this.formData.itemId = editPurchaseInfo.itemId;
+            if (editPurchaseInfo.itemId != 0 && editPurchaseInfo.itemNextId == null) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
+            } else if (editPurchaseInfo.itemNextId != null) {
+                this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemNextId, editPurchaseInfo.itemId];
             } else {
                 this.formData.type2 = [editPurchaseInfo.type2];
             }
@@ -346,8 +352,8 @@ export default {
             });
             this.formData.type3 = editPurchaseInfo.type3;
 
-            if (editPurchaseInfo.purchaseImg) {
-                editPurchaseInfo.purchaseImg.split(',').forEach((item, index) => {
+            if (editPurchaseInfo.pactImg) {
+                editPurchaseInfo.pactImg.split(',').forEach((item, index) => {
                     if (item) {
                         this.fileList2.push({
                             url: `${window.location.origin}/apply/expense/` + item
@@ -372,8 +378,10 @@ export default {
             this.query.itemId = editExpenseInfo.itemId;
 
             this.formData.type1 = editExpenseInfo.type1;
-            if (editExpenseInfo.itemId != null) {
+            if (editExpenseInfo.itemId != null && editExpenseInfo.itemNextId == null) {
                 this.formData.type2 = [editExpenseInfo.type2, editExpenseInfo.itemId];
+            } else if (editExpenseInfo.itemNextId != null) {
+                this.formData.type2 = [editExpenseInfo.type2, editExpenseInfo.itemNextId, editExpenseInfo.itemId];
             } else {
                 this.formData.type2 = [editExpenseInfo.type2];
             }
@@ -472,6 +480,7 @@ export default {
         classifyChange2(val) {
             this.query.itemId = null;
             this.formData.itemId = null;
+            this.formData.itemNextId = null;
             getExpense(val[0], this.userId).then(res => {
                 // console.log(res)
                 this.subClassifyOptions = res.data.data.expenseType;
@@ -602,6 +611,9 @@ export default {
             this.$router.go(-1);
         },
         onSubmit() {
+            if (this.formData.type2.length > 2) {
+                this.formData.itemNextId = this.formData.type2[1];
+            }
             this.formData.type2 = this.formData.type2[0];
             console.log(this.formData);
             this.$refs['formData'].validate(valid => {

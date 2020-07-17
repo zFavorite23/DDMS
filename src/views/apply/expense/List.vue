@@ -222,6 +222,7 @@ export default {
             this.listLoading = true;
             getExpenseList(this.query)
                 .then(response => {
+                    console.log(response)
                     this.listLoading = false;
                     this.total = response.data.data.total;
                     this.query.current = response.data.data.current;
@@ -235,7 +236,7 @@ export default {
         },
         getUserList() {
             getUserList().then(response => {
-                console.log(response);
+                // console.log(response);
                 response.data.data.forEach(element => {
                     //console.log(element)
                     this.userOptions.push({
