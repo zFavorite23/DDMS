@@ -139,7 +139,8 @@ export default {
                 itemId: null,
                 type1: null,
                 type: 6,
-                guessPriceYuan: 0
+                guessPriceYuan: 0,
+                itemNextId:null
             },
             formData: {
                 newData: true,
@@ -347,6 +348,7 @@ export default {
         // 详情分类
         classifyChange2(val) {
             this.query.itemId = null;
+            this.query.itemNextId = null;
             this.formData.itemId = 0;
             this.formData.itemNextId = null;
             getPurchase(val[0], this.query.userId).then(res => {
@@ -371,6 +373,10 @@ export default {
         getApplyUserInfo() {
             this.query.guessPriceYuan = this.formData.guessPriceYuan;
             this.query.type1 = this.formData.type1;
+            if (this.formData.type2.length > 2) {
+                this.query.itemNextId = this.formData.type2[1];
+                this.query.itemId=this.query.itemNextId
+            }
             getApprover(this.query).then(response => {
                 this.applyUserList = [];
                 this.formData.approverids = null;
@@ -487,6 +493,8 @@ export default {
             this.formData.companyName = null;
             this.formData.bankName = null;
             this.formData.bankAccount = null;
+            this.formData.aliasNext = '';
+            this.formData.itemNextId = null;
             this.$router.push('/purchase/form');
         }
     }
