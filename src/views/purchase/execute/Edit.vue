@@ -271,7 +271,9 @@ export default {
                 guessPriceYuan: '',
                 priceYuan: '',
                 relPriceYuan: '',
-                pactPriceYuan: ''
+                pactPriceYuan: '',
+                aliasNext: '',
+                itemNextId: null
             },
 
             userOptions: [
@@ -386,6 +388,8 @@ export default {
                 this.formData.name = editPurchaseInfo.name;
                 this.formData.buyUrl = editPurchaseInfo.buyUrl;
                 this.formData.itemId = editPurchaseInfo.itemId;
+                this.formData.aliasNext = editPurchaseInfo.aliasNext;
+                this.formData.itemNextId = editPurchaseInfo.itemNextId;
                 this.formData.purchaseId = editPurchaseInfo.purchaseId;
 
                 this.query.itemId = editPurchaseInfo.itemId;
