@@ -270,8 +270,8 @@ export default {
                 bankAccount: null,
                 guessPriceYuan: '',
                 priceYuan: '',
-                relPriceYuan:'',
-                pactPriceYuan:''
+                relPriceYuan: '',
+                pactPriceYuan: ''
             },
 
             userOptions: [
@@ -376,14 +376,12 @@ export default {
         // 获取总类
         getPurchase(id, userId) {
             getPurchase(id, userId).then(res => {
-                console.log(res);
                 this.sumClassifyOptions = res.data.data.purchaseType;
             });
         },
 
         getPurchaseInfo() {
             getPurchaseInfo(this.purchaseId).then(res => {
-                console.log(res);
                 const editPurchaseInfo = res.data.data;
                 this.formData.name = editPurchaseInfo.name;
                 this.formData.buyUrl = editPurchaseInfo.buyUrl;
@@ -392,8 +390,10 @@ export default {
 
                 this.query.itemId = editPurchaseInfo.itemId;
                 this.formData.type1 = editPurchaseInfo.type1;
-                if (editPurchaseInfo.itemId != 0) {
+                if (editPurchaseInfo.itemId != 0 && editPurchaseInfo.itemNextId == null) {
                     this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
+                } else if (editPurchaseInfo.itemNextId != null) {
+                    this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemNextId, editPurchaseInfo.itemId];
                 } else {
                     this.formData.type2 = [editPurchaseInfo.type2];
                 }
@@ -418,6 +418,7 @@ export default {
                 if (editPurchaseInfo.pactImg == null) {
                     this.formData.pactImg = '';
                 } else {
+					this.formData.pactImg = editPurchaseInfo.pactImg;
                     editPurchaseInfo.pactImg.split(',').forEach((item, index) => {
                         if (item) {
                             this.fileList2.push({
@@ -457,6 +458,7 @@ export default {
                     this.subClassifyOptions = res.data.data.purchaseType;
                 });
             });
+            console.log(this.formData)
         },
 
         // 提交

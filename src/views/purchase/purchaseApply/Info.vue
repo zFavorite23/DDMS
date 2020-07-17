@@ -13,7 +13,8 @@
                         </tr>
                         <tr>
                             <td>项目名称</td>
-                            <td colspan="3" v-if="purchaseInfo.alias != null">{{ purchaseInfo.alias }}</td>
+                            <td colspan="3" v-if="purchaseInfo.alias != null && purchaseInfo.aliasNext == null">{{ purchaseInfo.alias }}</td>
+                            <td colspan="3" v-else-if="purchaseInfo.alias != null && purchaseInfo.aliasNext != null">{{ purchaseInfo.aliasNext }} / {{ purchaseInfo.alias }}</td>
                             <td colspan="3" v-else>与项目无关</td>
                         </tr>
                         <tr>

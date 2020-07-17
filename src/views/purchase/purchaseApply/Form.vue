@@ -192,7 +192,9 @@ export default {
                 bankName: null,
                 bankAccount: null,
                 guessPriceYuan: '',
-                priceYuan: ''
+                priceYuan: '',
+                aliasNext: '',
+                itemNextId: null
             },
 
             rules: {
@@ -230,6 +232,7 @@ export default {
         this.uploadUrl = `${window.location.origin}/apply/purchase/upload`;
 
         const editPurchaseInfo = JSON.parse(window.localStorage.getItem('editPurchaseInfo'));
+
         if (editPurchaseInfo) {
             this.formData.newData = false;
             this.formData.name = editPurchaseInfo.name;
@@ -239,8 +242,10 @@ export default {
 
             this.query.itemId = editPurchaseInfo.itemId;
             this.formData.type1 = editPurchaseInfo.type1;
-            if (editPurchaseInfo.itemId != 0) {
+            if (editPurchaseInfo.itemId != 0 && editPurchaseInfo.itemNextId == null) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
+            } else if (editPurchaseInfo.itemNextId != null) {
+                this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemNextId, editPurchaseInfo.itemId];
             } else {
                 this.formData.type2 = [editPurchaseInfo.type2];
             }
@@ -300,6 +305,7 @@ export default {
                 });
             }
         }
+        console.log(this.formData);
     },
     computed: {
         ...mapGetters(['permissions', 'userId']),
@@ -342,6 +348,7 @@ export default {
         classifyChange2(val) {
             this.query.itemId = null;
             this.formData.itemId = 0;
+            this.formData.itemNextId = null;
             getPurchase(val[0], this.query.userId).then(res => {
                 this.subClassifyOptions = res.data.data.purchaseType;
             });
@@ -412,6 +419,9 @@ export default {
 
         // 提交
         onSubmit() {
+            if (this.formData.type2.length > 2) {
+                this.formData.itemNextId = this.formData.type2[1];
+            }
             this.formData.type2 = this.formData.type2[0];
             console.log(this.formData);
             this.$refs['formData'].validate(valid => {

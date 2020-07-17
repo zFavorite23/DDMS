@@ -54,10 +54,11 @@
                 >
                 <template slot-scope="scope">
                     <p>{{ scope.row.type1Name }}</p>
-                    <p>{{ scope.row.type2Name }}</p>
+                    <p v-if="scope.row.aliasNext==null">{{ scope.row.alias==null?scope.row.type2Name:scope.row.alias }}</p>
+                    <p v-else>{{ scope.row.aliasNext}} / {{  scope.row.alias}}</p>
                 </template>
             </el-table-column>
-            <el-table-column width="100" label="申请时间" :show-overflow-tooltip="true">
+            <el-table-column width="110" label="申请时间" :show-overflow-tooltip="true">
                 >
                 <template slot-scope="scope">
                     <span>{{ scope.row.createTime }}</span>
@@ -204,12 +205,18 @@ export default {
         ...mapGetters(['permissions', 'userId'])
     },
     created() {
+
         this.query.principalId = this.userId;
+        let page = sessionStorage.getItem('page2');
+        if (page != null) {
+            this.query.current = Number(page);
+        }
         // this.query.userId=this.userId;
         this.getUserList();
         this.getPurchasePage();
         this.getPurchase('100000');
     },
+    
     methods: {
         getPurchase(id) {
             getPurchase(id, this.userId).then(res => {

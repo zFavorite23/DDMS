@@ -49,7 +49,8 @@
             <el-table-column min-width="110" label="分类" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <p>{{ scope.row.type1Name }}</p>
-                    <p>{{ scope.row.type2Name }}</p>
+                    <p v-if="scope.row.aliasNext==null">{{ scope.row.alias==null?scope.row.type2Name:scope.row.alias }}</p>
+                    <p v-else>{{ scope.row.aliasNext}} / {{  scope.row.alias}}</p>
                 </template>
             </el-table-column>
             <el-table-column width="120" label="申请时间" :show-overflow-tooltip="true">
