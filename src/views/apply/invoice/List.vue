@@ -198,16 +198,7 @@ export default {
     computed: {
         ...mapGetters(['permissions', 'userId'])
     },
-    watch: {
-        'query.userId'() {
-            let page = sessionStorage.getItem('page2');
-            if (this.query.userId != this.userId) {
-                this.query.current = 1;
-            }
-            sessionStorage.setItem('page2', this.query.current);
-            deep: true;
-        }
-    },
+
     methods: {
         getInvoices(id) {
             getInvoices(id, this.userId).then(res => {

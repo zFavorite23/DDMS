@@ -161,6 +161,10 @@ export default {
     },
     created() {
         window.localStorage.removeItem('editInvoiceInfo');
+		let page = sessionStorage.getItem('page2');
+		if (page != null) {
+		    this.query.current = Number(page);
+		}
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
             this.query.status = '';
@@ -224,6 +228,7 @@ export default {
         },
         handleCurrentChange(val) {
             this.query.current = val;
+            sessionStorage.setItem('page2', val);
             this.getInvoiceApproverPage();
         },
         handInfo(data) {
