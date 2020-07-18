@@ -34,7 +34,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'createTime', order: 'descending' }">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="80" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -47,9 +47,9 @@
             </el-table-column>
             <el-table-column min-width="160" label="分类">
                 <template slot-scope="scope">
-                    <p v-if = "scope.row.type1Name">{{ scope.row.type1Name }}</p>
-                    <p v-if = "scope.row.type2Name">{{ scope.row.type2Name }}</p>
-                    <p v-if = "scope.row.type3Name">{{ scope.row.type3Name }}</p>
+                    <p v-if="scope.row.type1Name">{{ scope.row.type1Name }}</p>
+                    <p v-if="scope.row.type2Name">{{ scope.row.type2Name }}</p>
+                    <p v-if="scope.row.type3Name">{{ scope.row.type3Name }}</p>
                 </template>
             </el-table-column>
             <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">

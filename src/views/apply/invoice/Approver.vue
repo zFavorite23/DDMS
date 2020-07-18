@@ -29,7 +29,7 @@
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'createTime', order: 'descending' }">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="80" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -121,7 +121,7 @@ export default {
                 likeKeyWords: '',
                 applyUserId: null,
                 status: '',
-                orderBy: 'create_time_asc',
+                orderBy: 'create_time_desc',
                 current: 1,
                 size: 10
             },
