@@ -76,8 +76,9 @@
                         <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.classify != 10">
                             <td>支付截图</td>
                             <td colspan="3" v-if="invoiceInfo.payImg">
-                                <el-image v-for="(url, index) in urls1" :key="url" :src="url" lazy @click="onPreview1(index)"></el-image>
-                                <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
+                                <!-- <el-image v-for="(url, index) in urls1" :key="url" :src="url" lazy @click="onPreview1(index)"></el-image> -->
+                                <el-image v-for="(img, index) in urls1" :key="img" :src="img" lazy :preview-src-list="onPreview1(index)"></el-image>
+                                <!-- <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer> -->
                             </td>
                             <td colspan="3" v-else>无</td>
                         </tr>
@@ -98,8 +99,8 @@
                         <tr>
                             <td>发票图片</td>
                             <td colspan="3" v-if="invoiceInfo.invoiceImg">
-                                <el-image v-for="(url, index) in urls2" :key="url" :src="url" lazy @click="onPreview2(index)"></el-image>
-                                <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer>
+                                <el-image v-for="(img, index) in urls2" :key="img" :src="img" lazy :preview-src-list="onPreview2(index)"></el-image>
+                                <!-- <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer> -->
                             </td>
                             <td colspan="3" v-else>无</td>
                         </tr>
@@ -302,7 +303,7 @@ export default {
             urls1: [],
             urls2: [],
             showViewer: false, // 显示查看器
-            RefuseInfo: [],
+            RefuseInfo: []
         };
     },
     computed: {
@@ -325,7 +326,7 @@ export default {
         getInvoiceInfo() {
             getInvoiceInfo(this.invoiceId).then(response => {
                 this.invoiceInfo = response.data.data;
-                console.log(this.invoiceInfo)
+                console.log(this.invoiceInfo);
                 this.invoiceInfo.invoiceTimeCh = moment(this.invoiceInfo.invoiceTime).format('YYYY年MM月DD日');
                 this.invoiceInfo.payTimeCh = moment(this.invoiceInfo.payTime).format('YYYY年MM月DD日');
                 this.urls1 = [];
@@ -414,17 +415,35 @@ export default {
         backHistory() {
             this.$router.go(-1);
         },
-        onPreview1(val) {
-            this.url = this.urls1[val];
-            this.showViewer = true;
+        onPreview1(index) {
+            // this.url = this.urls1[val];
+            // this.showViewer = true;
+            let arr = [];
+            let i = 0;
+            for (i; i < this.urls1.length; i++) {
+                arr.push(this.urls1[i + index]);
+                if (i + index >= this.urls1.length - 1) {
+                    index = 0 - (i + 1);
+                }
+            }
+            return arr;
         },
         closeViewer() {
             this.showViewer = false;
             this.url = '';
         },
-        onPreview2(val) {
-            this.url = this.urls2[val];
-            this.showViewer = true;
+        onPreview2(index) {
+            // this.url = this.urls2[val];
+            // this.showViewer = true;
+            let arr = [];
+            let i = 0;
+            for (i; i < this.urls2.length; i++) {
+                arr.push(this.urls2[i + index]);
+                if (i + index >= this.urls2.length - 1) {
+                    index = 0 - (i + 1);
+                }
+            }
+            return arr;
         },
         print(e) {
             // this.remove();
