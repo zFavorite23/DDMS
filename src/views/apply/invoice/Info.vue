@@ -62,18 +62,18 @@
                             <td>报销支付描述</td>
                             <td colspan="3">{{ invoiceInfo.payDesc }}</td>
                         </tr>
-                        <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.classify != 10">
+                        <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.type1 != 22">
                             <td>支付时间</td>
                             <td colspan="3">{{ invoiceInfo.payTimeCh }}</td>
                         </tr>
-                        <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.classify != 10">
+                        <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.type1 != 22">
                             <td>支付金额</td>
                             <td>{{ invoiceInfo.payPriceYuan }} 元</td>
                             <td>支付截图数量</td>
                             <td v-if="invoiceInfo.payImgNum != null">{{ invoiceInfo.payImgNum }} 张</td>
                             <td v-else>无</td>
                         </tr>
-                        <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.classify != 10">
+                        <tr v-if="invoiceInfo.isFull == 1 && invoiceInfo.type1 != 22">
                             <td>支付截图</td>
                             <td colspan="3" v-if="invoiceInfo.payImg">
                                 <!-- <el-image v-for="(url, index) in urls1" :key="url" :src="url" lazy @click="onPreview1(index)"></el-image> -->
@@ -216,7 +216,7 @@
                         <span style="color: #1f2d3d;display: inline-block;padding: 10px 0;float: left; width: 30%;">{{ invoiceInfo.invoiceTimeCh }}</span>
                         <span style="color: #1f2d3d;display: inline-block;padding: 10px 10px;float: right;text-align: right; margin-right: -3%;width: 20%;">
                             第
-                            <span v-if="invoiceInfo.classify == 10" style="padding: 0 2px;">2</span>
+                            <span v-if="invoiceInfo.type1 == 22" style="padding: 0 2px;">2</span>
                             <span v-else style="padding: 0 2px;">1</span>
                             号
                         </span>
@@ -346,7 +346,7 @@ export default {
                     });
                 }
 
-                if (this.invoiceInfo.classify == 10) {
+                if (this.invoiceInfo.type1 == 22) {
                     this.checkUser1 = '王铮';
                     this.checkUser3 = '王海清';
                     this.applyUser = '李长霖';

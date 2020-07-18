@@ -30,7 +30,6 @@
                 </el-radio-group>
             </el-form-item>
 
-
             <el-form-item label="是否找的票：" prop="isFull">
                 <el-radio-group v-model="formData.isFull">
                     <el-radio label="1">是</el-radio>
@@ -53,7 +52,7 @@
                     show-word-limit
                 ></el-input>
             </el-form-item>
-            <div v-if="formData.isFull == '1' && formData.type1 != '10'">
+            <div v-if="formData.isFull == '1' && formData.type1 != 22">
                 <div style="">
                     <el-form-item label="支付时间：" prop="payTime" style="margin-right:20px;float: left">
                         <el-date-picker v-model="formData.payTime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
@@ -99,7 +98,8 @@
                         type="date"
                         format="yyyy 年 MM 月 dd 日"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择日期"></el-date-picker>
+                        placeholder="选择日期"
+                    ></el-date-picker>
                 </el-form-item>
                 <el-form-item label="发票金额：" prop="invoicePriceYuan" style="margin-right:20px;float: left">
                     <el-input type="text" placeholder="请输入发票金额" v-model="formData.invoicePriceYuan" @blur="getApplyUser" show-word-limit></el-input>
@@ -304,10 +304,10 @@ export default {
             this.formData.itemId = editInvoiceInfo.itemId;
             this.query.itemId = editInvoiceInfo.itemId;
             this.formData.type1 = editInvoiceInfo.type1;
-            if(editInvoiceInfo.itemId!=null){
-                this.formData.type2 = [editInvoiceInfo.type2,editInvoiceInfo.itemId]
-            }else {
-                this.formData.type2 = [editInvoiceInfo.type2]
+            if (editInvoiceInfo.itemId != null) {
+                this.formData.type2 = [editInvoiceInfo.type2, editInvoiceInfo.itemId];
+            } else {
+                this.formData.type2 = [editInvoiceInfo.type2];
             }
             this.formData.type3 = editInvoiceInfo.type3;
             this.formData.isFull = editInvoiceInfo.isFull;
@@ -387,7 +387,7 @@ export default {
 
         // 主分类
         classifyChange(val) {
-            console.log(val);
+            console.log(this.formData.type1);
             // if (val == '10') {
             //     this.formData.isFull = '1';
             //     this.isDisabled = true;
@@ -410,12 +410,13 @@ export default {
                     });
                 });
             });
+            this.getApplyUser()
         },
 
         // 明细分类
         classifyChange2(val) {
-            this.query.itemId = null
-            this.formData.itemId = null
+            this.query.itemId = null;
+            this.formData.itemId = null;
             getInvoices(val[0], this.userId).then(res => {
                 // console.log(res)
                 this.subClassifyOptions = res.data.data.invoiceType;
@@ -466,41 +467,41 @@ export default {
             });
         },
         getApplyUser() {
-            // if (this.formData.classify != 10) {
-            if (this.formData.isFull == '1') {
-                this.query.priceYuan = this.formData.payPriceYuan;
-            } else {
-                this.query.priceYuan = this.formData.invoicePriceYuan;
-            }
-            
-            console.log(this.query)
+            if (this.formData.type1 != 22) {
+                if (this.formData.isFull == '1') {
+                    this.query.priceYuan = this.formData.payPriceYuan;
+                } else {
+                    this.query.priceYuan = this.formData.invoicePriceYuan;
+                }
 
-            getApplyUserInfo(this.query).then(response => {
-                this.applyUserList = [];
-                this.formData.approverids = null;
-                console.log(response)
-                response.data.data.forEach(element => {
-                    this.applyUserList.push({
-                        userId: element.userId,
-                        username: element.username,
-                        avatar: element.avatar
+                console.log(this.query);
+
+                getApplyUserInfo(this.query).then(response => {
+                    this.applyUserList = [];
+                    this.formData.approverids = null;
+                    console.log(response);
+                    response.data.data.forEach(element => {
+                        this.applyUserList.push({
+                            userId: element.userId,
+                            username: element.username,
+                            avatar: element.avatar
+                        });
+                        if (this.formData.approverids == null) {
+                            this.formData.approverids += element.userId;
+                        } else {
+                            this.formData.approverids += ',' + element.userId;
+                        }
                     });
-                    if (this.formData.approverids == null) {
-                        this.formData.approverids += element.userId;
-                    } else {
-                        this.formData.approverids += ',' + element.userId;
-                    }
                 });
-            });
-            // } else {
-            //     this.applyUserList = [];
-            //     this.formData.approverids = 23;
-            //     this.applyUserList.push({
-            //         userId: 23,
-            //         username: '王海清',
-            //         avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/qZ3bvj9j1Kicjee8pBmwQUibV3pFRHRWZVHmIFj0CIFmMVtklCOKicU1f8KYdIKJkYGYSZmGaWqVu5iasmPH5ECkQw/132'
-            //     });
-            // }
+            } else {
+                this.applyUserList = [];
+                this.formData.approverids = 23;
+                this.applyUserList.push({
+                    userId: 23,
+                    username: '王海清',
+                    avatar: 'http://thirdwx.qlogo.cn/mmopen/vi_32/qZ3bvj9j1Kicjee8pBmwQUibV3pFRHRWZVHmIFj0CIFmMVtklCOKicU1f8KYdIKJkYGYSZmGaWqVu5iasmPH5ECkQw/132'
+                });
+            }
         },
         backHistory() {
             window.localStorage.removeItem('editInvoiceInfo');
