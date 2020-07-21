@@ -184,7 +184,9 @@ export default {
                 payPriceYuan: null,
                 payImg: '',
                 payImgNum: null,
-                approverids: ''
+                approverids: '',
+                aliasNext: '',
+                itemNextId: null
             },
             isSave: true,
             uploadUrl: '',
@@ -304,8 +306,10 @@ export default {
             this.formData.itemId = editInvoiceInfo.itemId;
             this.query.itemId = editInvoiceInfo.itemId;
             this.formData.type1 = editInvoiceInfo.type1;
-            if (editInvoiceInfo.itemId != null) {
+            if (editInvoiceInfo.itemId != null && editInvoiceInfo.itemNextId == null) {
                 this.formData.type2 = [editInvoiceInfo.type2, editInvoiceInfo.itemId];
+            } else if (editInvoiceInfo.itemNextId != null) {
+                this.formData.type2 = [editInvoiceInfo.type2, editInvoiceInfo.itemNextId, editInvoiceInfo.itemId];
             } else {
                 this.formData.type2 = [editInvoiceInfo.type2];
             }
@@ -417,6 +421,7 @@ export default {
         classifyChange2(val) {
             this.query.itemId = null;
             this.formData.itemId = null;
+            this.formData.itemNextId = null;
             getInvoices(val[0], this.userId).then(res => {
                 // console.log(res)
                 this.subClassifyOptions = res.data.data.invoiceType;
@@ -528,6 +533,9 @@ export default {
             this.$router.go(-1);
         },
         onSubmit() {
+            if (this.formData.type2.length > 2) {
+                this.formData.itemNextId = this.formData.type2[1];
+            }
             this.formData.type2 = this.formData.type2[0];
             console.log(this.formData);
             this.$refs['formData'].validate(valid => {
