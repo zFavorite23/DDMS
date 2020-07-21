@@ -23,13 +23,13 @@
             </el-form>
         </div>
 
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'createTime', order: 'descending' }">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'temporaryId', order: 'descending' }">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
                 </template>
             </el-table-column>
-            <el-table-column width="100" label="采购ID">
+            <el-table-column width="100" label="采购ID" prop='temporaryId' sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.temporaryId }}</span>
                 </template>
@@ -216,7 +216,7 @@ export default {
         this.getPurchasePage();
         this.getPurchase('100000');
     },
-    
+
     methods: {
         getPurchase(id) {
             getPurchase(id, this.userId).then(res => {

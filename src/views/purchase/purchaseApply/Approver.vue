@@ -177,6 +177,10 @@ export default {
         this.query.userId = this.userId;
         this.getPurchaseApprover();
         this.getPurchase('100000');
+        let page = sessionStorage.getItem('page2');
+        if (page != null) {
+            this.query.current = Number(page);
+        }
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
             this.query.status = '';
@@ -220,12 +224,12 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getInvoicePage();
+            this.getPurchaseApprover();
         },
         handleCurrentChange(val) {
             this.query.current = val;
             sessionStorage.setItem('page2', val);
-            this.getInvoicePage();
+            this.getPurchaseApprover();
         },
         copyCode(row) {
             this.$message({

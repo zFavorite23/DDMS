@@ -198,6 +198,10 @@ export default {
         this.getUserList();
         this.getPurchasePage();
         this.getPurchase('100000');
+		let page = sessionStorage.getItem('page2');
+		if (page != null) {
+		    this.query.current = Number(page);
+		}
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
             this.query.status = '';
@@ -270,6 +274,7 @@ export default {
         },
         handleCurrentChange(val) {
             this.query.current = val;
+            sessionStorage.setItem('page2', val);
             this.getPurchasePage();
         },
         lookModal(val) {
