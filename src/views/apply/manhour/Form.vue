@@ -39,7 +39,8 @@
                     </el-select>
                 </span>
                 <span style="font-size:1rem;margin-left: 20px;" class="hidden-xs-only hidden-sm-only">
-                      当前已填工时：<span style="color: #ff9900">{{hourNum}}</span>
+                    当前已填工时：
+                    <span style="color: #ff9900">{{ hourNum }}</span>
                 </span>
             </div>
 
@@ -291,7 +292,8 @@
                     </el-select>
                 </span>
                 <span style="font-size:1rem;margin-left: 20px;" class="hidden-xs-only hidden-sm-only">
-                      当前已填工时：<span style="color: #ff9900">{{hourNum2}}</span>
+                    当前已填工时：
+                    <span style="color: #ff9900">{{ hourNum2 }}</span>
                 </span>
             </div>
             <el-table :data="tableData_2" style="width: 100%">
@@ -477,7 +479,8 @@
                     </el-select>
                 </span>
                 <span style="font-size:1rem;margin-left: 20px;" class="hidden-xs-only hidden-sm-only">
-                      当前已填工时：<span style="color: #ff9900">{{hourNum3}}</span>
+                    当前已填工时：
+                    <span style="color: #ff9900">{{ hourNum3 }}</span>
                 </span>
             </div>
             <el-table :data="tableData_3" style="width: 100%">
@@ -663,7 +666,8 @@
                     </el-select>
                 </span>
                 <span style="font-size:1rem;margin-left: 20px;" class="hidden-xs-only hidden-sm-only">
-                      当前已填工时：<span style="color: #ff9900">{{hourNum4}}</span>
+                    当前已填工时：
+                    <span style="color: #ff9900">{{ hourNum4 }}</span>
                 </span>
             </div>
             <el-table :data="tableData_4" style="width: 100%">
@@ -848,7 +852,8 @@
                     </el-select>
                 </span>
                 <span style="font-size:1rem;margin-left: 20px;" class="hidden-xs-only hidden-sm-only">
-                      当前已填工时：<span style="color: #ff9900">{{hourNum5}}</span>
+                    当前已填工时：
+                    <span style="color: #ff9900">{{ hourNum5 }}</span>
                 </span>
             </div>
             <el-table :data="tableData_5" style="width: 100%">
@@ -1034,7 +1039,8 @@
                     </el-select>
                 </span>
                 <span style="font-size:1rem;margin-left: 20px;" class="hidden-xs-only hidden-sm-only">
-                      当前已填工时：<span style="color: #ff9900">{{hourNum6}}</span>
+                    当前已填工时：
+                    <span style="color: #ff9900">{{ hourNum6 }}</span>
                 </span>
             </div>
             <el-table :data="tableData_6" style="width: 100%">
@@ -1245,7 +1251,9 @@ export default {
                     // 日期
                     day: '',
                     useHour: '',
-                    useMin: 0
+                    useMin: 0,
+                    aliasNext: '',
+                    itemNextId: null
                 }
             ],
             tableData_2: [
@@ -1273,7 +1281,9 @@ export default {
                     useHour: '',
                     // 日期
                     day: '',
-                    useMin: 0
+                    useMin: 0,
+                    aliasNext: '',
+                    itemNextId: null
                 }
             ],
             tableData_3: [
@@ -1301,7 +1311,9 @@ export default {
                     useHour: '',
                     // 日期
                     day: '',
-                    useMin: 0
+                    useMin: 0,
+                    aliasNext: '',
+                    itemNextId: null
                 }
             ],
             tableData_4: [
@@ -1329,7 +1341,9 @@ export default {
                     useHour: '',
                     // 日期
                     day: '',
-                    useMin: 0
+                    useMin: 0,
+                    aliasNext: '',
+                    itemNextId: null
                 }
             ],
             tableData_5: [
@@ -1357,7 +1371,9 @@ export default {
                     useHour: '',
                     // 日期
                     day: '',
-                    useMin: 0
+                    useMin: 0,
+                    aliasNext: '',
+                    itemNextId: null
                 }
             ],
             tableData_6: [
@@ -1385,7 +1401,9 @@ export default {
                     useHour: '',
                     // 日期
                     day: '',
-                    useMin: 0
+                    useMin: 0,
+                    aliasNext: '',
+                    itemNextId: null
                 }
             ],
             query: {
@@ -1469,7 +1487,7 @@ export default {
             applyClockInfo: '',
             pickerOptions: {
                 disabledDate(time) {
-                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 1 
+                    return time.getTime() < new Date().getTime() - 3600 * 1000 * 24 * 1;
                 }
             },
             hourNum: 0.5,
@@ -1527,37 +1545,37 @@ export default {
         deleteRow_1(index) {
             if (this.tableData_1.length > 1) {
                 this.tableData_1.splice(index, 1);
-                this.hourNum = this.hourNum - 0.5
+                this.hourNum = this.hourNum - 0.5;
             }
         },
         deleteRow_2(index) {
             if (this.tableData_2.length > 1) {
                 this.tableData_2.splice(index, 1);
-                this.hourNum2 = this.hourNum2 - 0.5
+                this.hourNum2 = this.hourNum2 - 0.5;
             }
         },
         deleteRow_3(index) {
             if (this.tableData_3.length > 1) {
                 this.tableData_3.splice(index, 1);
-                this.hourNum3 = this.hourNum3 - 0.5
+                this.hourNum3 = this.hourNum3 - 0.5;
             }
         },
         deleteRow_4(index) {
             if (this.tableData_4.length > 1) {
                 this.tableData_4.splice(index, 1);
-                this.hourNum4 = this.hourNum4 - 0.5
+                this.hourNum4 = this.hourNum4 - 0.5;
             }
         },
         deleteRow_5(index) {
             if (this.tableData_5.length > 1) {
                 this.tableData_5.splice(index, 1);
-                this.hourNum5 = this.hourNum5 - 0.5
+                this.hourNum5 = this.hourNum5 - 0.5;
             }
         },
         deleteRow_6(index) {
             if (this.tableData_6.length > 1) {
                 this.tableData_6.splice(index, 1);
-                this.hourNum6 = this.hourNum6 - 0.5
+                this.hourNum6 = this.hourNum6 - 0.5;
             }
         },
 
@@ -1574,7 +1592,7 @@ export default {
                 });
                 return;
             }
-            this.hourNum= this.hourNum + 0.5
+            this.hourNum = this.hourNum + 0.5;
             var list = {
                 // 自评分
                 integral: this.tableData_1[0].integral,
@@ -1601,6 +1619,8 @@ export default {
                 // 工时
                 useMin: '',
                 useHour: 0.5,
+                aliasNext: '',
+                itemNextId: null,
                 // 填报日期
                 day: this.tableData_1[0].day
             };
@@ -1621,7 +1641,7 @@ export default {
                 });
                 return;
             }
-            this.hourNum2 = this.hourNum2 + 0.5
+            this.hourNum2 = this.hourNum2 + 0.5;
             var list = {
                 // 自评分
                 integral: this.tableData_2[0].integral,
@@ -1648,6 +1668,8 @@ export default {
                 // 工时
                 useMin: '',
                 useHour: 0.5,
+                aliasNext: '',
+                itemNextId: null,
                 // 填报日期
                 day: this.tableData_2[0].day
             };
@@ -1668,7 +1690,7 @@ export default {
                 });
                 return;
             }
-             this.hourNum3 = this.hourNum3 + 0.5
+            this.hourNum3 = this.hourNum3 + 0.5;
             var list = {
                 // 自评分
                 integral: this.tableData_3[0].integral,
@@ -1695,6 +1717,8 @@ export default {
                 // 工时
                 useMin: '',
                 useHour: 0.5,
+                aliasNext: '',
+                itemNextId: null,
                 // 填报日期
                 day: this.tableData_3[0].day
             };
@@ -1715,7 +1739,7 @@ export default {
                 });
                 return;
             }
-             this.hourNum4 = this.hourNum4 + 0.5
+            this.hourNum4 = this.hourNum4 + 0.5;
             var list = {
                 // 自评分
                 integral: this.tableData_4[0].integral,
@@ -1742,6 +1766,8 @@ export default {
                 // 工时
                 useMin: '',
                 useHour: 0.5,
+                aliasNext: '',
+                itemNextId: null,
                 // 填报日期
                 day: this.tableData_4[0].day
             };
@@ -1762,7 +1788,7 @@ export default {
                 });
                 return;
             }
-             this.hourNum5 = this.hourNum5 + 0.5
+            this.hourNum5 = this.hourNum5 + 0.5;
             var list = {
                 // 自评分
                 integral: this.tableData_5[0].integral,
@@ -1789,6 +1815,8 @@ export default {
                 // 工时
                 useMin: '',
                 useHour: 0.5,
+                aliasNext: '',
+                itemNextId: null,
                 // 填报日期
                 day: this.tableData_5[0].day
             };
@@ -1809,7 +1837,7 @@ export default {
                 });
                 return;
             }
-             this.hourNum6 = this.hourNum6 + 0.5
+            this.hourNum6 = this.hourNum6 + 0.5;
             var list = {
                 // 自评分
                 integral: this.tableData_6[0].integral,
@@ -1836,6 +1864,8 @@ export default {
                 // 工时
                 useMin: '',
                 useHour: 0.5,
+                aliasNext: '',
+                itemNextId: null,
                 // 填报日期
                 day: this.tableData_6[0].day
             };
@@ -1922,7 +1952,6 @@ export default {
                 this.tableData_1[8].mainClassify = this.tableData_1[8].mainClassify[0];
                 this.tableData_1[9].mainClassify = this.tableData_1[9].mainClassify[0];
             }
-
 
             for (var i = 0; i < this.tableData_1.length; i++) {
                 if (this.tableData_1[i].useHour > 0) {
@@ -2325,7 +2354,7 @@ export default {
                 hour += this.tableData_1[i].useHour;
             }
 
-            this.hourNum = hour
+            this.hourNum = hour;
 
             if (this.maxUseHour_1 < hour) {
                 // this.useHourDisabled_1 = true;
@@ -2340,7 +2369,7 @@ export default {
             for (var i = 0; i < this.tableData_2.length; i++) {
                 hour += this.tableData_2[i].useHour;
             }
-            this.hourNum2 = hour
+            this.hourNum2 = hour;
             if (this.maxUseHour_2 < hour) {
                 // this.useHourDisabled_1 = true;
                 Message({
@@ -2354,7 +2383,7 @@ export default {
             for (var i = 0; i < this.tableData_3.length; i++) {
                 hour += this.tableData_3[i].useHour;
             }
-            this.hourNum3 = hour
+            this.hourNum3 = hour;
             if (this.maxUseHour_3 < hour) {
                 // this.useHourDisabled_1 = true;
                 Message({
@@ -2368,7 +2397,7 @@ export default {
             for (var i = 0; i < this.tableData_4.length; i++) {
                 hour += this.tableData_4[i].useHour;
             }
-            this.hourNum4 = hour
+            this.hourNum4 = hour;
             if (this.maxUseHour_4 < hour) {
                 // this.useHourDisabled_1 = true;
                 Message({
@@ -2382,7 +2411,7 @@ export default {
             for (var i = 0; i < this.tableData_5.length; i++) {
                 hour += this.tableData_5[i].useHour;
             }
-            this.hourNum5 = hour
+            this.hourNum5 = hour;
             if (this.maxUseHour_5 < hour) {
                 // this.useHourDisabled_1 = true;
                 Message({
@@ -2396,7 +2425,7 @@ export default {
             for (var i = 0; i < this.tableData_6.length; i++) {
                 hour += this.tableData_6[i].useHour;
             }
-            this.hourNum6 = hour
+            this.hourNum6 = hour;
             if (this.maxUseHour_6 < hour) {
                 // this.useHourDisabled_1 = true;
                 Message({
@@ -3114,13 +3143,14 @@ export default {
         selectcMainClassify(val, index) {
             this.tableData_1[index].subClassify = '';
             this.tableData_1[index].itemId = null;
+            this.tableData_1[index].itemNextId = null;
 
             // 获取子类
             if (index == 0) {
                 selectCategory(val[0], this.userId).then(res => {
                     // 清空数据
                     this.subClassifyOptions_1 = [];
-                    console.log(res)
+                    console.log(res);
                     res.data.data.ddRegions.forEach(item => {
                         this.subClassifyOptions_1.push({
                             value: item.id,
@@ -3241,14 +3271,16 @@ export default {
             // 判断长度 获取项目id
             if (val.length > 1 && val.length < 3) {
                 this.tableData_1[index].itemId = val[1];
-                this.query.itemId  = val[1]
-                console.log(this.query)
-            } else if (val.length == 3){
+                this.query.itemId = val[1];
+                console.log(this.query);
+            } else if (val.length == 3) {
                 this.tableData_1[index].itemId = val[2];
-                this.query.itemId  = val[2]
-                console.log(this.query)
-            }else {
+                this.tableData_1[index].itemNextId = val[1];
+                this.query.itemId = val[2];
+                console.log(this.query);
+            } else {
                 this.tableData_1[index].itemId = null;
+                this.tableData_1[index].itemNextId = null;
             }
             // 获取验收人
             if (val.length > 1 && index == 0) {
@@ -3607,13 +3639,14 @@ export default {
         selectcMainClassify2(val, index) {
             this.tableData_2[index].subClassify = '';
             this.tableData_2[index].itemId = null;
+            this.tableData_2[index].itemNextId = null;
 
             // 获取子类
             if (index == 0) {
                 selectCategory(val[0], this.userId).then(res => {
                     // 清空数据
                     this.subClassifyOptions_1 = [];
-                    console.log(res)
+                    console.log(res);
                     res.data.data.ddRegions.forEach(item => {
                         this.subClassifyOptions_1.push({
                             value: item.id,
@@ -3674,14 +3707,16 @@ export default {
             // 判断长度 获取项目id
             if (val.length > 1 && val.length < 3) {
                 this.tableData_2[index].itemId = val[1];
-                this.query.itemId  = val[1]
-                console.log(this.query)
-            } else if (val.length == 3){
+                this.query.itemId = val[1];
+                console.log(this.query);
+            } else if (val.length == 3) {
                 this.tableData_2[index].itemId = val[2];
-                this.query.itemId  = val[2]
-                console.log(this.query)
-            }else {
+                this.tableData_2[index].itemNextId = val[1];
+                this.query.itemId = val[2];
+                console.log(this.query);
+            } else {
                 this.tableData_2[index].itemId = null;
+                this.tableData_2[index].itemNextId = null;
             }
             // 获取验收人
             if (val.length > 1 && index == 0) {
@@ -3860,19 +3895,19 @@ export default {
                     this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
                 });
             }
-
         },
         //  工作子分类
         selectcMainClassify3(val, index) {
             this.tableData_3[index].subClassify = '';
             this.tableData_3[index].itemId = null;
+            this.tableData_3[index].itemNextId = null;
 
             // 获取子类
             if (index == 0) {
                 selectCategory(val[0], this.userId).then(res => {
                     // 清空数据
                     this.subClassifyOptions_1 = [];
-                    console.log(res)
+                    console.log(res);
                     res.data.data.ddRegions.forEach(item => {
                         this.subClassifyOptions_1.push({
                             value: item.id,
@@ -3933,14 +3968,16 @@ export default {
             // 判断长度 获取项目id
             if (val.length > 1 && val.length < 3) {
                 this.tableData_3[index].itemId = val[1];
-                this.query.itemId  = val[1]
-                console.log(this.query)
-            } else if (val.length == 3){
+                this.query.itemId = val[1];
+                console.log(this.query);
+            } else if (val.length == 3) {
                 this.tableData_3[index].itemId = val[2];
-                this.query.itemId  = val[2]
-                console.log(this.query)
-            }else {
+                this.tableData_3[index].itemNextId = val[1];
+                this.query.itemId = val[2];
+                console.log(this.query);
+            } else {
                 this.tableData_3[index].itemId = null;
+                this.tableData_3[index].itemNextId = null;
             }
             // 获取验收人
             if (val.length > 1 && index == 0) {
@@ -4119,19 +4156,19 @@ export default {
                     this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
                 });
             }
-
         },
         //  工作子分类
         selectcMainClassify4(val, index) {
             this.tableData_4[index].subClassify = '';
             this.tableData_4[index].itemId = null;
+            this.tableData_4[index].itemNextId = null;
 
             // 获取子类
             if (index == 0) {
                 selectCategory(val[0], this.userId).then(res => {
                     // 清空数据
                     this.subClassifyOptions_1 = [];
-                    console.log(res)
+                    console.log(res);
                     res.data.data.ddRegions.forEach(item => {
                         this.subClassifyOptions_1.push({
                             value: item.id,
@@ -4192,14 +4229,16 @@ export default {
             // 判断长度 获取项目id
             if (val.length > 1 && val.length < 3) {
                 this.tableData_4[index].itemId = val[1];
-                this.query.itemId  = val[1]
-                console.log(this.query)
-            } else if (val.length == 3){
+                this.query.itemId = val[1];
+                console.log(this.query);
+            } else if (val.length == 3) {
                 this.tableData_4[index].itemId = val[2];
-                this.query.itemId  = val[2]
-                console.log(this.query)
-            }else {
+                this.tableData_4[index].itemNextId = val[1];
+                this.query.itemId = val[2];
+                console.log(this.query);
+            } else {
                 this.tableData_4[index].itemId = null;
+                this.tableData_4[index].itemNextId = null;
             }
             // 获取验收人
             if (val.length > 1 && index == 0) {
@@ -4378,19 +4417,19 @@ export default {
                     this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
                 });
             }
-
         },
         //  工作子分类
         selectcMainClassify5(val, index) {
             this.tableData_5[index].subClassify = '';
             this.tableData_5[index].itemId = null;
+            this.tableData_5[index].itemNextId = null;
 
             // 获取子类
             if (index == 0) {
                 selectCategory(val[0], this.userId).then(res => {
                     // 清空数据
                     this.subClassifyOptions_1 = [];
-                    console.log(res)
+                    console.log(res);
                     res.data.data.ddRegions.forEach(item => {
                         this.subClassifyOptions_1.push({
                             value: item.id,
@@ -4451,13 +4490,15 @@ export default {
             // 判断长度 获取项目id
             if (val.length > 1 && val.length < 3) {
                 this.tableData_5[index].itemId = val[1];
-                this.query.itemId  = val[1]
-                console.log(this.query)
-            } else if (val.length == 3){
+                this.query.itemId = val[1];
+                console.log(this.query);
+            } else if (val.length == 3) {
                 this.tableData_5[index].itemId = val[2];
-                this.query.itemId  = val[2]
-                console.log(this.query)
-            }else {
+                this.tableData_5[index].itemNextId = val[1];
+                this.query.itemId = val[2];
+                console.log(this.query);
+            } else {
+                this.tableData_5[index].itemNextId = null;
                 this.tableData_5[index].itemId = null;
             }
             // 获取验收人
@@ -4637,19 +4678,19 @@ export default {
                     this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
                 });
             }
-
         },
         //  工作子分类
         selectcMainClassify6(val, index) {
             this.tableData_6[index].subClassify = '';
             this.tableData_6[index].itemId = null;
+            this.tableData_6[index].itemNextId = null;
 
             // 获取子类
             if (index == 0) {
                 selectCategory(val[0], this.userId).then(res => {
                     // 清空数据
                     this.subClassifyOptions_1 = [];
-                    console.log(res)
+                    console.log(res);
                     res.data.data.ddRegions.forEach(item => {
                         this.subClassifyOptions_1.push({
                             value: item.id,
@@ -4710,14 +4751,16 @@ export default {
             // 判断长度 获取项目id
             if (val.length > 1 && val.length < 3) {
                 this.tableData_6[index].itemId = val[1];
-                this.query.itemId  = val[1]
-                console.log(this.query)
-            } else if (val.length == 3){
+                this.query.itemId = val[1];
+                console.log(this.query);
+            } else if (val.length == 3) {
                 this.tableData_6[index].itemId = val[2];
-                this.query.itemId  = val[2]
-                console.log(this.query)
-            }else {
+                this.tableData_6[index].ititemNextIdemId = val[1];
+                this.query.itemId = val[2];
+                console.log(this.query);
+            } else {
                 this.tableData_6[index].itemId = null;
+                this.tableData_6[index].itemNextId = null;
             }
             // 获取验收人
             if (val.length > 1 && index == 0) {
@@ -4896,7 +4939,6 @@ export default {
                     this.applyUserList4 = this.applyUserList4.filter(item => item.value != this.query.userId);
                 });
             }
-
         },
 
         // 未填报日期
