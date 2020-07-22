@@ -61,7 +61,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="开票备注" prop="remark">
-                <el-input v-model="formData.remark" placeholder="请填写开票备注" maxlength="30" show-word-limit></el-input>
+                <el-input v-model="formData.remark" placeholder="请填写开票备注" maxlength="60" show-word-limit></el-input>
                 <el-tag size="mini" type="danger">财务开票时填写的备注信息</el-tag>
             </el-form-item>
             <el-form-item label="产品清单：" prop="detailedList" v-if="formData.content == 22 || formData.content == 23">
