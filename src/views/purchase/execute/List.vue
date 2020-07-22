@@ -19,17 +19,17 @@
                         <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search" @click="getPurchasePage">搜索</el-button></el-form-item>
+                <el-form-item><el-button type="primary" size="medium" icon="el-icon-search" @click="getPurchaseExecutePage">搜索</el-button></el-form-item>
             </el-form>
         </div>
 
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" :default-sort="{ prop: 'temporaryId', order: 'descending' }">
+        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
                 </template>
             </el-table-column>
-            <el-table-column width="100" label="采购ID" prop='temporaryId' sortable>
+            <el-table-column width="100" label="采购ID">
                 <template slot-scope="scope">
                     <span>{{ scope.row.temporaryId }}</span>
                 </template>
@@ -54,8 +54,8 @@
                 >
                 <template slot-scope="scope">
                     <p>{{ scope.row.type1Name }}</p>
-                    <p v-if="scope.row.aliasNext==null">{{ scope.row.alias==null?scope.row.type2Name:scope.row.alias }}</p>
-                    <p v-else>{{ scope.row.aliasNext}} / {{  scope.row.alias}}</p>
+                    <p v-if="scope.row.aliasNext == null">{{ scope.row.alias == null ? scope.row.type2Name : scope.row.alias }}</p>
+                    <p v-else>{{ scope.row.aliasNext }} / {{ scope.row.alias }}</p>
                 </template>
             </el-table-column>
             <el-table-column width="110" label="申请时间" :show-overflow-tooltip="true">
@@ -154,7 +154,7 @@
 
 <script>
 import { getUserList } from '../../../api/admin/user.js';
-import { getPurchasePage, getPurchase } from '../../../api/purchase/purchase.js';
+import { getPurchaseExecutePage, getPurchase } from '../../../api/purchase/purchase.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
@@ -163,7 +163,6 @@ export default {
                 userId: null,
                 principalId: null,
                 status: '',
-                orderBy: 'create_time_desc',
                 likeKeyWords: '',
                 current: 1,
                 size: 10,
@@ -205,7 +204,6 @@ export default {
         ...mapGetters(['permissions', 'userId'])
     },
     created() {
-
         this.query.principalId = this.userId;
         let page = sessionStorage.getItem('page2');
         if (page != null) {
@@ -213,7 +211,7 @@ export default {
         }
         // this.query.userId=this.userId;
         this.getUserList();
-        this.getPurchasePage();
+        this.getPurchaseExecutePage();
         this.getPurchase('100000');
     },
 
@@ -228,8 +226,8 @@ export default {
                 });
             });
         },
-        getPurchasePage() {
-            getPurchasePage(this.query).then(res => {
+        getPurchaseExecutePage() {
+            getPurchaseExecutePage(this.query).then(res => {
                 console.log(res);
                 this.total = res.data.data.total;
                 this.query.current = res.data.data.current;
@@ -239,12 +237,12 @@ export default {
         },
         handleSizeChange(val) {
             this.query.size = val;
-            this.getPurchasePage();
+            this.getPurchaseExecutePage();
         },
         handleCurrentChange(val) {
             this.query.current = val;
             sessionStorage.setItem('page2', val);
-            this.getPurchasePage();
+            this.getPurchaseExecutePage();
         },
 
         getUserList() {
