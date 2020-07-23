@@ -3,7 +3,7 @@
         <div class="">
             <span class="tit">我审批的支出申请 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
-                <el-form-item><el-input style="width:120px"v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
+                <el-form-item><el-input style="width:120px" v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
                 <el-form-item>
                     <el-select style="width:120px" clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
@@ -13,13 +13,14 @@
                 <el-form-item>
                     <router-link to="/apply/expense/form"><el-button type="primary" size="medium">添加申请</el-button></router-link>
                 </el-form-item>
+                <el-form-item><el-button type="primary" size="medium" @click="exportExcel()">导出</el-button></el-form-item>
             </el-form>
             <el-radio-group v-model="listType" style="float: right;" @change="openList">
                 <el-radio-button label="1">我申请的</el-radio-button>
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;" >
+        <el-table :data="list" id="out-table" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="50" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -80,7 +81,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="query.current"
-            :page-sizes="[10, 20, 50, 100]"
+            :page-sizes="[10, 20, 50, 100, 500, 1000, 5000, 10000]"
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
             :total="total"
@@ -88,6 +89,9 @@
     </div>
 </template>
 <script>
+// 表格导出
+import FileSaver from 'file-saver';
+import XLSX from 'xlsx';
 import { getExpenseApproverPage } from '../../../api/apply/expense.js';
 // import {getUserInfo} from "../../../api/admin/user.js";
 import { mapGetters } from 'vuex';
@@ -174,6 +178,24 @@ export default {
                     path: '/apply/expense'
                 });
             }
+        },
+        exportExcel() {
+            let fix = document.querySelector('.el-table__fixed-right');
+            let wb;
+            if (fix) {
+                //判断要导出的节点中是否有fixed的表格，如果有，转换excel时先将该dom移除，然后append回去
+                wb = XLSX.utils.table_to_book(document.querySelector('#out-table').removeChild(fix));
+                document.querySelector('#out-table').appendChild(fix);
+            } else {
+                wb = XLSX.utils.table_to_book(document.querySelector('#out-table'));
+            }
+            let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
+            try {
+                FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '我的支出审批列表.xlsx');
+            } catch (e) {
+                if (typeof console !== 'undefined') console.log(e, wbout);
+            }
+            return wbout;
         }
     },
     mounted() {}
