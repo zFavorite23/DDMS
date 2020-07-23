@@ -23,13 +23,14 @@
                 <el-form-item>
                     <router-link to="/apply/invoice/form"><el-button type="primary" size="medium">添加申请</el-button></router-link>
                 </el-form-item>
+                <el-form-item><el-button type="primary" size="medium" @click="exportExcel()">导出</el-button></el-form-item>
             </el-form>
             <el-radio-group v-model="listType" style="float: right;" @change="openList">
                 <el-radio-button label="1">我申请的</el-radio-button>
                 <el-radio-button label="2">我审批的</el-radio-button>
             </el-radio-group>
         </div>
-        <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
+        <el-table :data="list" id="out-table" stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column width="80" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
@@ -51,9 +52,9 @@
 
             <el-table-column min-width="160" label="分类">
                 <template slot-scope="scope">
-                    <p v-if = "scope.row.type1Name">{{ scope.row.type1Name }}</p>
-                    <p v-if = "scope.row.type2Name">{{ scope.row.type2Name }}</p>
-                    <p v-if = "scope.row.type3Name">{{ scope.row.type3Name }}</p>
+                    <p v-if="scope.row.type1Name">{{ scope.row.type1Name }}</p>
+                    <p v-if="scope.row.type2Name">{{ scope.row.type2Name }}</p>
+                    <p v-if="scope.row.type3Name">{{ scope.row.type3Name }}</p>
                 </template>
             </el-table-column>
             <el-table-column min-width="80" label="是否找票">
@@ -101,7 +102,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="query.current"
-            :page-sizes="[10, 20, 50, 100]"
+            :page-sizes="[10, 20, 50, 100, 500, 1000, 5000,10000]"
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
             :total="total"
@@ -109,7 +110,10 @@
     </div>
 </template>
 <script>
-import { getInvoiceApproverPage,getInvoices } from '../../../api/apply/invoice.js';
+// 表格导出
+import FileSaver from 'file-saver';
+import XLSX from 'xlsx';
+import { getInvoiceApproverPage, getInvoices } from '../../../api/apply/invoice.js';
 import { getUserList } from '../../../api/admin/user.js';
 // import {getUserInfo} from "../../../api/admin/user.js";
 import { mapGetters } from 'vuex';
@@ -161,10 +165,10 @@ export default {
     },
     created() {
         window.localStorage.removeItem('editInvoiceInfo');
-		let page = sessionStorage.getItem('page2');
-		if (page != null) {
-		    this.query.current = Number(page);
-		}
+        let page = sessionStorage.getItem('page2');
+        if (page != null) {
+            this.query.current = Number(page);
+        }
         this.query.status = this.$route.query.status;
         if (!this.query.status) {
             this.query.status = '';
@@ -172,7 +176,7 @@ export default {
         this.query.userId = this.userId;
         this.getUserList();
         this.getInvoiceApproverPage();
-         this.getInvoices('100000');
+        this.getInvoices('100000');
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -243,6 +247,24 @@ export default {
                     path: '/apply/invoice'
                 });
             }
+        },
+        exportExcel() {
+            let fix = document.querySelector('.el-table__fixed-right');
+            let wb;
+            if (fix) {
+                //判断要导出的节点中是否有fixed的表格，如果有，转换excel时先将该dom移除，然后append回去
+                wb = XLSX.utils.table_to_book(document.querySelector('#out-table').removeChild(fix));
+                document.querySelector('#out-table').appendChild(fix);
+            } else {
+                wb = XLSX.utils.table_to_book(document.querySelector('#out-table'));
+            }
+            let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' });
+            try {
+                FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '我的报销审批列表.xlsx');
+            } catch (e) {
+                if (typeof console !== 'undefined') console.log(e, wbout);
+            }
+            return wbout;
         }
     },
     mounted() {}
