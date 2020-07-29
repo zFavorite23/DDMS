@@ -62,6 +62,7 @@
                 </el-table-column>
                 <el-table-column prop="start" min-width="60" label="提前"></el-table-column>
                 <el-table-column prop="end" min-width="60" label="加班"></el-table-column>
+                <el-table-column prop="min" min-width="60" label="统计时长" :formatter="formatType2"></el-table-column>
                 <el-table-column prop="createTime" min-width="160" label="创建时间"></el-table-column>
                 <el-table-column label="操作" min-width="100">
                     <template slot-scope="scope">
@@ -198,7 +199,7 @@ export default {
             this.listLoading = true;
             getPageList(this.query)
                 .then(response => {
-                    // console.log(response);
+                    console.log(response);
                     this.listLoading = false;
                     this.total = response.data.data.total;
                     this.query.current = response.data.data.current;
@@ -257,6 +258,9 @@ export default {
         },
         formatType: function(row) {
             return row.type == 1 ? '上班' : row.type == 2 ? '下班' : '未知';
+        },
+        formatType2: function(row) {
+            return row.type == 1 ? '' : row.type == 2 ? row.min : '';
         },
         // 单独处理时间的函数
         dealDisabledDate(time) {
