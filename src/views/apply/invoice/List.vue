@@ -193,7 +193,7 @@ export default {
         this.query.userId = this.userId;
         this.getInvoicePage();
         this.getUserList();
-        this.getInvoices('100000');
+        this.getInvoices('-1');
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -297,7 +297,14 @@ export default {
             invoiceMigration().then(response => {});
         }
     },
-    mounted() {}
+    watch: {
+        'query.likeKeyWords': {
+            handler: function() {
+                this.query.current = 1;
+                this.getInvoicePage();
+            }
+        }
+    }
 };
 </script>
 <style type="text/scss" lang="scss"></style>

@@ -102,7 +102,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="query.current"
-            :page-sizes="[10, 20, 50, 100, 500, 1000, 5000,10000]"
+            :page-sizes="[10, 20, 50, 100, 499, 1000, 5000]"
             :page-size="query.size"
             layout="total, sizes, prev, pager, next"
             :total="total"
@@ -165,7 +165,7 @@ export default {
     },
     created() {
         window.localStorage.removeItem('editInvoiceInfo');
-        let page = sessionStorage.getItem('page2');
+        let page = sessionStorage.getItem('approverPage');
         if (page != null) {
             this.query.current = Number(page);
         }
@@ -232,7 +232,7 @@ export default {
         },
         handleCurrentChange(val) {
             this.query.current = val;
-            sessionStorage.setItem('page2', val);
+            sessionStorage.setItem('approverPage', val);
             this.getInvoiceApproverPage();
         },
         handInfo(data) {
@@ -267,7 +267,14 @@ export default {
             return wbout;
         }
     },
-    mounted() {}
+    watch: {
+        'query.likeKeyWords': {
+            handler: function() {
+                this.query.current = 1;
+                this.getInvoiceApproverPage();
+            }
+        }
+    }
 };
 </script>
 <style type="text/scss" scope lang="scss"></style>
