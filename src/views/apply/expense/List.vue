@@ -290,7 +290,14 @@ export default {
             expenseMigration().then(response => {});
         }
     },
-    mounted() {}
+    watch: {
+        'query.likeKeyWords': {
+            handler: function() {
+                this.query.current = 1;
+                this.getExpenseList();
+            }
+        }
+    }
 };
 </script>
 <style type="text/scss" scope lang="scss">

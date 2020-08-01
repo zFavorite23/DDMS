@@ -198,7 +198,14 @@ export default {
             return wbout;
         }
     },
-    mounted() {}
+    watch: {
+        'query.likeKeyWords': {
+            handler: function() {
+                this.query.current = 1;
+                this.getExpenseApproverPage();
+            }
+        }
+    }
 };
 </script>
 <style type="text/scss" scope lang="scss"></style>
