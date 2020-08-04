@@ -153,6 +153,7 @@ export default {
             query3: {
                 startDay: dateFormat(new Date()).substr(0, 7) + '-01',
                 endDay: dateFormat(new Date()),
+                userId: null,
                 type: '1'
             },
             // 中心
@@ -615,6 +616,7 @@ export default {
         this.getHourRadixDeptCentre();
         this.query1.deptId = this.deptId;
         this.query4.userId = this.userId;
+        this.query3.userId = this.userId;
 
         this.getHourRadix();
     },
@@ -696,7 +698,7 @@ export default {
             this.isShow4 = false;
             this.isShow5 = false;
             if (this.query3.type == 1) {
-                getHourRadixDeptCentre(this.query4).then(res => {
+                getHourRadixDeptCentre(this.query3).then(res => {
                     this.optionBar3.title.text = `公司中心工时排行`;
                     res.data.data.forEach((item, index) => {
                         // console.log(item);
