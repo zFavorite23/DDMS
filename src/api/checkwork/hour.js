@@ -96,3 +96,23 @@ export function getDecline(query) {
         params: query
     });
 }
+
+/**
+ * 中心系数
+ */
+
+export function getHourRadixDeptCentre(query) {
+    return axios({
+        url: "/checkwork/clockHour/dept/centre",
+        method: "get",
+        params: query
+    });
+}
+export function getHourRadixDeptCentreuser(query) {
+    return axios({
+        url: "/checkwork/clockHour/centre/user",
+        method: "get",
+        params: query
+    });
+}
+
