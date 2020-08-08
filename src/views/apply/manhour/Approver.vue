@@ -42,12 +42,12 @@
             </el-table-column>
             <el-table-column min-width="180" label="审批工时">
                 <template slot-scope="scope">
-                    <!-- <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkMin }} 小时</p>
+                    <!-- <p v-show="scope.row.show" v-if="scope.row.status == 2 || scope.row.status == 1">{{ scope.row.checkHour }} 小时</p>
                     <p v-show="scope.row.show" v-else>{{ scope.row.useHour }} 小时</p> -->
                     <!-- v-show="!scope.row.show" -->
                     <el-input-number
                         v-if="scope.row.status == 0"
-                        v-model="scope.row.checkMin"
+                        v-model="scope.row.checkHour"
                         controls-position="right"
                         size="mini"
                         step-strictly
@@ -55,7 +55,7 @@
                         :max="24"
                         :min="0.0"
                     ></el-input-number>
-                    <span v-else>{{ scope.row.checkMin }} 小时</span>
+                    <span v-else>{{ scope.row.checkHour }} 小时</span>
                 </template>
             </el-table-column>
             <el-table-column min-width="180" label="反馈意见">
@@ -171,8 +171,8 @@ export default {
                     this.list = response.data.data.records;
                     this.list.forEach(item => {
                         this.$set(item, 'show', true);
-                        if (item.checkMin == null || item.checkMin == 0) {
-                            item.checkMin = item.useHour;
+                        if (item.checkHour == null || item.checkHour == 0) {
+                            item.checkHour = item.useHour;
                         }
                         // console.log(item);
                     });
@@ -192,10 +192,11 @@ export default {
 
         // 通过审批
         updateManhourApprover(val) {
-            if (this.list[val].checkMin == this.list[val].useHour - 2 || this.list[val].checkMin == 0) {
-                this.list[val].checkMin = this.list[val].useHour;
+            if (this.list[val].checkHour == this.list[val].useHour - 2 || this.list[val].checkHour == 0) {
+                this.list[val].checkHour = this.list[val].useHour;
             }
-            this.list[val].checkMin = parseFloat(this.list[val].checkMin);
+            this.list[val].checkHour = parseFloat(this.list[val].checkHour);
+            this.list[val].checkMin=this.list[val].checkHour*60
             this.$set(this.list[val], 'check', 1);
             console.log(this.list[val]);
             updateManhourApprover(this.list[val]).then(res => {
@@ -207,10 +208,10 @@ export default {
         //  不通过审批
         okUpdate(val) {
             this.list[val].show = false;
-            if (this.list[val].checkMin == this.list[val].useHour - 2 || this.list[val].checkMin == 0) {
-                this.list[val].checkMin = this.list[val].useHour;
+            if (this.list[val].checkHour == this.list[val].useHour - 2 || this.list[val].checkHour == 0) {
+                this.list[val].checkHour = this.list[val].useHour;
             }
-            this.list[val].checkMin = parseFloat(this.list[val].checkMin);
+            this.list[val].checkHour = parseFloat(this.list[val].checkHour);
             this.$set(this.list[val], 'check', 2);
             console.log(this.list[val]);
             updateManhourApprover(this.list[val]).then(res => {
@@ -223,8 +224,8 @@ export default {
         // updateManhourAll() {
         //     var Newlist = this.list.filter(item => item.status == 0);
         //     for (var i = 0; i < Newlist.length; i++) {
-        //         if (Newlist[i].checkMin == Newlist[i].useHour - 2 || this.list[val].checkMin == 0) {
-        //             Newlist[i].checkMin = Newlist[i].useHour;
+        //         if (Newlist[i].checkHour == Newlist[i].useHour - 2 || this.list[val].checkHour == 0) {
+        //             Newlist[i].checkHour = Newlist[i].useHour;
         //         }
         //     }
         //     updateManhourApproverAll(Newlist).then(res => {
