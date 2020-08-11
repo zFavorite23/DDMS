@@ -56,7 +56,7 @@
                 <el-input v-model="timeValue" placeholder="请选择日期" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="外出事由：" prop="reason"><el-input type="textarea" v-model="formData.reason" maxlength="30" show-word-limit></el-input></el-form-item>
+            <el-form-item label="外出事由：" prop="reason"><el-input type="textarea" v-model="formData.reason" maxlength="80" show-word-limit></el-input></el-form-item>
             <el-form-item label="审批人：">
                 <div class="apply-user-list" v-for="user in applyUserList">
                     <el-avatar :size="60" :src="user.avatar"></el-avatar>

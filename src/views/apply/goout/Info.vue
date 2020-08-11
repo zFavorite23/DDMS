@@ -215,6 +215,7 @@ export default {
                     if (res.data.data) {
                         this.backHistory();
                     }
+                    
                 })
                 .finally(() => {
                     this.saving = false;
