@@ -39,7 +39,7 @@
             </el-table-column>
             <el-table-column label="审批工时">
                 <template slot-scope="scope">
-                    <p v-if="scope.row.checkMin != null">{{ scope.row.checkHour }} 小时</p>
+                    <p v-if="scope.row.checkMin != null">{{ scope.row.checkMin }} 小时</p>
                     <p v-else>{{ scope.row.useHour }} 小时</p>
                 </template>
             </el-table-column>
