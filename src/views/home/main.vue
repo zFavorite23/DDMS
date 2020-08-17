@@ -319,10 +319,10 @@ export default {
         this.getApplyPage();
         this.getApproverPage();
 
-        if (!window.sessionStorage.getItem('storge')) {
-            this.open();
-            window.sessionStorage.setItem('storge', 'true');
-        }
+        // if (!window.sessionStorage.getItem('storge')) {
+        //     this.open();
+        //     window.sessionStorage.setItem('storge', 'true');
+        // }
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
@@ -489,7 +489,7 @@ export default {
             console.log(id);
             if (id == 1) {
                 this.$router.push({
-                    path: '/project/itemApprover?status=0'
+                    path: '/project/itemAdmin?status=0'
                 });
             } else if (id == 2) {
                 this.$router.push({
@@ -537,7 +537,7 @@ export default {
             var id = event.currentTarget.id;
             if (id == 1) {
                 this.$router.push({
-                    path: '/project/itemApprover?status=1'
+                    path: '/project/itemAdmin?status=1'
                 });
             } else if (id == 2) {
                 this.$router.push({
@@ -586,7 +586,7 @@ export default {
             console.log(id);
             if (id == 1) {
                 this.$router.push({
-                    path: '/project/itemApprover?status=2'
+                    path: '/project/itemAdmin?status=2'
                 });
             } else if (id == 2) {
                 this.$router.push({
