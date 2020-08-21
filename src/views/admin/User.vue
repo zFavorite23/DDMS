@@ -380,7 +380,7 @@ export default {
             getPageList(this.query)
                 .then(response => {
                     this.loading = false;
-                    //console.log(response.data.data)
+                    console.log(response.data.data)
                     this.total = response.data.data.total;
                     this.query.current = response.data.data.current;
                     this.query.size = response.data.data.size;

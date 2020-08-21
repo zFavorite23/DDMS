@@ -22,6 +22,11 @@
                 label="税号"
             ></el-table-column>
             <el-table-column
+                prop="telephone"
+                label="注册电话"
+                class="hidden-phone hidden-xs"
+            ></el-table-column>
+            <el-table-column
                 prop="bankName"
                 label="开户行名称"
                 class="hidden-phone hidden-xs"
