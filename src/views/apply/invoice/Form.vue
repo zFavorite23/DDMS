@@ -157,6 +157,9 @@ export default {
                 userId: null,
                 deptId: null,
                 itemId: null,
+                type1: '',
+                type2: '',
+                itemNextId: null,
                 type: 6,
                 priceYuan: 0
             },
@@ -300,12 +303,11 @@ export default {
         console.log(editInvoiceInfo);
         if (editInvoiceInfo) {
             this.formData.newData = false;
-            this.formData.invoiceId = editInvoiceInfo.invoiceId;
-            this.formData.companyId = editInvoiceInfo.companyId;
+            this.query.type1 = editInvoiceInfo.type1;
             this.query.companyId = editInvoiceInfo.companyId;
-            this.formData.itemId = editInvoiceInfo.itemId;
             this.query.itemId = editInvoiceInfo.itemId;
-            this.formData.type1 = editInvoiceInfo.type1;
+            this.query.itemNextId = editInvoiceInfo.itemNextId;
+            this.query.type2 = editInvoiceInfo.type2;
             if (editInvoiceInfo.itemId != null && editInvoiceInfo.itemNextId == null) {
                 this.formData.type2 = [editInvoiceInfo.type2, editInvoiceInfo.itemId];
             } else if (editInvoiceInfo.itemNextId != null) {
@@ -313,6 +315,11 @@ export default {
             } else {
                 this.formData.type2 = [editInvoiceInfo.type2];
             }
+
+            this.formData.invoiceId = editInvoiceInfo.invoiceId;
+            this.formData.companyId = editInvoiceInfo.companyId;
+            this.formData.itemId = editInvoiceInfo.itemId;
+            this.formData.type1 = editInvoiceInfo.type1;
             this.formData.type3 = editInvoiceInfo.type3;
             this.formData.isFull = editInvoiceInfo.isFull;
             this.formData.invoiceType = editInvoiceInfo.invoiceType;
@@ -391,16 +398,9 @@ export default {
 
         // 主分类
         classifyChange(val) {
+            this.query.type1 = val;
             console.log(this.formData.type1);
-            // if (val == '10') {
-            //     this.formData.isFull = '1';
-            //     this.isDisabled = true;
-            // } else if (val == '11' || val == '12') {
-            //     this.formData.itemId = '';
-            //     this.isDisabled = false;
-            // } else {
-            //     this.isDisabled = false;
-            // }
+
             this.mainClassifyOptions = [];
             this.subClassifyOptions = [];
 
@@ -414,7 +414,7 @@ export default {
                     });
                 });
             });
-            this.getApplyUser()
+            this.getApplyUser();
         },
 
         // 明细分类
@@ -431,28 +431,24 @@ export default {
             if (val.length > 1 && val.length < 3) {
                 this.query.itemId = val[1];
                 this.formData.itemId = val[1];
+                this.query.type2 = val[0];
+                this.query.itemNextId = null;
                 this.getApplyUser();
             } else if (val.length == 3) {
+                this.query.type2 = val[0];
                 this.query.itemId = val[2];
                 this.formData.itemId = val[2];
+                this.query.itemNextId = val[1];
                 this.getApplyUser();
             } else {
                 this.query.itemId = null;
+                this.query.itemNextId = null;
+                this.query.type2 = val[0];
                 this.formData.itemId = null;
+                this.getApplyUser();
             }
         },
 
-        // selectItem(val) {
-        //     if (val == null || val == '') {
-        //         this.query.itemId = null;
-        //         this.formData.itemId = null;
-        //         this.getApplyUser();
-        //     } else {
-        //         this.query.itemId = val;
-        //         this.formData.itemId = val;
-        //         this.getApplyUser();
-        //     }
-        // },
         getItemVosWithUserId(userId) {
             getItemVosWithUserId(userId).then(response => {
                 response.data.data.forEach(element => {
@@ -472,6 +468,7 @@ export default {
             });
         },
         getApplyUser() {
+            console.log(this.query);
             if (this.formData.type1 != 22) {
                 if (this.formData.isFull == '1') {
                     this.query.priceYuan = this.formData.payPriceYuan;
@@ -479,13 +476,22 @@ export default {
                     this.query.priceYuan = this.formData.invoicePriceYuan;
                 }
 
-                console.log(this.query);
-
                 getApplyUserInfo(this.query).then(response => {
                     this.applyUserList = [];
                     this.formData.approverids = null;
-                    console.log(response);
-                    response.data.data.forEach(element => {
+                    var newArr = response.data.data.filter(item => item.userId != this.query.userId);
+                    // 去重
+                    var newArr1 = [];
+                    var obj = {};
+                    for (var i = 0; i < newArr.length; i++) {
+                        if (!obj[newArr[i].userId]) {
+                            newArr1.push(newArr[i]);
+                            obj[newArr[i].userId] = true;
+                        }
+                    }
+                    console.log(newArr1);
+
+                    newArr1.forEach(element => {
                         this.applyUserList.push({
                             userId: element.userId,
                             username: element.username,
@@ -646,4 +652,9 @@ export default {
     mounted() {}
 };
 </script>
+<style>
+.el-radio-group {
+    line-height: 30px !important;
+}
+</style>
 <style type="text/scss" scoped lang="scss"></style>
