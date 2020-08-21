@@ -208,6 +208,9 @@ export default {
                 userId: null,
                 deptId: null,
                 isPublic: '1',
+                type1: '',
+                type2: '',
+                itemNextId: null,
                 type: 7,
                 priceYuan: 0
             },
@@ -326,12 +329,20 @@ export default {
         this.uploadUrl = `${window.location.origin}/apply/expense/upload`;
 
         const editPurchaseInfo = JSON.parse(window.localStorage.getItem('editPurchaseInfo'));
-        console.log(editPurchaseInfo)
+        console.log(editPurchaseInfo);
         if (editPurchaseInfo) {
             this.formData.name = editPurchaseInfo.name;
             this.formData.type1 = editPurchaseInfo.type1;
             this.formData.itemId = editPurchaseInfo.itemId;
-            if (editPurchaseInfo.itemId != 0 && editPurchaseInfo.itemNextId == null) {
+            this.query.type1 = editPurchaseInfo.type1;
+            this.query.companyId = editPurchaseInfo.companyId;
+            this.query.itemId = editPurchaseInfo.itemId;
+            this.query.itemNextId = editPurchaseInfo.itemNextId;
+            this.applyUserList = editPurchaseInfo.checkUserList;
+            this.query.type2 = editPurchaseInfo.type2;
+            this.formData.type3 = editPurchaseInfo.type3;
+
+            if (editPurchaseInfo.itemId != null && editPurchaseInfo.itemNextId == null) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
             } else if (editPurchaseInfo.itemNextId != null) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemNextId, editPurchaseInfo.itemId];
@@ -350,7 +361,7 @@ export default {
             getExpense(this.formData.type2[0], this.userId).then(res => {
                 this.subClassifyOptions = res.data.data.expenseType;
             });
-            this.formData.type3 = editPurchaseInfo.type3;
+
 
             if (editPurchaseInfo.pactImg) {
                 editPurchaseInfo.pactImg.split(',').forEach((item, index) => {
@@ -368,6 +379,8 @@ export default {
         }
 
         const editExpenseInfo = JSON.parse(window.localStorage.getItem('editExpenseInfo'));
+        console.log(editExpenseInfo);
+
         if (editExpenseInfo) {
             this.formData.newData = false;
             this.formData.expenseId = editExpenseInfo.expenseId;
@@ -375,9 +388,13 @@ export default {
             this.formData.classify = editExpenseInfo.classify;
             this.formData.type = editExpenseInfo.type;
             this.formData.itemId = editExpenseInfo.itemId;
-            this.query.itemId = editExpenseInfo.itemId;
-
+            this.query.type1 = editExpenseInfo.type1;
             this.formData.type1 = editExpenseInfo.type1;
+            this.query.companyId = editExpenseInfo.companyId;
+            this.query.itemId = editExpenseInfo.itemId;
+            this.query.itemNextId = editExpenseInfo.itemNextId;
+            this.applyUserList = editExpenseInfo.checkUserList;
+            this.query.type2 = editExpenseInfo.type2;
             if (editExpenseInfo.itemId != null && editExpenseInfo.itemNextId == null) {
                 this.formData.type2 = [editExpenseInfo.type2, editExpenseInfo.itemId];
             } else if (editExpenseInfo.itemNextId != null) {
@@ -385,6 +402,7 @@ export default {
             } else {
                 this.formData.type2 = [editExpenseInfo.type2];
             }
+
             getExpense(this.formData.type1, this.userId).then(res => {
                 res.data.data.expenseType.forEach(item => {
                     this.mainClassifyOptions.push({
@@ -459,7 +477,7 @@ export default {
 
         // 主分类
         classifyChange(val) {
-            console.log(val);
+            this.query.type1 = val;
 
             this.mainClassifyOptions = [];
             this.subClassifyOptions = [];
@@ -490,14 +508,21 @@ export default {
             if (val.length > 1 && val.length < 3) {
                 this.query.itemId = val[1];
                 this.formData.itemId = val[1];
+                this.query.type2 = val[0];
+                this.query.itemNextId = null;
                 this.getApplyUser();
             } else if (val.length == 3) {
+                this.query.type2 = val[0];
                 this.query.itemId = val[2];
                 this.formData.itemId = val[2];
+                this.query.itemNextId = val[1];
                 this.getApplyUser();
             } else {
                 this.query.itemId = null;
+                this.query.itemNextId = null;
+                this.query.type2 = val[0];
                 this.formData.itemId = null;
+                this.getApplyUser();
             }
         },
 
@@ -513,23 +538,25 @@ export default {
             }
             this.getApplyUser();
         },
-        // selectItem(val) {
-        //     if (val == null || val == '') {
-        //         this.query.itemId = null;
-        //         this.formData.itemId = null;
-        //         this.getApplyUser();
-        //     } else {
-        //         this.query.itemId = val;
-        //         this.formData.itemId = val;
-        //         this.getApplyUser();
-        //     }
-        // },
+
         getApplyUser() {
             this.query.priceYuan = this.formData.priceYuan;
             getApplyUserInfo(this.query).then(response => {
+                console.log(response);
                 this.applyUserList = [];
                 this.formData.approverids = null;
-                response.data.data.forEach(element => {
+
+                var newArr = response.data.data.filter(item => item.userId != this.query.userId);
+                // 去重
+                var newArr1 = [];
+                var obj = {};
+                for (var i = 0; i < newArr.length; i++) {
+                    if (!obj[newArr[i].userId]) {
+                        newArr1.push(newArr[i]);
+                        obj[newArr[i].userId] = true;
+                    }
+                }
+                newArr1.forEach(element => {
                     this.applyUserList.push({
                         userId: element.userId,
                         username: element.username,
