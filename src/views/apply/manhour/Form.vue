@@ -68,13 +68,11 @@
                             :options="mainClassifyOptions1"
                             :props="{ expandTrigger: 'hover' }"
                             :show-all-levels="false"
-                            filterable
                             size="mini"
                             @change="selectcMainClassify($event, scope.$index)"
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 1"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions2"
@@ -85,7 +83,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 2"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions3"
@@ -96,7 +93,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 3"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions4"
@@ -107,7 +103,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 4"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions5"
@@ -118,7 +113,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 5"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions6"
@@ -129,7 +123,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 6"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions7"
@@ -140,7 +133,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 7"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions8"
@@ -151,7 +143,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 8"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions9"
@@ -162,7 +153,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_1[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 9"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions10"
@@ -315,7 +305,6 @@
                     <template slot-scope="scope">
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 0"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions1"
@@ -326,7 +315,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 1"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions2"
@@ -337,7 +325,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 2"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions3"
@@ -348,7 +335,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 3"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions4"
@@ -359,7 +345,6 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_2[0].integral == 0"
-                            filterable
                             v-if="scope.$index == 4"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions5"
@@ -502,7 +487,7 @@
                     <template slot-scope="scope">
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 0"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions1"
@@ -513,7 +498,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 1"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions2"
@@ -524,7 +509,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 2"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions3"
@@ -535,7 +520,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 3"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions4"
@@ -546,7 +531,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_3[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 4"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions5"
@@ -689,7 +674,7 @@
                     <template slot-scope="scope">
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 0"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions1"
@@ -700,7 +685,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 1"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions2"
@@ -711,7 +696,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 2"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions3"
@@ -722,7 +707,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 3"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions4"
@@ -733,7 +718,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_4[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 4"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions5"
@@ -875,7 +860,7 @@
                     <template slot-scope="scope">
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 0"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions1"
@@ -886,7 +871,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 1"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions2"
@@ -897,7 +882,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 2"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions3"
@@ -908,7 +893,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 3"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions4"
@@ -919,7 +904,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_5[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 4"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions5"
@@ -1062,7 +1047,7 @@
                     <template slot-scope="scope">
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 0"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions1"
@@ -1073,7 +1058,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 1"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions2"
@@ -1084,7 +1069,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 2"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions3"
@@ -1095,7 +1080,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 3"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions4"
@@ -1106,7 +1091,7 @@
                         ></el-cascader>
                         <el-cascader
                             :disabled="tableData_6[0].integral == 0"
-                            filterable
+                            
                             v-if="scope.$index == 4"
                             v-model="scope.row.mainClassify"
                             :options="mainClassifyOptions5"
