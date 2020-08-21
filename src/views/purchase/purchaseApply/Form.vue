@@ -138,14 +138,14 @@ export default {
                 deptId: null,
                 itemId: null,
                 type1: null,
-                type: 6,
+                type2: null,
                 guessPriceYuan: 0,
-                itemNextId:null
+                itemNextId: null
             },
             formData: {
                 newData: true,
                 userId: null,
-                itemId: 0,
+                itemId: null,
                 // 采购负责人
                 approverids: '',
                 // 数据id
@@ -192,7 +192,7 @@ export default {
                 companyName: null,
                 bankName: null,
                 bankAccount: null,
-                guessPriceYuan: '',
+                guessPriceYuan: 0,
                 priceYuan: '',
                 aliasNext: '',
                 itemNextId: null
@@ -233,7 +233,7 @@ export default {
         this.uploadUrl = `${window.location.origin}/apply/purchase/upload`;
 
         const editPurchaseInfo = JSON.parse(window.localStorage.getItem('editPurchaseInfo'));
-
+        // console.log(editPurchaseInfo)
         if (editPurchaseInfo) {
             this.formData.newData = false;
             this.formData.name = editPurchaseInfo.name;
@@ -241,9 +241,13 @@ export default {
             this.formData.itemId = editPurchaseInfo.itemId;
             this.formData.purchaseId = editPurchaseInfo.purchaseId;
 
+            this.query.itemNextId = editPurchaseInfo.itemNextId;
             this.query.itemId = editPurchaseInfo.itemId;
+            this.query.type1 = editPurchaseInfo.type1;
+            this.query.type2 = editPurchaseInfo.type2;
+
             this.formData.type1 = editPurchaseInfo.type1;
-            if (editPurchaseInfo.itemId != 0 && editPurchaseInfo.itemNextId == null) {
+            if (editPurchaseInfo.itemId != null && editPurchaseInfo.itemNextId == null) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
             } else if (editPurchaseInfo.itemNextId != null) {
                 this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemNextId, editPurchaseInfo.itemId];
@@ -256,8 +260,6 @@ export default {
             this.formData.demand = editPurchaseInfo.demand;
             this.formData.num = editPurchaseInfo.num;
             this.formData.unit = editPurchaseInfo.unit;
-            // this.formData.price = editPurchaseInfo.price * 0.01;
-            // this.formData.guessPrice = editPurchaseInfo.guessPrice * 0.01;
             this.formData.priceYuan = editPurchaseInfo.priceYuan;
             this.formData.guessPriceYuan = editPurchaseInfo.guessPriceYuan;
             this.formData.remark = editPurchaseInfo.remark;
@@ -306,7 +308,7 @@ export default {
                 });
             }
         }
-        console.log(this.formData);
+        // console.log(this.query)
     },
     computed: {
         ...mapGetters(['permissions', 'userId']),
@@ -326,7 +328,7 @@ export default {
         // 获取总类
         getPurchase(id, userId) {
             getPurchase(id, userId).then(res => {
-                console.log(res);
+                // console.log(res);
                 this.sumClassifyOptions = res.data.data.purchaseType;
             });
         },
@@ -349,7 +351,7 @@ export default {
         classifyChange2(val) {
             this.query.itemId = null;
             this.query.itemNextId = null;
-            this.formData.itemId = 0;
+            this.formData.itemId = null;
             this.formData.itemNextId = null;
             getPurchase(val[0], this.query.userId).then(res => {
                 this.subClassifyOptions = res.data.data.purchaseType;
@@ -359,35 +361,47 @@ export default {
             if (val.length > 1 && val.length < 3) {
                 this.query.itemId = val[1];
                 this.formData.itemId = val[1];
-                // this.getApplyUser();
+                this.query.type2 = val[0];
+                this.query.itemNextId = null;
+                this.getApplyUserInfo();
             } else if (val.length == 3) {
+                this.query.type2 = val[0];
                 this.query.itemId = val[2];
                 this.formData.itemId = val[2];
-                // this.getApplyUser();
+                this.query.itemNextId = val[1];
+                this.getApplyUserInfo();
             } else {
                 this.query.itemId = null;
-                this.formData.itemId = 0;
+                this.formData.itemId = null;
+                this.query.itemNextId = null;
+                this.query.type2 = val[0];
+                this.getApplyUserInfo();
             }
         },
 
         getApplyUserInfo() {
-            this.query.guessPriceYuan = this.formData.guessPriceYuan;
+            this.query.guessPriceYuan = String(this.formData.guessPriceYuan);
             this.query.type1 = this.formData.type1;
-            if (this.formData.type2.length > 2) {
-                this.query.itemNextId = this.formData.type2[1];
-                this.query.itemId=this.query.itemNextId
-            }
             getApprover(this.query).then(response => {
                 this.applyUserList = [];
-                this.formData.approverids = null;
-                console.log(response);
-                response.data.data.forEach(element => {
+                this.formData.approverids = '';
+                var newArr = response.data.data.filter(item => item.checkUserId != this.query.userId);
+                // 去重
+                var newArr1 = [];
+                var obj = {};
+                for (var i = 0; i < newArr.length; i++) {
+                    if (!obj[newArr[i].checkUserId]) {
+                        newArr1.push(newArr[i]);
+                        obj[newArr[i].checkUserId] = true;
+                    }
+                }
+                newArr1.forEach(element => {
                     this.applyUserList.push({
                         userId: element.checkUserId,
                         username: element.checkUserName,
                         avatar: element.checkUserAvatar
                     });
-                    if (this.formData.approverids == null) {
+                    if (this.formData.approverids == '') {
                         this.formData.approverids += element.checkUserId;
                     } else {
                         this.formData.approverids += ',' + element.checkUserId;

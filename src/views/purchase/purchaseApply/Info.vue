@@ -49,8 +49,16 @@
                             <td colspan="3"><el-link type="primary" :href="purchaseInfo.buyUrl" target="_blank">链接</el-link></td>
                         </tr>
                         <tr>
+                            <td>推荐厂家/联系方式</td>
+                            <td colspan="3">{{ purchaseInfo.factoryName }}</td>
+                        </tr>
+                        <tr>
                             <td>备注</td>
                             <td colspan="3">{{ purchaseInfo.remark }}</td>
+                        </tr>
+                        <tr>
+                            <td>收货信息</td>
+                            <td colspan="3">{{ purchaseInfo.contact }}</td>
                         </tr>
                         <tr>
                             <td>预计到货时间</td>

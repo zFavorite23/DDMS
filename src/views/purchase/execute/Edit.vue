@@ -394,7 +394,7 @@ export default {
 
                 this.query.itemId = editPurchaseInfo.itemId;
                 this.formData.type1 = editPurchaseInfo.type1;
-                if (editPurchaseInfo.itemId != 0 && editPurchaseInfo.itemNextId == null) {
+                if (editPurchaseInfo.itemId != null && editPurchaseInfo.itemNextId == null) {
                     this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemId];
                 } else if (editPurchaseInfo.itemNextId != null) {
                     this.formData.type2 = [editPurchaseInfo.type2, editPurchaseInfo.itemNextId, editPurchaseInfo.itemId];
