@@ -30,13 +30,13 @@
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="是否找的票：" prop="isFull">
+            <el-form-item label="是否找的票：" prop="isFull" v-if="formData.type1 != 297">
                 <el-radio-group v-model="formData.isFull">
                     <el-radio label="1">是</el-radio>
                     <el-radio label="0" :disabled="isDisabled">否</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="发票类型：" prop="invoiceType">
+            <el-form-item label="发票类型：" prop="invoiceType" v-if="formData.type1 != 297">
                 <el-radio-group v-model="formData.invoiceType">
                     <el-radio label="1">专票</el-radio>
                     <el-radio label="2">普票</el-radio>
@@ -85,11 +85,44 @@
                 </el-form-item>
             </div>
 
-            <el-form-item label="发票上内容的描述：" prop="invoiceDesc">
+            <div v-if="formData.type1 == 297">
+                <div style="">
+                    <el-form-item label="支付时间：" prop="payTime" style="margin-right:20px;float: left">
+                        <el-date-picker v-model="formData.payTime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="支付金额：" prop="payPriceYuan" style="margin-right:20px;float: left">
+                        <el-input type="text" placeholder="请输入支付金额" v-model="formData.payPriceYuan" @blur="getApplyUser" show-word-limit></el-input>
+                    </el-form-item>
+                    <el-form-item label="支付图片张数：" prop="payImgNum" style="margin-right:20px;float: left">
+                        <el-input type="text" placeholder="请输入支付图片张数" v-model="formData.payImgNum" show-word-limit></el-input>
+                    </el-form-item>
+                    <div style="clear: both"></div>
+                </div>
+                <el-form-item label="支付截图：" prop="payImg">
+                    <el-upload
+                        class="upload-demo"
+                        :action="uploadUrl"
+                        name="file"
+                        :on-preview="handlePreview1"
+                        :on-remove="handleRemove1"
+                        :on-success="handSuccess1"
+                        :file-list="fileList1"
+                        accept=".png,.jpg,.jpeg,.JPEG,.PNG,.JPG"
+                        :before-upload="beforeAvatarUpload"
+                        list-type="picture"
+                    >
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5MB</div>
+                    </el-upload>
+                    <!-- <input type="file" name="pic" id="pic" accept="image/gif, image/jpeg" />-->
+                </el-form-item>
+            </div>
+
+            <el-form-item label="发票上内容的描述：" prop="invoiceDesc" v-if="formData.type1 != 297">
                 <el-input type="text" v-model="formData.invoiceDesc" placeholder="请填写发票上的信息或描述" maxlength="50" show-word-limit></el-input>
             </el-form-item>
 
-            <div style="">
+            <div style="" v-if="formData.type1 != 297">
                 <el-form-item label="发票时间：" prop="invoiceTime" style="margin-right:20px;float: left">
                     <!--                    <el-input type="text" placeholder="请输入发票日期" v-model="formData.invoiceData" show-word-limit></el-input>-->
                     <el-date-picker
@@ -110,7 +143,7 @@
                 <div style="clear: both"></div>
             </div>
 
-            <el-form-item label="发票图片：" prop="invoiceImg">
+            <el-form-item label="发票图片：" prop="invoiceImg" v-if="formData.type1 != 297">
                 <el-upload
                     class="upload-demo"
                     :action="uploadUrl"

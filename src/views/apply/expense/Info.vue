@@ -111,13 +111,14 @@
                         <span v-else-if="expenseInfo.isAffirm == '0'"><el-tag type="danger">未确认</el-tag></span>
                         <span v-else></span>
                         &nbsp;&nbsp;
+
                         <el-button
                             size="mini"
                             type="danger"
                             @click.native="handleModalAffirm(expenseInfo)"
                             v-if="expenseInfo.status == 1 && expenseInfo.isAffirm == 0 && deptId == '7100'"
                         >
-                            确认
+                            确认收到票据
                         </el-button>
                     </td>
                 </tr>

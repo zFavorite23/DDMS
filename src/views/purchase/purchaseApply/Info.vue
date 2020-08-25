@@ -125,11 +125,11 @@
                     <div class="title left"><p class="name">审批</p></div>
                     <el-alert title="审批流程不可逆转" type="warning"></el-alert>
                     <el-form :model="formData" :rules="rules" ref="formData" label-width="100px" class="demo-ruleForm res" style="width: 100%">
-                        <el-form-item label="采购负责人：" prop="principalId">
+                        <!-- <el-form-item label="采购负责人：" prop="principalId">
                             <el-select v-model="formData.principalId" placeholder="请选择">
                                 <el-option v-for="item in BusinessList" :key="item.value" :label="item.label" :value="item.value"></el-option>
                             </el-select>
-                        </el-form-item>
+                        </el-form-item> -->
                         <el-radio-group v-model="formData.check" @change="selectChcek" style="margin-top: 10px;margin-left: 20px">
                             <el-radio label="1">同意</el-radio>
                             <el-radio label="2">拒绝</el-radio>
@@ -166,7 +166,7 @@ export default {
                 userId: null,
                 check: '1',
                 summary: '同意',
-                principalId: ''
+                principalId: 91
             },
             query: {
                 deptId: 3100
@@ -197,7 +197,6 @@ export default {
             getPurchaseInfo(this.purchaseId).then(res => {
                 this.purchaseInfo = res.data.data;
                 console.log(this.purchaseInfo);
-                this.formData.principalId = this.purchaseInfo.principalId;
                 this.approverList = res.data.data.checkUserList;
                 this.approverList.forEach((item, index) => {
                     if (item.check == 0 && item.isBeing == 1 && item.userId == this.formData.userId) {

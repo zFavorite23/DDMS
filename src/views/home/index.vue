@@ -78,6 +78,7 @@
                         </div>
 
                         <el-dropdown-menu slot="dropdown">
+							<el-dropdown-item @click.native="off"><span>关机</span></el-dropdown-item>
                             <el-dropdown-item @click.native="isShow = !isShow"><span>实时监控</span></el-dropdown-item>
                             <el-dropdown-item @click.native="See()"><span>软件产品</span></el-dropdown-item>
                             <el-dropdown-item @click.native="See()"><span>物联网平台</span></el-dropdown-item>
@@ -260,6 +261,14 @@ export default {
     },
     mounted() {},
     methods: {
+        off(){
+            this.$axios({
+                method:'get',
+                url:'http://www.dreamdeck.cn:18000/computer/getAllComputer'
+            }).then(res=>{
+                console.log(res)
+            })
+        },
         See(e) {
             window.open('https://www.baidu.com', '_blank');
         },
@@ -292,7 +301,11 @@ export default {
                 matched = [{ name: '首页', path: '/' }].concat(matched);
             }
             this.levelList = matched;
-            console.log(this.levelList);
+            // console.log(this.levelList);
+            console.log(
+                '%c',
+                "font-size:200px;padding:110px 500px;background:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598262465097&di=35bbe65ecf3b55b5cfbbba3355d35b28&imgtype=0&src=http%3A%2F%2Fgss2.bdstatic.com%2F-fo3dSag_xI4khGkpoWK1HF6hhy%2Fbaike%2Fs%3D220%2Fsign%3D26f00493a718972ba73a07c8d6cf7b9d%2F8718367adab44aedd8958663bf1c8701a08bfb5a.jpg') no-repeat;"
+            );
         },
         loginOut() {
             console.log('2');
@@ -426,6 +439,7 @@ export default {
     },
     created() {
         this.getBreadcrumb();
+
     },
     watch: {
         $route() {

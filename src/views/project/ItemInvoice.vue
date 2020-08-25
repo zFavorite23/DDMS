@@ -38,15 +38,57 @@ export default {
     data() {
         return {
             query1: {
-                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                startTime: '2020-01-01',
                 endTime: dateFormat(new Date()),
                 itemId: ''
             },
             query2: {
-                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                startTime: '2020-01-01',
                 endTime: dateFormat(new Date()),
                 itemId: ''
             },
+            othernNum: 0, // 其它
+            travelNum: 0, // 差旅费
+            serveNum: 0, // 业务招待费
+            outsourceNum: 0, // 外协
+            deviceNum: 0, // 设备采购
+            workNum: 0, // 办公费
+            trafficNum: 0, // 市内交通
+            meetingNum: 0, // 会议费
+            // 饼图
+            optionPie: {
+                title: {
+                    text: '支出占比',
+                    // subtext: '纯属虚构',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: []
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            },
+            // 柱状图
             optionBar: {
                 tooltip: {
                     trigger: 'axis',
@@ -105,24 +147,9 @@ export default {
                         data: []
                     }
                 ]
-            }
-        };
-    },
-    computed: {
-        ...mapGetters(['permissions'])
-    },
-    created() {
-        this.query1.itemId = this.$route.params.itemId;
-        this.query2.itemId = this.$route.params.itemId;
-
-        this.getItemPayBack(this.query1);
-    },
-    mounted() {},
-    methods: {
-        // 折线
-        drawLine() {
-            let line = this.$echarts.init(document.getElementById('line'));
-            let optionLine = {
+            },
+            // 折线图
+            optionLin: {
                 title: {
                     text: '报销分类趋势'
                 },
@@ -143,11 +170,13 @@ export default {
                         saveAsImage: {}
                     }
                 },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
-                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: []
+                    }
+                ],
                 yAxis: {
                     type: 'value'
                 },
@@ -156,123 +185,100 @@ export default {
                         name: '差旅费',
                         type: 'line',
                         stack: '总量',
-                        data: [120, 132, 101, 134, 90, 230, 210]
+                        data: []
                     },
                     {
                         name: '业务招待费',
                         type: 'line',
                         stack: '总量',
-                        data: [220, 182, 191, 234, 290, 330, 310]
+                        data: []
                     },
                     {
                         name: '外协',
                         type: 'line',
                         stack: '总量',
-                        data: [150, 232, 201, 154, 190, 330, 410]
+                        data: []
                     },
                     {
                         name: '设备采购',
                         type: 'line',
                         stack: '总量',
-                        data: [320, 332, 301, 334, 390, 330, 320]
+                        data: []
                     },
                     {
                         name: '办公费',
                         type: 'line',
                         stack: '总量',
-                        data: [820, 932, 901, 934, 1290, 1330, 1320]
+                        data: []
                     },
                     {
                         name: '市内交通',
                         type: 'line',
                         stack: '总量',
-                        data: [520, 432, 701, 734, 1090, 1130, 1120]
+                        data: []
                     },
                     {
                         name: '会议费',
                         type: 'line',
                         stack: '总量',
-                        data: [620, 632, 501, 534, 990, 1030, 1020]
+                        data: []
                     }
                 ]
-            };
-            line.setOption(optionLine, (window.onresize = line.resize));
-        },
+            }
+        };
+    },
+    computed: {
+        ...mapGetters(['permissions'])
+    },
+    created() {
+        this.query1.itemId = this.$route.params.itemId;
+        this.query2.itemId = this.$route.params.itemId;
 
-        // 饼状
-        drawPie() {
-            let pie = this.$echarts.init(document.getElementById('pie'));
-            let optionPie = {
-                title: {
-                    text: '报销分类占比',
-                    // subtext: '纯属虚构',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ['差旅费', '业务招待费', '外协', '设备采购', '办公费', '市内交通', '会议费']
-                },
-                series: [
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: [
-                            { value: 335, name: '差旅费' },
-                            { value: 310, name: '业务招待费' },
-                            { value: 234, name: '外协' },
-                            { value: 135, name: '设备采购' },
-                            { value: 158, name: '办公费' },
-                            { value: 735, name: '市内交通' },
-                            { value: 535, name: '会议费' }
-                        ],
-                        itemStyle: {
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            };
-            pie.setOption(optionPie, (window.onresize = pie.resize));
-            // pie.setOption(optionPie)
-        },
-
+        this.getItemPayBack(this.query1);
+        this.getItemPayBack2(this.query1);
+        this.getItemPayBack3(this.query2);
+    },
+    mounted() {},
+    methods: {
+        // 查询
         getHourRadix() {
+            this.othernNum = 0;
+            this.travelNum = 0;
+            this.serveNum = 0;
+            this.outsourceNum = 0;
+            this.deviceNum = 0;
+            this.workNum = 0;
+            this.trafficNum = 0;
+            this.meetingNum = 0;
             this.optionBar.yAxis[0].data = [];
             this.optionBar.series[0].data = [];
             this.optionBar.series[1].data = [];
             this.getItemPayBack(this.query1);
+            this.optionPie.series[0].data = [];
+            this.getItemPayBack2(this.query1);
         },
         getHourRadix2() {
-            this.getItemPayBack(this.query2);
+            this.optionLin.series.forEach(item => {
+                item.data = [];
+            });
+            this.getItemPayBack3(this.query2);
         },
 
+        // 柱状图
         getItemPayBack(query) {
             getItemPay(query).then(res => {
-                console.log(res);
+                // console.log(res);
                 res.data.data.forEach((item, index) => {
                     this.optionBar.yAxis[0].data[index] = item.createTime;
-                    if (item.type === "1") {
+                    if (item.type === '1') {
                         this.optionBar.series[0].data.push(item.invoicePriceYuan);
-                    } else if (item.type === "4") {
+                    } else if (item.type === '4') {
                         this.optionBar.series[1].data.push(item.invoicePriceYuan);
-                    } else if (item.type === "6") {
+                    } else if (item.type === '6') {
                         this.optionBar.series[2].data.push(item.invoicePriceYuan);
                     }
                 });
                 this.drawBar();
-            });
-            this.$nextTick(function() {
-                this.drawPie();
             });
         },
         // 柱状
@@ -282,6 +288,170 @@ export default {
             bar.resize();
             window.addEventListener('resize', function() {
                 bar.resize();
+            });
+        },
+
+        // 饼图
+        getItemPayBack2(query) {
+            getItemPay(query).then(res => {
+                // console.log(res);
+                res.data.data.forEach((item, index) => {
+                    if (item.type == null) {
+                        this.othernNum += item.invoicePrice;
+                        this.optionPie.legend.data[0] = '其它';
+                        this.optionPie.series[0].data[0] = {
+                            value: this.othernNum,
+                            name: '其它'
+                        };
+                    }
+                    if (item.type == '1') {
+                        this.travelNum += item.invoicePrice;
+                        this.optionPie.legend.data[1] = '差旅费';
+                        this.optionPie.series[0].data[1] = {
+                            value: this.travelNum,
+                            name: '差旅费'
+                        };
+                    }
+                    if (item.type == '2') {
+                        this.serveNum += item.invoicePrice;
+                        this.optionPie.legend.data[2] = '业务招待费';
+                        this.optionPie.series[0].data[2] = {
+                            value: this.serveNum,
+                            name: '业务招待费'
+                        };
+                    }
+                    if (item.type == '3') {
+                        this.outsourceNum += item.invoicePrice;
+                        this.optionPie.legend.data[3] = '外协';
+                        this.optionPie.series[0].data[3] = {
+                            value: this.outsourceNum,
+                            name: '外协'
+                        };
+                    }
+                    if (item.type == '4') {
+                        this.deviceNum += item.invoicePrice;
+                        this.optionPie.legend.data[4] = '设备采购';
+                        this.optionPie.series[0].data[4] = {
+                            value: this.deviceNum,
+                            name: '设备采购'
+                        };
+                    }
+                    if (item.type == '5') {
+                        this.workNum += item.invoicePrice;
+                        this.optionPie.legend.data[5] = '办公费';
+                        this.optionPie.series[0].data[5] = {
+                            value: this.workNum,
+                            name: '办公费'
+                        };
+                    }
+                    if (item.type == '6') {
+                        this.trafficNum += item.invoicePrice;
+                        this.optionPie.legend.data[6] = '市内交通';
+                        this.optionPie.series[0].data[6] = {
+                            value: this.trafficNum,
+                            name: '市内交通'
+                        };
+                    }
+                    if (item.type == '7') {
+                        this.meetingNum += item.invoicePrice;
+                        this.optionPie.legend.data[7] = '会议费';
+                        this.optionPie.series[0].data[7] = {
+                            value: this.meetingNum,
+                            name: '会议费'
+                        };
+                    }
+                });
+                this.drawPie();
+            });
+        },
+        // 饼状
+        drawPie() {
+            let pie = this.$echarts.init(document.getElementById('pie'));
+            pie.setOption(this.optionPie, (window.onresize = pie.resize));
+            pie.resize();
+            window.addEventListener('resize', function() {
+                pie.resize();
+            });
+        },
+
+        // 折线
+        getItemPayBack3(query) {
+            getItemPay(query).then(res => {
+                var beforeData = res.data.data;
+                // console.log(res.data.data);
+                // var afterData = [];
+                // let tempArr = [];
+                // for (let i = 0; i < beforeData.length; i++) {
+                //     if (tempArr.indexOf(beforeData[i].createTime) === -1) {
+                //         afterData.push({
+                //             createTime: beforeData[i].createTime,
+                //             origin: [beforeData[i]]
+                //         });
+                //         tempArr.push(beforeData[i].createTime);
+                //     } else {
+                //         for (let j = 0; j < afterData.length; j++) {
+                //             if (afterData[j].createTime == beforeData[i].createTime) {
+                //                 afterData[j].origin.push(beforeData[i]);
+                //                 break;
+                //             }
+                //         }
+                //     }
+                // }
+                // console.log(afterData);
+                console.log(beforeData)
+
+                // afterData.forEach((item, index) => {
+                beforeData.forEach((i, index) => {
+                    this.optionLin.xAxis[0].data.push(i.createTime);
+                    // this.optionLin.xAxis[0].data=[...new Set(this.optionLin.xAxis[0].data)]
+                    if (i.type == '1') {
+                        this.optionLin.series[0].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[0].data.push(0);
+                    }
+                    if (i.type == '2') {
+                        this.optionLin.series[1].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[1].data.push(0);
+                    }
+                    if (i.type == '3') {
+                        this.optionLin.series[2].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[2].data.push(0);
+                    }
+                    if (i.type == '4') {
+                        this.optionLin.series[3].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[3].data.push(0);
+                    }
+                    if (i.type == '5') {
+                        this.optionLin.series[4].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[4].data.push(0);
+                    }
+                    if (i.type == '6') {
+                        this.optionLin.series[5].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[5].data.push(0);
+                    }
+                    if (i.type == '7') {
+                        this.optionLin.series[6].data.push(i.invoicePrice);
+                    } else {
+                        this.optionLin.series[6].data.push(0);
+                    }
+                });
+                this.drawLine();
+                // });
+                console.log(this.optionLin.series);
+            });
+        },
+        // 折线
+        drawLine() {
+            let line = this.$echarts.init(document.getElementById('line'));
+            line.setOption(this.optionLin, (window.onresize = line.resize));
+            line.resize();
+            window.addEventListener('resize', function() {
+                line.resize();
             });
         }
     }

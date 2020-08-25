@@ -87,7 +87,7 @@ export default {
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['5月1日', '5月2日', '5月3日', '5月4日', '5月5日', '5月6日', '5月7日']
+                    data: ['5月1日', '5月2日', '5月3日']
                 },
                 yAxis: {
                     type: 'value'
@@ -97,44 +97,45 @@ export default {
                         name: '员工一',
                         type: 'line',
                         stack: '总量',
-                        data: [120, 132, 101, 134, 90, 230, 210]
+                        data: [120, null, 101]
                     },
                     {
                         name: '员工二',
                         type: 'line',
                         stack: '总量',
-                        data: [220, 182, 191, 234, 290, 330, 310]
+                        data: [220, 182, 191]
                     },
                     {
                         name: '员工三',
                         type: 'line',
                         stack: '总量',
-                        data: [150, 232, 201, 154, 190, 330, 410]
-                    },
-                    {
-                        name: '员工四',
-                        type: 'line',
-                        stack: '总量',
-                        data: [320, 332, 301, 334, 390, 330, 320]
-                    },
-                    {
-                        name: '员工五',
-                        type: 'line',
-                        stack: '总量',
-                        data: [820, 932, 901, 934, 1290, 1330, 1320]
-                    },
-                    {
-                        name: '员工六',
-                        type: 'line',
-                        stack: '总量',
-                        data: [520, 432, 701, 734, 1090, 1130, 1120]
-                    },
-                    {
-                        name: '员工七',
-                        type: 'line',
-                        stack: '总量',
-                        data: [620, 632, 501, 534, 990, 1030, 1020]
-                    }
+                        data: [150, 232, 201],
+						}
+                    // },
+                    // {
+                    //     name: '员工四',
+                    //     type: 'line',
+                    //     stack: '总量',
+                    //     data: [320, 332, 301, 334, 390, 330, 320]
+                    // },
+                    // {
+                    //     name: '员工五',
+                    //     type: 'line',
+                    //     stack: '总量',
+                    //     data: [820, 932, 901, 934, 1290, 1330, 1320]
+                    // },
+                    // {
+                    //     name: '员工六',
+                    //     type: 'line',
+                    //     stack: '总量',
+                    //     data: [520, 432, 701, 734, 1090, 1130, 1120]
+                    // },
+                    // {
+                    //     name: '员工七',
+                    //     type: 'line',
+                    //     stack: '总量',
+                    //     data: [620, 632, 501, 534, 990, 1030, 1020]
+                    // }
                 ]
             };
             line.setOption(optionLine, (window.onresize = line.resize));

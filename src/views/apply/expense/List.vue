@@ -192,7 +192,7 @@ export default {
         if (!this.query.status) {
             this.query.status = '';
         }
-        if (this.userId != 1) {
+        if (this.userId != 1 && this.userId != 77) {
             this.disabled = true;
         }
         this.query.userId = this.userId;
@@ -222,7 +222,7 @@ export default {
             this.listLoading = true;
             getExpenseList(this.query)
                 .then(response => {
-                    console.log(response)
+                    console.log(response);
                     this.listLoading = false;
                     this.total = response.data.data.total;
                     this.query.current = response.data.data.current;

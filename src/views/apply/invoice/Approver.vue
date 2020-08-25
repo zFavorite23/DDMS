@@ -5,13 +5,18 @@
             <el-form :inline="true" :model="query">
                 <el-form-item><el-input style="width:120px" v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
                 <el-form-item>
-                    <el-select style="width:120px" clearable v-model="query.applyUserId" filterable placeholder="请选择">
+                    <el-select style="width:120px" clearable v-model="query.applyUserId" filterable placeholder="申请人">
                         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-select style="width:120px" clearable v-model="query.status" placeholder="请选择">
                         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
+                        <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <!-- <el-form-item>
@@ -42,9 +47,9 @@
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="180" label="时间" prop="invoiceTime" sortable>
+            <el-table-column min-width="180" label="时间" prop="invoiceTime">
                 <template slot-scope="scope">
-                    <!-- <p v-if="scope.row.payTime">支付：{{ scope.row.payTime }}</p> -->
+                    <p v-if="scope.row.payTime">支付：{{ scope.row.payTime }}</p>
                     <p>发票：{{ scope.row.invoiceTime }}</p>
                 </template>
             </el-table-column>
@@ -125,6 +130,7 @@ export default {
                 likeKeyWords: '',
                 applyUserId: null,
                 status: '',
+                type1: '',
                 orderBy: 'create_time_desc',
                 current: 1,
                 size: 10
@@ -176,7 +182,7 @@ export default {
         this.query.userId = this.userId;
         this.getUserList();
         this.getInvoiceApproverPage();
-        this.getInvoices('100000');
+        this.getInvoices('-1');
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])

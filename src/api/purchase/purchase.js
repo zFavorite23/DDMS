@@ -112,14 +112,27 @@ export function getBusinessDept(query) {
     });
 }
 
-
 /**
  * 采购负责人
  */
+
 export function applyEditpurchaseEs(data) {
     return axios({
         url: `/apply/purchase/editpurchaseEs`,
         method: "put",
         data
+    });
+}
+
+
+
+/**
+ * 采购执行列表
+ */
+export function getPurchaseExecutePage(query) {
+    return axios({
+        url: `/apply/purchase/executePage`,
+        method: "get",
+        params: query
     });
 }

@@ -19,41 +19,10 @@
                         <tr>
                             <td width="100">总分类</td>
                             <td>{{ invoiceInfo.type1Name }}</td>
-                            <!-- <td v-if="invoiceInfo.classify == 7">办公用品</td>
-                            <td v-if="invoiceInfo.classify == 8">固定资产</td>
-                            <td v-if="invoiceInfo.classify == 9">管理费用</td>
-                            <td v-if="invoiceInfo.classify == 10">人员补助</td>
-                            <td v-if="invoiceInfo.classify == 11">项目报销</td> -->
                             <td width="100">明细分类</td>
                             <td>{{ invoiceInfo.type3Name }}</td>
-                            <!-- <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 1">办公文具</td>
-                            <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 2">办公耗材</td>
-                            <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 3">日杂百货</td>
-                            <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 4">财务用品</td>
-                            <td v-if="invoiceInfo.classify == 7 && invoiceInfo.type == 5">电子设备及工具</td>
-
-                            <td v-if="invoiceInfo.classify == 8 && invoiceInfo.type == 1">办公设备</td>
-                            <td v-if="invoiceInfo.classify == 8 && invoiceInfo.type == 2">办公家具</td>
-
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 1">市内交通</td>
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 2">办公费用</td>
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 3">运输</td>
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 4">业务招待费</td>
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 5">会议费</td>
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 6">差旅费</td>
-                            <td v-if="invoiceInfo.classify == 9 && invoiceInfo.type == 7">福利费</td>
-
-                            <td v-if="invoiceInfo.classify == 10 && invoiceInfo.type == 1">住房补助</td>
-
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 1">差旅费</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 2">业务招待费</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 3">外协</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 4">设备采购</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 5">办公费</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 6">市内交通</td>
-                            <td v-if="invoiceInfo.classify == 11 && invoiceInfo.type == 7">会议费</td> -->
                         </tr>
-                        <tr>
+                        <tr v-if="invoiceInfo.type1 != 297">
                             <td>是否找票</td>
                             <td colspan="3" v-if="invoiceInfo.isFull == 0">否</td>
                             <td colspan="3" v-else-if="invoiceInfo.isFull == 1">是</td>
@@ -62,10 +31,16 @@
                             <td>报销支付描述</td>
                             <td colspan="3">{{ invoiceInfo.payDesc }}</td>
                         </tr>
-                        <tr v-if="(invoiceInfo.type1 != 10 && invoiceInfo.type1 != 22) && invoiceInfo.isFull == 1">
+
+                        <tr v-if="invoiceInfo.type1 != 10 && invoiceInfo.type1 != 22 && invoiceInfo.isFull == 1">
                             <td>支付时间</td>
                             <td colspan="3">{{ invoiceInfo.payTimeCh }}</td>
                         </tr>
+                        <tr v-if="invoiceInfo.type1 == 297">
+                            <td>支付时间</td>
+                            <td colspan="3">{{ invoiceInfo.payTimeCh }}</td>
+                        </tr>
+
                         <tr v-if="invoiceInfo.isFull == 1 && (invoiceInfo.type1 != 10 && invoiceInfo.type1 != 22)">
                             <td>支付金额</td>
                             <td>{{ invoiceInfo.payPriceYuan }} 元</td>
@@ -73,6 +48,14 @@
                             <td v-if="invoiceInfo.payImgNum != null">{{ invoiceInfo.payImgNum }} 张</td>
                             <td v-else>无</td>
                         </tr>
+                        <tr v-if="invoiceInfo.type1 == 297">
+                            <td>支付金额</td>
+                            <td>{{ invoiceInfo.payPriceYuan }} 元</td>
+                            <td>支付截图数量</td>
+                            <td v-if="invoiceInfo.payImgNum != null">{{ invoiceInfo.payImgNum }} 张</td>
+                            <td v-else>无</td>
+                        </tr>
+
                         <tr v-if="invoiceInfo.isFull == 1 && (invoiceInfo.type1 != 10 && invoiceInfo.type1 != 22)">
                             <td>支付截图</td>
                             <td colspan="3" v-if="invoiceInfo.payImg">
@@ -82,21 +65,31 @@
                             </td>
                             <td colspan="3" v-else>无</td>
                         </tr>
-                        <tr>
+                        <tr v-if="invoiceInfo.type1 == 297">
+                            <td>支付截图</td>
+                            <td colspan="3" v-if="invoiceInfo.payImg">
+                                <!-- <el-image v-for="(url, index) in urls1" :key="url" :src="url" lazy @click="onPreview1(index)"></el-image> -->
+                                <el-image v-for="(img, index) in urls1" :key="img" :src="img" lazy :preview-src-list="onPreview1(index)"></el-image>
+                                <!-- <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]"></el-image-viewer> -->
+                            </td>
+                            <td colspan="3" v-else>无</td>
+                        </tr>
+
+                        <tr v-if="invoiceInfo.type1 != 297">
                             <td>发票描述</td>
                             <td colspan="3">{{ invoiceInfo.invoiceDesc }}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="invoiceInfo.type1 != 297">
                             <td>发票时间</td>
                             <td colspan="3">{{ invoiceInfo.invoiceTimeCh }}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="invoiceInfo.type1 != 297">
                             <td>发票金额</td>
                             <td>{{ invoiceInfo.invoicePriceYuan }} 元</td>
                             <td>发票数量</td>
                             <td>{{ invoiceInfo.invoiceImgNum }} 张</td>
                         </tr>
-                        <tr>
+                        <tr v-if="invoiceInfo.type1 != 297">
                             <td>发票图片</td>
                             <td colspan="3" v-if="invoiceInfo.invoiceImg">
                                 <el-image v-for="(img, index) in urls2" :key="img" :src="img" lazy :preview-src-list="onPreview2(index)"></el-image>
@@ -104,7 +97,7 @@
                             </td>
                             <td colspan="3" v-else>无</td>
                         </tr>
-                        <tr>
+                        <tr v-if="invoiceInfo.type1 != 297">
                             <td>发票代码</td>
                             <td colspan="3">无</td>
                         </tr>
@@ -119,13 +112,23 @@
                                 <el-tag v-else-if="invoiceInfo.isAffirm == 0" type="danger">未确认</el-tag>
 
                                 &nbsp;&nbsp;
+                                <el-date-picker
+                                    v-if="invoiceInfo.status == 1 && invoiceInfo.isAffirm == 0 && deptId == '7100'"
+                                    v-model="month"
+                                    value-format="yyyy-MM"
+                                    format="yyyy 年 MM 月"
+                                    type="month"
+                                    placeholder="请选择归档月份"
+                                    size="mini"
+                                    style="width: 180px;margin-right: 15px;"
+                                ></el-date-picker>
                                 <el-button
                                     size="mini"
                                     type="danger"
                                     @click.native="handleModalAffirm(invoiceInfo)"
                                     v-if="invoiceInfo.status == 1 && invoiceInfo.isAffirm == 0 && deptId == '7100'"
                                 >
-                                    确认
+                                    确认收到票据
                                 </el-button>
                             </td>
                         </tr>
@@ -213,7 +216,12 @@
                             <span v-if="invoiceInfo.companyId == '2'">北京甲板智慧科技有限公司</span>
                             <span v-if="invoiceInfo.companyId == '3'">北京甲板数字科技有限公司</span>
                         </span>
-                        <span style="color: #1f2d3d;display: inline-block;padding: 10px 0;float: left; width: 30%;">{{ invoiceInfo.invoiceTimeCh }}</span>
+                        <span style="color: #1f2d3d;display: inline-block;padding: 10px 0;float: left; width: 30%;" v-if="invoiceInfo.type1 == 297">
+                            {{ invoiceInfo.payTimeCh }}
+                        </span>
+                        <span style="color: #1f2d3d;display: inline-block;padding: 10px 0;float: left; width: 30%;" v-if="invoiceInfo.type1 != 297">
+                            {{ invoiceInfo.invoiceTimeCh }}
+                        </span>
                         <span style="color: #1f2d3d;display: inline-block;padding: 10px 10px;float: right;text-align: right; margin-right: -3%;width: 20%;">
                             第
                             <span v-if="invoiceInfo.type1 == 22 || invoiceInfo.type1 == 10" style="padding: 0 2px;">2</span>
@@ -273,6 +281,7 @@ export default {
     components: { ElImageViewer },
     data() {
         return {
+            month: '',
             formData: {
                 approverId: null,
                 checkUserId: null,
@@ -479,8 +488,10 @@ export default {
                 }).then(() => {
                     const editData = {
                         invoiceId: data.invoiceId,
-                        isAffirm: '1'
+                        isAffirm: '1',
+                        backMonth: this.month
                     };
+                    console.log(this.month);
                     affirmInvoice(editData).then(res => {
                         if (res.data.data) {
                             this.getInvoiceInfo();
@@ -489,10 +500,16 @@ export default {
                 });
             }
         }
+    },
+    mounted() {
+        // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        month = month > 9 ? month : '0' + month;
+        var toMonth = year + '-' + month;
+        this.month = toMonth;
     }
-    // mounted:{
-    // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
-    // }
 };
 </script>
 

@@ -9,6 +9,11 @@
                         <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item>
+                    <el-select style="width:120px" clearable v-model="query.check" placeholder="请选择">
+                        <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item><el-button type="primary" size="medium" v-on:click="getItemAdminVosWithUserIdPage" icon="el-icon-search">搜索</el-button></el-form-item>
                 <el-form-item><el-button type="primary" size="medium" @click="handleModal" v-if="item_btn_add">新增</el-button></el-form-item>
             </el-form>
@@ -73,6 +78,7 @@
 </template>
 <script>
 import { getItemAdminVosWithUserIdPage } from '../../api/project/team.js';
+import { deleteItem } from '../../api/project/item.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
@@ -81,6 +87,7 @@ export default {
                 likeKeyWords: '',
                 type: '',
                 userId: null,
+                check:'',
                 current: 1,
                 size: 10
             },
@@ -96,6 +103,24 @@ export default {
                 {
                     value: '2',
                     label: '产品'
+                }
+            ],
+            statusOptions: [
+                {
+                    value: '',
+                    label: '全部'
+                },
+                {
+                    value: '0',
+                    label: '待审批'
+                },
+                {
+                    value: '1',
+                    label: '审批通过'
+                },
+                {
+                    value: '2',
+                    label: '审批拒绝'
                 }
             ],
             pages: 0,
@@ -132,6 +157,11 @@ export default {
     },
     created() {
         this.getItemAdminVosWithUserIdPage();
+        this.query.check = this.$route.query.status;
+        if (!this.query.check) {
+            this.query.check = '';
+        }
+        console.log(this.query.check)
         this.query.userId = this.userId;
         this.item_btn_add = this.permissions['dd_item_add'];
         this.item_btn_edit = this.permissions['dd_item_edit'];

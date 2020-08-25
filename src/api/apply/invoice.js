@@ -176,3 +176,17 @@ export function getFinanceUser(query) {
         params: query
     });
 }
+
+
+/**
+ * 报销统计
+ * 
+ * @returns {*}
+ */
+export function getStatisticsPage(query) {
+    return axios({
+        url: "/apply/invoice/getStatisticsPage",
+        method: "get",
+        params: query
+    });
+}

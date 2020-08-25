@@ -15,7 +15,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-select style="width:120px" clearable v-model="query.classify" placeholder="总分类">
+                    <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
                         <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
@@ -35,7 +35,7 @@
             </el-radio-group>
         </div>
         <el-table :data="list" stripe border v-loading="listLoading" style="width: 100%;">
-            <el-table-column width="80" label="序号">
+            <el-table-column width="60" label="序号">
                 <template scope="scope">
                     <span>{{ scope.$index + (query.current - 1) * query.size + 1 }}</span>
                 </template>
@@ -45,22 +45,22 @@
                     <span>{{ scope.row.applyUserName }}</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="160" label="分类">
+            <el-table-column min-width="180" label="分类">
                 <template slot-scope="scope">
                     <p v-if="scope.row.type1Name">{{ scope.row.type1Name }}</p>
                     <p v-if="scope.row.type2Name">{{ scope.row.type2Name }}</p>
                     <p v-if="scope.row.type3Name">{{ scope.row.type3Name }}</p>
                 </template>
             </el-table-column>
-            <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">
+            <el-table-column min-width="180" label="项目" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <span v-if="scope.row.alias == null || scope.row.alias == ''">与项目无关</span>
                     <span v-else>{{ scope.row.alias }}</span>
                 </template>
             </el-table-column>
-            <el-table-column min-width="180" label="时间" prop="invoiceTime" sortable>
+            <el-table-column min-width="140" label="时间" prop="invoiceTime">
                 <template slot-scope="scope">
-                    <!-- <p v-if="scope.row.payTime">支付：{{ scope.row.payTime }}</p> -->
+                    <p>支付：{{ scope.row.payTime }}</p>
                     <p>发票：{{ scope.row.invoiceTime }}</p>
                 </template>
             </el-table-column>
@@ -88,10 +88,10 @@
                     <el-tag v-if="scope.row.isAffirm == 1" type="success">是</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column min-width="160" label="金额(元)" :show-overflow-tooltip="true" prop="invoicePriceYuan" :sort-method="sortChange" sortable>
+            <el-table-column min-width="160" label="金额(元)" :show-overflow-tooltip="true" prop="invoicePriceYuan">
                 <template slot-scope="scope">
+                    <p>支付：{{ scope.row.payPriceYuan }} 元</p>
                     <p>发票：{{ scope.row.invoicePriceYuan }} 元</p>
-                    <!-- <p>支付：{{ scope.row.payPriceYuan }} 元</p> -->
                 </template>
             </el-table-column>
             <el-table-column prop="status" min-width="100" label="审批状态">
@@ -138,7 +138,7 @@ export default {
                 userId: null,
                 likeKeyWords: '',
                 status: '',
-                classify: '',
+                type1: '',
                 orderBy: 'create_time_desc',
                 current: 1,
                 size: 10
@@ -187,7 +187,7 @@ export default {
         if (!this.query.status) {
             this.query.status = '';
         }
-        if (this.userId != 1) {
+        if (this.userId != 1 && this.userId != 77) {
             this.disabled = true;
         }
         this.query.userId = this.userId;

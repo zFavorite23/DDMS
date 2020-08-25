@@ -100,6 +100,8 @@ import SupplierList from "../views/customer/supplier/List.vue";
 import FinanceInvoice from "../views/finance/invoice/Index.vue";
 import FinanceExpense from "../views/finance/expense/Index.vue";
 import FinanceReceipt from "../views/finance/receipt/Index.vue";
+import FinanceStatistics from "../views/finance/statistics/Index.vue";
+import FinanceFund from "../views/finance/fund/list.vue";
 // import Gathers from "../views/money/Gathers.vue";
 // import moneyHome from "../views/money/Home.vue";
 // import Project from "../views/money/Project.vue";
@@ -574,7 +576,17 @@ export const asyncRouterMap = [{
                 path: "receipt",
                 component: FinanceReceipt,
                 name: "开票"
-            }
+            },
+            {
+                path: 'statistics',
+                component: FinanceStatistics,
+                name: '报销统计'
+            },
+            {
+                path: 'fund',
+                component: FinanceFund,
+                name: '财务统计'
+            },
             // {
             //     path: "moneyHome",
             //     component: moneyHome,

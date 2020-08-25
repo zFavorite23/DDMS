@@ -38,12 +38,12 @@ export default {
     data() {
         return {
             query1: {
-                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                startTime: '2020-01-01',
                 endTime: dateFormat(new Date()),
                 itemId: null
             },
             query2: {
-                startTime: dateFormat(new Date()).substr(0, 7) + '-01',
+                startTime: '2020-01-01',
                 endTime: dateFormat(new Date()),
                 itemId: null
             },
@@ -122,25 +122,9 @@ export default {
                         data: []
                     }
                 ]
-            }
-        };
-    },
-    computed: {
-        ...mapGetters(['permissions'])
-    },
-    created() {
-        this.query1.itemId = this.$route.params.itemId;
-        this.query2.itemId = this.$route.params.itemId;
-
-        this.getItemExpend(this.query1);
-        this.getItemExpend2(this.query2);
-    },
-    mounted() {},
-    methods: {
-        // 饼状
-        drawPie() {
-            let pie = this.$echarts.init(document.getElementById('pie'));
-            let optionPie = {
+            },
+            // 饼图
+            optionPie: {
                 title: {
                     text: '支出占比',
                     // subtext: '纯属虚构',
@@ -153,7 +137,7 @@ export default {
                 legend: {
                     orient: 'vertical',
                     left: 'left',
-                    data: ['设备', '售前', '交付', '管理', '外协']
+                    data: []
                 },
                 series: [
                     {
@@ -161,13 +145,7 @@ export default {
                         type: 'pie',
                         radius: '55%',
                         center: ['50%', '60%'],
-                        data: [
-                            { value: 335, name: '设备' },
-                            { value: 310, name: '售前' },
-                            { value: 234, name: '交付' },
-                            { value: 135, name: '管理' },
-                            { value: 335, name: '外协' }
-                        ],
+                        data: [],
                         itemStyle: {
                             emphasis: {
                                 shadowBlur: 10,
@@ -177,14 +155,28 @@ export default {
                         }
                     }
                 ]
-            };
-            pie.setOption(optionPie, (window.onresize = pie.resize));
-            // pie.setOption(optionPie)
-        },
+            }
+        };
+    },
+    computed: {
+        ...mapGetters(['permissions'])
+    },
+    created() {
+        this.query1.itemId = this.$route.params.itemId;
+        this.query2.itemId = this.$route.params.itemId;
+
+        this.getItemExpend(this.query1);
+        this.getItemExpend2(this.query2);
+        this.getItemExpend3(this.query1);
+    },
+    mounted() {},
+    methods: {
         getHourRadix() {
             this.optionBar.yAxis[0].data = [];
             this.optionBar.series[0].data = [];
+            this.optionPie.series[0].data = [];
             this.getItemExpend(this.query1);
+            this.getItemExpend3(this.query1);
         },
         getHourRadix2() {
             this.optionLin.xAxis[0].data = [];
@@ -195,10 +187,10 @@ export default {
         // 柱状图
         getItemExpend(query) {
             getExpend(query).then(res => {
-                // console.log(res);
+                console.log(res);
                 res.data.data.forEach((item, index) => {
                     this.optionBar.yAxis[0].data[index] = item.createTime;
-                    this.optionBar.series[0].data[index] = item.invoicePriceYuan;
+                    this.optionBar.series[0].data[index] = item.price;
                     if (item.type == null) {
                         this.optionBar.legend.data[index] = '其它';
                         this.optionBar.series[0].name = '其它';
@@ -207,9 +199,6 @@ export default {
                 this.drawBar();
             });
 
-            this.$nextTick(function() {
-                this.drawPie();
-            });
         },
         // 柱状
         drawBar() {
@@ -227,7 +216,7 @@ export default {
                 // console.log(res);
                 res.data.data.forEach((item, index) => {
                     this.optionLin.xAxis[0].data[index] = item.createTime;
-                    this.optionLin.series[0].data[index] = item.invoicePriceYuan;
+                    this.optionLin.series[0].data[index] = item.price;
                     if (item.type == null) {
                         this.optionLin.legend.data[index] = '其它';
                         this.optionLin.series[0].name = '其它';
@@ -244,7 +233,33 @@ export default {
             window.addEventListener('resize', function() {
                 line.resize();
             });
-        }
+        },
+       
+        // 饼状
+        getItemExpend3(query){
+            getExpend(query).then(res => {
+                // console.log(res);
+                res.data.data.forEach((item, index) => {
+                    if (item.type == null) {
+                        this.optionPie.legend.data[index] = '其它';
+                        this.optionPie.series[0].data[index]={
+                            value:item.price,
+                            name:'其它'
+                        }
+                    }
+                });
+                this.drawPie();
+            });
+        },
+        // 饼状
+        drawPie() {
+            let pie = this.$echarts.init(document.getElementById('pie'));
+            pie.setOption(this.optionPie, (window.onresize = pie.resize));
+            pie.resize();
+            window.addEventListener('resize', function() {
+                pie.resize();
+            });
+        },
     }
 };
 </script>

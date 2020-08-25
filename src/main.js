@@ -6,6 +6,9 @@ import store from "./store/index";
 import "./element";
 import * as filters from "./filtres/index"; // 全局过滤器
 import "./role"; // 权限
+import axios from 'axios'
+// 将axios共享给所有实例使用
+Vue.prototype.$axios = axios
 
 import "./assets/icons/iconfont";
 import IconSvg from "./components/common/IconSvg.vue"; // svg组件
@@ -16,12 +19,14 @@ import "../src/assets/icons/iconfont.css";
 import echarts from "echarts";
 Vue.prototype.$echarts = echarts;
 
+import 'video.js/dist/video-js.css'
+
 import Print from "vue-print-nb";
 Vue.use(Print);
 
 // 复制功能
 import VueClipboard from 'vue-clipboard2'
- 
+
 Vue.use(VueClipboard)
 
 // 注册全局组件（register global）

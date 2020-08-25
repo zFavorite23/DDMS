@@ -19,12 +19,12 @@
                 </el-table-column>
                 <el-table-column prop="proportion" min-width="80" label="开票比例">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.proportion }}%</span>
+                        <span>{{ scope.row.proportion == null ? '' : `${scope.row.proportion}%` }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column min-width="80" label="开票金额">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.price }} 元</span>
+                        <span>{{ scope.row.price == null ? '' : `${scope.row.price}元` }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="type" min-width="80" label="开票类型">
@@ -45,6 +45,8 @@
                         <span v-if="scope.row.content == 22">*软件*系统软件产品</span>
                         <span v-if="scope.row.content == 23">*硬件*</span>
                         <span v-if="scope.row.content == 24">*现代服务*服务费</span>
+                        <span v-if="scope.row.content == 25">*工程服务*</span>
+                        <span v-if="scope.row.content == 26">*现代服务*</span>
                         <span v-else>{{ scope.row.content }}</span>
                     </template>
                 </el-table-column>
@@ -90,7 +92,7 @@ export default {
             list: [],
             number: '',
             listType: '1',
-            proportion: ''
+            proportion: 0
         };
     },
     computed: {
@@ -116,13 +118,12 @@ export default {
         // 获取开票信息列表
         getReceiptList() {
             getReceipt(this.itemId).then(res => {
-                // console.log(res);
+                console.log(res);
                 this.list = res.data.data;
                 this.total = res.data.data.length;
-                for (var i = 0; i < this.list.length; i++) {
-                    this.proportion += this.list[i].proportion;
-                }
-                // console.log(this.proportion);
+                this.list.forEach(item => {
+                    this.proportion += Number(item.proportion);
+                });
                 this.$nextTick(function() {
                     this.drawPie();
                 });
