@@ -191,6 +191,7 @@ export default {
             this.disabled = true;
         }
         this.query.userId = this.userId;
+        console.log(this.userId)
         this.getInvoicePage();
         this.getUserList();
         this.getInvoices('-1');

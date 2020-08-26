@@ -4,17 +4,23 @@
             <span class="tit">报销 / 总数 : {{ total }}</span>
             <el-form :inline="true" :model="query">
                 <el-form-item>
-                    <el-select style="width:120px" v-model="query.userId" filterable placeholder="请选择">
+                    <el-select style="width:120px" v-model="query.userId" filterable placeholder="申请人" clearable>
                         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item><el-input style="width:120px" v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
 
-                <el-form-item><el-date-picker style="width:180px" v-model="query.data" type="date" placeholder="申请日期"></el-date-picker></el-form-item>
+                <el-form-item>
+                    <el-date-picker style="width:180px" v-model="query.startTime" type="date" value-format="yyyy-MM-dd" placeholder="申请日期"></el-date-picker>
+                </el-form-item>
                 <el-form-item>
                     <el-date-picker style="width:180px" v-model="query.month" value-format="yyyy-MM" format="yyyy 年 MM 月" type="month" placeholder="归档月份"></el-date-picker>
                 </el-form-item>
-
+                <el-form-item>
+                    <el-select style="width:120px" clearable v-model="query.type1" placeholder="总分类">
+                        <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item><el-button type="primary" size="medium" v-on:click="getStatisticsPage()" icon="el-icon-search">搜索</el-button></el-form-item>
             </el-form>
         </div>
@@ -25,7 +31,7 @@
                 </template>
             </el-table-column>
             <el-table-column width="100" label="申请人" prop="applyUserName"></el-table-column>
-            <el-table-column min-width="100" label="申请时间" prop="invoiceTime"></el-table-column>
+            <el-table-column min-width="100" label="申请时间" prop="createTime" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column min-width="120" label="项目" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <span v-if="scope.row.alias == null || scope.row.alias == ''">与项目无关</span>
@@ -69,15 +75,19 @@
 
 <script>
 import { getUserList } from '../../../api/admin/user.js';
-import { getStatisticsPage } from '../../../api/apply/invoice.js';
+import { getStatisticsPage, getInvoices } from '../../../api/apply/invoice.js';
 import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            id: '',
             query: {
                 userId: null,
-                month: '2020-08',
+                month: '',
+                startTime: null,
+                endTime: null,
                 likeKeyWords: '',
+                type1: '',
                 orderBy: 'create_time_desc',
                 current: 1,
                 size: 10
@@ -86,22 +96,30 @@ export default {
             total: 0,
             listLoading: false,
             userOptions: [],
-            list: []
+            list: [],
+            classifyOptions: [
+                {
+                    value: '',
+                    label: '全部'
+                }
+            ]
         };
     },
     created() {
         this.getUserList();
         this.getStatisticsPage();
+        this.id = this.userId;
+        console.log(this.id);
+        this.getInvoices('-1');
     },
     computed: {
         ...mapGetters(['permissions', 'userId'])
     },
-
     methods: {
         // 公司人员列表
         getUserList() {
             getUserList().then(response => {
-                console.log(response);
+                // console.log(response);
                 response.data.data.forEach(element => {
                     //console.log(element)
                     this.userOptions.push({
@@ -124,6 +142,17 @@ export default {
             });
         },
 
+        getInvoices(id) {
+            getInvoices(id, this.id).then(res => {
+                console.log(res);
+                res.data.data.invoiceType.forEach(item => {
+                    this.classifyOptions.push({
+                        value: item.id,
+                        label: item.name
+                    });
+                });
+            });
+        },
         // 分页
         handleSizeChange(val) {
             this.query.size = val;
@@ -134,6 +163,14 @@ export default {
             sessionStorage.setItem('page2', val);
             this.getStatisticsPage();
         }
+    },
+    mounted() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        month = month > 9 ? month : '0' + month;
+        var toMonth = year + '-' + month;
+        this.query.month = toMonth;
     }
 };
 </script>

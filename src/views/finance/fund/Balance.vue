@@ -1,16 +1,26 @@
 <template>
     <div class="">
-        <span class="tit">账户余额</span>
-        <el-form :inline="true" :model="query">
-            <el-form-item><el-input style="width:120px" v-model="query.likeKeyWords" placeholder="关键字" clearable></el-input></el-form-item>
-
-            <el-form-item><el-date-picker style="width:180px" v-model="query.data" type="date" placeholder="申请日期"></el-date-picker></el-form-item>
-
-            <el-form-item><el-button type="primary" size="medium" v-on:click="getInvoicePage()" icon="el-icon-search">搜索</el-button></el-form-item>
-            <el-form-item>
-                <router-link to="/finance/fund/form"><el-button type="primary" size="medium">信息录入</el-button></router-link>
-            </el-form-item>
+        <el-form :inline="true">
+            <!-- <el-form-item><span class="tit">账户余额</span></el-form-item> -->
+            <el-form-item><el-button type="primary" @click="dialogFormVisible = true" size="mini">账户余额录入</el-button></el-form-item>
         </el-form>
+
+        <el-dialog title="账户余额录入" :visible.sync="dialogFormVisible">
+            <el-form :model="formData">
+                <el-form-item label="账户列表:" :label-width="formLabelWidth">
+                    <el-select v-model="formData.name" clearable placeholder="请选择账户">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="期初金额:" :label-width="formLabelWidth"><el-input placeholder="请输入期初金额" v-model="formData.money" clearable></el-input></el-form-item>
+                <el-form-item label="支出金额:" :label-width="formLabelWidth"><el-input placeholder="请输入支出金额" v-model="formData.money" clearable></el-input></el-form-item>
+                <el-form-item label="收入金额:" :label-width="formLabelWidth"><el-input placeholder="请输入收入金额" v-model="formData.money" clearable></el-input></el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            </div>
+        </el-dialog>
 
         <el-table stripe border v-loading="listLoading" style="width: 100%;">
             <el-table-column min-width="180" label="账户列表"></el-table-column>
@@ -39,6 +49,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            dialogFormVisible: false,
             query: {
                 userId: null,
                 likeKeyWords: '',
@@ -48,9 +59,54 @@ export default {
                 current: 1,
                 size: 10
             },
+            formData: {
+                data: '',
+                itemName: '',
+                name: '',
+                money: '',
+                type: ''
+            },
+            formLabelWidth: '120px',
             pages: 0,
             total: 0,
-            listLoading: false
+            listLoading: false,
+            options: [
+                {
+                    value: '1',
+                    label: '北京甲板智慧科技有限公司'
+                },
+                {
+                    value: '2',
+                    label: '北京甲板数字科技有限公司'
+                },
+                {
+                    value: '3',
+                    label: '北京甲板瑞城科技有限公司'
+                },
+                {
+                    value: '4',
+                    label: '济宁市万城象限信息科技中心',
+                    disabled: true
+                },
+                {
+                    value: '5',
+                    label: '济宁市数源矩阵信息科技中心',
+                    disabled: true
+                },
+                {
+                    value: '6',
+                    label: '上海道趣信息技术中心'
+                },
+                {
+                    value: '7',
+                    label: '单保晔',
+                    disabled: true
+                },
+                {
+                    value: '8',
+                    label: '单保勇'
+                }
+            ]
         };
     },
     created() {
